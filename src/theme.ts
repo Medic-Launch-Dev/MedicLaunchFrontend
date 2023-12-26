@@ -45,27 +45,27 @@ const theme = createTheme({
       msUserSelect: 'none',
     },
     h1: {
-      fontSize: '2.125rem',
+      fontSize: '1.8rem',
       fontWeight: 600,
     },
     h2: {
-      fontSize: '1.875rem',
-      fontWeight: 600,
-    },
-    h3: {
       fontSize: '1.5rem',
       fontWeight: 600,
     },
-    h4: {
+    h3: {
       fontSize: '1.25rem',
       fontWeight: 600,
     },
+    h4: {
+      fontSize: '1.1rem',
+      fontWeight: 600,
+    },
     h5: {
-      fontSize: '1.125rem',
+      fontSize: '0.9rem',
       fontWeight: 600,
     },
     h6: {
-      fontSize: '1rem',
+      fontSize: '0.8rem',
       fontWeight: 600,
     },
     subtitle1: {
@@ -88,16 +88,16 @@ theme.components = {
         fontWeight: 600,
         padding: `6px 22px`,
       },
-      containedPrimary: {
-        background: `linear-gradient(115.43deg, #2496C7 6.22%, #046E9B 100%)`,
-        ":hover": {
-          background: `linear-gradient(115.43deg, #2aabe3 6.22%, #046E9B 100%)`,
-        }
-      },
       containedSecondary: {
         background: `#fff`,
         ":hover": {
           backgroundColor: '#d2eefa',
+        }
+      },
+      outlinedPrimary: {
+        borderWidth: 2,
+        ":hover": {
+          borderWidth: 2,
         }
       }
     },

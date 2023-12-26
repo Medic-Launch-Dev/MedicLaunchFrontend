@@ -6,18 +6,35 @@ import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import AppShell from './components/nav/AppShell';
+import PracticeSession from './pages/PracticeSession';
+import Root from './pages/Root';
 import reportWebVitals from './reportWebVitals';
 import theme from './theme';
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Root />,
+  },
+  {
+    path: "practice-session",
+    element: <PracticeSession />
+  }
+]);
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <App />
+      <AppShell>
+        <RouterProvider router={router} />
+      </AppShell>
     </ThemeProvider>
   </React.StrictMode>
 );
