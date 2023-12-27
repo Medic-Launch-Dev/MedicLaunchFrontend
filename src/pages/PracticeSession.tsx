@@ -1,6 +1,7 @@
-import { Box, Button, Container, LinearProgress, Stack, Typography } from "@mui/material";
+import { Box, Container, LinearProgress, Stack, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import QuestionView from "../components/question/QuestionView";
+import LinkButton from "../components/util/LinkButton";
 import questionsStore from "../stores/questionsStore";
 import { primaryGradientText } from "../theme";
 
@@ -42,7 +43,9 @@ function PracticeSession() {
           <Typography variant="h6" sx={primaryGradientText}>{calculateProgress()}%</Typography>
         </Stack>
         <Box>
-          <Button variant="contained" sx={{ whiteSpace: 'nowrap' }}>End Session</Button>
+          <LinkButton to="/review-session" sx={{ whiteSpace: 'nowrap' }}>
+            End Session
+          </LinkButton>
         </Box>
       </Stack>
       <QuestionView question={currentQuestion} answerStatus={currentAnswerStatus} />

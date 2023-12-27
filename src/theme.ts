@@ -8,6 +8,11 @@ export const primaryGradientText = {
   WebkitTextFillColor: 'transparent'
 }
 
+export const unstyledLink = {
+  textDecoration: 'none',
+  color: 'inherit',
+}
+
 const theme = createTheme({
   palette: {
     primary: {

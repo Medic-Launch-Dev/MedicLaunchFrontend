@@ -9,6 +9,7 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import AppShell from './components/nav/AppShell';
 import PracticeSession from './pages/PracticeSession';
+import ReviewSession from './pages/ReviewSession';
 import Root from './pages/Root';
 import reportWebVitals from './reportWebVitals';
 import theme from './theme';
@@ -21,7 +22,11 @@ const router = createBrowserRouter([
   {
     path: "practice-session",
     element: <PracticeSession />
-  }
+  },
+  {
+    path: "review-session",
+    element: <ReviewSession />
+  },
 ]);
 
 const root = ReactDOM.createRoot(

@@ -9,7 +9,7 @@ import QuestionBankIcon from '../../src/assets/icons/question-bank.svg';
 import WelcomeImg from '../../src/assets/images/Welcome.png';
 import PageWithNav from '../components/nav/PageWithNav';
 import Card from '../components/util/Card';
-import { primaryGradient } from '../theme';
+import { primaryGradient, unstyledLink } from '../theme';
 
 function Root() {
   return (
@@ -38,7 +38,9 @@ function Root() {
                 primary
                 action={
                   <Button variant="contained" color="secondary">
-                    <Link to="practice-session">Start Questions</Link>
+                    <Link style={unstyledLink} to="practice-session">
+                      Start Questions
+                    </Link>
                   </Button>
                 }
                 icon={<img src={QuestionBankIcon} width={64} />}

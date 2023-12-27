@@ -2,6 +2,7 @@ import { ChevronRight, KeyboardArrowLeft } from "@mui/icons-material";
 import { Button, Grid, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import questionsStore, { Question } from "../../stores/questionsStore";
+import LinkButton from "../util/LinkButton";
 import AnswerOption from "./AnswerOption";
 import AnswersGrid from "./AnswersGrid";
 
@@ -12,6 +13,8 @@ interface QuestionViewProps {
 
 export default function QuestionView({ question, answerStatus }: QuestionViewProps) {
   const [selectedAnswer, setSelectedAnswer] = useState<string>();
+  const isFirstQuestion = questionsStore.currentQuestionIdx === 0
+  const isLastQuestion = questionsStore.currentQuestionIdx === questionsStore.questions.length - 1;
 
   const questionBodyMarkup = (
     <>
@@ -66,15 +69,15 @@ export default function QuestionView({ question, answerStatus }: QuestionViewPro
               startIcon={<KeyboardArrowLeft />}
               variant="outlined"
               onClick={() => questionsStore.prevQuestion()}
-              disabled={questionsStore.currentQuestionIdx <= 0}
+              disabled={isFirstQuestion}
             >
               Previous
             </Button>
             <Button
-              disabled={questionsStore.currentQuestionIdx === questionsStore.questions.length - 1}
               endIcon={<ChevronRight />}
               variant="outlined"
               onClick={() => questionsStore.nextQuestion()}
+              disabled={isLastQuestion}
             >
               Skip
             </Button>
@@ -103,16 +106,25 @@ export default function QuestionView({ question, answerStatus }: QuestionViewPro
           startIcon={<KeyboardArrowLeft />}
           variant="outlined"
           onClick={() => questionsStore.prevQuestion()}
-          disabled={questionsStore.currentQuestionIdx <= 0}
+          disabled={isFirstQuestion}
         >
           Previous
         </Button>
-        <Button
-          variant="contained"
-          onClick={() => questionsStore.nextQuestion()}
-        >
-          Next Question
-        </Button>
+
+        {
+          isLastQuestion ?
+            <LinkButton to="/review-session">
+              End Session
+            </LinkButton>
+            :
+            <Button
+              variant="contained"
+              onClick={() => questionsStore.nextQuestion()}
+            >
+              Next Question
+            </Button>
+
+        }
       </Stack>
     </Stack>
   )
