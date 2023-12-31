@@ -8,6 +8,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import AppShell from './components/nav/AppShell';
+import Login from './pages/Login';
 import PracticeSession from './pages/PracticeSession';
 import ReviewSession from './pages/ReviewSession';
 import Root from './pages/Root';
@@ -17,16 +18,26 @@ import theme from './theme';
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root />,
+    element: <AppShell />,
+    children: [
+      {
+        path: "",
+        element: <Root />
+      },
+      {
+        path: "practice-session",
+        element: <PracticeSession />
+      },
+      {
+        path: "review-session",
+        element: <ReviewSession />
+      },
+    ]
   },
   {
-    path: "practice-session",
-    element: <PracticeSession />
-  },
-  {
-    path: "review-session",
-    element: <ReviewSession />
-  },
+    path: "/login",
+    element: <Login />
+  }
 ]);
 
 const root = ReactDOM.createRoot(
@@ -37,9 +48,7 @@ root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AppShell>
-        <RouterProvider router={router} />
-      </AppShell>
+      <RouterProvider router={router} />
     </ThemeProvider>
   </React.StrictMode>
 );
