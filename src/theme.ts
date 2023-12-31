@@ -110,6 +110,25 @@ theme.components = {
       disableElevation: true,
       disableRipple: true
     }
+  },
+  MuiTextField: {
+    styleOverrides: {
+      root: {
+        backgroundColor: "#fff",
+        borderRadius: 12
+      }
+    }
+  },
+  MuiCheckbox: {
+    styleOverrides: {
+      root: {
+        '&:hover': { backgroundColor: 'transparent' },
+        borderWidth: 1,
+      }
+    },
+    defaultProps: {
+      disableRipple: true
+    }
   }
 }
 

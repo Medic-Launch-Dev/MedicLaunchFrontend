@@ -10,6 +10,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import AppShell from './components/nav/AppShell';
 import Login from './pages/Login';
 import PracticeSession from './pages/PracticeSession';
+import Register from './pages/Register';
 import ReviewSession from './pages/ReviewSession';
 import Root from './pages/Root';
 import reportWebVitals from './reportWebVitals';
@@ -37,7 +38,11 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />
-  }
+  },
+  {
+    path: "/register",
+    element: <Register />
+  },
 ]);
 
 const root = ReactDOM.createRoot(

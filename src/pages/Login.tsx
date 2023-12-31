@@ -11,13 +11,13 @@ export default function Login() {
             <Typography variant="h1" sx={primaryGradientText} fontSize={36} fontWeight={500} textAlign="center">
               Login
             </Typography>
-            <Typography variant="body1" color="#828282" fontSize={16} textAlign="center" sx={{ mt: 1 }}>
+            <Typography variant="body1" color="#828282" fontSize={16} textAlign="center" sx={{ mt: 2 }}>
               Enter your credentials to access your account
             </Typography>
             <TextField fullWidth label="Email address" sx={{ mt: 6 }} />
             <TextField fullWidth label="Password" sx={{ mt: 3 }} />
             <Stack direction="row" justifyContent="end" alignItems="end" width="100%" sx={{ mt: 1 }}>
-              <Typography>Forgot password?</Typography>
+              <Typography fontSize={14}>Forgot password?</Typography>
             </Stack>
             <Stack spacing={2} width="100%" alignItems="center" sx={{ mt: 4 }}>
               <Button variant="contained" fullWidth sx={{ fontSize: 16, fontWeight: 500, py: 1.5 }}>Log in</Button>
