@@ -29,7 +29,7 @@ jobs:
       uses: azure/CLI@v1
       with:
         inlineScript: |
-            az storage blob upload-batch --account-name mediclaunchdb --auth-mode key --destination-path '$web' --pattern './build/*' --source ./build
+            az storage blob upload-batch --account-name mediclaunchdb --auth-mode key --destination '$web' --pattern './build/*' --source ./build
 
   # Azure logout
     - name: logout
