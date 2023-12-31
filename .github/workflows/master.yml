@@ -17,9 +17,7 @@ jobs:
         node-version: 16
 
     - name: Install dependencies and build
-      run: |
-        # npm ci
-        npm run build
+      run: CI=false npm run build
         
     - uses: azure/login@v1
       with:
