@@ -51,15 +51,15 @@ export default function Login() {
               <AgreementCheckbox text="Send me updates and promotions via email/text" />
             </Stack>
             <Stack direction="row" spacing={2} alignItems="center" justifyContent="center" mt={3}>
-              <Button
-                variant="outlined"
-                sx={{ fontSize: 16, fontWeight: 500, py: 1.5 }}
-                startIcon={<ChevronLeft />}
-              >
-                <Link to="/login" style={unstyledLink}>
+              <Link to="/login" style={unstyledLink}>
+                <Button
+                  variant="outlined"
+                  sx={{ fontSize: 16, fontWeight: 500, py: 1.5 }}
+                  startIcon={<ChevronLeft />}
+                >
                   Back
-                </Link>
-              </Button>
+                </Button>
+              </Link>
               <Button
                 variant="contained"
                 sx={{ fontSize: 16, fontWeight: 500, py: 1.5, px: 6 }}
