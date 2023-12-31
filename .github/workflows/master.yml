@@ -8,7 +8,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 14
+
+    - name: Install dependencies and build
+      run: |
+        npm ci
+        npm run build
+        
     - uses: azure/login@v1
       with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
@@ -17,7 +29,7 @@ jobs:
       uses: azure/CLI@v1
       with:
         inlineScript: |
-            az storage blob upload-batch --account-name mediclaunchdb --auth-mode key -d '$web' -s build
+            az storage blob upload-batch --account-name mediclaunchdb --auth-mode key --destination-path '$web' --pattern './build/*' --source ./build
 
   # Azure logout
     - name: logout
