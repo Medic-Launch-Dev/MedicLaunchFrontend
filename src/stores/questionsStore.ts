@@ -54,6 +54,10 @@ class QuestionsStore {
       console.log("Questions: ", toJS(this.specialityQuestions));
     });
   }
+
+  async addQuestion(question: MedicalQuestion) {
+    await this.apiClient.saveQuestion(question);
+  }
 }
 
 const medicLaunchApiClient = new MedicLaunchApiClient();

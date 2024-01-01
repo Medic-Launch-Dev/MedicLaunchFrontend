@@ -1,7 +1,7 @@
 export enum QuestionType {
-    General,
-    PaperOneMockExam,
-    PaperTwoMockExam
+    General = "General",
+    PaperOneMockExam = "PaperOneMockExam",
+    PaperTwoMockExam = "PaperTwoMockExam",
 }
 
 export class Option {
@@ -10,19 +10,13 @@ export class Option {
 }
 
 export class MedicalQuestion {
-    id: string;
-    code: string;
+    id?: string;
     specialityId: string;
     questionType: QuestionType;
     questionText: string;
-    labValues: string;
     options: Option[];
     correctAnswerLetter: string;
     explanation: string;
     clinicalTips: string;
-    references: string;
-    authorUserId: string;
-    createdAt: Date;
-    updatedAt: Date;
-    updatedByUserId: string;
+    learningPoints: string;
 }

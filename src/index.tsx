@@ -1,18 +1,19 @@
-import '@fontsource/poppins/300.css';
-import '@fontsource/poppins/400.css';
-import '@fontsource/poppins/500.css';
-import '@fontsource/poppins/700.css';
-import { CssBaseline } from '@mui/material';
-import { ThemeProvider } from '@mui/material/styles';
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import AppShell from './components/nav/AppShell';
-import PracticeSession from './pages/PracticeSession';
-import ReviewSession from './pages/ReviewSession';
-import Root from './pages/Root';
-import reportWebVitals from './reportWebVitals';
-import theme from './theme';
+import "@fontsource/poppins/300.css";
+import "@fontsource/poppins/400.css";
+import "@fontsource/poppins/500.css";
+import "@fontsource/poppins/700.css";
+import { CssBaseline } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import AppShell from "./components/nav/AppShell";
+import PracticeSession from "./pages/PracticeSession";
+import ReviewSession from "./pages/ReviewSession";
+import Root from "./pages/Root";
+import reportWebVitals from "./reportWebVitals";
+import theme from "./theme";
+import CreateQuestion from "./components/question/CreateQuestion";
 
 const router = createBrowserRouter([
   {
@@ -21,16 +22,20 @@ const router = createBrowserRouter([
   },
   {
     path: "practice-session",
-    element: <PracticeSession />
+    element: <PracticeSession />,
   },
   {
     path: "review-session",
-    element: <ReviewSession />
+    element: <ReviewSession />,
+  },
+  {
+    path: "create-question",
+    element: <CreateQuestion />,
   },
 ]);
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
 
 root.render(

@@ -15,4 +15,15 @@ export default class MedicLaunchApiClient {
     const data = await response.json();
     return data;
   }
+
+  async saveQuestion(question: MedicalQuestion) {
+    await fetch(`${this.apiUrl}/questions/create`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify(question)
+    });
+  }
 }
