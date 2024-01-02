@@ -1,10 +1,12 @@
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
+import { LoadingButton } from "@mui/lab";
 import { Box, Button, Grid, Stack, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
 import * as yup from 'yup';
 import AgreementCheckbox from "../components/register/AgreementCheckbox";
 import UniversitySelect from "../components/register/UniversitySelect";
+import userStore from "../stores/userStore";
 import { primaryGradient, primaryGradientText, unstyledLink } from "../theme";
 
 const validationSchema = yup.object({
@@ -26,10 +28,17 @@ export default function Login() {
       password: '',
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: async values => {
+      await userStore.createUser(values.email, values.password);
     },
   });
+
+  const requiredFieldsAreEmpty = () => {
+    const requiredFields = Object.values(formik.values);
+    return requiredFields.some(value => value === '');
+  };
+
+  console.log(requiredFieldsAreEmpty());
 
   return (
     <Grid container sx={{ height: "100vh" }}>
@@ -108,15 +117,16 @@ export default function Login() {
                     Back
                   </Button>
                 </Link>
-                <Button
+                <LoadingButton
                   variant="contained"
                   sx={{ fontSize: 16, fontWeight: 500, py: 1.5, px: 6 }}
                   endIcon={<ChevronRight />}
-                  disabled={!formik.isValid}
+                  disabled={!formik.isValid || requiredFieldsAreEmpty()}
+                  loading={formik.isSubmitting}
                   type="submit"
                 >
                   Register
-                </Button>
+                </LoadingButton>
               </Stack>
             </form>
           </Box>
