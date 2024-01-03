@@ -10,15 +10,10 @@ function PracticeSession() {
   const currentAnswerStatus = questionsStore.answers[questionsStore.currentQuestionIdx].result;
 
   function calculateProgress() {
-    let totalAnswered = 0;
-    questionsStore.answers.forEach(answer => {
-      if (answer) totalAnswered += 1
-    })
+    const totalAnswered = questionsStore.getAnswerTotal("incorrect") + questionsStore.getAnswerTotal("correct");
 
     return Math.ceil((totalAnswered / questionsStore.answers.length) * 100);
   }
-
-  console.log(calculateProgress());
 
   return (
     <Container maxWidth="lg">
