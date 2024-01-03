@@ -30,7 +30,7 @@ function fileListToImageFiles(fileList: FileList): File[] {
 // TODO: add auto-save to local storage to prevent author losing content
 interface IQuestionTextEditorProps {
   placeholderText?: string;
-  onContentChange?: (content: string) => void;
+  onSaveEditorContent: (content: string) => void;
 }
 
 export const RichQuestionTextEditor = (props: IQuestionTextEditorProps) => {
@@ -127,7 +127,8 @@ export const RichQuestionTextEditor = (props: IQuestionTextEditorProps) => {
       [handleNewImageFiles]
     );
 
-  const [submittedContent, setSubmittedContent] = useState("");
+  // const [submittedContent, setSubmittedContent] = useState("");
+  console.log("Rich editor rendering");
 
   return (
     <>
@@ -150,10 +151,6 @@ export const RichQuestionTextEditor = (props: IQuestionTextEditorProps) => {
           extensions={extensions}
           content={exampleContent}
           editable={isEditable}
-          onUpdate={(content) => {
-            const editor = content.editor;
-            props.onContentChange?.(editor.getHTML());
-          }}
           editorProps={{
             handleDrop: handleDrop,
             handlePaste: handlePaste,
@@ -208,17 +205,17 @@ export const RichQuestionTextEditor = (props: IQuestionTextEditorProps) => {
                   IconComponent={isEditable ? Lock : LockOpen}
                 /> */}
 
-                {/* <Button
+                <Button
                   variant="contained"
                   size="small"
                   onClick={() => {
-                    setSubmittedContent(
+                    props.onSaveEditorContent(
                       rteRef.current?.editor?.getHTML() ?? ""
                     );
                   }}
                 >
                   Save
-                </Button> */}
+                </Button>
               </Stack>
             ),
           }}

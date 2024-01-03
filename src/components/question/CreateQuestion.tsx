@@ -57,7 +57,10 @@ const CreateQuestion = () => {
       <form>
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <RichQuestionTextEditor />
+            <RichQuestionTextEditor
+              placeholderText="Write your question here..."
+              onSaveEditorContent={(text) => setQuestionText(text)}
+            />
           </Grid>
           {Object.entries(options).map(([letter, text]) => (
             <Grid item xs={12} key={letter}>
@@ -81,14 +84,20 @@ const CreateQuestion = () => {
           <Grid item xs={12}>
             <RichQuestionTextEditor
               placeholderText="Write explanation here..."
-              // onContentChange={(text) => setExplanation(text)}
+              onSaveEditorContent={(text) => setExplanation(text)}
             />
           </Grid>
           <Grid item xs={12}>
-            <RichQuestionTextEditor placeholderText="Write learning points here..." />
+            <RichQuestionTextEditor
+              placeholderText="Write learning points here..."
+              onSaveEditorContent={(text) => setLearnings(text)}
+            />
           </Grid>
           <Grid item xs={12}>
-            <RichQuestionTextEditor placeholderText="Write clinical tips here..." />
+            <RichQuestionTextEditor
+              placeholderText="Write clinical tips here..."
+              onSaveEditorContent={(text) => setClinicalTips(text)}
+            />
           </Grid>
           <Grid item xs={12}>
             <Button variant="contained" color="primary" onClick={handleSubmit}>
