@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { MedicalQuestion, QuestionType } from "../../models/Question";
 import questionsStore from "../../stores/questionsStore";
+import { RichQuestionTextEditor } from "../tiptap/RichQuestionTextEditor";
 
 const CreateQuestion = () => {
   const [questionText, setQuestionText] = useState("");
@@ -56,14 +57,7 @@ const CreateQuestion = () => {
       <form>
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <TextField
-              label="Question Text"
-              fullWidth
-              multiline
-              rows={4}
-              value={questionText}
-              onChange={(e) => setQuestionText(e.target.value)}
-            />
+            <RichQuestionTextEditor />
           </Grid>
           {Object.entries(options).map(([letter, text]) => (
             <Grid item xs={12} key={letter}>
@@ -85,34 +79,16 @@ const CreateQuestion = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <TextField
-              label="Clinical Tips"
-              fullWidth
-              multiline
-              rows={4}
-              value={clinicalTips}
-              onChange={(e) => setClinicalTips(e.target.value)}
+            <RichQuestionTextEditor
+              placeholderText="Write explanation here..."
+              // onContentChange={(text) => setExplanation(text)}
             />
           </Grid>
           <Grid item xs={12}>
-            <TextField
-              label="learning Points"
-              fullWidth
-              multiline
-              rows={4}
-              value={learningPoints}
-              onChange={(e) => setLearnings(e.target.value)}
-            />
+            <RichQuestionTextEditor placeholderText="Write learning points here..." />
           </Grid>
           <Grid item xs={12}>
-            <TextField
-              label="Explanation"
-              fullWidth
-              multiline
-              rows={4}
-              value={explanation}
-              onChange={(e) => setExplanation(e.target.value)}
-            />
+            <RichQuestionTextEditor placeholderText="Write clinical tips here..." />
           </Grid>
           <Grid item xs={12}>
             <Button variant="contained" color="primary" onClick={handleSubmit}>
