@@ -38,7 +38,7 @@ export default function ReviewQuestionsTable() {
 
   const tableContainerStyles = {
     backgroundColor: "#fff", 
-    padding: 2, 
+    padding: "0.2rem 0.875rem", 
     borderRadius: 2
   }
   
