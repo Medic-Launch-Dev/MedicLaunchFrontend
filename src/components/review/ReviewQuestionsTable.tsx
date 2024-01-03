@@ -24,9 +24,14 @@ export default function ReviewQuestionsTable() {
 
   const tableHeadStyles = {
     color: "#72767C",
-    fontSize: "14px"
+    fontSize: "0.875rem",
   }
 
+  const tableBodyQuestionStyles = {
+    color: "#242731",
+    fontSize: "0.8125rem",
+    fontWeight: 500
+  }
   
   return (
     <TableContainer>
@@ -47,7 +52,7 @@ export default function ReviewQuestionsTable() {
               <TableCell component="th" scope="row">
                 {getResultChip(answer.result)}
               </TableCell>
-              <TableCell>{`${idx + 1} ${answer.questionText}`}</TableCell>
+              <TableCell sx={tableBodyQuestionStyles}>{`${idx + 1}. ${answer.questionText}`}</TableCell>
               <TableCell align="right">
                 <Button onClick={() => handleClickReview(idx)}>
                   Review
