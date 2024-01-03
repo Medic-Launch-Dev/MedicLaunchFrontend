@@ -1,3 +1,5 @@
+// The code in this folder is based on the example at: https://github.com/sjdemartini/mui-tiptap
+// Codesandbox: https://codesandbox.io/p/devbox/mui-tiptap-demo-3zl2l6?file=%2Fsrc%2FEditor.tsx%3A11%2C16
 import { Lock, LockOpen, TextFields } from "@mui/icons-material";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import type { EditorOptions } from "@tiptap/core";
