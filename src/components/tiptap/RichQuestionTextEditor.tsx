@@ -1,18 +1,17 @@
 // The code in this folder is based on the example at: https://github.com/sjdemartini/mui-tiptap
 // Codesandbox: https://codesandbox.io/p/devbox/mui-tiptap-demo-3zl2l6?file=%2Fsrc%2FEditor.tsx%3A11%2C16
-import { Lock, LockOpen, TextFields } from "@mui/icons-material";
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { TextFields } from "@mui/icons-material";
+import { Box, Button, GlobalStyles, Stack } from "@mui/material";
 import type { EditorOptions } from "@tiptap/core";
-import { useCallback, useRef, useState } from "react";
 import {
   LinkBubbleMenu,
   MenuButton,
   RichTextEditor,
-  RichTextReadOnly,
   TableBubbleMenu,
   insertImages,
-  type RichTextEditorRef,
+  type RichTextEditorRef
 } from "mui-tiptap";
+import { useCallback, useRef, useState } from "react";
 import EditorMenuControls from "./EditorMenuControls";
 import useExtensions from "./useExtensions";
 
@@ -132,6 +131,19 @@ export const RichQuestionTextEditor = (props: IQuestionTextEditorProps) => {
 
   return (
     <>
+      <GlobalStyles
+        styles={
+          {
+            '&.MuiTiptap-RichTextField-content': {
+              backgroundColor: "#fff",
+              borderRadius: "12px 12px 0px 0px"
+            },
+            '&.MuiTiptap-RichTextContent-root': {
+              borderRadius: 0
+            },
+          }
+        }
+      />
       <Box
         sx={{
           // An example of how editor styles can be overridden. In this case,
@@ -144,6 +156,8 @@ export const RichQuestionTextEditor = (props: IQuestionTextEditorProps) => {
               scrollMarginTop: showMenuBar ? 50 : 0,
             },
           },
+          bgcolor: "#fff",
+          borderRadius: 1,
         }}
       >
         <RichTextEditor
@@ -170,7 +184,7 @@ export const RichQuestionTextEditor = (props: IQuestionTextEditorProps) => {
             footer: (
               <Stack
                 direction="row"
-                spacing={2}
+                justifyContent="space-between"
                 sx={{
                   borderTopStyle: "solid",
                   borderTopWidth: 1,

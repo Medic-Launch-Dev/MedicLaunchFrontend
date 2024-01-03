@@ -8,7 +8,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import AppShell from './components/nav/AppShell';
-import CreateQuestion from "./components/question/CreateQuestion";
+import CreateQuestion from "./pages/CreateQuestion";
 import Login from './pages/Login';
 import PracticeSession from './pages/PracticeSession';
 import Register from './pages/Register';

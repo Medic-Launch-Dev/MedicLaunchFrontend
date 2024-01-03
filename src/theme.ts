@@ -66,11 +66,11 @@ const theme = createTheme({
       fontWeight: 600,
     },
     h5: {
-      fontSize: '0.9rem',
+      fontSize: '1rem',
       fontWeight: 600,
     },
     h6: {
-      fontSize: '0.8rem',
+      fontSize: '0.9rem',
       fontWeight: 600,
     },
     subtitle1: {
