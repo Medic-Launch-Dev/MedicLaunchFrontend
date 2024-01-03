@@ -35,7 +35,7 @@ export default function ReviewQuestionsTable() {
           <TableRow>
             <TableCell sx={tableHeadStyles}>Result</TableCell>
             <TableCell sx={tableHeadStyles}>Question</TableCell>
-            <TableCell sx={{textAlign:"right", paddingRight: 5, ...tableHeadStyles }}>Review</TableCell>
+            <TableCell />
           </TableRow>
         </TableHead>
         <TableBody>
