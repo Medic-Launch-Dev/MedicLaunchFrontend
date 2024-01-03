@@ -52,7 +52,7 @@ export default function ReviewQuestionsTable() {
               key={idx}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell component="th" scope="row">
+              <TableCell component="th" scope="row" sx={{width: 100}}>
                 {getResultChip(answer.result)}
               </TableCell>
               <TableCell sx={tableBodyQuestionStyles}>{`${idx + 1}. ${answer.questionText}`}</TableCell>
