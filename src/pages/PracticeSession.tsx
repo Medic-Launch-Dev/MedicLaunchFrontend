@@ -1,6 +1,6 @@
 import { Box, Container, LinearProgress, Stack, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
-import QuestionView from "../components/question/QuestionView";
+import QuestionView from "../components/practiceSession/QuestionView";
 import LinkButton from "../components/util/LinkButton";
 import questionsStore from "../stores/questionsStore";
 import { primaryGradientText } from "../theme";
