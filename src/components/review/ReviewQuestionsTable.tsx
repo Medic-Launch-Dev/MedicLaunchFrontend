@@ -2,6 +2,8 @@ import { Button, Chip, Table, TableBody, TableCell, TableContainer, TableHead, T
 import { useNavigate } from "react-router";
 import questionsStore from "../../stores/questionsStore";
 
+
+
 export default function ReviewQuestionsTable() {
   const navigate = useNavigate();
 
@@ -20,14 +22,20 @@ export default function ReviewQuestionsTable() {
     return <ResultChip label="Not attempted" />
   }
 
+  const tableHeadStyles = {
+    color: "#72767C",
+    fontSize: "14px"
+  }
+
+  
   return (
     <TableContainer>
       <Table>
         <TableHead>
-          <TableRow >
-            <TableCell>Result</TableCell>
-            <TableCell>Question</TableCell>
-            <TableCell sx={{textAlign:"right", paddingRight: 6 }}>Review</TableCell>
+          <TableRow>
+            <TableCell sx={tableHeadStyles}>Result</TableCell>
+            <TableCell sx={tableHeadStyles}>Question</TableCell>
+            <TableCell sx={{textAlign:"right", paddingRight: 5, ...tableHeadStyles }}>Review</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
