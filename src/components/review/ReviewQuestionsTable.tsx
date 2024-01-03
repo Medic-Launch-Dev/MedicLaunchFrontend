@@ -8,7 +8,7 @@ export default function ReviewQuestionsTable() {
   const navigate = useNavigate();
 
   const ResultChip = styled(Chip)({
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: 500,
     width: "8rem",
     textShadow: "0 0 0 #000"
@@ -20,19 +20,19 @@ export default function ReviewQuestionsTable() {
   }
 
   function getResultChip(result?: string) {
-    if (result === "correct") return <ResultChip label="Correct" color="success" />
-    if (result === "incorrect") return <ResultChip label="Incorrect" color="error" />
+    if (result === "correct") return <ResultChip label="Correct" sx={{backgroundColor:"#A4E29F"}} />
+    if (result === "incorrect") return <ResultChip label="Incorrect" sx={{backgroundColor:"#FFABAB"}} />
     return <ResultChip label="Not attempted" />
   }
 
   const tableHeadStyles = {
     color: "#72767C",
-    fontSize: "0.875rem",
+    fontSize: 14,
   }
 
   const tableBodyQuestionStyles = {
     color: "#242731",
-    fontSize: "0.8125rem",
+    fontSize: 13,
     fontWeight: 500
   }
   
