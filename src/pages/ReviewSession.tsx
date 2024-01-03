@@ -24,7 +24,7 @@ export default function ReviewSession() {
           Study Portal
         </LinkButton>
         <Typography variant="h1" sx={primaryGradientText} align="center">
-          Session Overview
+          Review Questions
         </Typography>
         <LinkButton to="/" sx={{ visibility: "hidden" }}>
           Study Portal
