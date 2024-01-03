@@ -24,10 +24,10 @@ export default function ReviewQuestionsTable() {
     <TableContainer>
       <Table>
         <TableHead>
-          <TableRow>
-            <TableCell sx={{ width: 150 }}>Result</TableCell>
+          <TableRow >
+            <TableCell>Result</TableCell>
             <TableCell>Question</TableCell>
-            <TableCell />
+            <TableCell sx={{textAlign:"right", paddingRight: 6 }}>Review</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
