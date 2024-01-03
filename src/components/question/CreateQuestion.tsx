@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { MedicalQuestion, QuestionType } from "../../models/Question";
 import questionsStore from "../../stores/questionsStore";
+import { RichQuestionTextEditor } from "../tiptap/RichQuestionTextEditor";
 
 const CreateQuestion = () => {
   const [questionText, setQuestionText] = useState("");
@@ -56,13 +57,9 @@ const CreateQuestion = () => {
       <form>
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <TextField
-              label="Question Text"
-              fullWidth
-              multiline
-              rows={4}
-              value={questionText}
-              onChange={(e) => setQuestionText(e.target.value)}
+            <RichQuestionTextEditor
+              placeholderText="Write your question here..."
+              onSaveEditorContent={(text) => setQuestionText(text)}
             />
           </Grid>
           {Object.entries(options).map(([letter, text]) => (
@@ -85,33 +82,21 @@ const CreateQuestion = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <TextField
-              label="Clinical Tips"
-              fullWidth
-              multiline
-              rows={4}
-              value={clinicalTips}
-              onChange={(e) => setClinicalTips(e.target.value)}
+            <RichQuestionTextEditor
+              placeholderText="Write explanation here..."
+              onSaveEditorContent={(text) => setExplanation(text)}
             />
           </Grid>
           <Grid item xs={12}>
-            <TextField
-              label="learning Points"
-              fullWidth
-              multiline
-              rows={4}
-              value={learningPoints}
-              onChange={(e) => setLearnings(e.target.value)}
+            <RichQuestionTextEditor
+              placeholderText="Write learning points here..."
+              onSaveEditorContent={(text) => setLearnings(text)}
             />
           </Grid>
           <Grid item xs={12}>
-            <TextField
-              label="Explanation"
-              fullWidth
-              multiline
-              rows={4}
-              value={explanation}
-              onChange={(e) => setExplanation(e.target.value)}
+            <RichQuestionTextEditor
+              placeholderText="Write clinical tips here..."
+              onSaveEditorContent={(text) => setClinicalTips(text)}
             />
           </Grid>
           <Grid item xs={12}>
