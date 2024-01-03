@@ -1,20 +1,20 @@
-import { Link } from "@mui/material";
+// import { Link } from "@mui/material";
+import { Box } from "@mui/material";
+import { NavLink as RouterNavLink } from "react-router-dom";
 
 interface NavLinkProps {
   text: string
-  href?: string;
+  href: string;
   selected?: boolean;
 }
 
 export default function NavLink({ text, href, selected }: NavLinkProps) {
   return (
-    <Link
-      href={href}
+    <RouterNavLink to={href} style={{textDecoration: 'none', color: 'white'}}>
+      <Box
       sx={{
         fontSize: 18,
         fontWeight: 700,
-        color: '#fff',
-        textDecoration: 'none',
         pl: 3,
         py: 1,
         cursor: 'pointer',
@@ -26,6 +26,7 @@ export default function NavLink({ text, href, selected }: NavLinkProps) {
       }}
     >
       {text}
-    </Link>
+    </Box>
+    </RouterNavLink>
   )
 }

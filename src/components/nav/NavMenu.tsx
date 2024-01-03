@@ -25,9 +25,9 @@ export default function NavMenu() {
           <img src={LogoWhite} width={150} />
         </Box>
         <Stack sx={{ width: '100%', pt: 12 }} gap={2}>
-          <NavLink text="Study Portal" selected />
-          <NavLink text="My Profile" />
-          <NavLinkRoute to='create-question'>Add Question</NavLinkRoute>
+          <NavLink text="Study Portal" selected href="/" />
+          <NavLink text="My Profile" href="/" />
+          <NavLink text="Add Question" href="/create-question" />
         </Stack>
       </Stack>
     </Drawer>
