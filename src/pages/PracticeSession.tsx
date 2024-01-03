@@ -7,7 +7,7 @@ import { primaryGradientText } from "../theme";
 
 function PracticeSession() {
   const currentQuestion = questionsStore.questions[questionsStore.currentQuestionIdx];
-  const currentAnswerStatus = questionsStore.answers[questionsStore.currentQuestionIdx];
+  const currentAnswerStatus = questionsStore.answers[questionsStore.currentQuestionIdx].result;
 
   function calculateProgress() {
     let totalAnswered = 0;

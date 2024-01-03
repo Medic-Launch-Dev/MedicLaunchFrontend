@@ -2,13 +2,13 @@ import { Box, Stack, Typography } from "@mui/material";
 import questionsStore from "../../stores/questionsStore";
 
 export default function AnswersGrid() {
-  function getBackgroundColor(status: string) {
+  function getBackgroundColor(status?: string) {
     if (status === "correct") return "#e7fae5";
     if (status === "incorrect") return "#f7e2e2";
-    else return "#f4f4f4"
+    return "#f4f4f4"
   }
 
-  function getTextColor(status: string) {
+  function getTextColor(status?: string) {
     if (status === "incorrect") return "#962121";
     if (status === "correct") return "#177d10";
   }
@@ -25,13 +25,13 @@ export default function AnswersGrid() {
       }}
     >
       {
-        questionsStore.answers.map((status, index) => {
+        questionsStore.answers.map((answer, index) => {
           return (
             <Stack
               alignItems="center"
               justifyContent="center"
               sx={{
-                backgroundColor: getBackgroundColor(status),
+                backgroundColor: getBackgroundColor(answer.result),
                 height: 25,
                 width: 25,
                 borderRadius: 0.5,
@@ -40,7 +40,7 @@ export default function AnswersGrid() {
               }}
               onClick={() => questionsStore.setCurrentQuestion(index)}
             >
-              <Typography variant="body2" color={getTextColor(status)} fontWeight={500}>
+              <Typography variant="body2" color={getTextColor(answer.result)} fontWeight={500}>
                 {index + 1}
               </Typography>
             </Stack>

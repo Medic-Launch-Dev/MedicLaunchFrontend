@@ -8,7 +8,7 @@ import AnswersGrid from "./AnswersGrid";
 
 interface QuestionViewProps {
   question: Question;
-  answerStatus: string;
+  answerStatus?: string;
 }
 
 export default function QuestionView({ question, answerStatus }: QuestionViewProps) {

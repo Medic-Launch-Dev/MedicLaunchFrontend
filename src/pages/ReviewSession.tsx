@@ -4,11 +4,15 @@ import AnalyticsIcon from '../../src/assets/icons/analytics.svg';
 import CorrectIcon from '../../src/assets/icons/correct.svg';
 import QuestionsIcon from '../../src/assets/icons/questions.svg';
 import RestartIcon from '../../src/assets/icons/restart.svg';
-import ReviewCard from "../components/review/ReviewCard";
+import ReviewQuestionsTable from "../components/review/ReviewQuestionsTable";
+import ReviewCard from "../components/review/ReviewStatCard";
 import LinkButton from "../components/util/LinkButton";
+import questionsStore from "../stores/questionsStore";
 import { primaryGradientText, unstyledLink } from "../theme";
 
 export default function ReviewSession() {
+  console.log(questionsStore.answers);
+  
   return (
     <Container maxWidth="lg" sx={{ pt: 2 }}>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
@@ -27,7 +31,7 @@ export default function ReviewSession() {
         <Grid item lg={3}>
           <ReviewCard
             title="Questions Completed"
-            subtitle={`${4}/5`}
+            subtitle={`${questionsStore.answers.length}/${questionsStore.questions.length}`}
             icon={<img src={QuestionsIcon} width={48} />}
           />
         </Grid>
@@ -53,6 +57,10 @@ export default function ReviewSession() {
             title="Continue Questions"
             icon={<img src={RestartIcon} width={48} />}
           />
+        </Grid>
+
+        <Grid item lg={12}>
+          <ReviewQuestionsTable />
         </Grid>
       </Grid>
     </Container>

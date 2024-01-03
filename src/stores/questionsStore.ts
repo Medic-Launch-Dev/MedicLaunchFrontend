@@ -1,7 +1,7 @@
 import { makeAutoObservable, toJS } from "mobx";
 import { questionsData } from "../Questions";
-import MedicLaunchApiClient from "../services/MedicLaunchApiClient";
 import { MedicalQuestion } from "../models/Question";
+import MedicLaunchApiClient from "../services/MedicLaunchApiClient";
 
 export interface Question {
   questionText: string;
@@ -11,17 +11,24 @@ export interface Question {
   explanation: string;
 }
 
+interface Answer {
+  result: "correct" | "incorrect" | undefined;
+  questionText: string;
+}
+
 class QuestionsStore {
   questions: Question[];
   specialityQuestions: MedicalQuestion[];
-  answers: string[];
+  answers: Answer[];
   currentQuestionIdx: number;
   apiClient: MedicLaunchApiClient;
 
 
   constructor(apClient: MedicLaunchApiClient) {
     this.questions = questionsData;
-    this.answers = new Array(this.questions.length);
+    this.answers = this.questions.map(question => { 
+      return { result: undefined, questionText: question.questionText };
+     })
     this.currentQuestionIdx = 0;
     this.apiClient = apClient;
     // this.getSpecialityQuestions("e9093faf-afc7-4a3e-bdc6-a5d66b273257");
@@ -41,9 +48,10 @@ class QuestionsStore {
   }
 
   submitAnswer(answer: string) {
-    if (answer === this.questions[this.currentQuestionIdx].correctAnswer)
-      this.answers[this.currentQuestionIdx] = "correct";
-    else this.answers[this.currentQuestionIdx] = "incorrect";
+    const question = this.questions[this.currentQuestionIdx]
+    if (answer === question.correctAnswer)
+      this.answers[this.currentQuestionIdx] = { result: "correct", questionText: question.questionText };
+    else this.answers[this.currentQuestionIdx] = { result: "incorrect", questionText: question.questionText };
     this.questions[this.currentQuestionIdx].submittedAnswer = answer;
   }
 

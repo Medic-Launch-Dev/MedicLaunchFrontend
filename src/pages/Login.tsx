@@ -6,7 +6,7 @@ export default function Login() {
   return (
     <Grid container sx={{ height: "100vh" }}>
       <Grid item lg={7} sx={{ height: "100%" }}>
-        <Stack sx={{ m: "auto", mt: -8, height: "100%" }} alignItems="center" justifyContent="center" spacing={2}>
+        <Stack sx={{ m: "auto", height: "100%" }} alignItems="center" justifyContent="center" spacing={2}>
           <Box maxWidth="sm">
             <Typography variant="h1" sx={primaryGradientText} fontSize={36} fontWeight={500} textAlign="center">
               Login
