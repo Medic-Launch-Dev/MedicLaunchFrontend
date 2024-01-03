@@ -26,6 +26,7 @@ export default function NavMenu() {
         <Stack sx={{ width: '100%', pt: 12 }} gap={2}>
           <NavLink text="Study Portal" selected />
           <NavLink text="My Profile" />
+          <NavLink text="Add Question" href="create-question"/>
         </Stack>
       </Stack>
     </Drawer>

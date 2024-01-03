@@ -9,6 +9,7 @@ interface NavLinkProps {
 export default function NavLink({ text, href, selected }: NavLinkProps) {
   return (
     <Link
+      href={href}
       sx={{
         fontSize: 18,
         fontWeight: 700,
