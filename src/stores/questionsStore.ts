@@ -66,6 +66,17 @@ class QuestionsStore {
   async addQuestion(question: MedicalQuestion) {
     await this.apiClient.saveQuestion(question);
   }
+
+  getAnswerTotal(filter?: "correct" | "incorrect") {
+    if (!filter) return this.answers.length;
+
+    let total = 0;
+    for (let i = 0; i < this.answers.length; i++) {
+      if (this.answers[i].result === filter) total += 1;
+    }
+    
+    return total;
+  }
 }
 
 const medicLaunchApiClient = new MedicLaunchApiClient();

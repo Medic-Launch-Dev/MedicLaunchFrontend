@@ -11,8 +11,12 @@ import questionsStore from "../stores/questionsStore";
 import { primaryGradientText, unstyledLink } from "../theme";
 
 export default function ReviewSession() {
-  console.log(questionsStore.answers);
-  
+  const totalQuestions = questionsStore.questions.length;
+  const correctAnswers = questionsStore.getAnswerTotal("correct");
+  const incorrectAnswers = questionsStore.getAnswerTotal("incorrect");
+  const totalAnswers = correctAnswers + incorrectAnswers;
+  const score = Math.ceil((correctAnswers / totalAnswers) * 100);
+
   return (
     <Container maxWidth="lg" sx={{ pt: 2 }}>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
@@ -31,14 +35,14 @@ export default function ReviewSession() {
         <Grid item lg={3}>
           <ReviewCard
             title="Questions Completed"
-            subtitle={`${questionsStore.answers.length}/${questionsStore.questions.length}`}
+            subtitle={`${correctAnswers + incorrectAnswers}/${totalQuestions}`}
             icon={<img src={QuestionsIcon} width={48} />}
           />
         </Grid>
         <Grid item lg={3}>
           <ReviewCard
             title="Correct"
-            subtitle={`${60}%`}
+            subtitle={`${score}%`}
             icon={<img src={CorrectIcon} width={48} />}
           />
         </Grid>
