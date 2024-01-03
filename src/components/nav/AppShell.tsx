@@ -1,13 +1,10 @@
 import { Avatar, Box, Stack, Toolbar } from "@mui/material";
+import { Outlet } from "react-router-dom";
 import Logo from "../../assets/logo.svg";
 
-interface Props {
-  children: React.ReactNode;
-}
-
-export default function AppShell({ children }: Props) {
+export default function AppShell() {
   return (
-    <div>
+    <Box sx={{ height: "100vh" }}>
       <Toolbar sx={{ backgroundColor: "#fff" }}>
         <Stack sx={{ width: '100%' }} direction="row" justifyContent="space-between" alignItems="center">
           <img src={Logo} height={40} />
@@ -15,8 +12,8 @@ export default function AppShell({ children }: Props) {
         </Stack>
       </Toolbar>
       <Box sx={{ p: 3 }}>
-        {children}
+        <Outlet />
       </Box>
-    </div>
+    </Box>
   )
 }

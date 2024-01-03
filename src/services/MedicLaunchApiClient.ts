@@ -26,4 +26,24 @@ export default class MedicLaunchApiClient {
       body: JSON.stringify(question)
     });
   }
+
+  async registerUser(email: string, password: string) {
+    await fetch(`${this.apiUrl}/register`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password })
+    });
+  }
+
+  async loginUser(email: string, password: string) {
+    return await fetch(`${this.apiUrl}/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password })
+    });
+  }
 }
