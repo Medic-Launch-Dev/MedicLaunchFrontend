@@ -8,7 +8,10 @@ export default function ReviewQuestionsTable() {
   const navigate = useNavigate();
 
   const ResultChip = styled(Chip)({
-    fontSize: 11
+    fontSize: 11,
+    fontWeight: 500,
+    width: "8rem",
+    textShadow: "0 0 0 #000"
   })
 
   function handleClickReview(idx) {
