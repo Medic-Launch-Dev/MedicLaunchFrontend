@@ -35,9 +35,15 @@ export default function ReviewQuestionsTable() {
     fontSize: 13,
     fontWeight: 500
   }
+
+  const tableContainerStyles = {
+    backgroundColor: "#fff", 
+    padding: 2, 
+    borderRadius: 2
+  }
   
   return (
-    <TableContainer>
+    <TableContainer sx={tableContainerStyles}>
       <Table>
         <TableHead>
           <TableRow>
