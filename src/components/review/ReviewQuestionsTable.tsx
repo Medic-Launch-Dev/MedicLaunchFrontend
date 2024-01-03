@@ -18,7 +18,7 @@ export default function ReviewQuestionsTable() {
 
   function getResultChip(result?: string) {
     if (result === "correct") return <ResultChip label="Correct" color="success" />
-    if (result === "incorrect") return <ResultChip label="Inorrect" color="error" />
+    if (result === "incorrect") return <ResultChip label="Incorrect" color="error" />
     return <ResultChip label="Not attempted" />
   }
 
