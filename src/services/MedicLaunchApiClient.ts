@@ -1,13 +1,17 @@
 
+import { AxiosInstance } from "axios";
 import { MedicalQuestion } from "../models/Question";
+import AxiosProvider from "./AxiosProvider";
+import Speciality from "../models/Speciality";
 
 
 export default class MedicLaunchApiClient {
   private readonly apiUrl: string;
-
-  constructor() {
+  private readonly axios: AxiosInstance;
+  constructor(axiosProvider: AxiosProvider) {
     const baseUrl = process.env.REACT_APP_MEDIC_LAUNCH_URL;
     this.apiUrl = baseUrl + '/api';
+    this.axios = axiosProvider.defaultInstance;
   }
 
   async getQuestionsInSpeciality(specialityId: string): Promise<MedicalQuestion[]> {
@@ -45,5 +49,11 @@ export default class MedicLaunchApiClient {
       },
       body: JSON.stringify({ email, password })
     });
+  }
+
+  async getSpecialitiesList(): Promise<Speciality[]> {
+    // use axios to get the list of specialities
+    const response = await this.axios.get<Speciality[]>(`${this.apiUrl}/specialities`);
+    return response.data;
   }
 }
