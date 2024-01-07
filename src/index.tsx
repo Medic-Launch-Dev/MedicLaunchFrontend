@@ -16,6 +16,7 @@ import ReviewSession from './pages/ReviewSession';
 import Root from './pages/Root';
 import reportWebVitals from './reportWebVitals';
 import theme from './theme';
+import EditQuestions from './pages/EditQuestions';
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "create-question",
         element: <CreateQuestion />,
+      },
+      {
+        path: "edit-questions",
+        element: <EditQuestions/>
       },
     ]
   },
