@@ -25,30 +25,14 @@ export default function ReviewQuestionsTable() {
     return <ResultChip label="Not attempted" />
   }
 
-  const tableHeadStyles = {
-    color: "#72767C",
-    fontSize: 14,
-  }
 
-  const tableBodyQuestionStyles = {
-    color: "#242731",
-    fontSize: 13,
-    fontWeight: 500
-  }
-
-  const tableContainerStyles = {
-    backgroundColor: "#fff", 
-    padding: "0.2rem 0.875rem", 
-    borderRadius: 2
-  }
-  
   return (
-    <TableContainer sx={tableContainerStyles}>
+    <TableContainer>
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell sx={tableHeadStyles}>Result</TableCell>
-            <TableCell sx={tableHeadStyles}>Question</TableCell>
+            <TableCell>Result</TableCell>
+            <TableCell>Question</TableCell>
             <TableCell />
           </TableRow>
         </TableHead>
@@ -61,7 +45,7 @@ export default function ReviewQuestionsTable() {
               <TableCell component="th" scope="row" sx={{width: 100}}>
                 {getResultChip(answer.result)}
               </TableCell>
-              <TableCell sx={tableBodyQuestionStyles}>{`${idx + 1}. ${answer.questionText}`}</TableCell>
+              <TableCell>{`${idx + 1}. ${answer.questionText}`}</TableCell>
               <TableCell align="right">
                 <Button onClick={() => handleClickReview(idx)}>
                   Review
