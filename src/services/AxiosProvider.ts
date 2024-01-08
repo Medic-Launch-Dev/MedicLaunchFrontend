@@ -5,7 +5,12 @@ export default class AxiosProvider {
 
     constructor() {
         this.defaultInstance = axios;
-
-        // TODO: add interceptors
+        this.defaultInstance.interceptors.request.use((config) => {
+            const accessToken = localStorage.getItem('accessToken');
+            if (accessToken) {
+                config.headers.Authorization = `Bearer ${accessToken}`;
+            }
+            return config;
+        });
     }
 }

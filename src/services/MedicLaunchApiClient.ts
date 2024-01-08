@@ -60,7 +60,7 @@ export default class MedicLaunchApiClient {
 
   async getSpecialitiesList(): Promise<Speciality[]> {
     // use axios to get the list of specialities
-    const response = await this.axios.get<Speciality[]>(`${this.apiUrl}/specialities`);
+    const response = await this.axios.get<Speciality[]>(`${this.apiUrl}/questions/specialities`);
     return response.data;
   }
 }
