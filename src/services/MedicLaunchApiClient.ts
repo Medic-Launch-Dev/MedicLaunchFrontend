@@ -41,14 +41,21 @@ export default class MedicLaunchApiClient {
     });
   }
 
-  async loginUser(email: string, password: string) {
-    return await fetch(`${this.apiUrl}/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password })
+  async loginUser(email: string, password: string): Promise<string> {
+    // return await fetch(`${this.apiUrl}/login`, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({ email, password })
+    // });
+    const response = await this.axios.post(`${this.apiUrl}/login`, {
+        email: email,
+        password: password
     });
+
+      const { token} = response.data;
+      return token;
   }
 
   async getSpecialitiesList(): Promise<Speciality[]> {

@@ -2,6 +2,7 @@ import { makeAutoObservable, toJS } from "mobx";
 import { questionsData } from "../Questions";
 import { MedicalQuestion } from "../models/Question";
 import MedicLaunchApiClient from "../services/MedicLaunchApiClient";
+import AxiosProvider from "../services/AxiosProvider";
 
 export interface Question {
   questionText: string;
@@ -79,6 +80,7 @@ class QuestionsStore {
   }
 }
 
-const medicLaunchApiClient = new MedicLaunchApiClient();
+const axiosProvider = new AxiosProvider();
+const medicLaunchApiClient = new MedicLaunchApiClient(axiosProvider);
 const questionsStore = new QuestionsStore(medicLaunchApiClient);
 export default questionsStore;
