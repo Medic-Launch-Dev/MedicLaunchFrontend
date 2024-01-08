@@ -13,52 +13,16 @@ import {
     Typography, 
     styled
 } from "@mui/material"
-import { primaryGradient, primaryGradientText } from "../theme"
+import { primaryGradientText } from "../theme"
 import TextSelect from "../components/util/TextSelect"
+import { Add } from "@mui/icons-material"
 
 export default function EditQuestions() {
-
-    const StatusChip = styled(Chip)({
-        backgroundColor: "#FFABAB",
-        fontWeight: 500,
-        fontSize: "11px",
-        borderRadius: 20,
-        textAlign: "center",  
-        padding: "0px",
-        height: "24px"  
-    })
-
-    const buttonStyles = {
-        primaryGradient, 
-        fontWeight:500, 
-        padding: 1.25, 
-        width: "max-content",
-        fontSize: "16px"
-    }
-
-    const tableContainerStyles = {
-        backgroundColor: "#fff", 
-        padding: 3, 
-        borderRadius: 2,
-        paddingBottom: 8
-      }
-    
-    const tableHeadStyles = {
-        fontSize: 14,
-        fontWeight: 500,
-        color: "#222",
-        textAlign: "left"
-    }
-
-    const tableBodyStyles = {
-        fontSize: "14px",
-        fontWeight: 500,        
-    }
-
+  
     // Below variable is just to determine how the tablebody would look/be  
     const EXAMPLES = [{
         questionCode: "MLAN01",
-        status: "Pending",
+        status: "pending",
         speciality: "Anaesthetics",
         questionNumber: 1,
         question: "A 30-year-old female presents with severe acne vulgaris that has been unresponsive...",
@@ -66,7 +30,7 @@ export default function EditQuestions() {
     },
     {
         questionCode: "MLAN01",
-        status: "Pending",
+        status: "pending",
         speciality: "Anaesthetics",
         questionNumber: 1,
         question: "A 30-year-old female presents with severe acne vulgaris that has been unresponsive...",
@@ -77,17 +41,17 @@ export default function EditQuestions() {
     // please adjust capitalization
 
     function getStatusChip(status?: string){
-        if (status === "approved") return <StatusChip label="Approved" sx={{backgroundColor:"#A4E29F"}} />
-        if (status === "not approved") return <StatusChip label="Not Approved" sx={{backgroundColor:"#FFABAB"}}/>
-        return <StatusChip label="Pending" />
+        if (status === "approved") return <Chip label="Approved" sx={{backgroundColor:"#A4E29F"}} />
+        if (status === "not approved") return <Chip label="Not Approved" sx={{backgroundColor:"#FFABAB"}}/>
+        return <Chip label="Pending" />
     }
    
 
     return(
         <Container>
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={3}>
-                <Button sx={buttonStyles} variant="contained">Author Portal</Button>
-                <Button sx={buttonStyles} variant="contained">+ Add Question</Button>
+                <Button variant="contained">Author Portal</Button>
+                <Button variant="contained"><Add/> Add Question</Button>
             </Stack>
 
             <Typography style={primaryGradientText} variant="h3" mb={3}>Edit Questions</Typography>
@@ -96,14 +60,14 @@ export default function EditQuestions() {
                 <Grid item xs={8}>
                     <Stack direction="row" alignItems="center">
                         <Grid container columnSpacing={2} >
-                            <Grid item xs={5}>
+                            <Grid item xs={6}>
                                 <TextSelect
                                     label="Question bank"
                                     options={["Practice questions", "Mock 1", "Mock 2"]}
                                     setSelected={()=> { }}
                                     />
                             </Grid>
-                            <Grid item xs={5} sx={{fontWeight: "bold"}}>
+                            <Grid item xs={6} sx={{fontWeight: "bold"}}>
                                 <TextSelect
                                     label="Speciality"
                                     options={["Cardioligy", "Dermatology", "Cancer"]}
@@ -115,30 +79,30 @@ export default function EditQuestions() {
                 </Grid>
             </Grid>
 
-            <TableContainer sx={tableContainerStyles}>
+            <TableContainer>
                 <Table>
                     <TableHead sx={{backgroundColor:"#E9F8FF"}}>
                         <TableRow>
-                            <TableCell sx={{...tableHeadStyles, width: 160}}>Question Code</TableCell>
-                            <TableCell sx={tableHeadStyles}>Status</TableCell>
-                            <TableCell sx={tableHeadStyles}>Speciality</TableCell>
-                            <TableCell sx={tableHeadStyles}>Question #</TableCell>
-                            <TableCell sx={{...tableHeadStyles, width: 320}}>Question</TableCell>
-                            <TableCell sx={{...tableHeadStyles, paddingLeft: "32px"}}>Edit</TableCell>
+                            <TableCell sx={{width: 160}}>Question Code</TableCell>
+                            <TableCell>Status</TableCell>
+                            <TableCell>Speciality</TableCell>
+                            <TableCell>Question #</TableCell>
+                            <TableCell sx={{width: 320}}>Question</TableCell>
+                            <TableCell sx={{paddingLeft: "32px"}}>Edit</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {EXAMPLES.map((p, index) => {
                             return (
                                 <TableRow key={index}>
-                                    <TableCell sx={tableBodyStyles} component="th" scope="row">{p.questionCode}</TableCell>
+                                    <TableCell component="th" scope="row">{p.questionCode}</TableCell>
                                     <TableCell>
                                         {getStatusChip(p.status)}
                                     </TableCell>
-                                    <TableCell sx={tableBodyStyles}>{p.speciality}</TableCell>
-                                    <TableCell sx={tableBodyStyles}>{p.questionNumber}</TableCell>
-                                    <TableCell sx={{...tableBodyStyles, width: 349}}>{p.question}</TableCell>
-                                    <TableCell sx={tableBodyStyles}>
+                                    <TableCell>{p.speciality}</TableCell>
+                                    <TableCell>{p.questionNumber}</TableCell>
+                                    <TableCell sx={{width: 349}}>{p.question}</TableCell>
+                                    <TableCell>
                                         <Button 
                                             variant="contained"
                                             sx={{
