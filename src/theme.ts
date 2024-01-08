@@ -159,6 +159,18 @@ theme.components = {
         borderRadius: 10,
       }
     }
+  },
+  MuiChip: {
+    styleOverrides: {
+      root: {
+        fontWeight: 500,
+        fontSize: "11px",
+        height: "24px",
+        textAlign: "center",
+        borderRadius: 20,
+        
+      }
+    }
   }
 
 }
