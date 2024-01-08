@@ -129,7 +129,50 @@ theme.components = {
     defaultProps: {
       disableRipple: true
     }
+  },
+  MuiTableCell: {
+      styleOverrides: {
+        root: {
+          fontWeight: 500,
+          fontSize: 12,
+          color: "#242731"
+        }
+      }
+  },
+  MuiTableHead: {
+    styleOverrides: {
+      root: {
+        "& .MuiTableCell-root":{
+        color: "#222",
+        fontSize: 14,
+        fontWeight: 500,
+        textAlign: "left" 
+      }
+      }
+    }
+  },
+  MuiTableContainer: {
+    styleOverrides: {
+      root: {
+        backgroundColor: "#fff", 
+        padding: "16px 18px", 
+        borderRadius: 10,
+      }
+    }
+  },
+  MuiChip: {
+    styleOverrides: {
+      root: {
+        fontWeight: 500,
+        fontSize: "11px",
+        height: "24px",
+        textAlign: "center",
+        borderRadius: 20,
+        
+      }
+    }
   }
+
 }
 
 export default theme;

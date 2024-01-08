@@ -7,48 +7,25 @@ import questionsStore from "../../stores/questionsStore";
 export default function ReviewQuestionsTable() {
   const navigate = useNavigate();
 
-  const ResultChip = styled(Chip)({
-    fontSize: 10,
-    fontWeight: 500,
-    width: "8rem",
-    textShadow: "0 0 0 #000"
-  })
-
   function handleClickReview(idx) {
     questionsStore.setCurrentQuestion(idx);
     navigate("/practice-session");
   }
 
   function getResultChip(result?: string) {
-    if (result === "correct") return <ResultChip label="Correct" sx={{backgroundColor:"#A4E29F"}} />
-    if (result === "incorrect") return <ResultChip label="Incorrect" sx={{backgroundColor:"#FFABAB"}} />
-    return <ResultChip label="Not attempted" />
+    if (result === "correct") return <Chip label="Correct" sx={{backgroundColor:"#A4E29F"}} />
+    if (result === "incorrect") return <Chip label="Incorrect" sx={{backgroundColor:"#FFABAB"}} />
+    return <Chip label="Not attempted" />
   }
 
-  const tableHeadStyles = {
-    color: "#72767C",
-    fontSize: 14,
-  }
 
-  const tableBodyQuestionStyles = {
-    color: "#242731",
-    fontSize: 13,
-    fontWeight: 500
-  }
-
-  const tableContainerStyles = {
-    backgroundColor: "#fff", 
-    padding: "0.2rem 0.875rem", 
-    borderRadius: 2
-  }
-  
   return (
-    <TableContainer sx={tableContainerStyles}>
+    <TableContainer>
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell sx={tableHeadStyles}>Result</TableCell>
-            <TableCell sx={tableHeadStyles}>Question</TableCell>
+            <TableCell>Result</TableCell>
+            <TableCell>Question</TableCell>
             <TableCell />
           </TableRow>
         </TableHead>
@@ -61,7 +38,7 @@ export default function ReviewQuestionsTable() {
               <TableCell component="th" scope="row" sx={{width: 100}}>
                 {getResultChip(answer.result)}
               </TableCell>
-              <TableCell sx={tableBodyQuestionStyles}>{`${idx + 1}. ${answer.questionText}`}</TableCell>
+              <TableCell>{`${idx + 1}. ${answer.questionText}`}</TableCell>
               <TableCell align="right">
                 <Button onClick={() => handleClickReview(idx)}>
                   Review

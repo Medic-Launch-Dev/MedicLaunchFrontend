@@ -14,6 +14,7 @@ import PracticeSession from "./pages/PracticeSession";
 import Register from "./pages/Register";
 import ReviewSession from "./pages/ReviewSession";
 import Root from "./pages/Root";
+import EditQuestions from './pages/EditQuestions';
 // import reportWebVitals from "./reportWebVitals";
 import theme from "./theme";
 import { AuthProvider } from "./services/AuthProvider";
@@ -49,6 +50,14 @@ const App = () => {
                 element={
                   <ProtectedRoute>
                     <CreateQuestion />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="edit-questions"
+                element={
+                  <ProtectedRoute>
+                    <EditQuestions />
                   </ProtectedRoute>
                 }
               />
