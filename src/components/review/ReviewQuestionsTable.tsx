@@ -7,22 +7,15 @@ import questionsStore from "../../stores/questionsStore";
 export default function ReviewQuestionsTable() {
   const navigate = useNavigate();
 
-  const ResultChip = styled(Chip)({
-    fontSize: 10,
-    fontWeight: 500,
-    width: "8rem",
-    textShadow: "0 0 0 #000"
-  })
-
   function handleClickReview(idx) {
     questionsStore.setCurrentQuestion(idx);
     navigate("/practice-session");
   }
 
   function getResultChip(result?: string) {
-    if (result === "correct") return <ResultChip label="Correct" sx={{backgroundColor:"#A4E29F"}} />
-    if (result === "incorrect") return <ResultChip label="Incorrect" sx={{backgroundColor:"#FFABAB"}} />
-    return <ResultChip label="Not attempted" />
+    if (result === "correct") return <Chip label="Correct" sx={{backgroundColor:"#A4E29F"}} />
+    if (result === "incorrect") return <Chip label="Incorrect" sx={{backgroundColor:"#FFABAB"}} />
+    return <Chip label="Not attempted" />
   }
 
 

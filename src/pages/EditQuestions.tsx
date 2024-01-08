@@ -81,7 +81,7 @@ export default function EditQuestions() {
 
             <TableContainer>
                 <Table>
-                    <TableHead sx={{backgroundColor:"#E9F8FF"}}>
+                    <TableHead>
                         <TableRow>
                             <TableCell sx={{width: 160}}>Question Code</TableCell>
                             <TableCell>Status</TableCell>
