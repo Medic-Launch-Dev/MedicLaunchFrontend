@@ -2,6 +2,8 @@ import { makeAutoObservable, toJS } from "mobx";
 import { questionsData } from "../Questions";
 import { MedicalQuestion } from "../models/Question";
 import MedicLaunchApiClient from "../services/MedicLaunchApiClient";
+import AxiosProvider from "../services/AxiosProvider";
+import Speciality from "../models/Speciality";
 
 export interface Question {
   questionText: string;
@@ -77,8 +79,14 @@ class QuestionsStore {
     
     return total;
   }
+
+  async getSpecialities(): Promise<Speciality[]> {
+    const specialities = await this.apiClient.getSpecialitiesList();
+    return specialities;
+  }
 }
 
-const medicLaunchApiClient = new MedicLaunchApiClient();
+const axiosProvider = new AxiosProvider();
+const medicLaunchApiClient = new MedicLaunchApiClient(axiosProvider);
 const questionsStore = new QuestionsStore(medicLaunchApiClient);
 export default questionsStore;

@@ -1,13 +1,17 @@
 
+import { AxiosInstance } from "axios";
 import { MedicalQuestion } from "../models/Question";
+import AxiosProvider from "./AxiosProvider";
+import Speciality from "../models/Speciality";
 
 
 export default class MedicLaunchApiClient {
   private readonly apiUrl: string;
-
-  constructor() {
+  private readonly axios: AxiosInstance;
+  constructor(axiosProvider: AxiosProvider) {
     const baseUrl = process.env.REACT_APP_MEDIC_LAUNCH_URL;
     this.apiUrl = baseUrl + '/api';
+    this.axios = axiosProvider.defaultInstance;
   }
 
   async getQuestionsInSpeciality(specialityId: string): Promise<MedicalQuestion[]> {
@@ -37,13 +41,26 @@ export default class MedicLaunchApiClient {
     });
   }
 
-  async loginUser(email: string, password: string) {
-    return await fetch(`${this.apiUrl}/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password })
+  async loginUser(email: string, password: string): Promise<string> {
+    // return await fetch(`${this.apiUrl}/login`, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({ email, password })
+    // });
+    const response = await this.axios.post(`${this.apiUrl}/login`, {
+        email: email,
+        password: password
     });
+
+      const { token} = response.data;
+      return token;
+  }
+
+  async getSpecialitiesList(): Promise<Speciality[]> {
+    // use axios to get the list of specialities
+    const response = await this.axios.get<Speciality[]>(`${this.apiUrl}/questions/specialities`);
+    return response.data;
   }
 }
