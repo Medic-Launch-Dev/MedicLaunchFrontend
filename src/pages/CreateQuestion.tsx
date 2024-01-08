@@ -3,16 +3,20 @@ import {
   Button,
   Container,
   Grid,
+  MenuItem,
   Stack,
   TextField,
-  Typography
+  Typography,
+  Select,
+  InputLabel,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RichQuestionTextEditor } from "../components/tiptap/RichQuestionTextEditor";
 import TextSelect from "../components/util/TextSelect";
 import { MedicalQuestion, QuestionType } from "../models/Question";
 import questionsStore from "../stores/questionsStore";
 import { primaryGradient, primaryGradientText } from "../theme";
+import Speciality from "../models/Speciality";
 
 const CreateQuestion = () => {
   const [questionText, setQuestionText] = useState("");
@@ -20,6 +24,8 @@ const CreateQuestion = () => {
   const [learningPoints, setLearnings] = useState("");
   const [explanation, setExplanation] = useState("");
   const [correctAnswer, setCorrectAnswer] = useState("");
+  const [specialities, setSpecialities] = useState<Speciality[]>([]);
+  const [selectedSpecialty, setSelectedSpecialty] = useState("default");
 
   const [options, setOptions] = useState({
     A: "",
@@ -31,6 +37,10 @@ const CreateQuestion = () => {
 
   const handleOptionChange = (letter, text) => {
     setOptions((prevOptions) => ({ ...prevOptions, [letter]: text }));
+  };
+
+  const handleSpecialitiesChange = (event) => {
+    setSelectedSpecialty(event.target.value);
   };
 
   const handleSubmit = () => {
@@ -52,9 +62,20 @@ const CreateQuestion = () => {
     questionsStore.addQuestion(question);
   };
 
+  useEffect(() => {
+    questionsStore.getSpecialities().then((data) => {
+      setSpecialities(data);
+    });
+  }, []);
+
   return (
     <Container>
-      <Stack direction="row" alignItems="center" justifyContent="space-between" mb={3}>
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+        mb={3}
+      >
         <Typography variant="h2" style={primaryGradientText}>
           Write new question
         </Typography>
@@ -63,7 +84,6 @@ const CreateQuestion = () => {
           {/* <Button variant="outlined">Save</Button> */}
           <Button variant="contained">Submit</Button>
         </Stack>
-
       </Stack>
       <form>
         <Grid container spacing={3}>
@@ -74,20 +94,30 @@ const CreateQuestion = () => {
                   <TextSelect
                     label="Question bank"
                     options={["Practice questions", "Mock 1", "Mock 2"]}
-                    setSelected={() => { }}
+                    setSelected={() => {}}
                   />
                 </Grid>
                 <Grid item xs={6}>
-                  <TextSelect
+                  <Select
                     label="Speciality"
-                    options={["Cardioligy", "Dermatology", "Cancer"]}
-                    setSelected={() => { }}
-                  />
+                    defaultValue={selectedSpecialty}
+                    value={selectedSpecialty}
+                    onChange={handleSpecialitiesChange}
+                  >
+                    <MenuItem value="default">Speciality</MenuItem>
+                    {specialities.map((speciality) => (
+                      <MenuItem key={speciality.id} value={speciality.id}>
+                        {speciality.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
                 </Grid>
               </Grid>
 
               <Stack spacing={1}>
-                <Typography variant="h6" sx={primaryGradientText}>Question text</Typography>
+                <Typography variant="h6" sx={primaryGradientText}>
+                  Question text
+                </Typography>
                 <RichQuestionTextEditor
                   placeholderText="Write new question here..."
                   onSaveEditorContent={(text) => setQuestionText(text)}
@@ -117,7 +147,9 @@ const CreateQuestion = () => {
                       rows={2}
                       value={text}
                       placeholder="Write answer here..."
-                      onChange={(e) => handleOptionChange(letter, e.target.value)}
+                      onChange={(e) =>
+                        handleOptionChange(letter, e.target.value)
+                      }
                     />
                   </Stack>
                 ))}
@@ -147,9 +179,10 @@ const CreateQuestion = () => {
                 />
               </Stack>
 
-
               <Stack spacing={1}>
-                <Typography variant="h6" sx={primaryGradientText}>Explanation</Typography>
+                <Typography variant="h6" sx={primaryGradientText}>
+                  Explanation
+                </Typography>
                 <RichQuestionTextEditor
                   placeholderText="Write explanation here..."
                   onSaveEditorContent={(text) => setExplanation(text)}
@@ -157,7 +190,9 @@ const CreateQuestion = () => {
               </Stack>
 
               <Stack spacing={1}>
-                <Typography variant="h6" sx={primaryGradientText}>Learning points</Typography>
+                <Typography variant="h6" sx={primaryGradientText}>
+                  Learning points
+                </Typography>
                 <RichQuestionTextEditor
                   placeholderText="Write learning points here..."
                   onSaveEditorContent={(text) => setLearnings(text)}
@@ -165,7 +200,9 @@ const CreateQuestion = () => {
               </Stack>
 
               <Stack spacing={1}>
-                <Typography variant="h6" sx={primaryGradientText}>Clinical tips</Typography>
+                <Typography variant="h6" sx={primaryGradientText}>
+                  Clinical tips
+                </Typography>
                 <RichQuestionTextEditor
                   placeholderText="Write clinical tips here..."
                   onSaveEditorContent={(text) => setClinicalTips(text)}
@@ -173,9 +210,7 @@ const CreateQuestion = () => {
               </Stack>
             </Stack>
           </Grid>
-          <Grid item xs={4}>
-
-          </Grid>
+          <Grid item xs={4}></Grid>
         </Grid>
       </form>
     </Container>
