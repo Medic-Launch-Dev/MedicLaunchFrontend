@@ -1,6 +1,7 @@
 import { makeAutoObservable } from "mobx";
 import MedicLaunchApiClient from "../services/MedicLaunchApiClient";
 import AxiosProvider from "../services/AxiosProvider";
+import { MedicLauncUser } from "../models/User";
 
 class UserStore {
   apiClient: MedicLaunchApiClient;
@@ -10,8 +11,8 @@ class UserStore {
     makeAutoObservable(this);
   }
 
-  async createUser(email: string, password: string): Promise<boolean> {
-    return await this.apiClient.registerUser(email, password);
+  async createUser(userData: MedicLauncUser): Promise<boolean> {
+    return await this.apiClient.registerUser(userData);
   }
 
   // async signUserIn(email: string, password: string) {

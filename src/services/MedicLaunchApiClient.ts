@@ -3,6 +3,7 @@ import { AxiosInstance } from "axios";
 import { MedicalQuestion } from "../models/Question";
 import AxiosProvider from "./AxiosProvider";
 import Speciality from "../models/Speciality";
+import { MedicLauncUser } from "../models/User";
 
 
 export default class MedicLaunchApiClient {
@@ -32,10 +33,9 @@ export default class MedicLaunchApiClient {
     });
   }
 
-  async registerUser(email: string, password: string): Promise<boolean> {
+  async registerUser(userData: MedicLauncUser): Promise<boolean> {
     const response = await this.axios.post(`${this.baseUrl}/register`, {
-      email: email,
-      password: password
+      userData
     });
 
     return response.status === 200;

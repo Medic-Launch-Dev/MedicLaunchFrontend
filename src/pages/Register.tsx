@@ -8,6 +8,7 @@ import AgreementCheckbox from "../components/register/AgreementCheckbox";
 import UniversitySelect from "../components/register/UniversitySelect";
 import userStore from "../stores/userStore";
 import { primaryGradient, primaryGradientText, unstyledLink } from "../theme";
+import { MedicLauncUser } from "../models/User";
 
 const validationSchema = yup.object({
   email: yup
@@ -27,13 +28,29 @@ export default function Register() {
     initialValues: {
       email: "",
       password: "",
+      city: "",
+      graduationYear: "",
+      university: "",
+      firstName: "",
+      lastName: "",
+      displayName: "",
+      howDidYouHearAboutUs: "",
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      const successfullyRegistered = await userStore.createUser(
-        values.email,
-        values.password
-      );
+      const userData: MedicLauncUser = {
+        email: values.email,
+        password: values.password,
+        city: values.city,
+        graduationYear: Number(values.graduationYear),
+        university: values.university,
+        firstName: values.firstName,
+        lastName: values.lastName,
+        displayName: values.displayName,
+        howDidYouHearAboutUs: values.howDidYouHearAboutUs,
+      };
+
+      const successfullyRegistered = await userStore.createUser(userData);
       if (successfullyRegistered) {
         navigate("/login");
       }
