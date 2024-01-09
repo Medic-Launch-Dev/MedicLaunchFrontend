@@ -3,14 +3,16 @@ import { AxiosInstance } from "axios";
 import { MedicalQuestion } from "../models/Question";
 import AxiosProvider from "./AxiosProvider";
 import Speciality from "../models/Speciality";
+import { MedicLauncUser } from "../models/User";
 
 
 export default class MedicLaunchApiClient {
   private readonly apiUrl: string;
   private readonly axios: AxiosInstance;
+  private readonly baseUrl: string;
   constructor(axiosProvider: AxiosProvider) {
-    const baseUrl = process.env.REACT_APP_MEDIC_LAUNCH_URL;
-    this.apiUrl = baseUrl + '/api';
+    this.baseUrl = process.env.REACT_APP_MEDIC_LAUNCH_URL!;
+    this.apiUrl = this.baseUrl + '/api';
     this.axios = axiosProvider.defaultInstance;
   }
 
@@ -31,24 +33,15 @@ export default class MedicLaunchApiClient {
     });
   }
 
-  async registerUser(email: string, password: string) {
-    await fetch(`${this.apiUrl}/register`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password })
+  async registerUser(userData: MedicLauncUser): Promise<boolean> {
+    const response = await this.axios.post(`${this.apiUrl}/account/register`, {
+      userData
     });
+
+    return response.status === 200;
   }
 
   async loginUser(email: string, password: string): Promise<string> {
-    // return await fetch(`${this.apiUrl}/login`, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({ email, password })
-    // });
     const response = await this.axios.post(`${this.apiUrl}/login`, {
         email: email,
         password: password
