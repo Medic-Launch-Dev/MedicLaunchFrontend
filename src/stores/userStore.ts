@@ -10,8 +10,8 @@ class UserStore {
     makeAutoObservable(this);
   }
 
-  async createUser(email: string, password: string) {
-    await this.apiClient.registerUser(email, password);
+  async createUser(email: string, password: string): Promise<boolean> {
+    return await this.apiClient.registerUser(email, password);
   }
 
   // async signUserIn(email: string, password: string) {

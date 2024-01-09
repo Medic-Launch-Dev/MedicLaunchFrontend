@@ -2,8 +2,8 @@ import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { Box, Button, Grid, Stack, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
-import { Link } from "react-router-dom";
-import * as yup from 'yup';
+import { Link, useNavigate } from "react-router-dom";
+import * as yup from "yup";
 import AgreementCheckbox from "../components/register/AgreementCheckbox";
 import UniversitySelect from "../components/register/UniversitySelect";
 import userStore from "../stores/userStore";
@@ -12,41 +12,57 @@ import { primaryGradient, primaryGradientText, unstyledLink } from "../theme";
 const validationSchema = yup.object({
   email: yup
     .string()
-    .email('Enter a valid email')
-    .required('Email is required'),
+    .email("Enter a valid email")
+    .required("Email is required"),
   password: yup
     .string()
-    .min(8, 'Password should be at least 8 characters')
-    .required('Password is required'),
+    .min(8, "Password should be at least 8 characters")
+    .required("Password is required"),
 });
 
+export default function Register() {
+  const navigate = useNavigate();
 
-export default function Login() {
   const formik = useFormik({
     initialValues: {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     },
     validationSchema: validationSchema,
-    onSubmit: async values => {
-      await userStore.createUser(values.email, values.password);
+    onSubmit: async (values) => {
+      const successfullyRegistered = await userStore.createUser(
+        values.email,
+        values.password
+      );
+      if (successfullyRegistered) {
+        navigate("/login");
+      }
     },
   });
 
   const requiredFieldsAreEmpty = () => {
     const requiredFields = Object.values(formik.values);
-    return requiredFields.some(value => value === '');
+    return requiredFields.some((value) => value === "");
   };
-
-  console.log(requiredFieldsAreEmpty());
 
   return (
     <Grid container sx={{ height: "100vh" }}>
       <Grid item lg={7} sx={{ height: "100%", maxWidth: 600 }}>
-        <Stack sx={{ m: "auto", height: "100%" }} alignItems="center" justifyContent="center" spacing={2}>
+        <Stack
+          sx={{ m: "auto", height: "100%" }}
+          alignItems="center"
+          justifyContent="center"
+          spacing={2}
+        >
           <Box maxWidth="md" width="100%" px={12}>
             <form onSubmit={formik.handleSubmit}>
-              <Typography variant="h1" sx={primaryGradientText} fontSize={36} fontWeight={500} textAlign="center">
+              <Typography
+                variant="h1"
+                sx={primaryGradientText}
+                fontSize={36}
+                fontWeight={500}
+                textAlign="center"
+              >
                 Register
               </Typography>
 
@@ -95,19 +111,33 @@ export default function Login() {
                     value={formik.values.password}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    error={formik.touched.password && Boolean(formik.errors.password)}
-                    helperText={formik.touched.password && formik.errors.password}
+                    error={
+                      formik.touched.password && Boolean(formik.errors.password)
+                    }
+                    helperText={
+                      formik.touched.password && formik.errors.password
+                    }
                   />
                 </Grid>
                 <Grid item md={6}>
-                  <TextField fullWidth label="Confirm password" />
+                  <TextField
+                    fullWidth
+                    label="Confirm password"
+                    type="password"
+                  />
                 </Grid>
               </Grid>
               <Stack mt={3}>
                 <AgreementCheckbox text="I agree to Terms & Conditions and Privacy Policy" />
                 <AgreementCheckbox text="Send me updates and promotions via email/text" />
               </Stack>
-              <Stack direction="row" spacing={2} alignItems="center" justifyContent="center" mt={3}>
+              <Stack
+                direction="row"
+                spacing={2}
+                alignItems="center"
+                justifyContent="center"
+                mt={3}
+              >
                 <Link to="/login" style={unstyledLink}>
                   <Button
                     variant="outlined"
@@ -132,9 +162,11 @@ export default function Login() {
           </Box>
         </Stack>
       </Grid>
-      <Grid item lg={5} sx={{ height: "100%", background: primaryGradient }}>
-      </Grid>
-
+      <Grid
+        item
+        lg={5}
+        sx={{ height: "100%", background: primaryGradient }}
+      ></Grid>
     </Grid>
-  )
+  );
 }
