@@ -11,7 +11,7 @@ export default function AppShell() {
           <Avatar />
         </Stack>
       </Toolbar>
-      <Box sx={{ p: 3 }}>
+      <Box sx={{ p: 3, height: "calc(100% - 64px)" }}>
         <Outlet />
       </Box>
     </Box>
