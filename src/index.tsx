@@ -6,19 +6,20 @@ import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import AppShell from "./components/nav/AppShell";
 import CreateQuestion from "./pages/CreateQuestion";
+import EditQuestions from './pages/EditQuestions';
 import Login from "./pages/Login";
 import PracticeSession from "./pages/PracticeSession";
 import Register from "./pages/Register";
 import ReviewSession from "./pages/ReviewSession";
 import Root from "./pages/Root";
-import EditQuestions from './pages/EditQuestions';
 // import reportWebVitals from "./reportWebVitals";
-import theme from "./theme";
+import CreateSession from "./pages/CreateSession";
 import { AuthProvider } from "./services/AuthProvider";
 import { ProtectedRoute } from "./services/ProtectedRoute";
+import theme from "./theme";
 
 const App = () => {
   return (
@@ -29,6 +30,14 @@ const App = () => {
           <Routes>
             <Route path="/" element={<AppShell />}>
               <Route index element={<Root />} />
+              <Route
+                path="create-session"
+                element={
+                  <ProtectedRoute>
+                    <CreateSession />
+                  </ProtectedRoute>
+                }
+              />
               <Route
                 path="practice-session"
                 element={
