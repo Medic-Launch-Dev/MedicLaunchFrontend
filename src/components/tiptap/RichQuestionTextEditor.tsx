@@ -9,7 +9,7 @@ import {
   RichTextEditor,
   TableBubbleMenu,
   insertImages,
-  type RichTextEditorRef
+  type RichTextEditorRef,
 } from "mui-tiptap";
 import { useCallback, useRef, useState } from "react";
 import EditorMenuControls from "./EditorMenuControls";
@@ -29,7 +29,7 @@ function fileListToImageFiles(fileList: FileList): File[] {
 // TODO: add auto-save to local storage to prevent author losing content
 interface IQuestionTextEditorProps {
   placeholderText?: string;
-  onSaveEditorContent: (content: string) => void;
+  editorRef: React.RefObject<RichTextEditorRef>;
 }
 
 export const RichQuestionTextEditor = (props: IQuestionTextEditorProps) => {
@@ -39,7 +39,8 @@ export const RichQuestionTextEditor = (props: IQuestionTextEditorProps) => {
       : "Add question content here...",
   });
 
-  const rteRef = useRef<RichTextEditorRef>(null);
+  // const rteRef = useRef<RichTextEditorRef>(null);
+  const rteRef = props.editorRef;
   const [isEditable, setIsEditable] = useState(true);
   const [showMenuBar, setShowMenuBar] = useState(true);
 
@@ -132,17 +133,15 @@ export const RichQuestionTextEditor = (props: IQuestionTextEditorProps) => {
   return (
     <>
       <GlobalStyles
-        styles={
-          {
-            '&.MuiTiptap-RichTextField-content': {
-              backgroundColor: "#fff",
-              borderRadius: "12px 12px 0px 0px"
-            },
-            '&.MuiTiptap-RichTextContent-root': {
-              borderRadius: 0
-            },
-          }
-        }
+        styles={{
+          "&.MuiTiptap-RichTextField-content": {
+            backgroundColor: "#fff",
+            borderRadius: "12px 12px 0px 0px",
+          },
+          "&.MuiTiptap-RichTextContent-root": {
+            borderRadius: 0,
+          },
+        }}
       />
       <Box
         sx={{
@@ -219,7 +218,7 @@ export const RichQuestionTextEditor = (props: IQuestionTextEditorProps) => {
                   IconComponent={isEditable ? Lock : LockOpen}
                 /> */}
 
-                <Button
+                {/* <Button
                   variant="contained"
                   size="small"
                   onClick={() => {
@@ -229,7 +228,7 @@ export const RichQuestionTextEditor = (props: IQuestionTextEditorProps) => {
                   }}
                 >
                   Save
-                </Button>
+                </Button> */}
               </Stack>
             ),
           }}
