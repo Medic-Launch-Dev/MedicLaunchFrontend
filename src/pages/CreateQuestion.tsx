@@ -17,9 +17,11 @@ import questionsStore from "../stores/questionsStore";
 import { primaryGradient, primaryGradientText } from "../theme";
 import Speciality from "../models/Speciality";
 import { RichTextEditorRef } from "mui-tiptap";
+import { useNavigate } from "react-router";
 
 const CreateQuestion = () => {
   const [specialities, setSpecialities] = useState<Speciality[]>([]);
+  const navigate = useNavigate();
 
   const optionARef = useRef<HTMLInputElement>(null);
   const optionBRef = useRef<HTMLInputElement>(null);
@@ -53,11 +55,11 @@ const CreateQuestion = () => {
     }[index];
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const options = optionsRef.map((option) => option.current!.value);
 
     const question: MedicalQuestion = {
-      specialityId: selectedSpecialtyRef.current!.value, //"e9093faf-afc7-4a3e-bdc6-a5d66b273257",
+      specialityId: selectedSpecialtyRef.current!.value,
       questionText: questionTextEditorRef.current!.editor!.getHTML() ?? "",
       clinicalTips: clinicalTipsEditorRef.current!.editor!.getHTML() ?? "",
       learningPoints: learningPointsEditorRef.current!.editor!.getHTML() ?? "",
@@ -72,7 +74,9 @@ const CreateQuestion = () => {
     };
 
     console.log(question);
-    questionsStore.addQuestion(question);
+    await questionsStore.addQuestion(question);
+
+    navigate("/edit-questions");
   };
 
   useEffect(() => {
