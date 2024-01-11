@@ -35,12 +35,12 @@ export default class MedicLaunchApiClient {
 
   async saveQuestion(question: MedicalQuestion) {
     const response = await this.axios.post<MedicalQuestion>(`${this.apiUrl}/questions/create`, {
-      question
+      ...question
     });
 
     console.log("Response: ", response.data);
     
-    return response.data;
+    return response.status === 200;
   }
 
   async registerUser(userData: MedicLauncUser): Promise<boolean> {

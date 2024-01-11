@@ -1,5 +1,4 @@
 // AuthProvider.tsx
-
 import axios from "axios";
 import React, {
   createContext,
@@ -39,11 +38,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         email,
         password,
       });
-      const { accessToken } = response.data;
+      const { accessToken, expiresIn } = response.data;
 
       // Set the user and token in the state or localStorage, etc.
       // TODO: set user information such as roles, name, profile picture, etc.
+
+      // set the expiring date of the token, expiresIn is in seconds
+      const expirationTimestamp = Math.floor(Date.now() / 1000) + expiresIn;
       localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("expiresIn", expirationTimestamp);
       return true;
     } catch (error) {
       // Handle login error, e.g., display an error message
@@ -77,18 +80,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const isLoggedIn = (): boolean => {
     const accessToken = localStorage.getItem("accessToken");
-    // TODO: check expired access token
-    // const decodedToken = jwt_decode(accessToken);
-    // const currentTime = Date.now() / 1000;
-    // if (decodedToken.exp < currentTime) {
-    //   return false;
-    // }
-
-    if (accessToken && accessToken !== "undefined") {
-      return true;
+    const expiresIn = localStorage.getItem("expiresIn");
+    if (!accessToken || !expiresIn) {
+      return false;
     }
 
-    return false;
+    const currentTimestamp = Math.floor(Date.now() / 1000); // Convert to seconds
+    return currentTimestamp < parseInt(expiresIn);
   };
 
   useEffect(() => {

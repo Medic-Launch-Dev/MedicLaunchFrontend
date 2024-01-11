@@ -68,7 +68,7 @@ const CreateQuestion = () => {
       })),
       correctAnswerLetter: answerRef.current!.value,
       questionType: QuestionType.General,
-      isSubmitted: false,
+      isSubmitted: true,
     };
 
     console.log(question);
