@@ -9,7 +9,7 @@ import LinkButton from "../components/util/LinkButton";
 
 export default function CreateSession() {
   const navigate = useNavigate();
-  const [activeStep, setActiveStep] = useState(1);
+  const [activeStep, setActiveStep] = useState(0);
   const steps = ['Areas of study', 'Familiarity level', 'Order and Quantity',];
 
   const handleNext = () => {
