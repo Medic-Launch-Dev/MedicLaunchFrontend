@@ -1,56 +1,28 @@
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import { Box, Button, Container, Stack, Step, StepLabel, Stepper } from "@mui/material";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import FamiliaritySelection from "../components/createSession/FamiliaritySelection";
+import OrderQuantitySelection from "../components/createSession/OrderQuantitySelection";
 import SpecialitySelection from "../components/createSession/SpecialitySelection";
 import LinkButton from "../components/util/LinkButton";
 
-const steps = ['Areas of study', 'Familiarity level', 'Order and Quantity',];
-
 export default function CreateSession() {
-  const [activeStep, setActiveStep] = useState(0);
-  const [skipped, setSkipped] = useState(new Set<number>());
-
-  const isStepOptional = (step: number) => {
-    return step === 1;
-  };
-
-  const isStepSkipped = (step: number) => {
-    return skipped.has(step);
-  };
+  const navigate = useNavigate();
+  const [activeStep, setActiveStep] = useState(1);
+  const steps = ['Areas of study', 'Familiarity level', 'Order and Quantity',];
 
   const handleNext = () => {
-    let newSkipped = skipped;
-    if (isStepSkipped(activeStep)) {
-      newSkipped = new Set(newSkipped.values());
-      newSkipped.delete(activeStep);
-    }
-
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped(newSkipped);
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleSkip = () => {
-    if (!isStepOptional(activeStep)) {
-      // You probably want to guard against something like this,
-      // it should never occur unless someone's actively trying to break something.
-      throw new Error("You can't skip a step that isn't optional.");
-    }
-
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped((prevSkipped) => {
-      const newSkipped = new Set(prevSkipped.values());
-      newSkipped.add(activeStep);
-      return newSkipped;
-    });
-  };
-
-  const handleReset = () => {
-    setActiveStep(0);
-  };
+  const handleStartPractice = () => {
+    navigate("/practice-session");
+  }
 
   return (
     <Container maxWidth="lg" sx={{ height: '100%' }}>
@@ -78,8 +50,21 @@ export default function CreateSession() {
             );
           })}
         </Stepper>
-        <Box sx={{ bgcolor: "white", p: 4, borderRadius: 2, flexGrow: 1, maxHeight: '100%', overflowY: 'scroll' }}>
-          <SpecialitySelection />
+        <Box
+          sx={{
+            bgcolor: "white",
+            p: 4,
+            borderRadius: 2,
+            flexGrow: 1,
+            maxHeight: '100%',
+            overflowY: 'scroll',
+            "::-webkit-scrollbar": {
+              display: 'none',
+            }
+          }}>
+          {activeStep === 0 && <SpecialitySelection />}
+          {activeStep === 1 && <FamiliaritySelection />}
+          {activeStep === 2 && <OrderQuantitySelection />}
         </Box>
         <Stack direction="row" alignItems="center" justifyContent="center" gap={1} pt={1} pb={6}>
           <Button
@@ -87,6 +72,8 @@ export default function CreateSession() {
             sx={{ width: "max-content", flexShrink: 0 }}
             size="large"
             startIcon={<ChevronLeft />}
+            disabled={activeStep === 0}
+            onClick={handleBack}
           >
             Back
           </Button>
@@ -95,8 +82,9 @@ export default function CreateSession() {
             sx={{ width: "max-content", flexShrink: 0, py: 1 }}
             size="large"
             endIcon={<ChevronRight />}
+            onClick={activeStep < 2 ? handleNext : handleStartPractice}
           >
-            Next
+            {activeStep < 2 ? "Next" : "Start practice"}
           </Button>
         </Stack>
       </Stack>
