@@ -38,7 +38,7 @@ function Root() {
                 primary
                 action={
                   <Button variant="contained" color="secondary">
-                    <Link style={unstyledLink} to="practice-session">
+                    <Link style={unstyledLink} to="create-session">
                       Start Questions
                     </Link>
                   </Button>
