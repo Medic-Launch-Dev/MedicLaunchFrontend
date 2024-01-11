@@ -4,11 +4,11 @@ import { useState } from "react";
 import SpecialitySelection from "../components/createSession/SpecialitySelection";
 import LinkButton from "../components/util/LinkButton";
 
-const steps = ['Areas of study', 'Familiarity level', 'Order and Quantity',];
-
 export default function CreateSession() {
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set<number>());
+  const steps = ['Areas of study', 'Familiarity level', 'Order and Quantity',];
+
 
   const isStepOptional = (step: number) => {
     return step === 1;
