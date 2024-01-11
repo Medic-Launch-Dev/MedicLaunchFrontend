@@ -22,15 +22,25 @@ export default class MedicLaunchApiClient {
     return data;
   }
 
+  async filterQuestions(specialityIds: string[]): Promise<MedicalQuestion[]> {
+     const response = this.axios.post(`${this.apiUrl}/questions/filter`, {
+        specialityIds
+      });
+
+      const { allQuestions } = (await response).data;
+      console.log("All Questions: ", allQuestions);
+      
+      return allQuestions;
+  }
+
   async saveQuestion(question: MedicalQuestion) {
-    await fetch(`${this.apiUrl}/questions/create`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      },
-      body: JSON.stringify(question)
+    const response = await this.axios.post<MedicalQuestion>(`${this.apiUrl}/questions/create`, {
+      ...question
     });
+
+    console.log("Response: ", response.data);
+    
+    return response.status === 200;
   }
 
   async registerUser(userData: MedicLauncUser): Promise<boolean> {

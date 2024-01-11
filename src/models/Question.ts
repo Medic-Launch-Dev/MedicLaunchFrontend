@@ -19,4 +19,5 @@ export class MedicalQuestion {
     explanation: string;
     clinicalTips: string;
     learningPoints: string;
+    isSubmitted: boolean;
 }
