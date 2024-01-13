@@ -48,7 +48,7 @@ class QuestionsStore {
   setCurrentQuestion(idx: number) {
     this.currentQuestionIdx = idx;
   }
-
+  
   submitAnswer(answer: string) {
     const question = this.questions[this.currentQuestionIdx]
     if (answer === question.correctAnswer)

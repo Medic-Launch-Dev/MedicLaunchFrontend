@@ -2,14 +2,19 @@ import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import { Box, Button, Container, Stack, Step, StepLabel, Stepper } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import FamiliaritySelection from "../components/createSession/FamiliaritySelection";
-import OrderQuantitySelection from "../components/createSession/OrderQuantitySelection";
-import SpecialitySelection from "../components/createSession/SpecialitySelection";
+import { FamiliaritySelection } from "../components/createSession/FamiliaritySelection";
+import { OrderQuantitySelection } from "../components/createSession/OrderQuantitySelection";
+import { SpecialitySelection } from "../components/createSession/SpecialitySelection";
 import LinkButton from "../components/util/LinkButton";
+import { useServiceProvider } from "../services/ServiceProvider";
+import { toJS } from "mobx";
+import { QuestionsOrder } from "../models/PracticeFilter";
 
 export default function CreateSession() {
   const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
+  const { practiceStore } = useServiceProvider();
+
   const steps = ['Areas of study', 'Familiarity level', 'Order and Quantity',];
 
   const handleNext = () => {
@@ -21,7 +26,14 @@ export default function CreateSession() {
   };
 
   const handleStartPractice = () => {
-    navigate("/practice-session");
+    console.log("Starting practice session");
+    
+    console.log(typeof(practiceStore.practiceFilter.questionsOrder));
+    
+    const filterModel =  practiceStore.getPracticeFilter();
+    console.log("Navigating to practice session with: ", toJS(filterModel));
+    //navigate("/practice-session");
+    
   }
 
   return (

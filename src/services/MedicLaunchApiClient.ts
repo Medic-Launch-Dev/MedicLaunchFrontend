@@ -4,6 +4,7 @@ import { MedicalQuestion } from "../models/Question";
 import AxiosProvider from "./AxiosProvider";
 import Speciality from "../models/Speciality";
 import { MedicLauncUser } from "../models/User";
+import { PracticeFilter } from "../models/PracticeFilter";
 
 
 export default class MedicLaunchApiClient {
@@ -22,13 +23,14 @@ export default class MedicLaunchApiClient {
     return data;
   }
 
-  async filterQuestions(specialityIds: string[]): Promise<MedicalQuestion[]> {
+  async filterQuestions(practiceFilter: PracticeFilter): Promise<MedicalQuestion[]> {
+    console.log("Practice Filter: ", practiceFilter);
+    
      const response = this.axios.post(`${this.apiUrl}/questions/filter`, {
-        specialityIds
+        practiceFilter
       });
 
       const { allQuestions } = (await response).data;
-      console.log("All Questions: ", allQuestions);
       
       return allQuestions;
   }
