@@ -15,7 +15,7 @@ export default function ReviewSession() {
   const correctAnswers = questionsStore.getAnswerTotal("correct");
   const incorrectAnswers = questionsStore.getAnswerTotal("incorrect");
   const totalAnswers = correctAnswers + incorrectAnswers;
-  const score = Math.ceil((correctAnswers / totalAnswers) * 100);
+  const score = totalAnswers === 0 ? 0 : Math.ceil((correctAnswers / totalAnswers) * 100);
 
   return (
     <Container maxWidth="lg" sx={{ pt: 2 }}>
