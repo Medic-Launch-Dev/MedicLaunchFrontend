@@ -1,15 +1,12 @@
 import { Box } from "@mui/material";
-import Speciality from "../../models/Speciality";
 import { primaryGradient } from "../../theme";
 
 interface SpecialityOptionProps {
-  speciality: Speciality;
-  centered?: boolean;
   selected: boolean;
-  setSelected: (speciality: Speciality) => void;
+  setSelected: () => void;
 }
 
-export default function SpecialityOption({ speciality, centered, selected, setSelected }: SpecialityOptionProps) {
+export default function SelectAllSpecialityOption({ selected, setSelected }: SpecialityOptionProps) {
   return (
     <Box
       sx={{
@@ -22,13 +19,13 @@ export default function SpecialityOption({ speciality, centered, selected, setSe
         height: "100%",
         display: 'flex',
         alignItems: 'center',
-        justifyContent: centered ? "center" : undefined,
+        justifyContent: "center",
         fontWeight: 500,
         cursor: "pointer",
       }}
-      onClick={() => setSelected(speciality)}
+      onClick={() => setSelected()}
     >
-      {speciality.name}
+      Select all
     </Box>
   )
 }

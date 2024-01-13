@@ -1,24 +1,34 @@
 import { Grid } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Speciality from "../../models/Speciality";
+import questionsStore from "../../stores/questionsStore";
+import SelectAllSpecialityOption from "./SelectAllSpecialityOption";
 import SpecialityOption from "./SpecialityOption";
 
 
 
 export default function SpecialitySelection() {
-  const specialities = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty", "Twenty-One", "Twenty-Two", "Twenty-Three", "Twenty-Four", "Twenty-Five", "Twenty-Six", "Twenty-Seven", "Twenty-Eight", "Twenty-Nine", "Thirty", "Thirty-One", "Thirty-Two", "Thirty-Three", "Thirty-Four", "Thirty-Five", "Thirty-Six", "Thirty-Seven", "Thirty-Eight", "Thirty-Nine", "Forty", "Forty-One", "Forty-Two", "Forty-Three", "Forty-Four", "Forty-Five", "Forty-Six", "Forty-Seven", "Forty-Eight", "Forty-Nine", "Fifty"];
-  const [selectedSpecialities, setSelectedSpecialities] = useState<string[] | "all">([]);
+  const [specialities, setSpecialities] = useState<Speciality[]>([]);
+  const [selectedSpecialities, setSelectedSpecialities] = useState<Speciality[] | "all">([]);
 
-  const handleSpecialityClick = (speciality: string) => {
+  useEffect(() => {
+    questionsStore.getSpecialities().then((data) => {
+      setSpecialities(data);
+    });
+  }, []);
+
+  const handleSpecialityClick = (speciality: Speciality) => {
+    const incomingSpeciality = speciality;
+
     if (selectedSpecialities === "all") {
-      const specialityToRemove = speciality;
-      const updatedSpecialities = specialities.filter(speciality => speciality !== specialityToRemove);
+      const updatedSpecialities = specialities.filter(speciality => speciality.id !== incomingSpeciality.id);
       setSelectedSpecialities(updatedSpecialities);
       return;
     }
 
-    const index = selectedSpecialities.indexOf(speciality);
+    const index = selectedSpecialities.findIndex(speciality => speciality.id === incomingSpeciality.id);;
     if (index === -1) {
-      setSelectedSpecialities([...selectedSpecialities, speciality]);
+      setSelectedSpecialities([...selectedSpecialities, incomingSpeciality]);
     } else {
       const updatedSpecialities = [...selectedSpecialities];
       updatedSpecialities.splice(index, 1);
@@ -36,18 +46,13 @@ export default function SpecialitySelection() {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
-        <SpecialityOption
-          centered
-          speciality="Select All"
-          selected={selectedSpecialities === "all"}
-          setSelected={() => handleSelectAllClick()}
-        />
+        <SelectAllSpecialityOption selected={selectedSpecialities === "all"} setSelected={handleSelectAllClick} />
       </Grid>
       {
         specialities.map(speciality => (
           <Grid item xs={3}>
             <SpecialityOption
-              selected={selectedSpecialities.includes(speciality) || selectedSpecialities === "all"}
+              selected={selectedSpecialities === "all" || selectedSpecialities.includes(speciality)}
               setSelected={handleSpecialityClick}
               speciality={speciality}
             />
