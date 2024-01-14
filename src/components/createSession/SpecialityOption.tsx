@@ -1,8 +1,9 @@
 import { Box } from "@mui/material";
 import { primaryGradient } from "../../theme";
+import Speciality from "../../models/Speciality";
 
 interface SpecialityOptionProps {
-  speciality: string;
+  speciality: Speciality;
   centered?: boolean;
   selected: boolean;
   setSelected: (speciality: string) => void;
@@ -25,9 +26,9 @@ export default function SpecialityOption({ speciality, centered, selected, setSe
         fontWeight: 500,
         cursor: "pointer",
       }}
-      onClick={() => setSelected(speciality)}
+      onClick={() => setSelected(speciality.id)}
     >
-      {speciality}
+      {speciality.name}
     </Box>
   )
 }

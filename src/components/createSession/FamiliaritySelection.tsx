@@ -1,8 +1,10 @@
 import { Grid } from "@mui/material";
-import { useState } from "react";
 import FilterOption from "./FamiliarityOption";
+import { useServiceProvider } from "../../services/ServiceProvider";
+import { Familiarity } from "../../models/PracticeFilter";
+import { observer } from "mobx-react-lite";
 
-export default function FamiliaritySelection() {
+export const FamiliaritySelection = observer(() => {
   const familiarities = [
     {
       heading: "New questions",
@@ -22,7 +24,13 @@ export default function FamiliaritySelection() {
     },
   ]
 
-  const [familiarity, setFamiliarity] = useState<string>();
+  const { practiceStore } = useServiceProvider();
+  const practiceFilter = practiceStore.practiceFilter;
+  const familiarity = practiceFilter.familiarity ? practiceFilter.familiarity : "";
+
+  const setFamiliarity = (familiarity: string) => {
+    practiceStore.setFamiliarity(familiarity as Familiarity);
+  }
 
   return (
     <Grid container spacing={6} height="100%" px={12} py={3}>
@@ -40,4 +48,4 @@ export default function FamiliaritySelection() {
       }
     </Grid>
   )
-}
+})

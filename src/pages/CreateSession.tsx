@@ -2,14 +2,15 @@ import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import { Box, Button, Container, Stack, Step, StepLabel, Stepper } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import FamiliaritySelection from "../components/createSession/FamiliaritySelection";
-import OrderQuantitySelection from "../components/createSession/OrderQuantitySelection";
-import SpecialitySelection from "../components/createSession/SpecialitySelection";
+import { FamiliaritySelection } from "../components/createSession/FamiliaritySelection";
+import { OrderQuantitySelection } from "../components/createSession/OrderQuantitySelection";
+import { SpecialitySelection } from "../components/createSession/SpecialitySelection";
 import LinkButton from "../components/util/LinkButton";
 
 export default function CreateSession() {
   const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
+
   const steps = ['Areas of study', 'Familiarity level', 'Order and Quantity',];
 
   const handleNext = () => {
