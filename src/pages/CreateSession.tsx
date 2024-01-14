@@ -6,14 +6,10 @@ import { FamiliaritySelection } from "../components/createSession/FamiliaritySel
 import { OrderQuantitySelection } from "../components/createSession/OrderQuantitySelection";
 import { SpecialitySelection } from "../components/createSession/SpecialitySelection";
 import LinkButton from "../components/util/LinkButton";
-import { useServiceProvider } from "../services/ServiceProvider";
-import { toJS } from "mobx";
-import { QuestionsOrder } from "../models/PracticeFilter";
 
 export default function CreateSession() {
   const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
-  const { practiceStore } = useServiceProvider();
 
   const steps = ['Areas of study', 'Familiarity level', 'Order and Quantity',];
 
@@ -26,14 +22,7 @@ export default function CreateSession() {
   };
 
   const handleStartPractice = () => {
-    console.log("Starting practice session");
-    
-    console.log(typeof(practiceStore.practiceFilter.questionsOrder));
-    
-    const filterModel =  practiceStore.getPracticeFilter();
-    console.log("Navigating to practice session with: ", toJS(filterModel));
-    //navigate("/practice-session");
-    
+    navigate("/practice-session");
   }
 
   return (

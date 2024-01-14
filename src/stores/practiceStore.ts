@@ -35,16 +35,8 @@ export class PracticeStore {
     setQuestionsCount(questionsCount: number) {
         this.practiceFilter.questionsCount = questionsCount;
     }
-
-    getPracticeFilter() {
-        return {
-            ...this.practiceFilter,
-            questionsOrder: questionsOrderMapping[this.practiceFilter.questionsOrder]
-        }
-    }
-
+    
     getPracticeQuestions() {
         return this.apiClient.filterQuestions(this.practiceFilter);
     }
-
 }

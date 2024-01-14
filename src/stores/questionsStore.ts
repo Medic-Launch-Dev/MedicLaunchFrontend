@@ -18,6 +18,17 @@ interface Answer {
   questionText: string;
 }
 
+// TODO: remove question and use class below
+// TODO: remove answer option class
+// TODO: keep all logic inside the store class
+// TODO: don't expose the current question index
+// TODO: refactor question view UI class to rely on the store class
+// TODO: retrieve the questions from the backend and use in the practice session
+
+export class QuestionModelUI extends MedicalQuestion {
+  isAnsweredCorrectly: boolean;
+}
+
 class QuestionsStore {
   questions: Question[];
   specialityQuestions: MedicalQuestion[];
@@ -33,7 +44,6 @@ class QuestionsStore {
      })
     this.currentQuestionIdx = 0;
     this.apiClient = apClient;
-    // this.getSpecialityQuestions("e9093faf-afc7-4a3e-bdc6-a5d66b273257");
     makeAutoObservable(this);
   }
 
