@@ -20,6 +20,7 @@ import CreateSession from "./pages/CreateSession";
 import { AuthProvider } from "./services/AuthProvider";
 import { ProtectedRoute } from "./services/ProtectedRoute";
 import theme from "./theme";
+import UserManagement from "./pages/UserManagement";
 import {
   ServiceProvider,
   ServiceProviderConsumer,
@@ -74,6 +75,14 @@ const App = () => {
                       element={
                         <ProtectedRoute>
                           <EditQuestions />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="user-management"
+                      element={
+                        <ProtectedRoute>
+                          <UserManagement/>
                         </ProtectedRoute>
                       }
                     />
