@@ -1,10 +1,26 @@
 import { Grid, Slider, Stack, Typography } from "@mui/material";
-import { useState } from "react";
 import FilterOption from "./FamiliarityOption";
+import { observer } from "mobx-react-lite";
+import { QuestionsOrder } from "../../models/PracticeFilter";
+import { useServiceProvider } from "../../services/ServiceProvider";
 
-export default function OrderQuantitySelection() {
-  const orders = ["Randomised order", "Order by speciality"]
-  const [order, setOrder] = useState<string>();
+export const OrderQuantitySelection = observer(() => {
+  // const orders = ["Randomised order", "Order by speciality"]
+
+  const { practiceStore } = useServiceProvider();
+  const practiceFilter = practiceStore.practiceFilter;
+  const order = practiceFilter.questionsOrder;
+  console.log("Questions order: ", order);
+  
+  const orders = Object.values(QuestionsOrder);
+
+  const setOrder = (order: string) => {
+    practiceStore.setQuestionsOrder(order as QuestionsOrder);
+  }
+
+  const onQuanityChange = (quantity: number) => {
+    practiceStore.setQuestionsCount(quantity);
+  }
 
   return (
     <Grid container spacing={6} height="100%" px={16} py={3}>
@@ -13,7 +29,7 @@ export default function OrderQuantitySelection() {
           <Grid item xs={6}>
             <FilterOption
               heading={o}
-              selected={order === o}
+              selected={order.toString() === o.toString()}
               setSelected={setOrder}
             />
           </Grid>
@@ -35,15 +51,16 @@ export default function OrderQuantitySelection() {
         >
           <Typography variant="h3" color="primary">Select number of questions</Typography>
           <Slider
-            defaultValue={20}
+            defaultValue={practiceFilter.questionsCount}
             step={1}
             min={10}
             max={100}
             valueLabelDisplay="on"
+            onChange={(e, value) => onQuanityChange(value as number)}
           />
         </Stack>
       </Grid>
     </Grid>
 
   )
-}
+})
