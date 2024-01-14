@@ -20,6 +20,7 @@ import CreateSession from "./pages/CreateSession";
 import { AuthProvider } from "./services/AuthProvider";
 import { ProtectedRoute } from "./services/ProtectedRoute";
 import theme from "./theme";
+import UserManagement from "./pages/UserManagement";
 
 const App = () => {
   return (
@@ -68,6 +69,13 @@ const App = () => {
                   <ProtectedRoute>
                     <EditQuestions />
                   </ProtectedRoute>
+                }
+              />
+              {/* The below route does not have ProtectedRoute surrounding it, until approval */}
+              <Route
+                path="user-management"
+                element={
+                  <UserManagement/>
                 }
               />
             </Route>
