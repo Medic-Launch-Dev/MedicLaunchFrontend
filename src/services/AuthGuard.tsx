@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "./AuthProvider";
 
-export const ProtectedRoute = ({ children }) => {
+export const AuthGuard = ({ children }) => {
   const { isLoggedIn } = useAuth();
 
   if (!isLoggedIn()) {
