@@ -2,11 +2,11 @@ import { Box, Container, LinearProgress, Stack, Typography } from "@mui/material
 import { observer } from "mobx-react-lite";
 import QuestionView from "../components/practiceSession/QuestionView";
 import LinkButton from "../components/util/LinkButton";
-import questionsStore from "../stores/questionsStore";
+import { useServiceProvider } from "../services/ServiceProvider";
 import { primaryGradientText } from "../theme";
 
 function PracticeSession() {
-  const currentQuestion = questionsStore.questions[questionsStore.currentQuestionIdx];
+  const { questionsStore } = useServiceProvider();
   const currentAnswerStatus = questionsStore.answers[questionsStore.currentQuestionIdx].result;
 
   function calculateProgress() {
@@ -43,7 +43,7 @@ function PracticeSession() {
           </LinkButton>
         </Box>
       </Stack>
-      <QuestionView question={currentQuestion} answerStatus={currentAnswerStatus} />
+      <QuestionView question={questionsStore.currentQuestion} answerStatus={currentAnswerStatus} />
     </Container>
   )
 }

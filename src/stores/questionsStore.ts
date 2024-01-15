@@ -1,9 +1,8 @@
 import { makeAutoObservable, toJS } from "mobx";
-import { questionsData } from "../Questions";
+import { newQuestionData, questionsData } from "../Questions";
 import { MedicalQuestion } from "../models/Question";
-import MedicLaunchApiClient from "../services/MedicLaunchApiClient";
-import AxiosProvider from "../services/AxiosProvider";
 import Speciality from "../models/Speciality";
+import MedicLaunchApiClient from "../services/MedicLaunchApiClient";
 
 export interface Question {
   questionText: string;
@@ -26,45 +25,63 @@ interface Answer {
 // TODO: retrieve the questions from the backend and use in the practice session
 
 export class QuestionModelUI extends MedicalQuestion {
-  isAnsweredCorrectly: boolean;
+  isAnsweredCorrectly?: boolean;
 }
 
-class QuestionsStore {
+export class QuestionsStore {
   questions: Question[];
+  newModelQuestions: QuestionModelUI[];
   specialityQuestions: MedicalQuestion[];
   answers: Answer[];
-  currentQuestionIdx: number;
+  private _currentQuestionIdx: number;
   apiClient: MedicLaunchApiClient;
 
 
   constructor(apClient: MedicLaunchApiClient) {
     this.questions = questionsData;
-    this.answers = this.questions.map(question => { 
+    this.newModelQuestions = newQuestionData;
+    this.answers = this.questions.map(question => {
       return { result: undefined, questionText: question.questionText };
-     })
-    this.currentQuestionIdx = 0;
+    })
+    this._currentQuestionIdx = 0;
     this.apiClient = apClient;
     makeAutoObservable(this);
   }
 
-  nextQuestion() {
-    this.currentQuestionIdx += 1;
+  get currentQuestionIdx() {
+    return this._currentQuestionIdx;
   }
 
-  prevQuestion() {
-    this.currentQuestionIdx -= 1;
+  get currentQuestion() {
+    return this.questions[this._currentQuestionIdx];
+  }
+
+  get onFirstQuestion() {
+    return this.currentQuestionIdx === 0;
+  }
+
+  get onLastQuestion() {
+    return this.currentQuestionIdx === this.questions.length - 1;
+  }
+
+  incrementQuestion() {
+    this._currentQuestionIdx += 1;
+  }
+
+  decrementQuestion() {
+    this._currentQuestionIdx -= 1;
   }
 
   setCurrentQuestion(idx: number) {
-    this.currentQuestionIdx = idx;
+    this._currentQuestionIdx = idx;
   }
-  
+
   submitAnswer(answer: string) {
-    const question = this.questions[this.currentQuestionIdx]
+    const question = this.questions[this._currentQuestionIdx]
     if (answer === question.correctAnswer)
-      this.answers[this.currentQuestionIdx] = { result: "correct", questionText: question.questionText };
-    else this.answers[this.currentQuestionIdx] = { result: "incorrect", questionText: question.questionText };
-    this.questions[this.currentQuestionIdx].submittedAnswer = answer;
+      this.answers[this._currentQuestionIdx] = { result: "correct", questionText: question.questionText };
+    else this.answers[this._currentQuestionIdx] = { result: "incorrect", questionText: question.questionText };
+    this.questions[this._currentQuestionIdx].submittedAnswer = answer;
   }
 
   getSpecialityQuestions(specialityId: string) {
@@ -86,7 +103,7 @@ class QuestionsStore {
     for (let i = 0; i < this.answers.length; i++) {
       if (this.answers[i].result === filter) total += 1;
     }
-    
+
     return total;
   }
 
@@ -95,8 +112,3 @@ class QuestionsStore {
     return specialities;
   }
 }
-
-const axiosProvider = new AxiosProvider();
-const medicLaunchApiClient = new MedicLaunchApiClient(axiosProvider);
-const questionsStore = new QuestionsStore(medicLaunchApiClient);
-export default questionsStore;

@@ -1,18 +1,17 @@
 import { Grid } from "@mui/material";
-import { useEffect, useState } from "react";
-import SpecialityOption from "./SpecialityOption";
-import questionsStore from "../../stores/questionsStore";
-import Speciality from "../../models/Speciality";
-import { observer } from "mobx-react-lite";
-import { useServiceProvider } from "../../services/ServiceProvider";
-import { PracticeFilter } from "../../models/PracticeFilter";
 import { toJS } from "mobx";
+import { observer } from "mobx-react-lite";
+import { useEffect, useState } from "react";
+import { PracticeFilter } from "../../models/PracticeFilter";
+import Speciality from "../../models/Speciality";
+import { useServiceProvider } from "../../services/ServiceProvider";
+import SpecialityOption from "./SpecialityOption";
 
 export const SpecialitySelection = observer(() => {
 
   const [allSelected, setAllSelected] = useState<boolean>(false);
 
-  const { practiceStore } = useServiceProvider();
+  const { practiceStore, questionsStore } = useServiceProvider();
 
   const practiceFilter: PracticeFilter = practiceStore.practiceFilter;
   const selectedSpecialities = practiceFilter.specialities;

@@ -1,7 +1,9 @@
 import { Box, Stack, Typography } from "@mui/material";
-import questionsStore from "../../stores/questionsStore";
+import { useServiceProvider } from "../../services/ServiceProvider";
 
 export default function AnswersGrid() {
+  const { questionsStore } = useServiceProvider();
+
   function getBackgroundColor(status?: string) {
     if (status === "correct") return "#e7fae5";
     if (status === "incorrect") return "#f7e2e2";
@@ -49,4 +51,4 @@ export default function AnswersGrid() {
       }
     </Box>
   )
-}
+};

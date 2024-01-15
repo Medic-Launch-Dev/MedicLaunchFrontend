@@ -1,4 +1,5 @@
 import { Container, Grid, Stack, Typography } from "@mui/material";
+import { observer } from "mobx-react-lite";
 import { Link } from "react-router-dom";
 import AnalyticsIcon from '../../src/assets/icons/analytics.svg';
 import CorrectIcon from '../../src/assets/icons/correct.svg';
@@ -7,10 +8,11 @@ import RestartIcon from '../../src/assets/icons/restart.svg';
 import ReviewQuestionsTable from "../components/review/ReviewQuestionsTable";
 import ReviewCard from "../components/review/ReviewStatCard";
 import LinkButton from "../components/util/LinkButton";
-import questionsStore from "../stores/questionsStore";
+import { useServiceProvider } from "../services/ServiceProvider";
 import { primaryGradientText, unstyledLink } from "../theme";
 
-export default function ReviewSession() {
+function ReviewSession() {
+  const { questionsStore } = useServiceProvider();
   const totalQuestions = questionsStore.questions.length;
   const correctAnswers = questionsStore.getAnswerTotal("correct");
   const incorrectAnswers = questionsStore.getAnswerTotal("incorrect");
@@ -69,4 +71,6 @@ export default function ReviewSession() {
       </Grid>
     </Container>
   )
-}
+};
+
+export default observer(ReviewSession);

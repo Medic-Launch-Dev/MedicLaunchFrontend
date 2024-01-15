@@ -1,32 +1,33 @@
 import { Box, Typography } from "@mui/material";
+import { observer } from "mobx-react-lite";
 
 interface AnswerOptionProps {
   children: string;
   setSelectedAnswer: (answer: string) => void;
   selected?: boolean;
   disabled?: boolean;
-  state: "base" | "correct" | "incorrect" | "subdued";
+  style: "base" | "correct" | "incorrect" | "subdued";
 }
 
-export default function AnswerOption({ children, setSelectedAnswer, selected, disabled, state }: AnswerOptionProps) {
+function AnswerOption({ children, setSelectedAnswer, selected, disabled, style }: AnswerOptionProps) {
   function getBackgroundColor() {
-    if (state === "incorrect") return "#fdf0f0";
-    if (state === "correct") return "#f5fef4";
+    if (style === "incorrect") return "#fdf0f0";
+    if (style === "correct") return "#f5fef4";
     return "#fff";
   }
 
   function getBorderColor() {
     if (selected) return "#2394c4"
-    if (state === "incorrect") return "#962121";
-    if (state === "correct") return "#368b30";
+    if (style === "incorrect") return "#962121";
+    if (style === "correct") return "#368b30";
     return "transparent";
   }
 
   function getTextColor() {
     if (selected) return "#2394c4"
-    if (state === "incorrect") return "#962121";
-    if (state === "correct") return "#177d10";
-    if (state === "subdued") return "#c4c4c4"
+    if (style === "incorrect") return "#962121";
+    if (style === "correct") return "#177d10";
+    if (style === "subdued") return "#c4c4c4"
   }
 
   return (
@@ -48,4 +49,6 @@ export default function AnswerOption({ children, setSelectedAnswer, selected, di
       </Typography>
     </Box>
   )
-}
+};
+
+export default observer(AnswerOption);
