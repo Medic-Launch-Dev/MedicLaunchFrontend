@@ -15,7 +15,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { RichQuestionTextEditor } from "../components/tiptap/RichQuestionTextEditor";
 import TextSelect from "../components/util/TextSelect";
-import { MedicalQuestion, QuestionType } from "../models/Question";
+import { Question, QuestionType } from "../models/Question";
 import Speciality from "../models/Speciality";
 import { useServiceProvider } from "../services/ServiceProvider";
 import { primaryGradient, primaryGradientText } from "../theme";
@@ -60,7 +60,7 @@ const CreateQuestion = () => {
   const handleSubmit = async () => {
     const options = optionsRef.map((option) => option.current!.value);
 
-    const question: MedicalQuestion = {
+    const question: Question = {
       specialityId: selectedSpecialtyRef.current!.value,
       questionText: questionTextEditorRef.current!.editor!.getHTML() ?? "",
       clinicalTips: clinicalTipsEditorRef.current!.editor!.getHTML() ?? "",
@@ -75,7 +75,6 @@ const CreateQuestion = () => {
       isSubmitted: true,
     };
 
-    console.log(question);
     await questionsStore.addQuestion(question);
 
     navigate("/edit-questions");

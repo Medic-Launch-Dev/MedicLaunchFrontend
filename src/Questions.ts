@@ -1,4 +1,4 @@
-import { MedicalQuestion, QuestionType } from './models/Question';
+import { Question, QuestionType } from './models/Question';
 
 export const questionsData = [
   {
@@ -39,7 +39,7 @@ export const questionsData = [
   // Add more questions as needed
 ];
 
-export const newQuestionData: MedicalQuestion[] = [
+export const newQuestionData: Question[] = [
   {
     specialityId: "spec_id_1",
     questionType: QuestionType.General,

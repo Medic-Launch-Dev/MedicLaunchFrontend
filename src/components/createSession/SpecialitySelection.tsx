@@ -1,5 +1,4 @@
 import { Grid } from "@mui/material";
-import { toJS } from "mobx";
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 import { PracticeFilter } from "../../models/PracticeFilter";
@@ -46,8 +45,6 @@ export const SpecialitySelection = observer(() => {
     if (allSelected) setSelectedSpecialities([]);
     else setAllSelected(true);
   };
-
-  console.log(toJS(selectedSpecialities));
 
   useEffect(() => {
     questionsStore.getSpecialities().then((specialities) => {

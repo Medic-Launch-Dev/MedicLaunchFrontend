@@ -13,11 +13,9 @@ import { primaryGradientText, unstyledLink } from "../theme";
 
 function ReviewSession() {
   const { questionsStore } = useServiceProvider();
-  const totalQuestions = questionsStore.questions.length;
-  const correctAnswers = questionsStore.getAnswerTotal("correct");
-  const incorrectAnswers = questionsStore.getAnswerTotal("incorrect");
+  const { correctAnswers, incorrectAnswers, totalQuestions } = questionsStore;
   const totalAnswers = correctAnswers + incorrectAnswers;
-  const score = Math.ceil((correctAnswers / totalAnswers) * 100);
+  const score = totalAnswers === 0 ? totalAnswers : Math.ceil((correctAnswers / totalAnswers) * 100);
 
   return (
     <Container maxWidth="lg" sx={{ pt: 2 }}>

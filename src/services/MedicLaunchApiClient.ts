@@ -1,10 +1,10 @@
 
 import { AxiosInstance } from "axios";
-import { MedicalQuestion } from "../models/Question";
-import AxiosProvider from "./AxiosProvider";
+import { PracticeFilter } from "../models/PracticeFilter";
+import { Question } from "../models/Question";
 import Speciality from "../models/Speciality";
 import { MedicLauncUser } from "../models/User";
-import { PracticeFilter } from "../models/PracticeFilter";
+import AxiosProvider from "./AxiosProvider";
 
 
 export default class MedicLaunchApiClient {
@@ -17,31 +17,31 @@ export default class MedicLaunchApiClient {
     this.axios = axiosProvider.defaultInstance;
   }
 
-  async getQuestionsInSpeciality(specialityId: string): Promise<MedicalQuestion[]> {
+  async getQuestionsInSpeciality(specialityId: string): Promise<Question[]> {
     const response = await fetch(`${this.apiUrl}/questions/speciality/${specialityId}`);
     const data = await response.json();
     return data;
   }
 
-  async filterQuestions(practiceFilter: PracticeFilter): Promise<MedicalQuestion[]> {
+  async filterQuestions(practiceFilter: PracticeFilter): Promise<Question[]> {
     console.log("Practice Filter: ", practiceFilter);
-    
-     const response = this.axios.post(`${this.apiUrl}/questions/filter`, {
-        practiceFilter
-      });
 
-      const { allQuestions } = (await response).data;
-      
-      return allQuestions;
+    const response = this.axios.post(`${this.apiUrl}/questions/filter`, {
+      practiceFilter
+    });
+
+    const { allQuestions } = (await response).data;
+
+    return allQuestions;
   }
 
-  async saveQuestion(question: MedicalQuestion) {
-    const response = await this.axios.post<MedicalQuestion>(`${this.apiUrl}/questions/create`, {
+  async saveQuestion(question: Question) {
+    const response = await this.axios.post<Question>(`${this.apiUrl}/questions/create`, {
       ...question
     });
 
     console.log("Response: ", response.data);
-    
+
     return response.status === 200;
   }
 
@@ -55,12 +55,12 @@ export default class MedicLaunchApiClient {
 
   async loginUser(email: string, password: string): Promise<string> {
     const response = await this.axios.post(`${this.apiUrl}/login`, {
-        email: email,
-        password: password
+      email: email,
+      password: password
     });
 
-      const { token} = response.data;
-      return token;
+    const { token } = response.data;
+    return token;
   }
 
   async getSpecialitiesList(): Promise<Speciality[]> {

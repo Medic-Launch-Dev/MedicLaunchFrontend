@@ -1,15 +1,16 @@
 import { Box, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
+import { Option } from "../../models/Question";
 
 interface AnswerOptionProps {
-  children: string;
-  setSelectedAnswer: (answer: string) => void;
+  option: Option;
+  setSelectedOption: (answer: Option) => void;
   selected?: boolean;
   disabled?: boolean;
   style: "base" | "correct" | "incorrect" | "subdued";
 }
 
-function AnswerOption({ children, setSelectedAnswer, selected, disabled, style }: AnswerOptionProps) {
+function AnswerOption({ option, setSelectedOption, selected, disabled, style }: AnswerOptionProps) {
   function getBackgroundColor() {
     if (style === "incorrect") return "#fdf0f0";
     if (style === "correct") return "#f5fef4";
@@ -42,10 +43,10 @@ function AnswerOption({ children, setSelectedAnswer, selected, disabled, style }
           border: disabled ? undefined : "2px solid #2394c4",
         },
       }}
-      onClick={() => !disabled && setSelectedAnswer(children)}
+      onClick={() => !disabled && setSelectedOption(option)}
     >
       <Typography variant="body1" sx={{ color: getTextColor(), fontWeight: 500 }}>
-        {children}
+        {option.letter}. {option.text}
       </Typography>
     </Box>
   )

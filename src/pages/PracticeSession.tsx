@@ -7,12 +7,11 @@ import { primaryGradientText } from "../theme";
 
 function PracticeSession() {
   const { questionsStore } = useServiceProvider();
-  const currentAnswerStatus = questionsStore.answers[questionsStore.currentQuestionIdx].result;
 
   function calculateProgress() {
-    const totalAnswered = questionsStore.getAnswerTotal("incorrect") + questionsStore.getAnswerTotal("correct");
+    const totalAnswered = questionsStore.correctAnswers + questionsStore.incorrectAnswers;
 
-    return Math.ceil((totalAnswered / questionsStore.answers.length) * 100);
+    return Math.ceil((totalAnswered / questionsStore.questions.length) * 100);
   }
 
   return (
@@ -43,7 +42,7 @@ function PracticeSession() {
           </LinkButton>
         </Box>
       </Stack>
-      <QuestionView question={questionsStore.currentQuestion} answerStatus={currentAnswerStatus} />
+      <QuestionView question={questionsStore.currentQuestion} />
     </Container>
   )
 }

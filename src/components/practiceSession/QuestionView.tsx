@@ -2,20 +2,21 @@ import { ChevronRight, KeyboardArrowLeft } from "@mui/icons-material";
 import { Button, Grid, Stack, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
+import { Option } from "../../models/Question";
 import { useServiceProvider } from "../../services/ServiceProvider";
-import { Question } from "../../stores/questionsStore";
+import { QuestionModelUI } from "../../stores/questionsStore";
 import LinkButton from "../util/LinkButton";
 import AnswerOption from "./AnswerOption";
 import AnswersGrid from "./AnswersGrid";
 
 interface QuestionViewProps {
-  question: Question;
-  answerStatus?: string;
+  question: QuestionModelUI;
 }
 
-function QuestionView({ question, answerStatus }: QuestionViewProps) {
+function QuestionView({ question }: QuestionViewProps) {
   const { questionsStore } = useServiceProvider();
-  const [selectedAnswer, setSelectedAnswer] = useState<string>();
+  const [selectedOption, setSelectedOption] = useState<Option>();
+  const wasAttempted = question.submittedAnswerLetter !== undefined;
 
   const questionBodyMarkup = (
     <>
@@ -23,14 +24,14 @@ function QuestionView({ question, answerStatus }: QuestionViewProps) {
 
       <Stack spacing={1} mb={2}>
         {
-          question.answers.map((answer, index) => {
+          question.options.map((option, index) => {
             let style: "base" | "correct" | "incorrect" | "subdued";
-            if (!answerStatus) {
+            if (!wasAttempted) {
               style = "base";
             } else {
-              if (question.correctAnswer === answer) {
+              if (question.correctAnswerLetter === option.letter) {
                 style = "correct"
-              } else if (question.submittedAnswer === answer) {
+              } else if (question.submittedAnswerLetter === option.letter) {
                 style = "incorrect";
               } else {
                 style = "subdued";
@@ -40,31 +41,27 @@ function QuestionView({ question, answerStatus }: QuestionViewProps) {
             return (
               <AnswerOption
                 key={index}
-                selected={!answerStatus && selectedAnswer === answer}
+                selected={!wasAttempted && selectedOption === option}
                 style={style}
-                setSelectedAnswer={setSelectedAnswer}
-                disabled={!!answerStatus}
-              >
-                {answer}
-              </AnswerOption>
+                option={option}
+                setSelectedOption={setSelectedOption}
+                disabled={wasAttempted}
+              />
             )
           })
         }
       </Stack>
 
       {
-        !answerStatus &&
+        !wasAttempted &&
         <Stack sx={{ width: "max-content" }} spacing={1}>
-          {
-            !answerStatus &&
-            <Button
-              variant="contained"
-              disabled={!selectedAnswer}
-              onClick={() => questionsStore.submitAnswer(selectedAnswer!)}
-            >
-              Submit
-            </Button>
-          }
+          <Button
+            variant="contained"
+            disabled={!selectedOption}
+            onClick={() => questionsStore.submitAnswer(selectedOption!.letter)}
+          >
+            Submit
+          </Button>
           <Stack direction="row" spacing={1}>
             <Button
               startIcon={<KeyboardArrowLeft />}
@@ -99,7 +96,7 @@ function QuestionView({ question, answerStatus }: QuestionViewProps) {
         }}
       >
         <Typography variant="h4" color="primary">Explanation</Typography>
-        <Typography variant="h5" color="primary">The correct answer is {question.correctAnswer}</Typography>
+        <Typography variant="h5" color="primary">The correct answer is {question.correctAnswerLetter}</Typography>
         <Typography variant="body1">{question.explanation}</Typography>
       </Stack>
       <Stack direction="row" spacing={1}>
@@ -139,7 +136,7 @@ function QuestionView({ question, answerStatus }: QuestionViewProps) {
         <AnswersGrid />
       </Grid>
       <Grid item xs={12}>
-        {answerStatus && explanationMarkup}
+        {wasAttempted && explanationMarkup}
       </Grid>
     </Grid>
   )
