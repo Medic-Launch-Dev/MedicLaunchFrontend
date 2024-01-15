@@ -9,7 +9,7 @@ import ReactDOM from "react-dom";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import AppShell from "./components/nav/AppShell";
 import CreateQuestion from "./pages/CreateQuestion";
-import EditQuestions from "./pages/EditQuestions";
+import EditQuestions from './pages/EditQuestions';
 import Login from "./pages/Login";
 import PracticeSession from "./pages/PracticeSession";
 import Register from "./pages/Register";
@@ -17,14 +17,13 @@ import ReviewSession from "./pages/ReviewSession";
 import Root from "./pages/Root";
 // import reportWebVitals from "./reportWebVitals";
 import CreateSession from "./pages/CreateSession";
+import { AuthGuard } from "./services/AuthGuard";
 import { AuthProvider } from "./services/AuthProvider";
-import { ProtectedRoute } from "./services/ProtectedRoute";
-import theme from "./theme";
-import UserManagement from "./pages/UserManagement";
 import {
   ServiceProvider,
   ServiceProviderConsumer,
 } from "./services/ServiceProvider";
+import theme from "./theme";
 
 const App = () => {
   return (
@@ -36,55 +35,27 @@ const App = () => {
             {(providers) => (
               <AuthProvider>
                 <Routes>
-                  <Route path="/" element={<AppShell />}>
+                  <Route path="/" element={<AuthGuard><AppShell /></AuthGuard>}>
                     <Route index element={<Root />} />
                     <Route
                       path="create-session"
-                      element={
-                        <ProtectedRoute>
-                          <CreateSession />
-                        </ProtectedRoute>
-                      }
+                      element={<CreateSession />}
                     />
                     <Route
                       path="practice-session"
-                      element={
-                        <ProtectedRoute>
-                          <PracticeSession />
-                        </ProtectedRoute>
-                      }
+                      element={<PracticeSession />}
                     />
                     <Route
                       path="review-session"
-                      element={
-                        <ProtectedRoute>
-                          <ReviewSession />
-                        </ProtectedRoute>
-                      }
+                      element={<ReviewSession />}
                     />
                     <Route
                       path="create-question"
-                      element={
-                        <ProtectedRoute>
-                          <CreateQuestion />
-                        </ProtectedRoute>
-                      }
+                      element={<CreateQuestion />}
                     />
                     <Route
                       path="edit-questions"
-                      element={
-                        <ProtectedRoute>
-                          <EditQuestions />
-                        </ProtectedRoute>
-                      }
-                    />
-                    <Route
-                      path="user-management"
-                      element={
-                        <ProtectedRoute>
-                          <UserManagement/>
-                        </ProtectedRoute>
-                      }
+                      element={<EditQuestions />}
                     />
                   </Route>
                   <Route path="/login" element={<Login />} />
