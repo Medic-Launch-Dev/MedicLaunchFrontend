@@ -19,6 +19,10 @@ import Root from "./pages/Root";
 import CreateSession from "./pages/CreateSession";
 import { AuthGuard } from "./services/AuthGuard";
 import { AuthProvider } from "./services/AuthProvider";
+import {
+  ServiceProvider,
+  ServiceProviderConsumer,
+} from "./services/ServiceProvider";
 import theme from "./theme";
 
 const App = () => {
@@ -26,35 +30,41 @@ const App = () => {
     <React.StrictMode>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <AuthProvider>
-          <Routes>
-            <Route path="/" element={<AuthGuard><AppShell /></AuthGuard>}>
-              <Route index element={<Root />} />
-              <Route
-                path="create-session"
-                element={<CreateSession />}
-              />
-              <Route
-                path="practice-session"
-                element={<PracticeSession />}
-              />
-              <Route
-                path="review-session"
-                element={<ReviewSession />}
-              />
-              <Route
-                path="create-question"
-                element={<CreateQuestion />}
-              />
-              <Route
-                path="edit-questions"
-                element={<EditQuestions />}
-              />
-            </Route>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-          </Routes>
-        </AuthProvider>
+        <ServiceProvider>
+          <ServiceProviderConsumer>
+            {(providers) => (
+              <AuthProvider>
+                <Routes>
+                  <Route path="/" element={<AuthGuard><AppShell /></AuthGuard>}>
+                    <Route index element={<Root />} />
+                    <Route
+                      path="create-session"
+                      element={<CreateSession />}
+                    />
+                    <Route
+                      path="practice-session"
+                      element={<PracticeSession />}
+                    />
+                    <Route
+                      path="review-session"
+                      element={<ReviewSession />}
+                    />
+                    <Route
+                      path="create-question"
+                      element={<CreateQuestion />}
+                    />
+                    <Route
+                      path="edit-questions"
+                      element={<EditQuestions />}
+                    />
+                  </Route>
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
+                </Routes>
+              </AuthProvider>
+            )}
+          </ServiceProviderConsumer>
+        </ServiceProvider>
       </ThemeProvider>
     </React.StrictMode>
   );
