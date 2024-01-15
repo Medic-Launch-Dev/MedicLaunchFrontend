@@ -4,22 +4,24 @@ import {
   Container,
   Grid,
   MenuItem,
+  Select,
   Stack,
   TextField,
   Typography,
-  Select,
 } from "@mui/material";
+import { observer } from "mobx-react-lite";
+import { RichTextEditorRef } from "mui-tiptap";
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router";
 import { RichQuestionTextEditor } from "../components/tiptap/RichQuestionTextEditor";
 import TextSelect from "../components/util/TextSelect";
 import { MedicalQuestion, QuestionType } from "../models/Question";
-import questionsStore from "../stores/questionsStore";
-import { primaryGradient, primaryGradientText } from "../theme";
 import Speciality from "../models/Speciality";
-import { RichTextEditorRef } from "mui-tiptap";
-import { useNavigate } from "react-router";
+import { useServiceProvider } from "../services/ServiceProvider";
+import { primaryGradient, primaryGradientText } from "../theme";
 
 const CreateQuestion = () => {
+  const { questionsStore } = useServiceProvider();
   const [specialities, setSpecialities] = useState<Speciality[]>([]);
   const navigate = useNavigate();
 
@@ -112,7 +114,7 @@ const CreateQuestion = () => {
                   <TextSelect
                     label="Question bank"
                     options={["Practice questions", "Mock 1", "Mock 2"]}
-                    setSelected={() => {}}
+                    setSelected={() => { }}
                   />
                 </Grid>
                 <Grid item xs={6}>
@@ -229,4 +231,4 @@ const CreateQuestion = () => {
   );
 };
 
-export default CreateQuestion;
+export default observer(CreateQuestion);

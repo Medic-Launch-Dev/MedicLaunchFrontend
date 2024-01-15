@@ -1,8 +1,7 @@
 import { makeAutoObservable, toJS } from "mobx";
-import { questionsData } from "../Questions";
+import { newQuestionData, questionsData } from "../Questions";
 import { MedicalQuestion } from "../models/Question";
 import Speciality from "../models/Speciality";
-import AxiosProvider from "../services/AxiosProvider";
 import MedicLaunchApiClient from "../services/MedicLaunchApiClient";
 
 export interface Question {
@@ -26,11 +25,12 @@ interface Answer {
 // TODO: retrieve the questions from the backend and use in the practice session
 
 export class QuestionModelUI extends MedicalQuestion {
-  isAnsweredCorrectly: boolean;
+  isAnsweredCorrectly?: boolean;
 }
 
-class QuestionsStore {
+export class QuestionsStore {
   questions: Question[];
+  newModelQuestions: QuestionModelUI[];
   specialityQuestions: MedicalQuestion[];
   answers: Answer[];
   private _currentQuestionIdx: number;
@@ -39,6 +39,7 @@ class QuestionsStore {
 
   constructor(apClient: MedicLaunchApiClient) {
     this.questions = questionsData;
+    this.newModelQuestions = newQuestionData;
     this.answers = this.questions.map(question => {
       return { result: undefined, questionText: question.questionText };
     })
@@ -55,11 +56,19 @@ class QuestionsStore {
     return this.questions[this._currentQuestionIdx];
   }
 
-  nextQuestion() {
+  get onFirstQuestion() {
+    return this.currentQuestionIdx === 0;
+  }
+
+  get onLastQuestion() {
+    return this.currentQuestionIdx === this.questions.length - 1;
+  }
+
+  incrementQuestion() {
     this._currentQuestionIdx += 1;
   }
 
-  prevQuestion() {
+  decrementQuestion() {
     this._currentQuestionIdx -= 1;
   }
 
@@ -103,8 +112,3 @@ class QuestionsStore {
     return specialities;
   }
 }
-
-const axiosProvider = new AxiosProvider();
-const medicLaunchApiClient = new MedicLaunchApiClient(axiosProvider);
-const questionsStore = new QuestionsStore(medicLaunchApiClient);
-export default questionsStore;

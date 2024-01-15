@@ -1,7 +1,9 @@
 import { ChevronRight, KeyboardArrowLeft } from "@mui/icons-material";
 import { Button, Grid, Stack, Typography } from "@mui/material";
+import { observer } from "mobx-react-lite";
 import { useState } from "react";
-import questionsStore, { Question } from "../../stores/questionsStore";
+import { useServiceProvider } from "../../services/ServiceProvider";
+import { Question } from "../../stores/questionsStore";
 import LinkButton from "../util/LinkButton";
 import AnswerOption from "./AnswerOption";
 import AnswersGrid from "./AnswersGrid";
@@ -11,10 +13,9 @@ interface QuestionViewProps {
   answerStatus?: string;
 }
 
-export default function QuestionView({ question, answerStatus }: QuestionViewProps) {
+function QuestionView({ question, answerStatus }: QuestionViewProps) {
+  const { questionsStore } = useServiceProvider();
   const [selectedAnswer, setSelectedAnswer] = useState<string>();
-  const isFirstQuestion = questionsStore.currentQuestionIdx === 0
-  const isLastQuestion = questionsStore.currentQuestionIdx === questionsStore.questions.length - 1;
 
   const questionBodyMarkup = (
     <>
@@ -23,16 +24,16 @@ export default function QuestionView({ question, answerStatus }: QuestionViewPro
       <Stack spacing={1} mb={2}>
         {
           question.answers.map((answer, index) => {
-            let state: "base" | "correct" | "incorrect" | "subdued";
+            let style: "base" | "correct" | "incorrect" | "subdued";
             if (!answerStatus) {
-              state = "base";
+              style = "base";
             } else {
               if (question.correctAnswer === answer) {
-                state = "correct"
+                style = "correct"
               } else if (question.submittedAnswer === answer) {
-                state = "incorrect";
+                style = "incorrect";
               } else {
-                state = "subdued";
+                style = "subdued";
               }
             }
 
@@ -40,7 +41,7 @@ export default function QuestionView({ question, answerStatus }: QuestionViewPro
               <AnswerOption
                 key={index}
                 selected={!answerStatus && selectedAnswer === answer}
-                state={state}
+                style={style}
                 setSelectedAnswer={setSelectedAnswer}
                 disabled={!!answerStatus}
               >
@@ -68,16 +69,16 @@ export default function QuestionView({ question, answerStatus }: QuestionViewPro
             <Button
               startIcon={<KeyboardArrowLeft />}
               variant="outlined"
-              onClick={() => questionsStore.prevQuestion()}
-              disabled={isFirstQuestion}
+              onClick={() => questionsStore.decrementQuestion()}
+              disabled={questionsStore.onFirstQuestion}
             >
               Previous
             </Button>
             <Button
               endIcon={<ChevronRight />}
               variant="outlined"
-              onClick={() => questionsStore.nextQuestion()}
-              disabled={isLastQuestion}
+              onClick={() => questionsStore.incrementQuestion()}
+              disabled={questionsStore.onLastQuestion}
             >
               Skip
             </Button>
@@ -105,21 +106,21 @@ export default function QuestionView({ question, answerStatus }: QuestionViewPro
         <Button
           startIcon={<KeyboardArrowLeft />}
           variant="outlined"
-          onClick={() => questionsStore.prevQuestion()}
-          disabled={isFirstQuestion}
+          onClick={() => questionsStore.decrementQuestion()}
+          disabled={questionsStore.onFirstQuestion}
         >
           Previous
         </Button>
 
         {
-          isLastQuestion ?
+          questionsStore.onLastQuestion ?
             <LinkButton to="/review-session">
               End Session
             </LinkButton>
             :
             <Button
               variant="contained"
-              onClick={() => questionsStore.nextQuestion()}
+              onClick={() => questionsStore.incrementQuestion()}
             >
               Next Question
             </Button>
@@ -143,3 +144,5 @@ export default function QuestionView({ question, answerStatus }: QuestionViewPro
     </Grid>
   )
 }
+
+export default observer(QuestionView);
