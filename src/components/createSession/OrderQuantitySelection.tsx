@@ -1,8 +1,8 @@
 import { Grid, Slider, Stack, Typography } from "@mui/material";
-import FilterOption from "./FamiliarityOption";
 import { observer } from "mobx-react-lite";
 import { QuestionsOrder } from "../../models/PracticeFilter";
 import { useServiceProvider } from "../../services/ServiceProvider";
+import FilterOption from "./FamiliarityOption";
 
 export const OrderQuantitySelection = observer(() => {
   // const orders = ["Randomised order", "Order by speciality"]
@@ -10,8 +10,7 @@ export const OrderQuantitySelection = observer(() => {
   const { practiceStore } = useServiceProvider();
   const practiceFilter = practiceStore.practiceFilter;
   const order = practiceFilter.questionsOrder;
-  console.log("Questions order: ", order);
-  
+
   const orders = Object.values(QuestionsOrder);
 
   const setOrder = (order: string) => {

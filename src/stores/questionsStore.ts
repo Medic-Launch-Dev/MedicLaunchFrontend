@@ -1,21 +1,8 @@
 import { makeAutoObservable, toJS } from "mobx";
-import { newQuestionData, questionsData } from "../Questions";
-import { MedicalQuestion } from "../models/Question";
+import { newQuestionData } from "../Questions";
+import { Question } from "../models/Question";
 import Speciality from "../models/Speciality";
 import MedicLaunchApiClient from "../services/MedicLaunchApiClient";
-
-export interface Question {
-  questionText: string;
-  answers: string[];
-  correctAnswer: string;
-  submittedAnswer: string | null;
-  explanation: string;
-}
-
-interface Answer {
-  result: "correct" | "incorrect" | undefined;
-  questionText: string;
-}
 
 // TODO: remove question and use class below
 // TODO: remove answer option class
@@ -24,26 +11,24 @@ interface Answer {
 // TODO: refactor question view UI class to rely on the store class
 // TODO: retrieve the questions from the backend and use in the practice session
 
-export class QuestionModelUI extends MedicalQuestion {
-  isAnsweredCorrectly?: boolean;
+export class QuestionModelUI extends Question {
+  submittedAnswerLetter?: string;
 }
 
 export class QuestionsStore {
-  questions: Question[];
-  newModelQuestions: QuestionModelUI[];
-  specialityQuestions: MedicalQuestion[];
-  answers: Answer[];
+  questions: QuestionModelUI[];
+  specialityQuestions: Question[];
   private _currentQuestionIdx: number;
+  private _correctAnswers: number;
+  private _incorrectAnswers: number;
   apiClient: MedicLaunchApiClient;
 
 
   constructor(apClient: MedicLaunchApiClient) {
-    this.questions = questionsData;
-    this.newModelQuestions = newQuestionData;
-    this.answers = this.questions.map(question => {
-      return { result: undefined, questionText: question.questionText };
-    })
+    this.questions = newQuestionData;
     this._currentQuestionIdx = 0;
+    this._correctAnswers = 0;
+    this._incorrectAnswers = 0;
     this.apiClient = apClient;
     makeAutoObservable(this);
   }
@@ -64,6 +49,18 @@ export class QuestionsStore {
     return this.currentQuestionIdx === this.questions.length - 1;
   }
 
+  get correctAnswers() {
+    return this._correctAnswers;
+  }
+
+  get incorrectAnswers() {
+    return this._incorrectAnswers;
+  }
+
+  get totalQuestions() {
+    return this.questions.length;
+  }
+
   incrementQuestion() {
     this._currentQuestionIdx += 1;
   }
@@ -76,12 +73,18 @@ export class QuestionsStore {
     this._currentQuestionIdx = idx;
   }
 
-  submitAnswer(answer: string) {
-    const question = this.questions[this._currentQuestionIdx]
-    if (answer === question.correctAnswer)
-      this.answers[this._currentQuestionIdx] = { result: "correct", questionText: question.questionText };
-    else this.answers[this._currentQuestionIdx] = { result: "incorrect", questionText: question.questionText };
-    this.questions[this._currentQuestionIdx].submittedAnswer = answer;
+  wasAnsweredCorrectly(question: QuestionModelUI) {
+    if (question.submittedAnswerLetter) {
+      if (question.submittedAnswerLetter === question.correctAnswerLetter)
+        return true;
+      else return false;
+    }
+  }
+
+  submitAnswer(answerLetter: string) {
+    this.currentQuestion.submittedAnswerLetter = answerLetter;
+    if (answerLetter === this.currentQuestion.correctAnswerLetter) this._correctAnswers += 1;
+    else this._incorrectAnswers += 1;
   }
 
   getSpecialityQuestions(specialityId: string) {
@@ -92,19 +95,8 @@ export class QuestionsStore {
     });
   }
 
-  async addQuestion(question: MedicalQuestion) {
+  async addQuestion(question: Question) {
     await this.apiClient.saveQuestion(question);
-  }
-
-  getAnswerTotal(filter?: "correct" | "incorrect") {
-    if (!filter) return this.answers.length;
-
-    let total = 0;
-    for (let i = 0; i < this.answers.length; i++) {
-      if (this.answers[i].result === filter) total += 1;
-    }
-
-    return total;
   }
 
   async getSpecialities(): Promise<Speciality[]> {

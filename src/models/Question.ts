@@ -9,7 +9,7 @@ export class Option {
     text: string;
 }
 
-export class MedicalQuestion {
+export class Question {
     id?: string;
     specialityId: string;
     questionType: QuestionType;

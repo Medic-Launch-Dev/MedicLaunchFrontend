@@ -6,6 +6,7 @@ import { useServiceProvider } from "../../services/ServiceProvider";
 
 export default function ReviewQuestionsTable() {
   const { questionsStore } = useServiceProvider();
+  const { wasAnsweredCorrectly } = questionsStore;
   const navigate = useNavigate();
 
   function handleClickReview(idx) {
@@ -13,10 +14,10 @@ export default function ReviewQuestionsTable() {
     navigate("/practice-session");
   }
 
-  function getResultChip(result?: string) {
-    if (result === "correct") return <Chip label="Correct" sx={{ backgroundColor: "#A4E29F" }} />
-    if (result === "incorrect") return <Chip label="Incorrect" sx={{ backgroundColor: "#FFABAB" }} />
-    return <Chip label="Not attempted" />
+  function getResultChip(answeredCorrectly?: boolean) {
+    if (answeredCorrectly === undefined) return <Chip label="Not attempted" />;
+    if (answeredCorrectly === true) return <Chip label="Correct" sx={{ backgroundColor: "#e7fae5", color: "#177d10" }} />;
+    else return <Chip label="Incorrect" sx={{ backgroundColor: "#f7e2e2", color: "#962121" }} />;
   }
 
 
@@ -31,15 +32,15 @@ export default function ReviewQuestionsTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {questionsStore.answers.map((answer, idx) => (
+          {questionsStore.questions.map((question, idx) => (
             <TableRow
               key={idx}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row" sx={{ width: 100 }}>
-                {getResultChip(answer.result)}
+                {getResultChip(wasAnsweredCorrectly(question))}
               </TableCell>
-              <TableCell>{`${idx + 1}. ${answer.questionText}`}</TableCell>
+              <TableCell>{`${idx + 1}. ${question.questionText}`}</TableCell>
               <TableCell align="right">
                 <Button onClick={() => handleClickReview(idx)}>
                   Review
