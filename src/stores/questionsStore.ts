@@ -1,9 +1,9 @@
 import { makeAutoObservable, toJS } from "mobx";
 import { questionsData } from "../Questions";
 import { MedicalQuestion } from "../models/Question";
-import MedicLaunchApiClient from "../services/MedicLaunchApiClient";
-import AxiosProvider from "../services/AxiosProvider";
 import Speciality from "../models/Speciality";
+import AxiosProvider from "../services/AxiosProvider";
+import MedicLaunchApiClient from "../services/MedicLaunchApiClient";
 
 export interface Question {
   questionText: string;
@@ -33,38 +33,46 @@ class QuestionsStore {
   questions: Question[];
   specialityQuestions: MedicalQuestion[];
   answers: Answer[];
-  currentQuestionIdx: number;
+  private _currentQuestionIdx: number;
   apiClient: MedicLaunchApiClient;
 
 
   constructor(apClient: MedicLaunchApiClient) {
     this.questions = questionsData;
-    this.answers = this.questions.map(question => { 
+    this.answers = this.questions.map(question => {
       return { result: undefined, questionText: question.questionText };
-     })
-    this.currentQuestionIdx = 0;
+    })
+    this._currentQuestionIdx = 0;
     this.apiClient = apClient;
     makeAutoObservable(this);
   }
 
+  get currentQuestionIdx() {
+    return this._currentQuestionIdx;
+  }
+
+  get currentQuestion() {
+    return this.questions[this._currentQuestionIdx];
+  }
+
   nextQuestion() {
-    this.currentQuestionIdx += 1;
+    this._currentQuestionIdx += 1;
   }
 
   prevQuestion() {
-    this.currentQuestionIdx -= 1;
+    this._currentQuestionIdx -= 1;
   }
 
   setCurrentQuestion(idx: number) {
-    this.currentQuestionIdx = idx;
+    this._currentQuestionIdx = idx;
   }
-  
+
   submitAnswer(answer: string) {
-    const question = this.questions[this.currentQuestionIdx]
+    const question = this.questions[this._currentQuestionIdx]
     if (answer === question.correctAnswer)
-      this.answers[this.currentQuestionIdx] = { result: "correct", questionText: question.questionText };
-    else this.answers[this.currentQuestionIdx] = { result: "incorrect", questionText: question.questionText };
-    this.questions[this.currentQuestionIdx].submittedAnswer = answer;
+      this.answers[this._currentQuestionIdx] = { result: "correct", questionText: question.questionText };
+    else this.answers[this._currentQuestionIdx] = { result: "incorrect", questionText: question.questionText };
+    this.questions[this._currentQuestionIdx].submittedAnswer = answer;
   }
 
   getSpecialityQuestions(specialityId: string) {
@@ -86,7 +94,7 @@ class QuestionsStore {
     for (let i = 0; i < this.answers.length; i++) {
       if (this.answers[i].result === filter) total += 1;
     }
-    
+
     return total;
   }
 

@@ -6,7 +6,6 @@ import questionsStore from "../stores/questionsStore";
 import { primaryGradientText } from "../theme";
 
 function PracticeSession() {
-  const currentQuestion = questionsStore.questions[questionsStore.currentQuestionIdx];
   const currentAnswerStatus = questionsStore.answers[questionsStore.currentQuestionIdx].result;
 
   function calculateProgress() {
@@ -43,7 +42,7 @@ function PracticeSession() {
           </LinkButton>
         </Box>
       </Stack>
-      <QuestionView question={currentQuestion} answerStatus={currentAnswerStatus} />
+      <QuestionView question={questionsStore.currentQuestion} answerStatus={currentAnswerStatus} />
     </Container>
   )
 }
