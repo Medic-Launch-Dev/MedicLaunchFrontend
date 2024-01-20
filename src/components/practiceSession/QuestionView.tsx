@@ -30,10 +30,7 @@ function QuestionView({ question }: QuestionViewProps) {
   const questionBodyMarkup = (
     <>
       {/* <Typography variant="body1" sx={{ fontWeight: 500, mb: 2 }}>{question.questionText}</Typography> */}
-      <RichTextReadOnly
-              content={question.questionText}
-              extensions={extensions}
-            />
+      <RichTextReadOnly content={question.questionText} extensions={extensions} />
       <Stack spacing={1} mb={2}>
         {
           question.options.map((option, index) => {
@@ -110,18 +107,48 @@ function QuestionView({ question }: QuestionViewProps) {
 
   const explanationMarkup = (
     <Stack spacing={3}>
-      <Box sx={{ backgroundColor: "#fff", p: 4, borderRadius: 1, }}>
-        <Typography variant="h4" color="primary">Explanation</Typography>
-        <Typography variant="h5" color="primary" mt={2}>The correct answer is {question.correctAnswerLetter}: {correctOption[0].text}</Typography>
-        <Typography fontSize={13} fontWeight={500} mt={1}>{question.explanation}</Typography>
-        <Typography variant="h6" color="primary" mt={2}>Key Learning Points:</Typography>
-        <Typography fontSize={13} fontWeight={500} mt={1}>{question.explanation}</Typography>
+      <Box sx={{ backgroundColor: "#fff", p: 4, borderRadius: 1 }}>
+        <Typography variant="h4" color="primary">
+          Explanation
+        </Typography>
+        <Typography variant="h5" color="primary" mt={2}>
+          The correct answer is {question.correctAnswerLetter}:{" "}
+          {correctOption[0].text}
+        </Typography>
+        <Typography fontSize={13} fontWeight={500} mt={1}>
+          <RichTextReadOnly
+            content={question.explanation}
+            extensions={extensions}
+          />
+        </Typography>
+        <Typography variant="h6" color="primary" mt={2}>
+          Key Learning Points:
+        </Typography>
+        <Typography fontSize={13} fontWeight={500} mt={1}>
+          <RichTextReadOnly
+            content={question.learningPoints}
+            extensions={extensions}
+          />
+        </Typography>
         <Stack
           mt={3}
-          sx={{ background: primaryGradient, p: 3, mx: 8, alignItems: 'center', borderRadius: 1.5 }}
+          sx={{
+            background: primaryGradient,
+            p: 3,
+            mx: 8,
+            alignItems: "center",
+            borderRadius: 1.5,
+          }}
         >
-          <Typography variant="h6" color="secondary">Clinical Tips:</Typography>
-          <Typography fontSize={13} textAlign="center" mt={1} color="secondary">{question.explanation}</Typography>
+          <Typography variant="h6" color="secondary">
+            Clinical Tips:
+          </Typography>
+          <Typography fontSize={13} textAlign="center" mt={1} color="secondary">
+            <RichTextReadOnly
+              content={question.clinicalTips}
+              extensions={extensions}
+            />
+          </Typography>
         </Stack>
       </Box>
       <Stack direction="row" spacing={1}>
@@ -134,23 +161,19 @@ function QuestionView({ question }: QuestionViewProps) {
           Previous
         </Button>
 
-        {
-          questionsStore.onLastQuestion ?
-            <LinkButton to="/review-session">
-              End Session
-            </LinkButton>
-            :
-            <Button
-              variant="contained"
-              onClick={() => questionsStore.incrementQuestion()}
-            >
-              Next Question
-            </Button>
-
-        }
+        {questionsStore.onLastQuestion ? (
+          <LinkButton to="/review-session">End Session</LinkButton>
+        ) : (
+          <Button
+            variant="contained"
+            onClick={() => questionsStore.incrementQuestion()}
+          >
+            Next Question
+          </Button>
+        )}
       </Stack>
     </Stack>
-  )
+  );
 
   return (
     <Grid container spacing={3} pb={3}>
