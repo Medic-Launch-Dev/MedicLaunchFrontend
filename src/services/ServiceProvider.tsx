@@ -16,7 +16,7 @@ export const ServiceProviderConsumer = ServiceProviderContext.Consumer;
 export const ServiceProvider = ({ children }) => {
     const axiosProvider = new AxiosProvider();
     const medicLaunchApiClient = new MedicLaunchApiClient(axiosProvider);
-    const practiceStore = new PracticeStore();
+    const practiceStore = new PracticeStore(medicLaunchApiClient);
     const questionsStore = new QuestionsStore(medicLaunchApiClient);
 
     return (
