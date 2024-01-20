@@ -1,17 +1,17 @@
 import { ChevronRight, Flag, FlagOutlined, KeyboardArrowLeft } from "@mui/icons-material";
 import { Box, Button, Grid, IconButton, Stack, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
+import { RichTextReadOnly } from "mui-tiptap";
 import { useState } from "react";
 import { Option } from "../../models/Question";
 import { useServiceProvider } from "../../services/ServiceProvider";
 import { QuestionModelUI } from "../../stores/questionsStore";
 import { primaryGradient } from "../../theme";
+import useExtensions from "../tiptap/useExtensions";
 import LinkButton from "../util/LinkButton";
 import AnswerOption from "./AnswerOption";
 import AnswersGrid from "./AnswersGrid";
 import LabValues from "./LabValues";
-import { RichTextReadOnly } from "mui-tiptap";
-import useExtensions from "../tiptap/useExtensions";
 
 interface QuestionViewProps {
   question: QuestionModelUI;
@@ -21,7 +21,7 @@ function QuestionView({ question }: QuestionViewProps) {
   const { questionsStore } = useServiceProvider();
   const [selectedOption, setSelectedOption] = useState<Option>();
   const [isFlagged, setIsFlagged] = useState<boolean>();
-  const wasAttempted = question.submittedAnswerLetter !== undefined;
+  const wasAttempted = !!question.submittedAnswerLetter;
   const correctOption = question.options.filter(option => option.letter === question.correctAnswerLetter);
 
   const extensions = useExtensions({
@@ -31,7 +31,9 @@ function QuestionView({ question }: QuestionViewProps) {
   const questionBodyMarkup = (
     <>
       {/* <Typography variant="body1" sx={{ fontWeight: 500, mb: 2 }}>{question.questionText}</Typography> */}
-      <RichTextReadOnly content={question.questionText} extensions={extensions} />
+      <Box mb={2}>
+        <RichTextReadOnly content={question.questionText} extensions={extensions} />
+      </Box>
       <Stack spacing={1} mb={2}>
         {
           question.options.map((option, index) => {
@@ -113,48 +115,61 @@ function QuestionView({ question }: QuestionViewProps) {
   const explanationMarkup = (
     <Stack spacing={3}>
       <Box sx={{ backgroundColor: "#fff", p: 4, borderRadius: 1 }}>
-        <Typography variant="h4" color="primary">
-          Explanation
-        </Typography>
-        <Typography variant="h5" color="primary" mt={2}>
+        <Typography variant="h5" color="primary">
           The correct answer is {question.correctAnswerLetter}:{" "}
           {correctOption[0].text}
         </Typography>
-        <Typography fontSize={13} fontWeight={500} mt={1}>
-          <RichTextReadOnly
-            content={question.explanation}
-            extensions={extensions}
-          />
-        </Typography>
-        <Typography variant="h6" color="primary" mt={2}>
-          Key Learning Points:
-        </Typography>
-        <Typography fontSize={13} fontWeight={500} mt={1}>
-          <RichTextReadOnly
-            content={question.learningPoints}
-            extensions={extensions}
-          />
-        </Typography>
-        <Stack
-          mt={3}
-          sx={{
-            background: primaryGradient,
-            p: 3,
-            mx: 8,
-            alignItems: "center",
-            borderRadius: 1.5,
-          }}
-        >
-          <Typography variant="h6" color="secondary">
-            Clinical Tips:
-          </Typography>
-          <Typography fontSize={13} textAlign="center" mt={1} color="secondary">
-            <RichTextReadOnly
-              content={question.clinicalTips}
-              extensions={extensions}
-            />
-          </Typography>
-        </Stack>
+        {
+          question.explanation &&
+          <Box mt={2}>
+            <Typography variant="h6" color="primary">
+              Explanation
+            </Typography>
+            <Typography fontSize={13} fontWeight={500} mt={1}>
+              <RichTextReadOnly
+                content={question.explanation}
+                extensions={extensions}
+              />
+            </Typography>
+          </Box>
+        }
+        {
+          question.learningPoints &&
+          <Box mt={2}>
+            <Typography variant="h6" color="primary">
+              Learning Points:
+            </Typography>
+            <Typography fontSize={13} fontWeight={500} mt={1}>
+              <RichTextReadOnly
+                content={question.learningPoints}
+                extensions={extensions}
+              />
+            </Typography>
+          </Box>
+        }
+        {
+          question.clinicalTips &&
+          <Stack
+            mt={3}
+            sx={{
+              background: primaryGradient,
+              p: 3,
+              mx: 8,
+              alignItems: "center",
+              borderRadius: 1.5,
+            }}
+          >
+            <Typography variant="h6" color="secondary">
+              Clinical Tips:
+            </Typography>
+            <Typography fontSize={13} textAlign="center" mt={1} color="secondary">
+              <RichTextReadOnly
+                content={question.clinicalTips}
+                extensions={extensions}
+              />
+            </Typography>
+          </Stack>
+        }
       </Box>
       <Stack direction="row" spacing={1}>
         <Button
@@ -182,10 +197,10 @@ function QuestionView({ question }: QuestionViewProps) {
 
   return (
     <Grid container spacing={3} pb={3}>
-      <Grid item xs={12} lg={6}>
+      <Grid item xs={12} lg={7}>
         {questionBodyMarkup}
       </Grid>
-      <Grid item xs={12} lg={6}>
+      <Grid item xs={12} lg={5}>
         {rightSideMarkup}
       </Grid>
       <Grid item xs={12}>

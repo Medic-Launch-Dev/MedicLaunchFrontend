@@ -1,5 +1,4 @@
-import { makeAutoObservable, toJS } from "mobx";
-import { newQuestionData } from "../Questions";
+import { makeAutoObservable } from "mobx";
 import { Question } from "../models/Question";
 import Speciality from "../models/Speciality";
 import MedicLaunchApiClient from "../services/MedicLaunchApiClient";
@@ -18,7 +17,7 @@ export class QuestionsStore {
 
 
   constructor(apClient: MedicLaunchApiClient) {
-    // this.questions = newQuestionData;
+    this.questions = [];
     this._currentQuestionIdx = 0;
     this._correctAnswers = 0;
     this._incorrectAnswers = 0;
@@ -83,8 +82,6 @@ export class QuestionsStore {
   getSpecialityQuestions(specialityId: string) {
     this.apiClient.getQuestionsInSpeciality(specialityId).then((questions) => {
       this.specialityQuestions = questions;
-
-      console.log("Questions: ", toJS(this.specialityQuestions));
     });
   }
 
@@ -96,11 +93,8 @@ export class QuestionsStore {
     const specialities = await this.apiClient.getSpecialitiesList();
     return specialities;
   }
- 
-  async setPracticeQuestions(questions: Question[]) {
-    console.log("Questions: ", questions);
 
+  async setPracticeQuestions(questions: Question[]) {
     this.questions = questions;
   }
-  
 }

@@ -1,5 +1,6 @@
 import { Box, Container, LinearProgress, Stack, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
+import { Navigate } from "react-router-dom";
 import QuestionView from "../components/practiceSession/QuestionView";
 import LinkButton from "../components/util/LinkButton";
 import { useServiceProvider } from "../services/ServiceProvider";
@@ -9,10 +10,12 @@ function PracticeSession() {
   const { questionsStore } = useServiceProvider();
 
   function calculateProgress() {
+    if (!questionsStore.questions) return 0;
     const totalAnswered = questionsStore.correctAnswers + questionsStore.incorrectAnswers;
-
     return Math.ceil((totalAnswered / questionsStore.questions.length) * 100);
   }
+
+  if (!questionsStore.questions.length) return <Navigate to="/create-session" />
 
   return (
     <Container maxWidth="lg">
