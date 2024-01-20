@@ -1,5 +1,5 @@
-import { ChevronRight, KeyboardArrowLeft } from "@mui/icons-material";
-import { Box, Button, Grid, Stack, Typography } from "@mui/material";
+import { ChevronRight, Flag, FlagOutlined, KeyboardArrowLeft } from "@mui/icons-material";
+import { Box, Button, Grid, IconButton, Stack, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import { Option } from "../../models/Question";
@@ -18,6 +18,7 @@ interface QuestionViewProps {
 function QuestionView({ question }: QuestionViewProps) {
   const { questionsStore } = useServiceProvider();
   const [selectedOption, setSelectedOption] = useState<Option>();
+  const [isFlagged, setIsFlagged] = useState<boolean>();
   const wasAttempted = question.submittedAnswerLetter !== undefined;
   const correctOption = question.options.filter(option => option.letter === question.correctAnswerLetter);
 
@@ -62,10 +63,14 @@ function QuestionView({ question }: QuestionViewProps) {
             variant="contained"
             disabled={!selectedOption}
             onClick={() => questionsStore.submitAnswer(selectedOption!.letter)}
+            sx={{ mx: 2 }}
           >
             Submit
           </Button>
           <Stack direction="row" spacing={1}>
+            <IconButton onClick={() => setIsFlagged(prevIsFlagged => !prevIsFlagged)}>
+              {isFlagged ? <Flag color="primary" /> : <FlagOutlined color="primary" />}
+            </IconButton>
             <Button
               startIcon={<KeyboardArrowLeft />}
               variant="outlined"

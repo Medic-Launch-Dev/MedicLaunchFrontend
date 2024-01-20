@@ -18,6 +18,7 @@ import ReviewSession from "./pages/ReviewSession";
 import Root from "./pages/Root";
 // import reportWebVitals from "./reportWebVitals";
 import CreateSession from "./pages/CreateSession";
+import UserManagement from "./pages/UserManagement";
 import { AuthGuard } from "./services/AuthGuard";
 import { AuthProvider } from "./services/AuthProvider";
 import {
@@ -57,6 +58,10 @@ const App = () => {
                     <Route
                       path="edit-questions"
                       element={<EditQuestions />}
+                    />
+                    <Route
+                      path="user-management"
+                      element={<UserManagement />}
                     />
                   </Route>
                   <Route path="/login" element={<Login />} />
