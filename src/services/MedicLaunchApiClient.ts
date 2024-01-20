@@ -13,7 +13,7 @@ export default class MedicLaunchApiClient {
   private readonly baseUrl: string;
   constructor(axiosProvider: AxiosProvider) {
     this.baseUrl = process.env.REACT_APP_MEDIC_LAUNCH_URL!;
-    this.apiUrl = this.baseUrl + 'api';
+    this.apiUrl = this.baseUrl + '/api';
     this.axios = axiosProvider.defaultInstance;
   }
 
@@ -24,14 +24,11 @@ export default class MedicLaunchApiClient {
 
   async filterQuestions(practiceFilter: PracticeFilter): Promise<Question[]> {
     console.log("Practice Filter: ", practiceFilter);
-
-    const response = this.axios.post(`${this.apiUrl}/questions/filter`, {
-      practiceFilter
+    const response = await this.axios.post(`${this.apiUrl}/questions/filter`, {
+      ...practiceFilter,
+      familiarity: practiceFilter.familiarity.toString(),
     });
-
-    const { allQuestions } = (await response).data;
-
-    return allQuestions;
+    return response.data;
   }
 
   async saveQuestion(question: Question) {
@@ -64,6 +61,7 @@ export default class MedicLaunchApiClient {
 
   async getSpecialitiesList(): Promise<Speciality[]> {
     // use axios to get the list of specialities
+    console.log(`${this.apiUrl}/questions/specialities`);
     const response = await this.axios.get<Speciality[]>(`${this.apiUrl}/questions/specialities`);
     return response.data;
   }

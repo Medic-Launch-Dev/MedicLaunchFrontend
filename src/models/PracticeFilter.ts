@@ -1,10 +1,11 @@
 import { makeAutoObservable } from "mobx";
+import { QuestionType } from "./Question";
 
 export enum Familiarity {
-    NewQuestions = "New Questions",
-    IncorrectQuestions = "Incorrect Questions",
-    FlaggedQuestions = "Flagged Questions",
-    AllQuestions = "All Questions"
+    NewQuestions = "NewQuestions",
+    IncorrectQuestions = "IncorrectQuestions",
+    FlaggedQuestions = "FlaggedQuestions",
+    AllQuestions = "AllQuestions"
 }
 
 export enum QuestionsOrder {
@@ -14,14 +15,17 @@ export enum QuestionsOrder {
 
 export class PracticeFilter {
     constructor() {
-        this.specialities = [];
+        this.specialityIds = [];
         this.familiarity = Familiarity.NewQuestions;
-        this.questionsOrder = QuestionsOrder.Randomized;
+        this.selectionOrder = QuestionsOrder.Randomized;
         this.questionsCount = 20;
+        this.allSpecialitiesSelected = false;
         makeAutoObservable(this);
     }
-    specialities: string[];
+    specialityIds: string[];
     familiarity: Familiarity;
-    questionsOrder: QuestionsOrder;
+    selectionOrder: QuestionsOrder;
     questionsCount: number;
+    questionType: string = QuestionType.General
+    allSpecialitiesSelected: boolean;
 }

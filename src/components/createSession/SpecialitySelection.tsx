@@ -7,13 +7,10 @@ import { useServiceProvider } from "../../services/ServiceProvider";
 import SpecialityOption from "./SpecialityOption";
 
 export const SpecialitySelection = observer(() => {
-
-  const [allSelected, setAllSelected] = useState<boolean>(false);
-
   const { practiceStore, questionsStore } = useServiceProvider();
 
   const practiceFilter: PracticeFilter = practiceStore.practiceFilter;
-  const selectedSpecialities = practiceFilter.specialities;
+  const selectedSpecialities = practiceFilter.specialityIds;
 
   const setSelectedSpecialities = (selectedSpecialitiesInput: string[]) => {
     practiceStore.setSelectedSpecialities(selectedSpecialitiesInput);
@@ -22,7 +19,7 @@ export const SpecialitySelection = observer(() => {
   const [specialities, setSpecialitiesList] = useState<Speciality[]>([]);
 
   const handleSpecialityClick = (speciality: string) => {
-    if (allSelected) {
+    if (practiceFilter.allSpecialitiesSelected) {
       const specialityToRemove = speciality;
       const updatedSpecialities = specialities
         .filter((speciality) => speciality.id !== specialityToRemove)
@@ -42,8 +39,7 @@ export const SpecialitySelection = observer(() => {
   };
 
   const handleSelectAllClick = () => {
-    if (allSelected) setSelectedSpecialities([]);
-    else setAllSelected(true);
+    practiceStore.setAllSpecialitiesSelected(true);
   };
 
   useEffect(() => {
@@ -55,13 +51,21 @@ export const SpecialitySelection = observer(() => {
   const selectAllOption: Speciality = { id: "all", name: "Select All" };
 
   return specialities && specialities.length > 0 ? (
-    <Box sx={{ bgcolor: "white", borderRadius: 2, p: 4, maxHeight: '100%', overflowY: 'scroll' }}>
+    <Box
+      sx={{
+        bgcolor: "white",
+        borderRadius: 2,
+        p: 4,
+        maxHeight: "100%",
+        overflowY: "scroll",
+      }}
+    >
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <SpecialityOption
             centered
             speciality={selectAllOption}
-            selected={allSelected}
+            selected={practiceFilter.allSpecialitiesSelected}
             setSelected={() => handleSelectAllClick()}
           />
         </Grid>
@@ -69,7 +73,7 @@ export const SpecialitySelection = observer(() => {
           <Grid item xs={3}>
             <SpecialityOption
               selected={
-                selectedSpecialities.includes(speciality.id) || allSelected
+                selectedSpecialities.includes(speciality.id) || practiceFilter.allSpecialitiesSelected
               }
               setSelected={handleSpecialityClick}
               speciality={speciality}
