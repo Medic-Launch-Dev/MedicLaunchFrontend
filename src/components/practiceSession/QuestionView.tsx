@@ -10,6 +10,8 @@ import LinkButton from "../util/LinkButton";
 import AnswerOption from "./AnswerOption";
 import AnswersGrid from "./AnswersGrid";
 import LabValues from "./LabValues";
+import { RichTextReadOnly } from "mui-tiptap";
+import useExtensions from "../tiptap/useExtensions";
 
 interface QuestionViewProps {
   question: QuestionModelUI;
@@ -21,10 +23,17 @@ function QuestionView({ question }: QuestionViewProps) {
   const wasAttempted = question.submittedAnswerLetter !== undefined;
   const correctOption = question.options.filter(option => option.letter === question.correctAnswerLetter);
 
+  const extensions = useExtensions({
+    placeholder: ""
+  });
+
   const questionBodyMarkup = (
     <>
-      <Typography variant="body1" sx={{ fontWeight: 500, mb: 2 }}>{question.questionText}</Typography>
-
+      {/* <Typography variant="body1" sx={{ fontWeight: 500, mb: 2 }}>{question.questionText}</Typography> */}
+      <RichTextReadOnly
+              content={question.questionText}
+              extensions={extensions}
+            />
       <Stack spacing={1} mb={2}>
         {
           question.options.map((option, index) => {
