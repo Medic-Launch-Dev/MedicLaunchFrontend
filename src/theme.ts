@@ -70,7 +70,7 @@ const theme = createTheme({
       fontWeight: 600,
     },
     h6: {
-      fontSize: '0.9rem',
+      fontSize: '0.875rem',
       fontWeight: 600,
     },
     subtitle1: {

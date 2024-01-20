@@ -1,13 +1,15 @@
 import { ChevronRight, KeyboardArrowLeft } from "@mui/icons-material";
-import { Button, Grid, Stack, Typography } from "@mui/material";
+import { Box, Button, Grid, Stack, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import { Option } from "../../models/Question";
 import { useServiceProvider } from "../../services/ServiceProvider";
 import { QuestionModelUI } from "../../stores/questionsStore";
+import { primaryGradient } from "../../theme";
 import LinkButton from "../util/LinkButton";
 import AnswerOption from "./AnswerOption";
 import AnswersGrid from "./AnswersGrid";
+import LabValues from "./LabValues";
 
 interface QuestionViewProps {
   question: QuestionModelUI;
@@ -17,6 +19,7 @@ function QuestionView({ question }: QuestionViewProps) {
   const { questionsStore } = useServiceProvider();
   const [selectedOption, setSelectedOption] = useState<Option>();
   const wasAttempted = question.submittedAnswerLetter !== undefined;
+  const correctOption = question.options.filter(option => option.letter === question.correctAnswerLetter);
 
   const questionBodyMarkup = (
     <>
@@ -83,22 +86,35 @@ function QuestionView({ question }: QuestionViewProps) {
         </Stack>
       }
     </>
+  );
+
+  const rightSideMarkup = (
+    <Stack spacing={2} sx={{ maxHeight: 450 }}>
+      <Box sx={{ flexShrink: 0 }}>
+        <AnswersGrid />
+      </Box>
+      <Box sx={{ flexGrow: 1, overflowY: 'scroll', backgroundColor: "white", borderRadius: 1, p: 3 }}>
+        <LabValues />
+      </Box>
+    </Stack>
   )
 
   const explanationMarkup = (
     <Stack spacing={3}>
-      <Stack
-        spacing={2}
-        sx={{
-          backgroundColor: "#fff",
-          p: 4,
-          borderRadius: 1,
-        }}
-      >
+      <Box sx={{ backgroundColor: "#fff", p: 4, borderRadius: 1, }}>
         <Typography variant="h4" color="primary">Explanation</Typography>
-        <Typography variant="h5" color="primary">The correct answer is {question.correctAnswerLetter}</Typography>
-        <Typography variant="body1">{question.explanation}</Typography>
-      </Stack>
+        <Typography variant="h5" color="primary" mt={2}>The correct answer is {question.correctAnswerLetter}: {correctOption[0].text}</Typography>
+        <Typography fontSize={13} fontWeight={500} mt={1}>{question.explanation}</Typography>
+        <Typography variant="h6" color="primary" mt={2}>Key Learning Points:</Typography>
+        <Typography fontSize={13} fontWeight={500} mt={1}>{question.explanation}</Typography>
+        <Stack
+          mt={3}
+          sx={{ background: primaryGradient, p: 3, mx: 8, alignItems: 'center', borderRadius: 1.5 }}
+        >
+          <Typography variant="h6" color="secondary">Clinical Tips:</Typography>
+          <Typography fontSize={13} textAlign="center" mt={1} color="secondary">{question.explanation}</Typography>
+        </Stack>
+      </Box>
       <Stack direction="row" spacing={1}>
         <Button
           startIcon={<KeyboardArrowLeft />}
@@ -128,12 +144,12 @@ function QuestionView({ question }: QuestionViewProps) {
   )
 
   return (
-    <Grid container columnSpacing={6} rowSpacing={3}>
+    <Grid container spacing={3} pb={3}>
       <Grid item xs={12} lg={6}>
         {questionBodyMarkup}
       </Grid>
       <Grid item xs={12} lg={6}>
-        <AnswersGrid />
+        {rightSideMarkup}
       </Grid>
       <Grid item xs={12}>
         {wasAttempted && explanationMarkup}

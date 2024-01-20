@@ -1,5 +1,6 @@
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import { Box, Button, Container, Stack, Step, StepLabel, Stepper } from "@mui/material";
+import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FamiliaritySelection } from "../components/createSession/FamiliaritySelection";
@@ -7,7 +8,7 @@ import { OrderQuantitySelection } from "../components/createSession/OrderQuantit
 import { SpecialitySelection } from "../components/createSession/SpecialitySelection";
 import LinkButton from "../components/util/LinkButton";
 
-export default function CreateSession() {
+function CreateSession() {
   const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
 
@@ -85,3 +86,5 @@ export default function CreateSession() {
     </Container>
   )
 }
+
+export default observer(CreateSession);

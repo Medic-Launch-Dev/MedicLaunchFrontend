@@ -13,14 +13,13 @@ export default class MedicLaunchApiClient {
   private readonly baseUrl: string;
   constructor(axiosProvider: AxiosProvider) {
     this.baseUrl = process.env.REACT_APP_MEDIC_LAUNCH_URL!;
-    this.apiUrl = this.baseUrl + '/api';
+    this.apiUrl = this.baseUrl + 'api';
     this.axios = axiosProvider.defaultInstance;
   }
 
   async getQuestionsInSpeciality(specialityId: string): Promise<Question[]> {
-    const response = await fetch(`${this.apiUrl}/questions/speciality/${specialityId}`);
-    const data = await response.json();
-    return data;
+    const response = await this.axios.get<Question[]>(`${this.apiUrl}/questions/speciality/${specialityId}`);
+    return response.data;
   }
 
   async filterQuestions(practiceFilter: PracticeFilter): Promise<Question[]> {
