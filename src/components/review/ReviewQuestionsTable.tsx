@@ -1,6 +1,8 @@
 import { Button, Chip, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { useNavigate } from "react-router";
 import { useServiceProvider } from "../../services/ServiceProvider";
+import { RichTextReadOnly } from "mui-tiptap";
+import useExtensions from "../tiptap/useExtensions";
 
 
 
@@ -8,6 +10,10 @@ export default function ReviewQuestionsTable() {
   const { questionsStore } = useServiceProvider();
   const { wasAnsweredCorrectly } = questionsStore;
   const navigate = useNavigate();
+
+  const extensions = useExtensions({
+    placeholder: ""
+  });
 
   function handleClickReview(idx) {
     questionsStore.setCurrentQuestion(idx);
@@ -40,7 +46,12 @@ export default function ReviewQuestionsTable() {
               <TableCell component="th" scope="row" sx={{ width: 100 }}>
                 {getResultChip(wasAnsweredCorrectly(question))}
               </TableCell>
-              <TableCell>{`${idx + 1}. ${question.questionText}`}</TableCell>
+              <TableCell>
+                  <RichTextReadOnly
+                    content={`${idx + 1}. ${question.questionText}`}
+                    extensions={extensions}
+                  />
+              </TableCell>
               <TableCell align="right">
                 <Button onClick={() => handleClickReview(idx)} size="small">
                   Review
