@@ -8,6 +8,7 @@ import {
   StepLabel,
   Stepper,
 } from "@mui/material";
+import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FamiliaritySelection } from "../components/createSession/FamiliaritySelection";
@@ -16,7 +17,7 @@ import { SpecialitySelection } from "../components/createSession/SpecialitySelec
 import LinkButton from "../components/util/LinkButton";
 import { useServiceProvider } from "../services/ServiceProvider";
 
-export default function CreateSession() {
+function CreateSession() {
   const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
   const { practiceStore, questionsStore } = useServiceProvider();
@@ -127,3 +128,5 @@ export default function CreateSession() {
     </Container>
   );
 }
+
+export default observer(CreateSession);

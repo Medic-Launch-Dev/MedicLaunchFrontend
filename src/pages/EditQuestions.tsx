@@ -13,12 +13,24 @@ import {
 	TableRow,
 	Typography
 } from "@mui/material"
+import { observer } from "mobx-react-lite"
+import { useEffect } from "react"
 import TextSelect from "../components/util/TextSelect"
+import { useServiceProvider } from "../services/ServiceProvider"
 import { primaryGradientText } from "../theme"
 
-export default function EditQuestions() {
+function EditQuestions() {
+	const { questionsStore } = useServiceProvider();
 
-	// Below variable is just to determine how the tablebody would look/be  
+	useEffect(() => {
+		// questionsStore.getSpecialities()
+		// 	.then(specialities => {
+		// 		const questionPromises = specialities.map(speciality => questionsStore.getSpecialityQuestions(speciality.id));
+		// 		return Promise.all(questionPromises);
+		// 	})
+		// 	.then(allQuestions => console.log('Questions for each specialty:', allQuestions))
+	}, [])
+
 	const EXAMPLES = [{
 		questionCode: "MLAN01",
 		status: "pending",
@@ -35,9 +47,6 @@ export default function EditQuestions() {
 		question: "A 30-year-old female presents with severe acne vulgaris that has been unresponsive...",
 		idx: 69
 	}]
-
-	// Function below for pending, approved, not approved, they are capitalized,
-	// please adjust capitalization
 
 	function getStatusChip(status?: string) {
 		if (status === "approved") return <Chip label="Approved" sx={{ backgroundColor: "#A4E29F" }} />
@@ -126,3 +135,5 @@ export default function EditQuestions() {
 		</Container>
 	)
 }
+
+export default observer(EditQuestions);
