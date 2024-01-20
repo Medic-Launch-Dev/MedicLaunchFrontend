@@ -1,4 +1,4 @@
-import { Grid, Slider, Stack, Typography } from "@mui/material";
+import { Box, Slider, Stack, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { QuestionsOrder } from "../../models/PracticeFilter";
 import { useServiceProvider } from "../../services/ServiceProvider";
@@ -22,19 +22,19 @@ export const OrderQuantitySelection = observer(() => {
   }
 
   return (
-    <Grid container spacing={6} height="100%" px={16} py={3}>
-      {
-        orders.map(o => (
-          <Grid item xs={6}>
-            <FilterOption
-              heading={o}
-              selected={order.toString() === o.toString()}
-              setSelected={setOrder}
-            />
-          </Grid>
-        ))
-      }
-      <Grid item xs={12}>
+    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', bgcolor: 'white', borderRadius: 2 }}>
+      <Stack sx={{ width: 450 }} spacing={3}>
+        {
+          orders.map(o => (
+            <Box>
+              <FilterOption
+                text={o}
+                selected={order.toString() === o.toString()}
+                setSelected={setOrder}
+              />
+            </Box>
+          ))
+        }
         <Stack
           spacing={6}
           justifyContent="center"
@@ -42,13 +42,12 @@ export const OrderQuantitySelection = observer(() => {
           sx={{
             background: "white",
             borderRadius: 1.5,
-            py: 2,
-            px: 4,
+            p: 5,
             boxShadow: '0px 0px 22px 0px #97979765',
             height: "100%",
           }}
         >
-          <Typography variant="h3" color="primary">Select number of questions</Typography>
+          <Typography fontSize={18} fontWeight={600}>Select number of questions</Typography>
           <Slider
             defaultValue={practiceFilter.questionsCount}
             step={1}
@@ -58,8 +57,8 @@ export const OrderQuantitySelection = observer(() => {
             onChange={(e, value) => onQuanityChange(value as number)}
           />
         </Stack>
-      </Grid>
-    </Grid>
+      </Stack>
+    </Box>
 
   )
 })

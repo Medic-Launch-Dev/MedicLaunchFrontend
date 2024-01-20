@@ -42,7 +42,7 @@ export default function ReviewQuestionsTable() {
               </TableCell>
               <TableCell>{`${idx + 1}. ${question.questionText}`}</TableCell>
               <TableCell align="right">
-                <Button onClick={() => handleClickReview(idx)}>
+                <Button onClick={() => handleClickReview(idx)} size="small">
                   Review
                 </Button>
               </TableCell>

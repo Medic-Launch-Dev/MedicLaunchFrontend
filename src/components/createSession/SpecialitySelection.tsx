@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 import { PracticeFilter } from "../../models/PracticeFilter";
@@ -55,27 +55,29 @@ export const SpecialitySelection = observer(() => {
   const selectAllOption: Speciality = { id: "all", name: "Select All" };
 
   return specialities && specialities.length > 0 ? (
-    <Grid container spacing={2}>
-      <Grid item xs={12}>
-        <SpecialityOption
-          centered
-          speciality={selectAllOption}
-          selected={allSelected}
-          setSelected={() => handleSelectAllClick()}
-        />
-      </Grid>
-      {specialities.map((speciality) => (
-        <Grid item xs={3}>
+    <Box sx={{ bgcolor: "white", borderRadius: 2, p: 4, maxHeight: '100%', overflowY: 'scroll' }}>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
           <SpecialityOption
-            selected={
-              selectedSpecialities.includes(speciality.id) || allSelected
-            }
-            setSelected={handleSpecialityClick}
-            speciality={speciality}
+            centered
+            speciality={selectAllOption}
+            selected={allSelected}
+            setSelected={() => handleSelectAllClick()}
           />
         </Grid>
-      ))}
-    </Grid>
+        {specialities.map((speciality) => (
+          <Grid item xs={3}>
+            <SpecialityOption
+              selected={
+                selectedSpecialities.includes(speciality.id) || allSelected
+              }
+              setSelected={handleSpecialityClick}
+              speciality={speciality}
+            />
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
   ) : (
     <div>Loading...</div>
   );

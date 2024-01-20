@@ -11,7 +11,7 @@ export default function CreateSession() {
   const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
 
-  const steps = ['Areas of study', 'Familiarity level', 'Order and Quantity',];
+  const steps = ['Specialities', 'Familiarity level', 'Order and Quantity',];
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -28,12 +28,11 @@ export default function CreateSession() {
   return (
     <Container maxWidth="lg" sx={{ height: '100%' }}>
       <Stack height="100%" gap={3} py={2}>
-
         <LinkButton to="/" sx={{ width: "max-content", flexShrink: 0 }}>Study Portal</LinkButton>
         <Stepper
           activeStep={activeStep}
           sx={{
-            my: 1,
+            my: 2,
             '& .MuiStepConnector-line': { borderTopWidth: 2 },
           }}>
           {steps.map((label) => {
@@ -53,15 +52,9 @@ export default function CreateSession() {
         </Stepper>
         <Box
           sx={{
-            bgcolor: "white",
-            p: 4,
-            borderRadius: 2,
             flexGrow: 1,
             maxHeight: '100%',
-            overflowY: 'scroll',
-            "::-webkit-scrollbar": {
-              display: 'none',
-            }
+            overflowY: 'hidden',
           }}>
           {activeStep === 0 && <SpecialitySelection />}
           {activeStep === 1 && <FamiliaritySelection />}
@@ -85,7 +78,7 @@ export default function CreateSession() {
             endIcon={<ChevronRight />}
             onClick={activeStep < 2 ? handleNext : handleStartPractice}
           >
-            {activeStep < 2 ? "Next" : "Start practice"}
+            Next
           </Button>
         </Stack>
       </Stack>

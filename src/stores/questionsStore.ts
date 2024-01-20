@@ -4,13 +4,6 @@ import { Question } from "../models/Question";
 import Speciality from "../models/Speciality";
 import MedicLaunchApiClient from "../services/MedicLaunchApiClient";
 
-// TODO: remove question and use class below
-// TODO: remove answer option class
-// TODO: keep all logic inside the store class
-// TODO: don't expose the current question index
-// TODO: refactor question view UI class to rely on the store class
-// TODO: retrieve the questions from the backend and use in the practice session
-
 export class QuestionModelUI extends Question {
   submittedAnswerLetter?: string;
 }

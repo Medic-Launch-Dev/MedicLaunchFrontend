@@ -134,8 +134,8 @@ theme.components = {
     styleOverrides: {
       root: {
         fontWeight: 500,
-        fontSize: 12,
-        color: "#242731"
+        fontSize: 13,
+        color: "#2f2f2f"
       }
     }
   },
@@ -145,7 +145,7 @@ theme.components = {
         "& .MuiTableCell-root": {
           color: "#222",
           fontSize: 14,
-          fontWeight: 500,
+          fontWeight: 600,
           textAlign: "left"
         }
       }

@@ -1,8 +1,8 @@
-import { Grid } from "@mui/material";
-import FilterOption from "./FamiliarityOption";
-import { useServiceProvider } from "../../services/ServiceProvider";
-import { Familiarity } from "../../models/PracticeFilter";
+import { Box, Stack } from "@mui/material";
 import { observer } from "mobx-react-lite";
+import { Familiarity } from "../../models/PracticeFilter";
+import { useServiceProvider } from "../../services/ServiceProvider";
+import FilterOption from "./FamiliarityOption";
 
 export const FamiliaritySelection = observer(() => {
   const familiarities = [
@@ -33,19 +33,18 @@ export const FamiliaritySelection = observer(() => {
   }
 
   return (
-    <Grid container spacing={6} height="100%" px={12} py={3}>
-      {
-        familiarities.map(f => (
-          <Grid item xs={6}>
+    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', bgcolor: 'white', borderRadius: 2 }}>
+      <Stack sx={{ width: 450, m: 'auto' }} spacing={3}>
+        {
+          familiarities.map(f => (
             <FilterOption
-              heading={f.heading}
-              subheading={f.subheading}
+              text={f.heading}
               selected={familiarity === f.heading}
               setSelected={setFamiliarity}
             />
-          </Grid>
-        ))
-      }
-    </Grid>
+          ))
+        }
+      </Stack>
+    </Box>
   )
 })
