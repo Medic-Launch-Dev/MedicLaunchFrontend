@@ -18,7 +18,7 @@ export class QuestionsStore {
 
 
   constructor(apClient: MedicLaunchApiClient) {
-    this.questions = newQuestionData;
+    // this.questions = newQuestionData;
     this._currentQuestionIdx = 0;
     this._correctAnswers = 0;
     this._incorrectAnswers = 0;
@@ -96,4 +96,11 @@ export class QuestionsStore {
     const specialities = await this.apiClient.getSpecialitiesList();
     return specialities;
   }
+ 
+  async setPracticeQuestions(questions: Question[]) {
+    console.log("Questions: ", questions);
+
+    this.questions = questions;
+  }
+  
 }

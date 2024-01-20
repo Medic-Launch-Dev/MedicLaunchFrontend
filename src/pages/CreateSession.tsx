@@ -1,19 +1,49 @@
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
-import { Box, Button, Container, Stack, Step, StepLabel, Stepper } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Stack,
+  Step,
+  StepLabel,
+  Stepper,
+} from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FamiliaritySelection } from "../components/createSession/FamiliaritySelection";
 import { OrderQuantitySelection } from "../components/createSession/OrderQuantitySelection";
 import { SpecialitySelection } from "../components/createSession/SpecialitySelection";
 import LinkButton from "../components/util/LinkButton";
+import { useServiceProvider } from "../services/ServiceProvider";
 
 export default function CreateSession() {
   const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
+  const { practiceStore, questionsStore } = useServiceProvider();
 
-  const steps = ['Specialities', 'Familiarity level', 'Order and Quantity',];
+  const steps = [
+    {
+      label: "Select speciality",
+      onNext: async () => {},
+    },
+    {
+      label: "Select familiarity",
+      onNext: async () => {
+        const practiceQuestion = await practiceStore.getPracticeQuestions();
+        console.log("Questions in CreateSession: ", practiceQuestion);
 
-  const handleNext = () => {
+        questionsStore.setPracticeQuestions(practiceQuestion);
+      },
+    },
+    {
+      label: "Select number of questions",
+      onNext: async () => {},
+    },
+  ];
+
+  const handleNext = async () => {
+    await steps[activeStep].onNext();
+
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
@@ -23,29 +53,33 @@ export default function CreateSession() {
 
   const handleStartPractice = () => {
     navigate("/practice-session");
-  }
+  };
 
   return (
-    <Container maxWidth="lg" sx={{ height: '100%' }}>
+    <Container maxWidth="lg" sx={{ height: "100%" }}>
       <Stack height="100%" gap={3} py={2}>
-        <LinkButton to="/" sx={{ width: "max-content", flexShrink: 0 }}>Study Portal</LinkButton>
+        <LinkButton to="/" sx={{ width: "max-content", flexShrink: 0 }}>
+          Study Portal
+        </LinkButton>
         <Stepper
           activeStep={activeStep}
           sx={{
             my: 2,
-            '& .MuiStepConnector-line': { borderTopWidth: 2 },
-          }}>
-          {steps.map((label) => {
+            "& .MuiStepConnector-line": { borderTopWidth: 2 },
+          }}
+        >
+          {steps.map(({ label, onNext }) => {
             const stepProps: { completed?: boolean } = {};
             return (
               <Step
                 key={label}
                 {...stepProps}
                 sx={{
-                  '& .MuiStepLabel-label': { fontSize: '1rem', px: 0.5 },
-                  '& .MuiStepIcon-text': { fontSize: '1rem', },
-                }}>
-                <StepLabel sx={{ fontSize: '1.5rem' }}>{label}</StepLabel>
+                  "& .MuiStepLabel-label": { fontSize: "1rem", px: 0.5 },
+                  "& .MuiStepIcon-text": { fontSize: "1rem" },
+                }}
+              >
+                <StepLabel sx={{ fontSize: "1.5rem" }}>{label}</StepLabel>
               </Step>
             );
           })}
@@ -53,14 +87,22 @@ export default function CreateSession() {
         <Box
           sx={{
             flexGrow: 1,
-            maxHeight: '100%',
-            overflowY: 'hidden',
-          }}>
+            maxHeight: "100%",
+            overflowY: "hidden",
+          }}
+        >
           {activeStep === 0 && <SpecialitySelection />}
           {activeStep === 1 && <FamiliaritySelection />}
           {activeStep === 2 && <OrderQuantitySelection />}
         </Box>
-        <Stack direction="row" alignItems="center" justifyContent="center" gap={1} pt={1} pb={6}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="center"
+          gap={1}
+          pt={1}
+          pb={6}
+        >
           <Button
             variant="outlined"
             sx={{ width: "max-content", flexShrink: 0 }}
@@ -83,5 +125,5 @@ export default function CreateSession() {
         </Stack>
       </Stack>
     </Container>
-  )
+  );
 }

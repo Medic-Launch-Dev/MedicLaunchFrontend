@@ -9,27 +9,32 @@ export const FamiliaritySelection = observer(() => {
     {
       heading: "New questions",
       subheading: "Questions you've never attempted before",
+      enumMapping: Familiarity.NewQuestions
     },
     {
       heading: "Incorrect questions",
       subheading: "Questions you got incorrect on your last attempt",
+      enumMapping: Familiarity.IncorrectQuestions
     },
     {
       heading: "Flagged questions",
       subheading: "Questions you flagged in previous sessions",
+      enumMapping: Familiarity.FlaggedQuestions
     },
     {
       heading: "All questions",
       subheading: "Every question in the UKMLA question bank",
+      enumMapping: Familiarity.AllQuestions
     },
   ]
 
   const { practiceStore } = useServiceProvider();
   const practiceFilter = practiceStore.practiceFilter;
-  const familiarity = practiceFilter.familiarity ? practiceFilter.familiarity : "";
+  const familiarity = practiceFilter.familiarity;
 
   const setFamiliarity = (familiarity: string) => {
-    practiceStore.setFamiliarity(familiarity as Familiarity);
+    const familiarityEnum = familiarities.find(f => f.heading === familiarity)!.enumMapping!;
+    practiceStore.setFamiliarity(familiarityEnum);
   }
 
   return (
@@ -39,7 +44,7 @@ export const FamiliaritySelection = observer(() => {
           familiarities.map(f => (
             <FilterOption
               text={f.heading}
-              selected={familiarity === f.heading}
+              selected={f.enumMapping === familiarity}
               setSelected={setFamiliarity}
             />
           ))

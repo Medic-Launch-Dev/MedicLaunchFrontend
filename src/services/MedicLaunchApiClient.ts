@@ -25,14 +25,11 @@ export default class MedicLaunchApiClient {
 
   async filterQuestions(practiceFilter: PracticeFilter): Promise<Question[]> {
     console.log("Practice Filter: ", practiceFilter);
-
-    const response = this.axios.post(`${this.apiUrl}/questions/filter`, {
-      practiceFilter
+    const response = await this.axios.post(`${this.apiUrl}/questions/filter`, {
+      ...practiceFilter,
+      familiarity: practiceFilter.familiarity.toString(),
     });
-
-    const { allQuestions } = (await response).data;
-
-    return allQuestions;
+    return response.data;
   }
 
   async saveQuestion(question: Question) {
