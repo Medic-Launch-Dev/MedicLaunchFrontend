@@ -1,0 +1,20 @@
+*::-webkit-scrollbar {
+  width: 24px;
+  border-top-right-radius: inherit;
+  border-bottom-right-radius: inherit;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #babac0;
+  border: 8px transparent solid;
+  border-radius: 9999px;
+  background-clip: padding-box;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #a0a0a5;
+}
+
+*::-webkit-scrollbar-button {
+  display: none;
+}

@@ -1,5 +1,5 @@
-import { ChevronRight, Flag, FlagOutlined, KeyboardArrowLeft } from "@mui/icons-material";
-import { Box, Button, Grid, IconButton, Stack, Typography } from "@mui/material";
+import { ChevronRight, Flag, KeyboardArrowLeft } from "@mui/icons-material";
+import { Box, Button, Grid, Stack, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { RichTextReadOnly } from "mui-tiptap";
 import { useState } from "react";
@@ -66,19 +66,23 @@ function QuestionView({ question }: QuestionViewProps) {
 
       {
         !wasAttempted &&
-        <Stack sx={{ width: "max-content" }} spacing={1}>
+        <Stack sx={{ width: "max-content" }} spacing={1} alignItems="center">
           <Button
             variant="contained"
+            sx={{ px: 12 }}
             disabled={!selectedOption}
             onClick={() => questionsStore.submitAnswer(selectedOption!.letter)}
-            sx={{ mx: 2 }}
           >
             Submit
           </Button>
           <Stack direction="row" spacing={1}>
-            <IconButton onClick={() => setIsFlagged(prevIsFlagged => !prevIsFlagged)}>
-              {isFlagged ? <Flag color="primary" /> : <FlagOutlined color="primary" />}
-            </IconButton>
+            <Button
+              startIcon={<Flag />}
+              onClick={() => setIsFlagged(prevIsFlagged => !prevIsFlagged)}
+              variant={isFlagged ? "contained" : "outlined"}
+            >
+              Flag
+            </Button>
             <Button
               startIcon={<KeyboardArrowLeft />}
               variant="outlined"
@@ -171,26 +175,35 @@ function QuestionView({ question }: QuestionViewProps) {
           </Stack>
         }
       </Box>
-      <Stack direction="row" spacing={1}>
-        <Button
-          startIcon={<KeyboardArrowLeft />}
-          variant="outlined"
-          onClick={() => questionsStore.decrementQuestion()}
-          disabled={questionsStore.onFirstQuestion}
-        >
-          Previous
-        </Button>
-
+      <Stack sx={{ width: "max-content" }} spacing={1} alignItems="center">
         {questionsStore.onLastQuestion ? (
-          <LinkButton to="/review-session">End Session</LinkButton>
+          <LinkButton sx={{ px: 12 }} to="/review-session">End Session</LinkButton>
         ) : (
           <Button
+            sx={{ px: 12 }}
             variant="contained"
             onClick={() => questionsStore.incrementQuestion()}
           >
             Next Question
           </Button>
         )}
+        <Stack direction="row" spacing={1}>
+          <Button
+            startIcon={<Flag />}
+            onClick={() => setIsFlagged(prevIsFlagged => !prevIsFlagged)}
+            variant={isFlagged ? "contained" : "outlined"}
+          >
+            Flag
+          </Button>
+          <Button
+            startIcon={<KeyboardArrowLeft />}
+            variant="outlined"
+            onClick={() => questionsStore.decrementQuestion()}
+            disabled={questionsStore.onFirstQuestion}
+          >
+            Previous
+          </Button>
+        </Stack>
       </Stack>
     </Stack>
   );

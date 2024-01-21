@@ -17,6 +17,7 @@ import Register from "./pages/Register";
 import ReviewSession from "./pages/ReviewSession";
 import Root from "./pages/Root";
 // import reportWebVitals from "./reportWebVitals";
+import "./index.css";
 import CreateSession from "./pages/CreateSession";
 import UserManagement from "./pages/UserManagement";
 import { AuthGuard } from "./services/AuthGuard";

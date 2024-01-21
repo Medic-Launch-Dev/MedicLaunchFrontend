@@ -29,7 +29,7 @@ export const OrderQuantitySelection = observer(() => {
         justifyContent: "center",
         height: "100%",
         bgcolor: "white",
-        borderRadius: 2,
+        borderRadius: 1.5,
       }}
     >
       <Stack sx={{ width: 450 }} spacing={3}>

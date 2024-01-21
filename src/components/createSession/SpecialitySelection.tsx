@@ -54,7 +54,7 @@ export const SpecialitySelection = observer(() => {
     <Box
       sx={{
         bgcolor: "white",
-        borderRadius: 2,
+        borderRadius: 1.5,
         p: 4,
         maxHeight: "100%",
         overflowY: "scroll",
