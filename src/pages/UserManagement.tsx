@@ -1,7 +1,7 @@
 import { Add } from '@mui/icons-material';
 import { Button, Container, Stack, TextField, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
-import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { primaryGradientText } from '../theme';
 import { Search } from '@mui/icons-material';
 
@@ -10,29 +10,17 @@ const columns: GridColDef[] = [
     { 
         field: 'id', 
         headerName: '#',
-        width: 30  
+        width: 30,  
     },
     {
         field: 'fullName',
         headerName: 'USER',
-        description: 'This column has a value getter and is not sortable.',
         width: 200,
-        renderCell: (params: GridRenderCellParams) => (
-            <div>
-                <a style={{color: '#0c78a6', textDecoration: 'none'}} href="#">{`${params.row.firstName || ''} ${params.row.lastName || ''}`}</a>
-            </div>
-        ), 
     },
     {
         field: 'email',
         headerName: 'EMAIL',
         width: 200,
-        renderCell: (params: GridRenderCellParams) => (
-            <div>
-                <a style={{color: '#0c78a6', textDecoration: 'none'}} href="#">{params.row.email}</a>
-            </div>
-        ),
-
     },
     {
         field: 'totalProducts',
@@ -64,15 +52,15 @@ const columns: GridColDef[] = [
 
 // This data is just an example to display on the grid, the rows attribute in datagrid should take an array of objects
 const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 14, email: 'testemail@gmail.com', totalRevenue: "90", lastLoggedIn: '12/09/2024', mailingStatus: 'YES', totalProducts: 4 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 31, email: 'testemail@gmail.com', totalRevenue: "90", lastLoggedIn: '12/09/2024', mailingStatus: 'YES', totalProducts: 4 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 31, email: 'testemail@gmail.com', totalRevenue: "90", lastLoggedIn: '12/09/2024', mailingStatus: 'YES', totalProducts: 4 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 11, email: 'testemail@gmail.com', totalRevenue: "90", lastLoggedIn: '12/09/2024', mailingStatus: 'YES', totalProducts: 4 },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null, email: 'testemail@gmail.com', totalRevenue: "90", lastLoggedIn: '12/09/2024', mailingStatus: 'YES', totalProducts: 4 },
-  { id: 6, lastName: 'Melisandre', firstName: null, age: 150, email: 'testemail@gmail.com', totalRevenue: "90", lastLoggedIn: '12/09/2024', mailingStatus: 'YES', totalProducts: 4 },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44, email: 'testemail@gmail.com', totalRevenue: "90", lastLoggedIn: '12/09/2024', mailingStatus: 'YES', totalProducts: 4 },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36, email: 'testemail@gmail.com', totalRevenue: "90", lastLoggedIn: '12/09/2024', mailingStatus: 'YES', totalProducts: 4 },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65, email: 'testemail@gmail.com', totalRevenue: "90", lastLoggedIn: '12/09/2024', mailingStatus: 'YES', totalProducts: 4 },
+  { id: 1, fullName: 'Snow Jon', age: 14, email: 'testemail@gmail.com', totalRevenue: 90, lastLoggedIn: '12/09/2024', mailingStatus: 'YES', totalProducts: 24 },
+  { id: 2, fullName: 'Lannister Cersei', age: 31, email: 'asd@gmail.com', totalRevenue: 290, lastLoggedIn: '12/09/2024', mailingStatus: 'YES', totalProducts: 2 },
+  { id: 3, fullName: 'Lannister Jaime', age: 31, email: 'gfg@gmail.com', totalRevenue: 910, lastLoggedIn: '12/09/2024', mailingStatus: 'YES', totalProducts: 15},
+  { id: 4, fullName: 'Stark Arya', age: 11, email: 'testemail@gmail.com', totalRevenue: 90, lastLoggedIn: '12/09/2024', mailingStatus: 'YES', totalProducts: 5},
+  { id: 5, fullName: 'Targaryen Daenerys', age: null, email: 'ere@gmail.com', totalRevenue: 40, lastLoggedIn: '12/09/2024', mailingStatus: 'YES', totalProducts: 1},
+  { id: 6, fullName: 'Melisandre', age: 150, email: 'testemail@gmail.com', totalRevenue: 90, lastLoggedIn: '12/09/2024', mailingStatus: 'YES', totalProducts: 5},
+  { id: 7, fullName: 'Clifford Ferrara', age: 44, email: 'cxc@gmail.com', totalRevenue: 90, lastLoggedIn: '12/09/2024', mailingStatus: 'YES', totalProducts: 43 },
+  { id: 8, fullName: 'Frances Rossini', age: 36, email: 'testemail@gmail.com', totalRevenue: 90, lastLoggedIn: '12/09/2024', mailingStatus: 'YES', totalProducts: 41 },
+  { id: 9, fullName: 'Roxie Harvey', age: 65, email: 'testemail@gmail.com', totalRevenue: 9, lastLoggedIn: '12/09/2024', mailingStatus: 'YES', totalProducts: 4 },
 ];
 
 export default function UserManagement() {
@@ -116,9 +104,7 @@ export default function UserManagement() {
                     rows={rows}
                     columns={columns}
                     checkboxSelection
-                    disableRowSelectionOnClick
                     columnHeaderHeight={45}
-
                 />
             </Box>
         </Container>
