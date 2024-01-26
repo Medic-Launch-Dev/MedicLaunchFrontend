@@ -69,7 +69,7 @@ function QuestionView({ question }: QuestionViewProps) {
         <Stack sx={{ width: "max-content" }} spacing={1} alignItems="center">
           <Button
             variant="contained"
-            sx={{ px: 12 }}
+            sx={{ px: 12, py: 1.25 }}
             disabled={!selectedOption}
             onClick={() => questionsStore.submitAnswer(selectedOption!.letter)}
           >
@@ -80,6 +80,7 @@ function QuestionView({ question }: QuestionViewProps) {
               startIcon={<Flag />}
               onClick={() => setIsFlagged(prevIsFlagged => !prevIsFlagged)}
               variant={isFlagged ? "contained" : "outlined"}
+              sx={isFlagged ? { border: '2px solid transparent' } : undefined}
             >
               Flag
             </Button>
@@ -177,10 +178,10 @@ function QuestionView({ question }: QuestionViewProps) {
       </Box>
       <Stack sx={{ width: "max-content" }} spacing={1} alignItems="center">
         {questionsStore.onLastQuestion ? (
-          <LinkButton sx={{ px: 12 }} to="/review-session">End Session</LinkButton>
+          <LinkButton sx={{ px: 12, py: 1.25 }} to="/review-session">End Session</LinkButton>
         ) : (
           <Button
-            sx={{ px: 12 }}
+            sx={{ px: 12, py: 1.25 }}
             variant="contained"
             onClick={() => questionsStore.incrementQuestion()}
           >

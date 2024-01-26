@@ -95,6 +95,7 @@ theme.components = {
       },
       containedSecondary: {
         background: `#fff`,
+        border: '2px solid transparent',
         ":hover": {
           backgroundColor: '#d2eefa',
         }
@@ -102,6 +103,9 @@ theme.components = {
       outlinedPrimary: {
         borderWidth: 2,
         ":hover": {
+          borderWidth: 2,
+        },
+        "&.Mui-disabled": {
           borderWidth: 2,
         }
       }
