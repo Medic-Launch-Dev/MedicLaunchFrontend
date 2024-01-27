@@ -1,13 +1,13 @@
+import { LoadingButton } from "@mui/lab";
 import {
   Box,
   Button,
   Container,
   Grid,
-  MenuItem,
-  Select,
+  Snackbar,
   Stack,
   TextField,
-  Typography,
+  Typography
 } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { RichTextEditorRef } from "mui-tiptap";
@@ -15,6 +15,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { RichQuestionTextEditor } from "../components/tiptap/RichQuestionTextEditor";
 import TextSelect from "../components/util/TextSelect";
+import { useSnackbar } from "../hooks/useSnackbar";
 import { Question, QuestionType } from "../models/Question";
 import Speciality from "../models/Speciality";
 import { useServiceProvider } from "../services/ServiceProvider";
@@ -22,6 +23,8 @@ import { primaryGradient, primaryGradientText } from "../theme";
 
 const CreateQuestion = () => {
   const { questionsStore } = useServiceProvider();
+  const { showSnackbar, snackbarProps } = useSnackbar();
+  const [loading, setLoading] = useState(false);
   const [specialities, setSpecialities] = useState<Speciality[]>([]);
   const navigate = useNavigate();
 
@@ -46,6 +49,7 @@ const CreateQuestion = () => {
   const clinicalTipsEditorRef = useRef<RichTextEditorRef>(null);
 
   const selectedSpecialtyRef = useRef<HTMLInputElement>(null);
+  const selectedQuestionBankRef = useRef<HTMLInputElement>(null);
 
   const indexToLetter = (index) => {
     return {
@@ -57,27 +61,38 @@ const CreateQuestion = () => {
     }[index];
   };
 
+  const questionBankOptions = ["Practice questions", "Mock 1", "Mock 2"];
+
   const handleSubmit = async () => {
-    const options = optionsRef.map((option) => option.current!.value);
+    try {
+      setLoading(true);
 
-    const question: Question = {
-      specialityId: selectedSpecialtyRef.current!.value,
-      questionText: questionTextEditorRef.current!.editor!.getHTML() ?? "",
-      clinicalTips: clinicalTipsEditorRef.current!.editor!.getHTML() ?? "",
-      learningPoints: learningPointsEditorRef.current!.editor!.getHTML() ?? "",
-      explanation: explanationEditorRef.current!.editor!.getHTML() ?? "",
-      options: options.map((option, index) => ({
-        letter: indexToLetter(index),
-        text: option,
-      })),
-      correctAnswerLetter: answerRef.current!.value,
-      questionType: QuestionType.General,
-      isSubmitted: true,
-    };
+      const options = optionsRef.map((option) => option.current!.value);
 
-    await questionsStore.addQuestion(question);
+      const question: Question = {
+        specialityId: selectedSpecialtyRef.current!.value,
+        questionText: questionTextEditorRef.current!.editor!.getHTML() ?? "",
+        clinicalTips: clinicalTipsEditorRef.current!.editor!.getHTML() ?? "",
+        learningPoints: learningPointsEditorRef.current!.editor!.getHTML() ?? "",
+        explanation: explanationEditorRef.current!.editor!.getHTML() ?? "",
+        options: options.map((option, index) => ({
+          letter: indexToLetter(index),
+          text: option,
+        })),
+        correctAnswerLetter: answerRef.current!.value,
+        questionType: QuestionType.General,
+        isSubmitted: true,
+      };
 
-    navigate("/edit-questions");
+      await questionsStore.addQuestion(question);
+
+      navigate("/edit-questions");
+    } catch (e) {
+      console.error(e);
+      showSnackbar("Failed to submit", "error");
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -88,6 +103,7 @@ const CreateQuestion = () => {
 
   return (
     <Container>
+      <Snackbar {...snackbarProps} />
       <Stack
         direction="row"
         alignItems="center"
@@ -99,38 +115,32 @@ const CreateQuestion = () => {
         </Typography>
         <Stack direction="row" spacing={1}>
           <Button variant="outlined">Preview</Button>
-          <Button variant="contained" onClick={handleSubmit}>
+          <LoadingButton variant="contained" onClick={handleSubmit} loading={loading}>
             Submit
-          </Button>
+          </LoadingButton>
         </Stack>
       </Stack>
       <form>
         <Grid container spacing={3}>
           <Grid item xs={8}>
             <Stack spacing={3}>
-              <Grid container columnSpacing={2}>
-                <Grid item xs={6}>
-                  <TextSelect
-                    label="Question bank"
-                    options={["Practice questions", "Mock 1", "Mock 2"]}
-                    setSelected={() => { }}
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <Select
-                    label="Speciality"
-                    defaultValue={selectedSpecialtyRef.current?.value}
-                    value={selectedSpecialtyRef.current?.value}
-                    inputRef={selectedSpecialtyRef}
-                  >
-                    {specialities.map((speciality) => (
-                      <MenuItem key={speciality.id} value={speciality.id}>
-                        {speciality.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </Grid>
-              </Grid>
+              <Stack direction="row" spacing={1}>
+                <TextSelect
+                  label="Question bank"
+                  options={questionBankOptions.map(option => ({ value: option }))}
+                  setSelected={() => { }}
+                />
+                <TextSelect
+                  label="Speciality"
+                  value={selectedSpecialtyRef.current?.value}
+                  inputRef={selectedSpecialtyRef}
+                  options={specialities.map(speciality => ({
+                    value: speciality.id,
+                    displayText: speciality.name
+                  }))}
+                  setSelected={() => { }}
+                />
+              </Stack>
 
               <Stack spacing={1}>
                 <Typography variant="h6" sx={primaryGradientText}>

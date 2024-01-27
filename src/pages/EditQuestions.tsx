@@ -54,6 +54,9 @@ function EditQuestions() {
 		return <Chip label="Pending" />
 	}
 
+	const questionBankOptions = ["Practice questions", "Mock 1", "Mock 2"];
+	const specialityOptions = ["Practice questions", "Mock 1", "Mock 2"];
+
 
 	return (
 		<Container>
@@ -71,14 +74,14 @@ function EditQuestions() {
 							<Grid item xs={6}>
 								<TextSelect
 									label="Question bank"
-									options={["Practice questions", "Mock 1", "Mock 2"]}
+									options={questionBankOptions.map(option => ({ value: option }))}
 									setSelected={() => { }}
 								/>
 							</Grid>
 							<Grid item xs={6} sx={{ fontWeight: "bold" }}>
 								<TextSelect
 									label="Speciality"
-									options={["Cardioligy", "Dermatology", "Cancer"]}
+									options={specialityOptions.map(option => ({ value: option }))}
 									setSelected={() => { }}
 								/>
 							</Grid>
