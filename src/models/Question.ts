@@ -20,4 +20,5 @@ export class Question {
     clinicalTips: string;
     learningPoints: string;
     isSubmitted: boolean;
+    specialityName?: string;
 }
