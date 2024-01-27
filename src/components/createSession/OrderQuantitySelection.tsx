@@ -5,9 +5,7 @@ import { useServiceProvider } from "../../services/ServiceProvider";
 import FilterOption from "./FamiliarityOption";
 
 export const OrderQuantitySelection = observer(() => {
-  // const orders = ["Randomised order", "Order by speciality"]
-
-  const { practiceStore } = useServiceProvider();
+  const { practiceStore, questionsStore } = useServiceProvider();
   const practiceFilter = practiceStore.practiceFilter;
   const order = practiceFilter.selectionOrder;
 
@@ -20,6 +18,8 @@ export const OrderQuantitySelection = observer(() => {
   const onQuanityChange = (quantity: number) => {
     practiceStore.setQuestionsCount(quantity);
   };
+
+  const questionsCount = questionsStore.questions.length;
 
   return (
     <Box
@@ -59,10 +59,9 @@ export const OrderQuantitySelection = observer(() => {
             Select number of questions
           </Typography>
           <Slider
-            defaultValue={practiceFilter.questionsCount}
             step={1}
-            min={10}
-            max={100}
+            min={1}
+            max={questionsCount}
             valueLabelDisplay="on"
             onChange={(e, value) => onQuanityChange(value as number)}
           />

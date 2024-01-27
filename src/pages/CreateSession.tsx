@@ -58,26 +58,26 @@ function CreateSession() {
       // add api call here
     } catch (e) {
       console.error(e);
-      showSnackbar('Error', 'error')
+      showSnackbar("Error", "error");
     }
   }
 
   async function handleSelectFamiliarity() {
     try {
       const practiceQuestion = await practiceStore.getPracticeQuestions();
-      console.log("Questions in CreateSession: ", practiceQuestion);
 
       questionsStore.setPracticeQuestions(practiceQuestion);
+      practiceStore.setQuestionsCount(practiceQuestion.length);
     } catch (e) {
-      console.error(e);
-      showSnackbar('Error', 'error')
+      showSnackbar("Error", "error");
     }
   }
 
   function handleStartPractice() {
-    // add quanitity and order logic 
+    // add quanitity and order logic
+    questionsStore.applyOrderAndQuantity(practiceStore.practiceFilter);
     navigate("/practice-session");
-  };
+  }
 
   return (
     <Container maxWidth="lg" sx={{ height: "100%" }}>

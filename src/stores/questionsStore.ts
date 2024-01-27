@@ -2,6 +2,7 @@ import { makeAutoObservable } from "mobx";
 import { Question } from "../models/Question";
 import Speciality from "../models/Speciality";
 import MedicLaunchApiClient from "../services/MedicLaunchApiClient";
+import { PracticeFilter, QuestionsOrder } from "../models/PracticeFilter";
 
 export class QuestionModelUI extends Question {
   submittedAnswerLetter?: string;
@@ -96,5 +97,41 @@ export class QuestionsStore {
 
   async setPracticeQuestions(questions: Question[]) {
     this.questions = questions;
+  }
+
+  applyOrderAndQuantity(practiceFilter: PracticeFilter) {
+    const questionsOrder = practiceFilter.selectionOrder;
+    const quantity = practiceFilter.questionsCount;
+    console.log("Questions Order: ", questionsOrder);
+    console.log("Questions Quantity: ", quantity);
+    
+
+    if(this.questions.length === 0) {
+      return;
+    }
+
+    let practiceQuestions : QuestionModelUI[] = [];
+
+    if(questionsOrder === QuestionsOrder.Randomized) {
+      practiceQuestions = this.questions.sort(() => Math.random());
+    }
+    else if(questionsOrder === QuestionsOrder.OrderBySpeciality) {
+      practiceQuestions = this.questions.sort((a, b) => {
+        if(a.specialityName && b.specialityName) {
+          return a.specialityName.localeCompare(b.specialityName);
+        }
+        else {
+          return 0;
+        }
+      });
+    }
+
+    if(quantity <= practiceQuestions.length) {
+      this.questions = practiceQuestions.slice(0, quantity);
+    } else {
+      this.questions = practiceQuestions;
+    }
+    console.log("Practice Questions: ", this.questions);
+    
   }
 }
