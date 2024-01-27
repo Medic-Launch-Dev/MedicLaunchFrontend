@@ -1,16 +1,14 @@
-import { Button, SxProps } from "@mui/material";
+import { Button, ButtonProps } from "@mui/material";
 import { Link } from "react-router-dom";
 
-interface LinkButtonProps {
-  variant?: "text" | "outlined" | "contained";
+interface LinkButtonProps extends ButtonProps {
   children: string;
   to: string;
-  sx?: SxProps;
 }
 
-export default function LinkButton({ variant, children, to, sx }: LinkButtonProps) {
+export default function LinkButton({ variant, children, to, ...rest }: LinkButtonProps) {
   return (
-    <Button variant={variant ?? "contained"} sx={sx}>
+    <Button variant={variant ?? "contained"} {...rest}>
       <Link to={to} style={{ textDecoration: 'none', color: 'inherit' }}>
         {children}
       </Link>

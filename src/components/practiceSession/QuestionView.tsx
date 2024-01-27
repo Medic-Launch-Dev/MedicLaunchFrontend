@@ -15,9 +15,10 @@ import LabValues from "./LabValues";
 
 interface QuestionViewProps {
   question: QuestionModelUI;
+  inPreview?: boolean;
 }
 
-function QuestionView({ question }: QuestionViewProps) {
+function QuestionView({ question, inPreview }: QuestionViewProps) {
   const { questionsStore } = useServiceProvider();
   const [selectedOption, setSelectedOption] = useState<Option>();
   const [isFlagged, setIsFlagged] = useState<boolean>();
@@ -57,7 +58,7 @@ function QuestionView({ question }: QuestionViewProps) {
                 style={style}
                 option={option}
                 setSelectedOption={setSelectedOption}
-                disabled={wasAttempted}
+                disabled={wasAttempted || inPreview}
               />
             )
           })
@@ -65,7 +66,7 @@ function QuestionView({ question }: QuestionViewProps) {
       </Stack>
 
       {
-        !wasAttempted &&
+        !wasAttempted && !inPreview &&
         <Stack sx={{ width: "max-content" }} spacing={1} alignItems="center">
           <Button
             variant="contained"
@@ -108,9 +109,12 @@ function QuestionView({ question }: QuestionViewProps) {
 
   const rightSideMarkup = (
     <Stack spacing={2} sx={{ maxHeight: 450 }}>
-      <Box sx={{ flexShrink: 0 }}>
-        <AnswersGrid />
-      </Box>
+      {
+        !inPreview &&
+        <Box sx={{ flexShrink: 0 }}>
+          <AnswersGrid />
+        </Box>
+      }
       <Box sx={{ flexGrow: 1, overflowY: 'scroll', backgroundColor: "white", borderRadius: 1, p: 3 }}>
         <LabValues />
       </Box>
@@ -122,7 +126,7 @@ function QuestionView({ question }: QuestionViewProps) {
       <Box sx={{ backgroundColor: "#fff", p: 4, borderRadius: 1 }}>
         <Typography variant="h5" color="primary">
           The correct answer is {question.correctAnswerLetter}:{" "}
-          {correctOption[0].text}
+          {correctOption[0]?.text}
         </Typography>
         {
           question.explanation &&
@@ -183,6 +187,7 @@ function QuestionView({ question }: QuestionViewProps) {
           <Button
             sx={{ px: 12, py: 1.25 }}
             variant="contained"
+            disabled={inPreview}
             onClick={() => questionsStore.incrementQuestion()}
           >
             Next Question
@@ -193,6 +198,7 @@ function QuestionView({ question }: QuestionViewProps) {
             startIcon={<Flag />}
             onClick={() => setIsFlagged(prevIsFlagged => !prevIsFlagged)}
             variant={isFlagged ? "contained" : "outlined"}
+            disabled={inPreview}
           >
             Flag
           </Button>
@@ -218,7 +224,7 @@ function QuestionView({ question }: QuestionViewProps) {
         {rightSideMarkup}
       </Grid>
       <Grid item xs={12}>
-        {wasAttempted && explanationMarkup}
+        {(wasAttempted || inPreview) && explanationMarkup}
       </Grid>
     </Grid>
   )

@@ -13,6 +13,7 @@ import { observer } from "mobx-react-lite";
 import { RichTextEditorRef } from "mui-tiptap";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
+import QuestionPreview from "../components/questionCreation/QuestionPreview";
 import { RichQuestionTextEditor } from "../components/tiptap/RichQuestionTextEditor";
 import TextSelect from "../components/util/TextSelect";
 import { useSnackbar } from "../hooks/useSnackbar";
@@ -25,7 +26,9 @@ const CreateQuestion = () => {
   const { questionsStore } = useServiceProvider();
   const { showSnackbar, snackbarProps } = useSnackbar();
   const [loading, setLoading] = useState(false);
+  const [showPreview, setShowPreview] = useState(false);
   const [specialities, setSpecialities] = useState<Speciality[]>([]);
+  const [previewQuestion, setPreviewQuestion] = useState<Question>();
   const navigate = useNavigate();
 
   const optionARef = useRef<HTMLInputElement>(null);
@@ -49,7 +52,6 @@ const CreateQuestion = () => {
   const clinicalTipsEditorRef = useRef<RichTextEditorRef>(null);
 
   const selectedSpecialtyRef = useRef<HTMLInputElement>(null);
-  const selectedQuestionBankRef = useRef<HTMLInputElement>(null);
 
   const indexToLetter = (index) => {
     return {
@@ -95,11 +97,35 @@ const CreateQuestion = () => {
     }
   };
 
+  const handleClickPreview = () => {
+    const options = optionsRef.map((option) => option.current!.value);
+
+    const question: Question = {
+      specialityId: selectedSpecialtyRef.current!.value ?? "",
+      questionText: questionTextEditorRef.current!.editor!.getHTML() ?? "",
+      clinicalTips: clinicalTipsEditorRef.current!.editor!.getHTML() ?? "",
+      learningPoints: learningPointsEditorRef.current!.editor!.getHTML() ?? "",
+      explanation: explanationEditorRef.current!.editor!.getHTML() ?? "",
+      options: options.map((option, index) => ({
+        letter: indexToLetter(index),
+        text: option || "",
+      })),
+      correctAnswerLetter: answerRef.current!.value ?? "",
+      questionType: QuestionType.General,
+      isSubmitted: true,
+    };
+
+    setPreviewQuestion(question);
+    setShowPreview(true);
+  };
+
   useEffect(() => {
     questionsStore.getSpecialities().then((data) => {
       setSpecialities(data);
     });
   }, []);
+
+  if (showPreview) return <QuestionPreview question={previewQuestion!} setShow={setShowPreview} />
 
   return (
     <Container>
@@ -114,7 +140,7 @@ const CreateQuestion = () => {
           Write new question
         </Typography>
         <Stack direction="row" spacing={1}>
-          <Button variant="outlined">Preview</Button>
+          <Button variant="outlined" onClick={handleClickPreview}>Preview</Button>
           <LoadingButton variant="contained" onClick={handleSubmit} loading={loading}>
             Submit
           </LoadingButton>
