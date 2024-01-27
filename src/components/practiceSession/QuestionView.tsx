@@ -7,6 +7,7 @@ import { Option } from "../../models/Question";
 import { useServiceProvider } from "../../services/ServiceProvider";
 import { QuestionModelUI } from "../../stores/questionsStore";
 import { primaryGradient } from "../../theme";
+import { getInnerTextFromHTML } from "../../utils/RichTextUtils";
 import useExtensions from "../tiptap/useExtensions";
 import LinkButton from "../util/LinkButton";
 import AnswerOption from "./AnswerOption";
@@ -119,7 +120,7 @@ function QuestionView({ question, inPreview }: QuestionViewProps) {
         <LabValues />
       </Box>
     </Stack>
-  )
+  );
 
   const explanationMarkup = (
     <Stack spacing={3}>
@@ -129,7 +130,7 @@ function QuestionView({ question, inPreview }: QuestionViewProps) {
           {correctOption[0]?.text}
         </Typography>
         {
-          question.explanation &&
+          getInnerTextFromHTML(question.explanation) &&
           <Box mt={2}>
             <Typography variant="h6" color="primary">
               Explanation
@@ -143,7 +144,7 @@ function QuestionView({ question, inPreview }: QuestionViewProps) {
           </Box>
         }
         {
-          question.learningPoints &&
+          getInnerTextFromHTML(question.learningPoints) &&
           <Box mt={2}>
             <Typography variant="h6" color="primary">
               Learning Points:
@@ -157,7 +158,7 @@ function QuestionView({ question, inPreview }: QuestionViewProps) {
           </Box>
         }
         {
-          question.clinicalTips &&
+          getInnerTextFromHTML(question.clinicalTips) &&
           <Stack
             mt={3}
             sx={{
