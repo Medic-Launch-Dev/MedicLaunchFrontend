@@ -27,12 +27,13 @@ export const OrderQuantitySelection = observer(() => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        height: "100%",
         bgcolor: "white",
         borderRadius: 1.5,
+        overflowY: 'scroll',
+        height: "100%",
       }}
     >
-      <Stack sx={{ width: 450 }} spacing={3}>
+      <Stack sx={{ width: 450 }} spacing={3} py={4}>
         {orders.map((o) => (
           <Box>
             <FilterOption

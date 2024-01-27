@@ -1,8 +1,10 @@
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
+import { LoadingButton } from "@mui/lab";
 import {
   Box,
   Button,
   Container,
+  Snackbar,
   Stack,
   Step,
   StepLabel,
@@ -15,49 +17,71 @@ import { FamiliaritySelection } from "../components/createSession/FamiliaritySel
 import { OrderQuantitySelection } from "../components/createSession/OrderQuantitySelection";
 import { SpecialitySelection } from "../components/createSession/SpecialitySelection";
 import LinkButton from "../components/util/LinkButton";
+import { useSnackbar } from "../hooks/useSnackbar";
 import { useServiceProvider } from "../services/ServiceProvider";
 
 function CreateSession() {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const { practiceStore, questionsStore } = useServiceProvider();
+  const { showSnackbar, snackbarProps } = useSnackbar();
 
   const steps = [
     {
       label: "Select speciality",
-      onNext: async () => {},
+      onNext: handleSelectSpeciality,
     },
     {
       label: "Select familiarity",
-      onNext: async () => {
-        const practiceQuestion = await practiceStore.getPracticeQuestions();
-        console.log("Questions in CreateSession: ", practiceQuestion);
-
-        questionsStore.setPracticeQuestions(practiceQuestion);
-      },
+      onNext: handleSelectFamiliarity,
     },
     {
       label: "Select number of questions",
-      onNext: async () => {},
+      onNext: handleStartPractice,
     },
   ];
 
   const handleNext = async () => {
+    setLoading(true);
     await steps[activeStep].onNext();
-
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setLoading(false);
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleStartPractice = () => {
+  async function handleSelectSpeciality() {
+    try {
+      // add api call here
+    } catch (e) {
+      console.error(e);
+      showSnackbar('Error', 'error')
+    }
+  }
+
+  async function handleSelectFamiliarity() {
+    try {
+      const practiceQuestion = await practiceStore.getPracticeQuestions();
+      console.log("Questions in CreateSession: ", practiceQuestion);
+
+      questionsStore.setPracticeQuestions(practiceQuestion);
+    } catch (e) {
+      console.error(e);
+      showSnackbar('Error', 'error')
+    }
+  }
+
+  function handleStartPractice() {
+    // add quanitity and order logic 
     navigate("/practice-session");
   };
 
   return (
     <Container maxWidth="lg" sx={{ height: "100%" }}>
+      <Snackbar {...snackbarProps} />
       <Stack height="100%" gap={3} py={2}>
         <LinkButton to="/" sx={{ width: "max-content", flexShrink: 0 }}>
           Study Portal
@@ -114,15 +138,16 @@ function CreateSession() {
           >
             Back
           </Button>
-          <Button
+          <LoadingButton
             variant="contained"
             sx={{ width: "max-content", flexShrink: 0, py: 1 }}
             size="large"
             endIcon={<ChevronRight />}
-            onClick={activeStep < 2 ? handleNext : handleStartPractice}
+            onClick={handleNext}
+            loading={loading}
           >
             Next
-          </Button>
+          </LoadingButton>
         </Stack>
       </Stack>
     </Container>
