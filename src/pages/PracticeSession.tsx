@@ -8,6 +8,7 @@ import { primaryGradientText } from "../theme";
 
 function PracticeSession() {
   const { questionsStore } = useServiceProvider();
+  console.log(questionsStore.questions.length);
 
   function calculateProgress() {
     if (!questionsStore.questions) return 0;
