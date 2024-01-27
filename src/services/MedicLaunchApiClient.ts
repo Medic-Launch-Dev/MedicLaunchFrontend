@@ -43,7 +43,7 @@ export default class MedicLaunchApiClient {
 
   async registerUser(userData: MedicLauncUser): Promise<boolean> {
     const response = await this.axios.post(`${this.apiUrl}/account/register`, {
-      userData
+      ...userData
     });
 
     return response.status === 200;
