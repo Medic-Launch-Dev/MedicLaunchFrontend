@@ -1,6 +1,7 @@
 name: Deploy Medic Launch React App CI
 
 on:
+    workflow_dispatch: {}
     push:
         branches: [ master ]
 
