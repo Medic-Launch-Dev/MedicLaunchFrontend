@@ -3,6 +3,7 @@ import { Question } from "../models/Question";
 import Speciality from "../models/Speciality";
 import MedicLaunchApiClient from "../services/MedicLaunchApiClient";
 import { PracticeFilter, QuestionsOrder } from "../models/PracticeFilter";
+import { FamiliarityCounts } from "../models/FamiliarityCounts";
 
 export class QuestionModelUI extends Question {
   submittedAnswerLetter?: string;
@@ -15,8 +16,7 @@ export class QuestionsStore {
   private _correctAnswers: number;
   private _incorrectAnswers: number;
   apiClient: MedicLaunchApiClient;
-
-
+  familiarityCounts: FamiliarityCounts;
   constructor(apClient: MedicLaunchApiClient) {
     this.questions = [];
     this._currentQuestionIdx = 0;
@@ -131,5 +131,13 @@ export class QuestionsStore {
     }
     console.log("Practice Questions: ", this.questions);
     
+  }
+
+  getQuestionNumber() {
+    return this._currentQuestionIdx + 1;
+  }
+
+  async setFamiliarityCounts(specialityIds: string[], allSpecialitesSelected: boolean) {
+    this.familiarityCounts = await this.apiClient.getFamiliarityCounts(specialityIds, allSpecialitesSelected);
   }
 }

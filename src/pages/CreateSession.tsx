@@ -55,7 +55,7 @@ function CreateSession() {
 
   async function handleSelectSpeciality() {
     try {
-      // add api call here
+      questionsStore.setFamiliarityCounts(practiceStore.practiceFilter.specialityIds, practiceStore.practiceFilter.allSpecialitiesSelected);
     } catch (e) {
       console.error(e);
       showSnackbar("Error", "error");

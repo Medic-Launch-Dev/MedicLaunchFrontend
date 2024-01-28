@@ -5,6 +5,7 @@ import { Question } from "../models/Question";
 import Speciality from "../models/Speciality";
 import { MedicLauncUser } from "../models/User";
 import AxiosProvider from "./AxiosProvider";
+import { FamiliarityCounts } from "../models/FamiliarityCounts";
 
 
 export default class MedicLaunchApiClient {
@@ -60,8 +61,16 @@ export default class MedicLaunchApiClient {
   }
 
   async getSpecialitiesList(): Promise<Speciality[]> {
-    // use axios to get the list of specialities
     const response = await this.axios.get<Speciality[]>(`${this.apiUrl}/questions/specialities`);
+    return response.data;
+  }
+
+  async getFamiliarityCounts(specialityIds: string[], allSpecialitiesSelected: boolean): Promise<FamiliarityCounts> {
+    const response = await this.axios.post(`${this.apiUrl}/questions/familiaritycounts`, {
+      specialityIds: specialityIds,
+      allSpecialitiesSelected: allSpecialitiesSelected
+    });
+
     return response.data;
   }
 }
