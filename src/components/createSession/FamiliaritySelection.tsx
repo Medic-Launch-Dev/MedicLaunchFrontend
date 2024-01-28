@@ -3,6 +3,7 @@ import { observer } from "mobx-react-lite";
 import { Familiarity } from "../../models/PracticeFilter";
 import { useServiceProvider } from "../../services/ServiceProvider";
 import FilterOption from "./FamiliarityOption";
+import { useEffect } from "react";
 
 export const FamiliaritySelection = observer(() => {
   const familiarities = [
