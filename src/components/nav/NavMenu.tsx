@@ -28,6 +28,7 @@ export default function NavMenu() {
           <NavLink text="Study Portal" selected href="/" />
           <NavLink text="My Profile" href="/" />
           <NavLink text="Add Question" href="/create-question" />
+          <NavLink text="Edit Questions" href="/edit-questions" />
         </Stack>
       </Stack>
     </Drawer>

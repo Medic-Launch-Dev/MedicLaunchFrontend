@@ -21,4 +21,5 @@ export class Question {
     learningPoints: string;
     isSubmitted: boolean;
     specialityName?: string;
+    questionCode?: string;
 }
