@@ -80,10 +80,8 @@ export class QuestionsStore {
     else this._incorrectAnswers += 1;
   }
 
-  getSpecialityQuestions(specialityId: string) {
-    this.apiClient.getQuestionsInSpeciality(specialityId).then((questions) => {
-      this.specialityQuestions = questions;
-    });
+  async getSpecialityQuestions(specialityId: string) {
+    return await this.apiClient.getQuestionsInSpeciality(specialityId);
   }
 
   async addQuestion(question: Question) {
