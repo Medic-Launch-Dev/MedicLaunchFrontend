@@ -1,8 +1,8 @@
 import { makeAutoObservable } from "mobx";
+import { PracticeFilter, QuestionsOrder } from "../models/PracticeFilter";
 import { Question } from "../models/Question";
 import Speciality from "../models/Speciality";
 import MedicLaunchApiClient from "../services/MedicLaunchApiClient";
-import { PracticeFilter, QuestionsOrder } from "../models/PracticeFilter";
 
 export class QuestionModelUI extends Question {
   submittedAnswerLetter?: string;
@@ -11,6 +11,7 @@ export class QuestionModelUI extends Question {
 export class QuestionsStore {
   questions: QuestionModelUI[];
   specialityQuestions: Question[];
+  previewQuestion: QuestionModelUI;
   private _currentQuestionIdx: number;
   private _correctAnswers: number;
   private _incorrectAnswers: number;
@@ -104,20 +105,20 @@ export class QuestionsStore {
     const quantity = practiceFilter.questionsCount;
     console.log("Questions Order: ", questionsOrder);
     console.log("Questions Quantity: ", quantity);
-    
 
-    if(this.questions.length === 0) {
+
+    if (this.questions.length === 0) {
       return;
     }
 
-    let practiceQuestions : QuestionModelUI[] = [];
+    let practiceQuestions: QuestionModelUI[] = [];
 
-    if(questionsOrder === QuestionsOrder.Randomized) {
+    if (questionsOrder === QuestionsOrder.Randomized) {
       practiceQuestions = this.questions.sort(() => Math.random());
     }
-    else if(questionsOrder === QuestionsOrder.OrderBySpeciality) {
+    else if (questionsOrder === QuestionsOrder.OrderBySpeciality) {
       practiceQuestions = this.questions.sort((a, b) => {
-        if(a.specialityName && b.specialityName) {
+        if (a.specialityName && b.specialityName) {
           return a.specialityName.localeCompare(b.specialityName);
         }
         else {
@@ -126,12 +127,15 @@ export class QuestionsStore {
       });
     }
 
-    if(quantity <= practiceQuestions.length) {
+    if (quantity <= practiceQuestions.length) {
       this.questions = practiceQuestions.slice(0, quantity);
     } else {
       this.questions = practiceQuestions;
     }
     console.log("Practice Questions: ", this.questions);
-    
+  }
+
+  updatePreviewQuestion(question: QuestionModelUI) {
+    this.previewQuestion = question;
   }
 }

@@ -19,12 +19,14 @@ interface QuestionViewProps {
   inPreview?: boolean;
 }
 
-function QuestionView({ question, inPreview }: QuestionViewProps) {
+function QuestionView({ question: questionFromProps, inPreview }: QuestionViewProps) {
   const { questionsStore } = useServiceProvider();
+  const question = inPreview ? questionsStore.previewQuestion : questionFromProps;
+
   const [selectedOption, setSelectedOption] = useState<Option>();
   const [isFlagged, setIsFlagged] = useState<boolean>();
-  const wasAttempted = !!question.submittedAnswerLetter;
-  const correctOption = question.options.filter(option => option.letter === question.correctAnswerLetter);
+  const wasAttempted = !!question?.submittedAnswerLetter;
+  const correctOption = question?.options?.filter(option => option.letter === question?.correctAnswerLetter);
 
   const extensions = useExtensions({
     placeholder: ""
@@ -32,20 +34,20 @@ function QuestionView({ question, inPreview }: QuestionViewProps) {
 
   const questionBodyMarkup = (
     <>
-      {/* <Typography variant="body1" sx={{ fontWeight: 500, mb: 2 }}>{question.questionText}</Typography> */}
+      {/* <Typography variant="body1" sx={{ fontWeight: 500, mb: 2 }}>{question?.questionText}</Typography> */}
       <Box mb={2}>
-        <RichTextReadOnly content={question.questionText} extensions={extensions} />
+        <RichTextReadOnly content={question?.questionText} extensions={extensions} />
       </Box>
       <Stack spacing={1} mb={2}>
         {
-          question.options.map((option, index) => {
+          question?.options?.map((option, index) => {
             let style: "base" | "correct" | "incorrect" | "subdued";
             if (!wasAttempted) {
               style = "base";
             } else {
-              if (question.correctAnswerLetter === option.letter) {
+              if (question?.correctAnswerLetter === option.letter) {
                 style = "correct"
-              } else if (question.submittedAnswerLetter === option.letter) {
+              } else if (question?.submittedAnswerLetter === option.letter) {
                 style = "incorrect";
               } else {
                 style = "subdued";
@@ -126,39 +128,39 @@ function QuestionView({ question, inPreview }: QuestionViewProps) {
     <Stack spacing={3}>
       <Box sx={{ backgroundColor: "#fff", p: 4, borderRadius: 1 }}>
         <Typography variant="h5" color="primary">
-          The correct answer is {question.correctAnswerLetter}:{" "}
-          {correctOption[0]?.text}
+          The correct answer is {question?.correctAnswerLetter}:{" "}
+          {correctOption && correctOption[0].text}
         </Typography>
         {
-          getInnerTextFromHTML(question.explanation) &&
+          getInnerTextFromHTML(question?.explanation) &&
           <Box mt={2}>
             <Typography variant="h6" color="primary">
               Explanation
             </Typography>
             <Typography fontSize={13} fontWeight={500} mt={1}>
               <RichTextReadOnly
-                content={question.explanation}
+                content={question?.explanation}
                 extensions={extensions}
               />
             </Typography>
           </Box>
         }
         {
-          getInnerTextFromHTML(question.learningPoints) &&
+          getInnerTextFromHTML(question?.learningPoints) &&
           <Box mt={2}>
             <Typography variant="h6" color="primary">
               Learning Points:
             </Typography>
             <Typography fontSize={13} fontWeight={500} mt={1}>
               <RichTextReadOnly
-                content={question.learningPoints}
+                content={question?.learningPoints}
                 extensions={extensions}
               />
             </Typography>
           </Box>
         }
         {
-          getInnerTextFromHTML(question.clinicalTips) &&
+          getInnerTextFromHTML(question?.clinicalTips) &&
           <Stack
             mt={3}
             sx={{
@@ -174,7 +176,7 @@ function QuestionView({ question, inPreview }: QuestionViewProps) {
             </Typography>
             <Typography fontSize={13} textAlign="center" mt={1} color="secondary">
               <RichTextReadOnly
-                content={question.clinicalTips}
+                content={question?.clinicalTips}
                 extensions={extensions}
               />
             </Typography>

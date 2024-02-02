@@ -19,6 +19,7 @@ import Root from "./pages/Root";
 // import reportWebVitals from "./reportWebVitals";
 import "./index.css";
 import CreateSession from "./pages/CreateSession";
+import QuestionPreview from "./pages/QuestionPreview";
 import UserManagement from "./pages/UserManagement";
 import { AuthGuard } from "./services/AuthGuard";
 import { AuthProvider } from "./services/AuthProvider";
@@ -55,6 +56,10 @@ const App = () => {
                     <Route
                       path="create-question"
                       element={<CreateQuestion />}
+                    />
+                    <Route
+                      path="question-preview"
+                      element={<QuestionPreview />}
                     />
                     <Route
                       path="edit-questions"

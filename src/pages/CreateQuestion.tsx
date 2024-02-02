@@ -13,7 +13,6 @@ import { observer } from "mobx-react-lite";
 import { RichTextEditorRef } from "mui-tiptap";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
-import QuestionPreview from "../components/questionCreation/QuestionPreview";
 import { RichQuestionTextEditor } from "../components/tiptap/RichQuestionTextEditor";
 import TextSelect from "../components/util/TextSelect";
 import { useSnackbar } from "../hooks/useSnackbar";
@@ -26,9 +25,7 @@ const CreateQuestion = () => {
   const { questionsStore } = useServiceProvider();
   const { showSnackbar, snackbarProps } = useSnackbar();
   const [loading, setLoading] = useState(false);
-  const [showPreview, setShowPreview] = useState(false);
   const [specialities, setSpecialities] = useState<Speciality[]>([]);
-  const [previewQuestion, setPreviewQuestion] = useState<Question>();
   const navigate = useNavigate();
 
   const optionARef = useRef<HTMLInputElement>(null);
@@ -115,8 +112,8 @@ const CreateQuestion = () => {
       isSubmitted: true,
     };
 
-    setPreviewQuestion(question);
-    setShowPreview(true);
+    questionsStore.updatePreviewQuestion(question);
+    navigate("/question-preview")
   };
 
   useEffect(() => {
@@ -124,8 +121,6 @@ const CreateQuestion = () => {
       setSpecialities(data);
     });
   }, []);
-
-  if (showPreview) return <QuestionPreview question={previewQuestion!} setShow={setShowPreview} />
 
   return (
     <Container>
