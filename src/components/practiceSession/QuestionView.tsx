@@ -36,7 +36,9 @@ function QuestionView({ question: questionFromProps, inPreview }: QuestionViewPr
     <>
       <Box sx={{
         display: "flex",
-        alignItems: "center"
+        alignItems: "center",
+        gap: 1,
+        mb: 1
       }}>
         <Box
           sx={{
@@ -49,12 +51,11 @@ function QuestionView({ question: questionFromProps, inPreview }: QuestionViewPr
             fontWeight: 500,
             borderRadius: 1,
             padding: "5px 15px",
-            marginBottom: "10px"
           }}
         >
           {question.specialityName}
         </Box>
-        <span>{`Question ${questionsStore.getQuestionNumber()}`}</span>
+        <Typography fontWeight={600}>{`Question ${questionsStore.getQuestionNumber()}`}</Typography>
       </Box>
       <Box mb={2}>
         <RichTextReadOnly content={question?.questionText} extensions={extensions} />
