@@ -4,6 +4,8 @@ import {
 	Chip,
 	Container,
 	Grid,
+	Select,
+	SelectChangeEvent,
 	Stack,
 	Table,
 	TableBody,
@@ -14,39 +16,25 @@ import {
 	Typography
 } from "@mui/material"
 import { observer } from "mobx-react-lite"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import TextSelect from "../components/util/TextSelect"
 import { useServiceProvider } from "../services/ServiceProvider"
 import { primaryGradientText } from "../theme"
+import Speciality from "../models/Speciality"
+import { QuestionModelUI } from "../stores/questionsStore"
+import { useNavigate } from "react-router-dom";
+import { LoadingWrapper } from "../components/util/LoadingWrapper"
+import parse from 'html-react-parser';
 
 function EditQuestions() {
 	const { questionsStore } = useServiceProvider();
+	const [specialities, setSpecialitiesList] = useState<Speciality[]>([]);
 
-	useEffect(() => {
-		// questionsStore.getSpecialities()
-		// 	.then(specialities => {
-		// 		const questionPromises = specialities.map(speciality => questionsStore.getSpecialityQuestions(speciality.id));
-		// 		return Promise.all(questionPromises);
-		// 	})
-		// 	.then(allQuestions => console.log('Questions for each specialty:', allQuestions))
-	}, [])
+	const [questions, setQuestions] = useState<QuestionModelUI[]>([]);
 
-	const EXAMPLES = [{
-		questionCode: "MLAN01",
-		status: "pending",
-		speciality: "Anaesthetics",
-		questionNumber: 1,
-		question: "A 30-year-old female presents with severe acne vulgaris that has been unresponsive...",
-		idx: 69
-	},
-	{
-		questionCode: "MLAN01",
-		status: "pending",
-		speciality: "Anaesthetics",
-		questionNumber: 1,
-		question: "A 30-year-old female presents with severe acne vulgaris that has been unresponsive...",
-		idx: 69
-	}]
+	const [loading, setLoading] = useState(false);
+
+	const navigate = useNavigate();
 
 	function getStatusChip(status?: string) {
 		if (status === "approved") return <Chip label="Approved" sx={{ backgroundColor: "#A4E29F" }} />
@@ -55,42 +43,78 @@ function EditQuestions() {
 	}
 
 	const questionBankOptions = ["Practice questions", "Mock 1", "Mock 2"];
-	const specialityOptions = ["Practice questions", "Mock 1", "Mock 2"];
 
+	const loadQuestions = async (specialityId: string) => {
+		setLoading(true);
+		const questions = await questionsStore.getSpecialityQuestions(specialityId);
+		setQuestions(questions);
+		setLoading(false);
+	}
+
+	const navigateToAuthorPortal = () => {
+		navigate("/");
+	}
+
+	const navigateToQuestionCreation = () => {
+		navigate("/create-question");
+	}
+
+	const getQuestionTextWithoutHtml = (questionText: string) => {
+		const text = parse(questionText);
+		return text;
+	}
+		
+	useEffect(() => {
+		questionsStore.getSpecialities()
+		.then((specialities) => {
+			setSpecialitiesList(specialities);
+		})
+		.catch(e => {
+			console.error(e);
+			// showSnackbar('Failed to get specialities', 'error');
+		});
+	}, []);
 
 	return (
 		<Container>
-			<Stack direction="row" alignItems="center" justifyContent="space-between" mb={3}>
-				<Button variant="contained">Author Portal</Button>
-				<Button variant="contained"><Add /> Add Question</Button>
-			</Stack>
+		<Stack direction="row" alignItems="center" justifyContent="space-between" mb={3}>
+			<Button variant="contained" onClick={navigateToAuthorPortal}>Author Portal</Button>
+			<Button variant="contained" onClick={navigateToQuestionCreation}><Add /> Add Question</Button>
+		</Stack>
 
-			<Typography style={primaryGradientText} variant="h3" mb={3}>Edit Questions</Typography>
+		<Typography style={primaryGradientText} variant="h3" mb={3}>Edit Questions</Typography>
 
-			<Grid container spacing={3} mb={4}>
-				<Grid item xs={8}>
-					<Stack direction="row" alignItems="center">
-						<Grid container columnSpacing={2} >
-							<Grid item xs={6}>
-								<TextSelect
-									label="Question bank"
-									options={questionBankOptions.map(option => ({ value: option }))}
-									setSelected={() => { }}
-								/>
-							</Grid>
-							<Grid item xs={6} sx={{ fontWeight: "bold" }}>
-								<TextSelect
-									label="Speciality"
-									options={specialityOptions.map(option => ({ value: option }))}
-									setSelected={() => { }}
-								/>
-							</Grid>
+		<Grid container spacing={3} mb={4}>
+			<Grid item xs={8}>
+				<Stack direction="row" alignItems="center">
+					<Grid container columnSpacing={2} >
+						<Grid item xs={6}>
+						<TextSelect
+							label="Question bank"
+							options={questionBankOptions.map(option => ({ value: option }))}
+							setSelected={() => { }}
+						/>
 						</Grid>
-					</Stack>
-				</Grid>
+						<Grid item xs={6} sx={{ fontWeight: "bold" }}>
+						<TextSelect
+							label="Speciality"
+							defaultValue={specialities[0]?.id}
+							options={specialities.map(speciality => ({
+								value: speciality.id,
+								displayText: speciality.name
+							}))}
+							setSelected={() => { }}
+							onChange={(e) => loadQuestions(e.target.value as string)}
+							/>
+						</Grid>
+					</Grid>
+				</Stack>
 			</Grid>
-
-			<TableContainer>
+		</Grid>
+		<LoadingWrapper isLoading={loading}>
+			{
+				questions.length > 0 ? (
+					<TableContainer>
 				<Table>
 					<TableHead>
 						<TableRow>
@@ -103,16 +127,20 @@ function EditQuestions() {
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{EXAMPLES.map((p, index) => {
+						{questions.map((p, index) => {
 							return (
 								<TableRow key={index}>
 									<TableCell component="th" scope="row">{p.questionCode}</TableCell>
 									<TableCell>
-										{getStatusChip(p.status)}
+										{getStatusChip(p.isSubmitted ? "Submitted" : "Draft")}
 									</TableCell>
-									<TableCell>{p.speciality}</TableCell>
-									<TableCell>{p.questionNumber}</TableCell>
-									<TableCell sx={{ width: 349 }}>{p.question}</TableCell>
+									<TableCell>{p.specialityName}</TableCell>
+									<TableCell>{index + 1}</TableCell>
+									<TableCell sx={{ width: 349 }}>
+										<span>
+											{getQuestionTextWithoutHtml(p.questionText)}
+										</span>
+									</TableCell>
 									<TableCell>
 										<Button
 											variant="contained"
@@ -134,8 +162,12 @@ function EditQuestions() {
 					</TableBody>
 				</Table>
 			</TableContainer>
+				) : <Typography variant="h6">No questions in selected speciality and question bank</Typography>
+			}
+		</LoadingWrapper>
 
-		</Container>
+	</Container>
+	
 	)
 }
 

@@ -4,10 +4,19 @@ import { observer } from "mobx-react-lite";
 import QuestionView from "../components/practiceSession/QuestionView";
 import LinkButton from "../components/util/LinkButton";
 import { useServiceProvider } from "../services/ServiceProvider";
+import { QuestionModelUI } from "../stores/questionsStore";
 import { primaryGradient } from "../theme";
 
 function QuestionPreview() {
   const { questionsStore } = useServiceProvider();
+
+  function hasMinimumProperties(question: QuestionModelUI) {
+    if (!question) return false;
+    if (!question.questionText) return false;
+    if (!question.options) return false;
+    if (!question.correctAnswerLetter) return false;
+    return true;
+  }
 
   return (
     <Container maxWidth="lg">
@@ -29,10 +38,10 @@ function QuestionPreview() {
         <Button startIcon={<ChevronLeft />} sx={{ visibility: "hidden" }}>Back to edit</Button>
       </Stack>
       {
-        questionsStore.previewQuestion ?
+        hasMinimumProperties(questionsStore.previewQuestion) ?
           <QuestionView question={questionsStore.previewQuestion} inPreview />
           :
-          <div>Nothing to preview</div>
+          <Typography textAlign="center">Add required fields to question in order to preview</Typography>
       }
     </Container>
   )

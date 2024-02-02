@@ -43,6 +43,7 @@
     "@types/react-dom": "^18.2.18",
     "axios": "^1.6.5",
     "formik": "^2.4.5",
+    "html-react-parser": "^5.1.1",
     "mobx": "^6.12.0",
     "mobx-react-lite": "^4.0.5",
     "mui-tiptap": "^1.8.6",
