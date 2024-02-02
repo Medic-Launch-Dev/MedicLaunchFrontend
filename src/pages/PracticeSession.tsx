@@ -1,5 +1,6 @@
 import { Box, Container, LinearProgress, Stack, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
+import { useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import QuestionView from "../components/practiceSession/QuestionView";
 import LinkButton from "../components/util/LinkButton";
@@ -15,6 +16,18 @@ function PracticeSession() {
     const totalAnswered = questionsStore.correctAnswers + questionsStore.incorrectAnswers;
     return Math.ceil((totalAnswered / questionsStore.questions.length) * 100);
   }
+
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      e.returnValue = 'something';
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
 
   if (!questionsStore.questions.length) return <Navigate to="/create-session" />
 

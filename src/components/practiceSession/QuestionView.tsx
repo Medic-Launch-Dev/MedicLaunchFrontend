@@ -38,7 +38,7 @@ function QuestionView({ question: questionFromProps, inPreview }: QuestionViewPr
         display: "flex",
         alignItems: "center",
         gap: 1,
-        mb: 1
+        mb: 2
       }}>
         <Box
           sx={{
@@ -60,7 +60,7 @@ function QuestionView({ question: questionFromProps, inPreview }: QuestionViewPr
       <Box mb={2}>
         <RichTextReadOnly content={question?.questionText} extensions={extensions} />
       </Box>
-      <Stack spacing={1} mb={2}>
+      <Stack spacing={1} mb={3}>
         {
           question?.options?.map((option, index) => {
             let style: "base" | "correct" | "incorrect" | "subdued";

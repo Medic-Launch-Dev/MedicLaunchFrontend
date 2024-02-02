@@ -1,5 +1,6 @@
 import { Container, Grid, Stack, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import AnalyticsIcon from '../../src/assets/icons/analytics.svg';
 import CorrectIcon from '../../src/assets/icons/correct.svg';
@@ -16,6 +17,18 @@ function ReviewSession() {
   const { correctAnswers, incorrectAnswers, totalQuestions } = questionsStore;
   const totalAnswers = correctAnswers + incorrectAnswers;
   const score = totalAnswers === 0 ? totalAnswers : Math.ceil((correctAnswers / totalAnswers) * 100);
+
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      e.returnValue = 'something';
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
 
   return (
     <Container maxWidth="lg" sx={{ pt: 2 }}>
