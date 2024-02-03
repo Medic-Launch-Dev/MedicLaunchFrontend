@@ -27,7 +27,7 @@ export default function Card({ title, children, primary, action, icon }: CardPro
         <Typography variant="h4" sx={primary ? undefined : primaryGradientText}>
           {title}
         </Typography>
-        <Box sx={{ mt: 1 }}>
+        <Box sx={{ my: 1 }}>
           {
             typeof children === 'string' ?
               <Typography>{children}</Typography>

@@ -1,0 +1,78 @@
+import { Button, Grid, Stack, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
+import CoursesIcon from '../../src/assets/icons/courses.svg';
+import PodcastsIcon from '../../src/assets/icons/podcasts.svg';
+import QuestionBankIcon from '../../src/assets/icons/question-bank.svg';
+import WelcomeImg from '../../src/assets/images/Welcome.png';
+import PageWithNav from '../components/nav/PageWithNav';
+import Card from '../components/util/Card';
+import { primaryGradient, unstyledLink } from '../theme';
+
+function AuthorPortal() {
+  return (
+    <PageWithNav>
+      <Grid container spacing={2}>
+        <Grid item xs={12} lg={6}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Stack
+                sx={{
+                  px: 5,
+                  borderRadius: 2,
+                  background: primaryGradient,
+                }}
+                direction="row"
+                justifyContent="space-between"
+                alignItems="center"
+                spacing={7}
+              >
+                <Typography variant="h2" color="#fff">Welcome to your Question Writing Dashboard, Sajjaad</Typography>
+                <img src={WelcomeImg} height={140} />
+              </Stack>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Card
+                title="Author Profile"
+                primary
+                action={
+                  <Button variant="contained" color="secondary">
+                    <Link style={unstyledLink} to="/author-portal">
+                      Access Profile
+                    </Link>
+                  </Button>
+                }
+                icon={<img src={QuestionBankIcon} width={64} />}
+              >
+                Personalise your profile and preferences effortlessly
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Card
+                title="Question Writing Guide"
+                action={<Button variant="contained">Download</Button>}
+                icon={<img src={PodcastsIcon} width={64} />}
+              >
+                Master question creation with our guide
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Card
+                title="Review all questions"
+                action={
+                  <Link to="/edit-questions">
+                    <Button variant="contained">View questions</Button>
+                  </Link>
+                }
+                icon={<img src={CoursesIcon} width={64} />}
+              >
+                View your historic questions and edit here
+              </Card>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    </PageWithNav>
+  );
+}
+
+export default AuthorPortal;

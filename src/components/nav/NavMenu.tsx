@@ -1,4 +1,5 @@
 import { Box, Drawer, Stack } from "@mui/material";
+import { useMatch } from "react-router-dom";
 import LogoWhite from "../../assets/logo-white.svg";
 import NavLink from "./NavLink";
 
@@ -24,9 +25,9 @@ export default function NavMenu() {
           <img src={LogoWhite} width={150} />
         </Box>
         <Stack sx={{ width: '100%', pt: 12 }} gap={2}>
-          <NavLink text="Study Portal" selected href="/" />
+          <NavLink text="Study Portal" selected={!!useMatch("/")} href="/" />
           <NavLink text="My Profile" href="/" />
-          <NavLink text="Author Portal" href="/edit-questions" />
+          <NavLink text="Author Portal" selected={!!useMatch("/author-portal")} href="/author-portal" />
         </Stack>
       </Stack>
     </Drawer>

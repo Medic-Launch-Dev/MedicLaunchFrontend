@@ -18,6 +18,7 @@ import ReviewSession from "./pages/ReviewSession";
 import Root from "./pages/Root";
 // import reportWebVitals from "./reportWebVitals";
 import "./index.css";
+import AuthorPortal from "./pages/AuthorPortal";
 import CreateSession from "./pages/CreateSession";
 import EditQuestion from "./pages/EditQuestion";
 import QuestionPreview from "./pages/QuestionPreview";
@@ -60,7 +61,6 @@ const App = () => {
           path: "question-preview",
           element: <QuestionPreview />
         },
-
         {
           path: "edit-questions",
           element: <EditQuestions />
@@ -69,10 +69,13 @@ const App = () => {
           path: "edit-question",
           element: <EditQuestion />
         },
-
         {
           path: "user-management",
           element: <UserManagement />
+        },
+        {
+          path: "author-portal",
+          element: <AuthorPortal />
         },
       ],
     },

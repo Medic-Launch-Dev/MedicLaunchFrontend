@@ -51,7 +51,7 @@ function EditQuestions() {
 	}
 
 	const navigateToAuthorPortal = () => {
-		navigate("/");
+		navigate("/author-portal");
 	}
 
 	const navigateToQuestionCreation = () => {
