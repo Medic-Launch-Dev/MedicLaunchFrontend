@@ -172,9 +172,9 @@ export default function useExtensions({
         nested: true,
       }),
 
-    //   Mention.configure({
-    //     suggestion: mentionSuggestionOptions,
-    //   }),
+      //   Mention.configure({
+      //     suggestion: mentionSuggestionOptions,
+      //   }),
 
       Placeholder.configure({
         placeholder,

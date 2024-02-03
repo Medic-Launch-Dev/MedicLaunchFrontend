@@ -1,3 +1,4 @@
+import { ChevronLeft } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import {
   Button,
@@ -10,12 +11,13 @@ import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import QuestionEditView from "../components/questionCreation/QuestionEditView";
+import LinkButton from "../components/util/LinkButton";
 import { useSnackbar } from "../hooks/useSnackbar";
 import { Question } from "../models/Question";
 import { useServiceProvider } from "../services/ServiceProvider";
 import { primaryGradientText } from "../theme";
 
-const CreateQuestion = () => {
+const EditQuestion = () => {
   const { questionsStore } = useServiceProvider();
   const { showSnackbar, snackbarProps } = useSnackbar();
   const [loading, setLoading] = useState(false);
@@ -27,21 +29,22 @@ const CreateQuestion = () => {
       if (!question) return;
       setLoading(true);
 
-      await questionsStore.addQuestion(question);
+      const updatedQuestion: Question = { ...question, previousSpecialityId: question.specialityId }
 
-      navigate(`/edit-questions?speciality=${question.specialityId}`);
+      await questionsStore.updateQuestion(updatedQuestion);
+
+      showSnackbar("Question updated", "success");
     } catch (e) {
       console.error(e);
-      showSnackbar("Failed to submit", "error");
+      showSnackbar("Failed to update", "error");
     } finally {
       setLoading(false);
     }
   };
 
   const handleClickPreview = () => {
-    if (!question) return;
     questionsStore.setPreviewQuestion(question);
-    navigate("/question-preview?from=create");
+    navigate("/question-preview");
   };
 
   return (
@@ -51,15 +54,20 @@ const CreateQuestion = () => {
         direction="row"
         alignItems="center"
         justifyContent="space-between"
-        mb={3}
+        mb={4}
       >
-        <Typography variant="h2" style={primaryGradientText}>
-          Write new question
-        </Typography>
+        <Stack direction="row" alignItems="center" spacing={1}>
+          <LinkButton variant="text" to={`/edit-questions?speciality=${question.specialityId}`} startIcon={<ChevronLeft />}>
+            Back
+          </LinkButton>
+          <Typography variant="h2" style={primaryGradientText}>
+            Edit question
+          </Typography>
+        </Stack>
         <Stack direction="row" spacing={1}>
           <Button variant="outlined" onClick={handleClickPreview}>Preview</Button>
           <LoadingButton variant="contained" onClick={handleSubmit} loading={loading} disabled={!question?.questionType || !question.specialityId}>
-            Create Draft
+            Update
           </LoadingButton>
         </Stack>
       </Stack>
@@ -71,4 +79,4 @@ const CreateQuestion = () => {
   );
 };
 
-export default observer(CreateQuestion);
+export default observer(EditQuestion);

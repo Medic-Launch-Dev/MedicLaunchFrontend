@@ -1,11 +1,11 @@
 
 import { AxiosInstance } from "axios";
+import { FamiliarityCounts } from "../models/FamiliarityCounts";
 import { PracticeFilter } from "../models/PracticeFilter";
 import { Question } from "../models/Question";
 import Speciality from "../models/Speciality";
 import { MedicLauncUser } from "../models/User";
 import AxiosProvider from "./AxiosProvider";
-import { FamiliarityCounts } from "../models/FamiliarityCounts";
 
 
 export default class MedicLaunchApiClient {
@@ -34,6 +34,16 @@ export default class MedicLaunchApiClient {
 
   async saveQuestion(question: Question) {
     const response = await this.axios.post<Question>(`${this.apiUrl}/questions/create`, {
+      ...question
+    });
+
+    console.log("Response: ", response.data);
+
+    return response.status === 200;
+  }
+
+  async overwriteQuestion(question: Question) {
+    const response = await this.axios.post<Question>(`${this.apiUrl}/questions/update/${question.id}`, {
       ...question
     });
 

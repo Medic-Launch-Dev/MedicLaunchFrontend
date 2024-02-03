@@ -22,4 +22,5 @@ export class Question {
     isSubmitted: boolean;
     specialityName?: string;
     questionCode?: string;
+    previousSpecialityId?: string;
 }
