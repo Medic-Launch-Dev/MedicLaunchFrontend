@@ -10,8 +10,7 @@ import {
   Typography
 } from "@mui/material";
 import { observer } from "mobx-react-lite";
-import { RichTextEditorRef } from "mui-tiptap";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { RichQuestionTextEditor } from "../components/tiptap/RichQuestionTextEditor";
 import TextSelect from "../components/util/TextSelect";
@@ -28,64 +27,97 @@ const CreateQuestion = () => {
   const [specialities, setSpecialities] = useState<Speciality[]>([]);
   const navigate = useNavigate();
 
-  const optionARef = useRef<HTMLInputElement>(null);
-  const optionBRef = useRef<HTMLInputElement>(null);
-  const optionCRef = useRef<HTMLInputElement>(null);
-  const optionDRef = useRef<HTMLInputElement>(null);
-  const optionERef = useRef<HTMLInputElement>(null);
-
-  const optionsRef = [
-    optionARef,
-    optionBRef,
-    optionCRef,
-    optionDRef,
-    optionERef,
+  const questionBankOptions = [
+    {
+      value: QuestionType.General,
+      displayText: "General"
+    },
+    {
+      value: QuestionType.PaperOneMockExam,
+      displayText: "Mock Paper 1"
+    },
+    {
+      value: QuestionType.PaperTwoMockExam,
+      displayText: "Mock Paper 2"
+    }
   ];
 
-  const answerRef = useRef<HTMLInputElement>(null);
-  const questionTextEditorRef = useRef<RichTextEditorRef>(null);
-  const explanationEditorRef = useRef<RichTextEditorRef>(null);
-  const learningPointsEditorRef = useRef<RichTextEditorRef>(null);
-  const clinicalTipsEditorRef = useRef<RichTextEditorRef>(null);
+  const [selectedSpeciality, setSelectedSpeciality] = useState('');
+  const [selectedQuestionBank, setSelectedQuestionBank] = useState<QuestionType>(QuestionType.General);
 
-  const selectedSpecialtyRef = useRef<HTMLInputElement>(null);
+  const [questionText, setQuestionText] = useState('');
+  const [explanation, setExlpanation] = useState('');
+  const [learningPoints, setLearningPoints] = useState('');
+  const [clinicalTips, setClinicalTips] = useState('');
 
-  const indexToLetter = (index) => {
-    return {
-      0: "A",
-      1: "B",
-      2: "C",
-      3: "D",
-      4: "E",
-    }[index];
-  };
+  const [optionA, setOptionA] = useState('');
+  const [optionB, setOptionB] = useState('');
+  const [optionC, setOptionC] = useState('');
+  const [optionD, setOptionD] = useState('');
+  const [optionE, setOptionE] = useState('');
+  const [answer, setAnswer] = useState('');
 
-  const questionBankOptions = ["Practice questions", "Mock 1", "Mock 2"];
+  const options = [
+    {
+      letter: "A",
+      value: optionA,
+      setValue: setOptionA
+    },
+    {
+      letter: "B",
+      value: optionB,
+      setValue: setOptionB
+    },
+    {
+      letter: "C",
+      value: optionC,
+      setValue: setOptionC
+    },
+    {
+      letter: "D",
+      value: optionD,
+      setValue: setOptionD
+    },
+    {
+      letter: "E",
+      value: optionE,
+      setValue: setOptionE
+    },
+  ]
+
+  const handleSortOptions = () => {
+    const sortedOptions = [optionA, optionB, optionC, optionD, optionE].sort();
+    setOptionA(sortedOptions[0]);
+    setOptionB(sortedOptions[1]);
+    setOptionC(sortedOptions[2]);
+    setOptionD(sortedOptions[3]);
+    setOptionE(sortedOptions[4]);
+  }
 
   const handleSubmit = async () => {
     try {
       setLoading(true);
 
-      const options = optionsRef.map((option) => option.current!.value);
-
       const question: Question = {
-        specialityId: selectedSpecialtyRef.current!.value,
-        questionText: questionTextEditorRef.current!.editor!.getHTML() ?? "",
-        clinicalTips: clinicalTipsEditorRef.current!.editor!.getHTML() ?? "",
-        learningPoints: learningPointsEditorRef.current!.editor!.getHTML() ?? "",
-        explanation: explanationEditorRef.current!.editor!.getHTML() ?? "",
-        options: options.map((option, index) => ({
-          letter: indexToLetter(index),
-          text: option,
+        specialityId: selectedSpeciality,
+        questionText,
+        clinicalTips,
+        learningPoints,
+        explanation,
+        options: options.map(option => ({
+          letter: option.letter,
+          text: option.value,
         })),
-        correctAnswerLetter: answerRef.current!.value,
-        questionType: QuestionType.General,
+        correctAnswerLetter: answer,
+        questionType: selectedQuestionBank,
         isSubmitted: true,
       };
 
-      await questionsStore.addQuestion(question);
+      console.log(question);
 
-      navigate("/edit-questions");
+      // await questionsStore.addQuestion(question);
+
+      // navigate("/edit-questions");
     } catch (e) {
       console.error(e);
       showSnackbar("Failed to submit", "error");
@@ -95,25 +127,7 @@ const CreateQuestion = () => {
   };
 
   const handleClickPreview = () => {
-    const options = optionsRef.map((option) => option.current!.value);
 
-    const question: Question = {
-      specialityId: selectedSpecialtyRef.current!.value ?? "",
-      questionText: questionTextEditorRef.current!.editor!.getHTML() ?? "",
-      clinicalTips: clinicalTipsEditorRef.current!.editor!.getHTML() ?? "",
-      learningPoints: learningPointsEditorRef.current!.editor!.getHTML() ?? "",
-      explanation: explanationEditorRef.current!.editor!.getHTML() ?? "",
-      options: options.map((option, index) => ({
-        letter: indexToLetter(index),
-        text: option || "",
-      })),
-      correctAnswerLetter: answerRef.current!.value ?? "",
-      questionType: QuestionType.General,
-      isSubmitted: true,
-    };
-
-    questionsStore.updatePreviewQuestion(question);
-    navigate("/question-preview")
   };
 
   useEffect(() => {
@@ -136,7 +150,7 @@ const CreateQuestion = () => {
         </Typography>
         <Stack direction="row" spacing={1}>
           <Button variant="outlined" onClick={handleClickPreview}>Preview</Button>
-          <LoadingButton variant="contained" onClick={handleSubmit} loading={loading}>
+          <LoadingButton variant="contained" onClick={handleSubmit} loading={loading} disabled={!selectedQuestionBank || !selectedSpeciality}>
             Submit
           </LoadingButton>
         </Stack>
@@ -148,18 +162,18 @@ const CreateQuestion = () => {
               <Stack direction="row" spacing={1}>
                 <TextSelect
                   label="Question bank"
-                  options={questionBankOptions.map(option => ({ value: option }))}
-                  setSelected={() => { }}
+                  options={questionBankOptions}
+                  value={selectedQuestionBank}
+                  setSelected={setSelectedQuestionBank}
                 />
                 <TextSelect
                   label="Speciality"
-                  value={selectedSpecialtyRef.current?.value}
-                  inputRef={selectedSpecialtyRef}
                   options={specialities.map(speciality => ({
                     value: speciality.id,
                     displayText: speciality.name
                   }))}
-                  setSelected={() => { }}
+                  value={selectedSpeciality}
+                  setSelected={setSelectedSpeciality}
                 />
               </Stack>
 
@@ -169,13 +183,14 @@ const CreateQuestion = () => {
                 </Typography>
                 <RichQuestionTextEditor
                   placeholderText="Write new question here..."
-                  editorRef={questionTextEditorRef}
+                  initialValue={''}
+                  setValue={setQuestionText}
                 />
               </Stack>
 
               <Stack spacing={1}>
-                {optionsRef.map((option, index) => (
-                  <Stack direction="row" key={index} spacing={1}>
+                {options.map(option => (
+                  <Stack direction="row" key={option.letter} spacing={1}>
                     <Box
                       sx={{
                         background: primaryGradient,
@@ -188,14 +203,15 @@ const CreateQuestion = () => {
                         borderRadius: 1,
                       }}
                     >
-                      {indexToLetter(index)}
+                      {option.letter}
                     </Box>
                     <TextField
                       size="small"
                       fullWidth
                       rows={2}
                       placeholder="Write answer here..."
-                      inputRef={option}
+                      value={option.value}
+                      onChange={e => option.setValue(e.target.value)}
                     />
                   </Stack>
                 ))}
@@ -215,12 +231,19 @@ const CreateQuestion = () => {
                 >
                   Answer
                 </Box>
-                <TextField
+                <TextSelect
                   size="small"
-                  placeholder="Write correct answer here"
-                  fullWidth
-                  inputRef={answerRef}
+                  options={options.map(option => ({ value: option.letter }))}
+                  value={answer}
+                  setSelected={setAnswer}
                 />
+                <Button
+                  onClick={handleSortOptions}
+                  sx={{ minWidth: 'max-content' }}
+                  disabled={options.some(option => !option.value || option.value === '')}
+                >
+                  Sort Options {'A-->Z'}
+                </Button>
               </Stack>
 
               <Stack spacing={1}>
@@ -228,8 +251,9 @@ const CreateQuestion = () => {
                   Explanation
                 </Typography>
                 <RichQuestionTextEditor
-                  placeholderText="Write explanation here..."
-                  editorRef={explanationEditorRef}
+                  placeholderText="Write new question here..."
+                  initialValue={''}
+                  setValue={setExlpanation}
                 />
               </Stack>
 
@@ -238,8 +262,9 @@ const CreateQuestion = () => {
                   Learning points
                 </Typography>
                 <RichQuestionTextEditor
-                  placeholderText="Write learning points here..."
-                  editorRef={learningPointsEditorRef}
+                  placeholderText="Write new question here..."
+                  initialValue={''}
+                  setValue={setLearningPoints}
                 />
               </Stack>
 
@@ -249,7 +274,8 @@ const CreateQuestion = () => {
                 </Typography>
                 <RichQuestionTextEditor
                   placeholderText="Write clinical tips here..."
-                  editorRef={clinicalTipsEditorRef}
+                  initialValue={''}
+                  setValue={setClinicalTips}
                 />
               </Stack>
             </Stack>

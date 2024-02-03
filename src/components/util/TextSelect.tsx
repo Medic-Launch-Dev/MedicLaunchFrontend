@@ -22,7 +22,7 @@ export default function TextSelect({ label, options, selected, setSelected, ...r
         sx={{ backgroundColor: "#fff" }}
         {...rest}
       >
-        {options.map(option => <MenuItem value={option.value}>{option.displayText ?? option.value}</MenuItem>)}
+        {options.map(option => <MenuItem value={option.value} key={option.value}>{option.displayText ?? option.value}</MenuItem>)}
       </Select>
     </FormControl>
   )
