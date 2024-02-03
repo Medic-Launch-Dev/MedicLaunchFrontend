@@ -35,14 +35,6 @@ function OptionInput({ size, fullWidth, rows, placeholder, ...props }: TextField
   )
 }
 
-const emptyOptions = [
-  { letter: "A", text: '' },
-  { letter: "B", text: '' },
-  { letter: "C", text: '' },
-  { letter: "D", text: '' },
-  { letter: "E", text: '' },
-]
-
 export default function AnswerOptionsInput({ options, setOptions, answer, setAnswer }: AnswerOptionsInputProps) {
   options = options.sort((a, b) => a.letter.localeCompare(b.letter));
 
@@ -64,7 +56,13 @@ export default function AnswerOptionsInput({ options, setOptions, answer, setAns
     setOptionC(sortedOptions[2]);
     setOptionD(sortedOptions[3]);
     setOptionE(sortedOptions[4]);
-    updateParentOptions();
+    setOptions([
+      { letter: "A", text: sortedOptions[0] },
+      { letter: "B", text: sortedOptions[1] },
+      { letter: "C", text: sortedOptions[2] },
+      { letter: "D", text: sortedOptions[3] },
+      { letter: "E", text: sortedOptions[4] },
+    ]);
   }
 
   function updateParentOptions() {

@@ -4,11 +4,9 @@ import {
   Typography
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
 import AnswerOptionsInput from "../../components/questionCreation/AnswerOptionsInput";
 import { RichQuestionTextEditor } from "../../components/tiptap/RichQuestionTextEditor";
 import TextSelect from "../../components/util/TextSelect";
-import { useSnackbar } from "../../hooks/useSnackbar";
 import { Option, Question, QuestionType } from "../../models/Question";
 import Speciality from "../../models/Speciality";
 import { useServiceProvider } from "../../services/ServiceProvider";
@@ -29,11 +27,7 @@ interface QuestionEditViewProps {
 
 export default function QuestionEditView({ question, setQuestion }: QuestionEditViewProps) {
   const { questionsStore } = useServiceProvider();
-  const { showSnackbar, snackbarProps } = useSnackbar();
-  const [loading, setLoading] = useState(false);
-  const [showPreview, setShowPreview] = useState(false);
   const [specialities, setSpecialities] = useState<Speciality[]>([]);
-  const navigate = useNavigate();
 
   const questionBankOptions = [
     {
@@ -68,6 +62,7 @@ export default function QuestionEditView({ question, setQuestion }: QuestionEdit
 
   useEffect(() => {
     setQuestion({
+      ...question,
       specialityId: selectedSpeciality,
       questionText,
       clinicalTips,
@@ -78,9 +73,7 @@ export default function QuestionEditView({ question, setQuestion }: QuestionEdit
       questionType: selectedQuestionBank,
       isSubmitted: true,
     });
-
-    console.log(options);
-  }, [selectedSpeciality, selectedQuestionBank, questionText, options, answer, explanation, learningPoints, clinicalTips])
+  }, [selectedSpeciality, selectedQuestionBank, questionText, options, answer, explanation, learningPoints, clinicalTips]);
 
   return (
     <Grid container spacing={3}>
@@ -110,7 +103,7 @@ export default function QuestionEditView({ question, setQuestion }: QuestionEdit
             </Typography>
             <RichQuestionTextEditor
               placeholderText="Write new question here..."
-              initialValue={''}
+              initialValue={question?.questionText || ''}
               setValue={setQuestionText}
             />
           </Stack>
@@ -128,7 +121,7 @@ export default function QuestionEditView({ question, setQuestion }: QuestionEdit
             </Typography>
             <RichQuestionTextEditor
               placeholderText="Write new question here..."
-              initialValue={''}
+              initialValue={question?.explanation || ''}
               setValue={setExlpanation}
             />
           </Stack>
@@ -139,7 +132,7 @@ export default function QuestionEditView({ question, setQuestion }: QuestionEdit
             </Typography>
             <RichQuestionTextEditor
               placeholderText="Write new question here..."
-              initialValue={''}
+              initialValue={question?.learningPoints || ''}
               setValue={setLearningPoints}
             />
           </Stack>
@@ -150,7 +143,7 @@ export default function QuestionEditView({ question, setQuestion }: QuestionEdit
             </Typography>
             <RichQuestionTextEditor
               placeholderText="Write clinical tips here..."
-              initialValue={''}
+              initialValue={question?.clinicalTips || ''}
               setValue={setClinicalTips}
             />
           </Stack>

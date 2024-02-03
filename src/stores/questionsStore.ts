@@ -89,6 +89,10 @@ export class QuestionsStore {
     await this.apiClient.saveQuestion(question);
   }
 
+  async updateQuestion(question: Question) {
+    await this.apiClient.overwriteQuestion(question);
+  }
+
   async getSpecialities(): Promise<Speciality[]> {
     const specialities = await this.apiClient.getSpecialitiesList();
     return specialities;
@@ -133,7 +137,7 @@ export class QuestionsStore {
     console.log("Practice Questions: ", this.questions);
   }
 
-  updatePreviewQuestion(question: QuestionModelUI) {
+  setPreviewQuestion(question: QuestionModelUI) {
     this.previewQuestion = question;
   }
 

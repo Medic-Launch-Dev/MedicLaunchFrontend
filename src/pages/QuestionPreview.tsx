@@ -1,6 +1,7 @@
 import { ChevronLeft } from "@mui/icons-material";
 import { Button, Container, Stack, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
+import { useSearchParams } from "react-router-dom";
 import QuestionView from "../components/practiceSession/QuestionView";
 import LinkButton from "../components/util/LinkButton";
 import { useServiceProvider } from "../services/ServiceProvider";
@@ -8,6 +9,8 @@ import { QuestionModelUI } from "../stores/questionsStore";
 import { primaryGradient } from "../theme";
 
 function QuestionPreview() {
+  let [searchParams] = useSearchParams();
+  const from = searchParams.get('from');
   const { questionsStore } = useServiceProvider();
 
   function hasMinimumProperties(question: QuestionModelUI) {
@@ -31,7 +34,7 @@ function QuestionPreview() {
           borderRadius: 1,
           mb: 4
         }}>
-        <LinkButton variant="text" color="secondary" to="/create-question" startIcon={<ChevronLeft />}>
+        <LinkButton variant="text" color="secondary" to={from === "create" ? "/create-question" : "/edit-question"} startIcon={<ChevronLeft />}>
           Back to edit
         </LinkButton>
         <Typography variant="h3" color="secondary">Preview</Typography>
