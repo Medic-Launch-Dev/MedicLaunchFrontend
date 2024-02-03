@@ -29,7 +29,7 @@ const CreateQuestion = () => {
 
       await questionsStore.addQuestion(question);
 
-      navigate("/edit-questions");
+      navigate(`/edit-questions?speciality=${question.specialityId}`);
     } catch (e) {
       console.error(e);
       showSnackbar("Failed to submit", "error");

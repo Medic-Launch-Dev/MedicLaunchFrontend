@@ -1,12 +1,17 @@
 import { Avatar, Box, Stack, Toolbar } from "@mui/material";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, useNavigation } from "react-router-dom";
 import Logo from "../../assets/logo.svg";
+import { Loading } from "../util/Loading";
 
 export default function AppShell() {
   const navigate = useNavigate();
+  const { state } = useNavigation();
+
+  console.log(state);
 
   return (
     <Box sx={{ height: "100vh" }}>
+      {state === "loading" && <Loading />}
       <Toolbar sx={{ backgroundColor: "#fff" }}>
         <Stack sx={{ width: '100%' }} direction="row" justifyContent="space-between" alignItems="center">
           <img src={Logo} height={40} alt="Medic launch" style={{ cursor: 'pointer' }} onClick={() => navigate("/")} />

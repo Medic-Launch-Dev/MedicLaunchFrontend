@@ -34,29 +34,32 @@ function QuestionView({ question: questionFromProps, inPreview }: QuestionViewPr
 
   const questionBodyMarkup = (
     <>
-      <Box sx={{
-        display: "flex",
-        alignItems: "center",
-        gap: 1,
-        mb: 2
-      }}>
-        <Box
-          sx={{
-            background: primaryGradient,
-            color: "#fff",
-            width: "fit-content",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            fontWeight: 500,
-            borderRadius: 1,
-            padding: "5px 15px",
-          }}
-        >
-          {question.specialityName}
+      {
+        !inPreview &&
+        <Box sx={{
+          display: "flex",
+          alignItems: "center",
+          gap: 1,
+          mb: 2
+        }}>
+          <Box
+            sx={{
+              background: primaryGradient,
+              color: "#fff",
+              width: "fit-content",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              fontWeight: 500,
+              borderRadius: 1,
+              padding: "5px 15px",
+            }}
+          >
+            {question.specialityName}
+          </Box>
+          <Typography fontWeight={600}>{`Question ${questionsStore.getQuestionNumber()}`}</Typography>
         </Box>
-        <Typography fontWeight={600}>{`Question ${questionsStore.getQuestionNumber()}`}</Typography>
-      </Box>
+      }
       <Box mb={2}>
         <RichTextReadOnly content={question?.questionText} extensions={extensions} />
       </Box>

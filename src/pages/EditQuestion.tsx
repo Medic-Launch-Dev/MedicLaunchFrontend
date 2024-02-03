@@ -57,7 +57,7 @@ const EditQuestion = () => {
         mb={4}
       >
         <Stack direction="row" alignItems="center" spacing={1}>
-          <LinkButton variant="text" to="/edit-questions" startIcon={<ChevronLeft />}>
+          <LinkButton variant="text" to={`/edit-questions?speciality=${question.specialityId}`} startIcon={<ChevronLeft />}>
             Back
           </LinkButton>
           <Typography variant="h2" style={primaryGradientText}>

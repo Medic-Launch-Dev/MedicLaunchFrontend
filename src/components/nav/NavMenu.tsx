@@ -1,7 +1,6 @@
 import { Box, Drawer, Stack } from "@mui/material";
 import LogoWhite from "../../assets/logo-white.svg";
 import NavLink from "./NavLink";
-import { NavLink as NavLinkRoute } from "react-router-dom";
 
 export default function NavMenu() {
   return (
@@ -27,8 +26,7 @@ export default function NavMenu() {
         <Stack sx={{ width: '100%', pt: 12 }} gap={2}>
           <NavLink text="Study Portal" selected href="/" />
           <NavLink text="My Profile" href="/" />
-          <NavLink text="Add Question" href="/create-question" />
-          <NavLink text="Edit Questions" href="/edit-questions" />
+          <NavLink text="Author Portal" href="/edit-questions" />
         </Stack>
       </Stack>
     </Drawer>

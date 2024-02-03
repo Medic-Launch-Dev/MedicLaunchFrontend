@@ -13,20 +13,24 @@ import {
 	TableRow,
 	Typography
 } from "@mui/material"
-import parse from 'html-react-parser'
 import { observer } from "mobx-react-lite"
 import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useSearchParams } from "react-router-dom"
 import { LoadingWrapper } from "../components/util/LoadingWrapper"
 import TextSelect from "../components/util/TextSelect"
+import { Question } from "../models/Question"
 import Speciality from "../models/Speciality"
 import { useServiceProvider } from "../services/ServiceProvider"
 import { QuestionModelUI } from "../stores/questionsStore"
 import { primaryGradientText } from "../theme"
 
 function EditQuestions() {
+	let [searchParams] = useSearchParams();
+	const defaultSpeciality = searchParams.get('speciality');
+
 	const { questionsStore } = useServiceProvider();
 	const [specialities, setSpecialitiesList] = useState<Speciality[]>([]);
+	const [selectedSpeciality, setSelectedSpeciality] = useState<string>();
 	const [questions, setQuestions] = useState<QuestionModelUI[]>([]);
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
@@ -51,18 +55,21 @@ function EditQuestions() {
 	}
 
 	const navigateToQuestionCreation = () => {
+		questionsStore.setPreviewQuestion(new Question());
 		navigate("/create-question");
 	}
 
 	const getQuestionTextWithoutHtml = (questionText: string) => {
-		const text = parse(questionText);
-		return text;
+		const tempContainer = document.createElement('div');
+		tempContainer.innerHTML = questionText;
+		return tempContainer.innerText;
 	}
 
 	useEffect(() => {
 		questionsStore.getSpecialities()
 			.then((specialities) => {
 				setSpecialitiesList(specialities);
+				if (defaultSpeciality) setSelectedSpeciality(defaultSpeciality);
 			})
 			.catch(e => {
 				console.error(e);
@@ -70,10 +77,15 @@ function EditQuestions() {
 			});
 	}, []);
 
+	useEffect(() => {
+		if (selectedSpeciality) loadQuestions(selectedSpeciality);
+	}, [selectedSpeciality])
+
+
+
 	function handleClickEdit(question: QuestionModelUI) {
 		questionsStore.setPreviewQuestion(question);
 		navigate("/edit-question")
-
 	}
 
 	return (
@@ -89,23 +101,24 @@ function EditQuestions() {
 				<Grid item xs={8}>
 					<Stack direction="row" alignItems="center">
 						<Grid container columnSpacing={2} >
-							<Grid item xs={6}>
-								<TextSelect
-									label="Question bank"
-									options={questionBankOptions.map(option => ({ value: option }))}
-									setSelected={() => { }}
-								/>
-							</Grid>
 							<Grid item xs={6} sx={{ fontWeight: "bold" }}>
 								<TextSelect
 									label="Speciality"
-									defaultValue={specialities[0]?.id}
 									options={specialities.map(speciality => ({
 										value: speciality.id,
 										displayText: speciality.name
 									}))}
+									defaultValue={defaultSpeciality}
+									selected={selectedSpeciality}
+									setSelected={setSelectedSpeciality}
+								/>
+							</Grid>
+							<Grid item xs={6}>
+								<TextSelect
+									label="Question bank"
+									defaultValue={questionBankOptions[0]}
+									options={questionBankOptions.map(option => ({ value: option }))}
 									setSelected={() => { }}
-									onChange={(e) => loadQuestions(e.target.value as string)}
 								/>
 							</Grid>
 						</Grid>
@@ -137,10 +150,10 @@ function EditQuestions() {
 												</TableCell>
 												<TableCell>{p.specialityName}</TableCell>
 												<TableCell>{index + 1}</TableCell>
-												<TableCell sx={{ width: 349 }}>
-													<span>
+												<TableCell sx={{ width: 500 }}>
+													<Typography sx={{ height: 64, overflowY: 'hidden' }}>
 														{getQuestionTextWithoutHtml(p.questionText)}
-													</span>
+													</Typography>
 												</TableCell>
 												<TableCell>
 													<Button

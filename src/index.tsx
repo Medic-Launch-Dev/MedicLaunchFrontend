@@ -7,7 +7,7 @@ import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import React from "react";
 import ReactDOM from "react-dom";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import AppShell from "./components/nav/AppShell";
 import CreateQuestion from "./pages/CreateQuestion";
 import EditQuestions from './pages/EditQuestions';
@@ -31,6 +31,62 @@ import {
 import theme from "./theme";
 
 const App = () => {
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <AuthGuard><AppShell /></AuthGuard>,
+      children: [
+        {
+          index: true,
+          element: <Root />,
+        },
+        {
+          path: "create-session",
+          element: <CreateSession />
+        },
+        {
+          path: "practice-session",
+          element: <PracticeSession />
+        },
+        {
+          path: "review-session",
+          element: <ReviewSession />
+        },
+        {
+          path: "create-question",
+          element: <CreateQuestion />
+        },
+        {
+          path: "question-preview",
+          element: <QuestionPreview />
+        },
+
+        {
+          path: "edit-questions",
+          element: <EditQuestions />
+        },
+        {
+          path: "edit-question",
+          element: <EditQuestion />
+        },
+
+        {
+          path: "user-management",
+          element: <UserManagement />
+        },
+      ],
+    },
+    {
+      path: "/login",
+      element: <Login />
+    },
+    {
+      path: "/register",
+      element: <Register />
+    },
+  ]);
+
+
   return (
     <React.StrictMode>
       <ThemeProvider theme={theme}>
@@ -39,45 +95,7 @@ const App = () => {
           <ServiceProviderConsumer>
             {(providers) => (
               <AuthProvider>
-                <Routes>
-                  <Route path="/" element={<AuthGuard><AppShell /></AuthGuard>}>
-                    <Route index element={<Root />} />
-                    <Route
-                      path="create-session"
-                      element={<CreateSession />}
-                    />
-                    <Route
-                      path="practice-session"
-                      element={<PracticeSession />}
-                    />
-                    <Route
-                      path="review-session"
-                      element={<ReviewSession />}
-                    />
-                    <Route
-                      path="create-question"
-                      element={<CreateQuestion />}
-                    />
-                    <Route
-                      path="question-preview"
-                      element={<QuestionPreview />}
-                    />
-                    <Route
-                      path="edit-questions"
-                      element={<EditQuestions />}
-                    />
-                    <Route
-                      path="edit-question"
-                      element={<EditQuestion />}
-                    />
-                    <Route
-                      path="user-management"
-                      element={<UserManagement />}
-                    />
-                  </Route>
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/register" element={<Register />} />
-                </Routes>
+                <RouterProvider router={router} />
               </AuthProvider>
             )}
           </ServiceProviderConsumer>
@@ -88,8 +106,6 @@ const App = () => {
 };
 
 ReactDOM.render(
-  <Router>
-    <App />
-  </Router>,
+  <App />,
   document.getElementById("root")
 );
