@@ -154,7 +154,7 @@ function QuestionView({ question: questionFromProps, inPreview }: QuestionViewPr
       <Box sx={{ backgroundColor: "#fff", p: 4, borderRadius: 1 }}>
         <Typography variant="h5" color="primary">
           The correct answer is {question?.correctAnswerLetter}:{" "}
-          {correctOption && correctOption[0].text}
+          {correctOption && correctOption[0] && correctOption[0].text}
         </Typography>
         {
           getInnerTextFromHTML(question?.explanation) &&
