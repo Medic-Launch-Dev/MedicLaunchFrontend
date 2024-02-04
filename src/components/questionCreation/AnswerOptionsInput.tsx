@@ -99,6 +99,14 @@ export default function AnswerOptionsInput({ options, setOptions, answer, setAns
           <OptionInput value={optionE} onChange={e => setOptionE(e.target.value)} onBlur={updateParentOptions} />
         </Stack>
       </Stack>
+      <Button
+        onClick={handleSortOptions}
+        sx={{ minWidth: 'max-content' }}
+        variant="contained"
+        disabled={options.some(option => !optionA || !optionB || !optionC || !optionD || !optionE)}
+      >
+        Sort Options {'A-->Z'}
+      </Button>
       <Stack direction="row" spacing={1}>
         <Box
           sx={{
@@ -120,13 +128,6 @@ export default function AnswerOptionsInput({ options, setOptions, answer, setAns
           value={answer}
           setSelected={setAnswer}
         />
-        <Button
-          onClick={handleSortOptions}
-          sx={{ minWidth: 'max-content' }}
-          disabled={options.some(option => !optionA || !optionB || !optionC || !optionD || !optionE)}
-        >
-          Sort Options {'A-->Z'}
-        </Button>
       </Stack>
     </>
   )

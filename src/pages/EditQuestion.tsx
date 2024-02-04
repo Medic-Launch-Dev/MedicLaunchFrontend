@@ -67,7 +67,7 @@ const EditQuestion = () => {
         <Stack direction="row" spacing={1}>
           <Button variant="outlined" onClick={handleClickPreview}>Preview</Button>
           <LoadingButton variant="contained" onClick={handleSubmit} loading={loading} disabled={!question?.questionType || !question.specialityId}>
-            Update
+            Save
           </LoadingButton>
         </Stack>
       </Stack>
