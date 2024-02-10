@@ -22,6 +22,7 @@ import AuthorPortal from "./pages/AuthorPortal";
 import CreateSession from "./pages/CreateSession";
 import EditQuestion from "./pages/EditQuestion";
 import QuestionPreview from "./pages/QuestionPreview";
+import Subscribe from "./pages/Subscribe";
 import UserManagement from "./pages/UserManagement";
 import { AuthGuard } from "./services/AuthGuard";
 import { AuthProvider } from "./services/AuthProvider";
@@ -76,6 +77,10 @@ const App = () => {
         {
           path: "author-portal",
           element: <AuthorPortal />
+        },
+        {
+          path: "/subscribe",
+          element: <Subscribe />
         },
       ],
     },

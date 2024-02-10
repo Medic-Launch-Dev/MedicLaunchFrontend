@@ -1,44 +1,38 @@
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import {
-  Box,
-  Button,
-  Container,
-  Snackbar,
-  Stack,
-  Step,
-  StepLabel,
-  Stepper,
-} from "@mui/material";
+import { Box, Button, Container, Snackbar, Stack, Step, StepLabel, Stepper, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FamiliaritySelection } from "../components/createSession/FamiliaritySelection";
-import { OrderQuantitySelection } from "../components/createSession/OrderQuantitySelection";
-import { SpecialitySelection } from "../components/createSession/SpecialitySelection";
+import Payment from "../components/subscribe/Payment";
+import { PlanSelection } from "../components/subscribe/PlanSelection";
+import { QuestionBankSelection } from "../components/subscribe/QuestionBankSelection";
 import LinkButton from "../components/util/LinkButton";
 import { useSnackbar } from "../hooks/useSnackbar";
-import { useServiceProvider } from "../services/ServiceProvider";
+import { primaryGradientText } from "../theme";
 
-function CreateSession() {
+function Subscribe() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
-  const { practiceStore, questionsStore } = useServiceProvider();
+  const [selectedPlan, setSelectedPlan] = useState<string>("");
+
+  console.log(selectedPlan);
+
   const { showSnackbar, snackbarProps } = useSnackbar();
 
   const steps = [
     {
-      label: "Select speciality",
-      onNext: handleSelectSpeciality,
+      label: "Select Question Bank",
+      onNext: () => { },
     },
     {
-      label: "Select familiarity",
-      onNext: handleSelectFamiliarity,
+      label: "Select Plan",
+      onNext: handlePlan,
     },
     {
-      label: "Select number of questions",
-      onNext: handleStartPractice,
+      label: "Make Payment",
+      onNext: handlePayment,
     },
   ];
 
@@ -53,39 +47,29 @@ function CreateSession() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  async function handleSelectSpeciality() {
-    try {
-      questionsStore.setFamiliarityCounts(practiceStore.practiceFilter.specialityIds, practiceStore.practiceFilter.allSpecialitiesSelected);
-    } catch (e) {
-      console.error(e);
-      showSnackbar("Error", "error");
-    }
+  async function handlePlan() {
+
   }
 
-  async function handleSelectFamiliarity() {
-    try {
-      const practiceQuestion = await practiceStore.getPracticeQuestions();
+  async function handlePayment() {
 
-      questionsStore.setPracticeQuestions(practiceQuestion);
-      practiceStore.setQuestionsCount(practiceQuestion.length);
-    } catch (e) {
-      showSnackbar("Error", "error");
-    }
-  }
-
-  function handleStartPractice() {
-    // add quanitity and order logic
-    questionsStore.applyOrderAndQuantity(practiceStore.practiceFilter);
-    navigate("/practice-session");
   }
 
   return (
     <Container maxWidth="lg" sx={{ height: "100%" }}>
       <Snackbar {...snackbarProps} />
       <Stack height="100%" gap={3} py={2}>
-        <LinkButton to="/" sx={{ width: "max-content", flexShrink: 0 }}>
-          Study Portal
-        </LinkButton>
+        <Stack direction="row" justifyContent="space-between">
+          <LinkButton to="/" sx={{ width: "max-content", flexShrink: 0 }} startIcon={<ChevronLeft />}>
+            Study Portal
+          </LinkButton>
+          <Typography fontSize={28} fontWeight={500} sx={primaryGradientText}>
+            Add Subscription
+          </Typography>
+          <LinkButton to="/" sx={{ width: "max-content", flexShrink: 0, visibility: "hidden" }} startIcon={<ChevronLeft />}>
+            Study Portal
+          </LinkButton>
+        </Stack>
         <Stepper
           activeStep={activeStep}
           sx={{
@@ -93,7 +77,7 @@ function CreateSession() {
             "& .MuiStepConnector-line": { borderTopWidth: 2 },
           }}
         >
-          {steps.map(({ label, onNext }) => {
+          {steps.map(({ label }) => {
             const stepProps: { completed?: boolean } = {};
             return (
               <Step
@@ -113,13 +97,13 @@ function CreateSession() {
           sx={{
             flexGrow: 1,
             maxHeight: "100%",
-            minHeight: 400,
+            minHeight: 550,
             overflowY: "hidden",
           }}
         >
-          {activeStep === 0 && <SpecialitySelection />}
-          {activeStep === 1 && <FamiliaritySelection />}
-          {activeStep === 2 && <OrderQuantitySelection />}
+          {activeStep === 0 && <QuestionBankSelection />}
+          {activeStep === 1 && <PlanSelection selectedPlan={selectedPlan} setSelectedPlan={setSelectedPlan} />}
+          {activeStep === 2 && <Payment />}
         </Box>
         <Stack
           direction="row"
@@ -147,7 +131,7 @@ function CreateSession() {
             onClick={handleNext}
             loading={loading}
           >
-            Next
+            {activeStep === steps.length - 1 ? "Pay now" : "Next"}
           </LoadingButton>
         </Stack>
       </Stack>
@@ -155,4 +139,4 @@ function CreateSession() {
   );
 }
 
-export default observer(CreateSession);
+export default observer(Subscribe);
