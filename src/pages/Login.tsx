@@ -34,9 +34,9 @@ export default function Login() {
     <>
       <Snackbar {...snackbarProps} />
       <Grid container sx={{ height: "100vh" }}>
-        <Grid item lg={7} sx={{ height: "100%" }}>
+        <Grid item lg={7} xs={12} sx={{ height: "100%" }}>
           <Stack
-            sx={{ m: "auto", height: "100%" }}
+            sx={{ m: "auto", minHeight: "100%", py: 5 }}
             alignItems="center"
             justifyContent="center"
             spacing={2}
@@ -108,7 +108,7 @@ export default function Login() {
         <Grid
           item
           lg={5}
-          sx={{ height: "100%", background: primaryGradient }}
+          sx={{ height: "100%", background: primaryGradient, display: { xs: 'none', lg: 'block' } }}
         ></Grid>
       </Grid>
     </>

@@ -93,9 +93,9 @@ export default function Register() {
     <>
       <Snackbar {...snackbarProps} />
       <Grid container sx={{ height: "100vh" }}>
-        <Grid item lg={7} sx={{ height: "100%", maxWidth: 600 }}>
+        <Grid item lg={7} xs={12} sx={{ height: "100%", maxWidth: 600 }}>
           <Stack
-            sx={{ m: "auto", height: "100%" }}
+            sx={{ m: "auto", minHeight: "100%", py: 5 }}
             alignItems="center"
             justifyContent="center"
             spacing={2}
@@ -260,7 +260,7 @@ export default function Register() {
         <Grid
           item
           lg={5}
-          sx={{ height: "100%", background: primaryGradient }}
+          sx={{ height: "100%", background: primaryGradient, display: { xs: 'none', lg: 'block' } }}
         ></Grid>
       </Grid>
     </>

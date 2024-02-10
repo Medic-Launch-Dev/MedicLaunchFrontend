@@ -113,6 +113,7 @@ function CreateSession() {
           sx={{
             flexGrow: 1,
             maxHeight: "100%",
+            minHeight: 450,
             overflowY: "hidden",
           }}
         >
