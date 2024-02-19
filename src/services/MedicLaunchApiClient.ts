@@ -83,4 +83,15 @@ export default class MedicLaunchApiClient {
 
     return response.data;
   }
+
+  async getPaymentClientSecret(planId: number) : Promise<string> {
+    const response = await this.axios.post(`${this.apiUrl}/payment/create-payment-intent?planId=${planId}`);
+    const clientSecret = response.data.clientSecret;
+    return clientSecret;
+  }
+
+  async getPublishableKey() : Promise<string> {
+    const response = await this.axios.get(`${this.apiUrl}/payment/publishable-key`);
+    return response.data.publishableKey;
+  }
 }

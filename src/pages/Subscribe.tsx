@@ -4,7 +4,7 @@ import { Box, Button, Container, Snackbar, Stack, Step, StepLabel, Stepper, Typo
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Payment from "../components/subscribe/Payment";
+import { Payment } from "../components/subscribe/Payment";
 import { PlanSelection } from "../components/subscribe/PlanSelection";
 import { QuestionBankSelection } from "../components/subscribe/QuestionBankSelection";
 import LinkButton from "../components/util/LinkButton";
