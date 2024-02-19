@@ -3,11 +3,13 @@ import { PracticeStore } from '../stores/practiceStore';
 import { QuestionsStore } from '../stores/questionsStore';
 import AxiosProvider from './AxiosProvider';
 import MedicLaunchApiClient from './MedicLaunchApiClient';
+import { PaymentStore } from '../stores/paymentStore';
 
 
 interface ServiceProvderContextValues {
     practiceStore: PracticeStore;
     questionsStore: QuestionsStore;
+    paymentStore: PaymentStore;
 }
 
 export const ServiceProviderContext = React.createContext<ServiceProvderContextValues | null>(null);
@@ -18,9 +20,10 @@ export const ServiceProvider = ({ children }) => {
     const medicLaunchApiClient = new MedicLaunchApiClient(axiosProvider);
     const practiceStore = new PracticeStore(medicLaunchApiClient);
     const questionsStore = new QuestionsStore(medicLaunchApiClient);
+    const paymentStore = new PaymentStore(medicLaunchApiClient);
 
     return (
-        <ServiceProviderContext.Provider value={{ practiceStore, questionsStore }}>
+        <ServiceProviderContext.Provider value={{ practiceStore, questionsStore, paymentStore }}>
             {children}
         </ServiceProviderContext.Provider>
     )
