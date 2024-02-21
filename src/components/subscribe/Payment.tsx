@@ -3,6 +3,7 @@ import { Elements, PaymentElement } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useServiceProvider } from "../../services/ServiceProvider";
 import { useEffect, useState } from "react";
+import { LoadingWrapper } from "../util/LoadingWrapper";
 
 export const Payment = () => {
   // const stripePromise = loadStripe("pk_test_51HZ948JUITqc1TPfw9cgfD1S0DZdrHoIgGTcDYuGtkRjBDg0giuikEK6tlUQV7JdC4IJQRF6bct8K8tT525tASxV00Rxj75OBt");
@@ -34,7 +35,8 @@ export const Payment = () => {
   }, [paymentStore]);
 
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', bgcolor: 'white', borderRadius: 1.5 }}>
+   <LoadingWrapper isLoading={isLoading}>
+     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', bgcolor: 'white', borderRadius: 1.5 }}>
       <Box sx={{ display: 'flex', justifyContent: 'center', gap: 8 }}>
         <Stack sx={{ width: 400, borderRadius: 1, border: '1px solid #CFCFCF', height: 'max-content' }} p={2}>
           <Stack direction="row" alignItems="center" justifyContent="space-between" borderBottom="1px solid #CFCFCF" pb={1.5}>
@@ -51,5 +53,6 @@ export const Payment = () => {
         </Elements>
       </Box>
     </Box>
+   </LoadingWrapper>
   )
 }
