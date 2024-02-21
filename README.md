@@ -1,6 +1,6 @@
 # Documentation
 
-Dev webiste address: https://mediclaunchdb.z13.web.core.windows.net/
+Dev webiste address: https://mediclaunch.azureedge.net
 
 
 # Getting Started with Create React App
