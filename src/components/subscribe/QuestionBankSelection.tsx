@@ -25,6 +25,7 @@ export const QuestionBankSelection = observer(() => {
         {
           questionBanks.map(({ name, icon: Icon }) => (
             <QuestionBankOption
+              key={name}
               text={name}
               selected={selectedQB === name}
               setSelected={setSelectedQB}

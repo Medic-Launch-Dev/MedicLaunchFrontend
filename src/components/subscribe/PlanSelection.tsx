@@ -25,7 +25,7 @@ export const PlanSelection = observer(({ selectedPlan, setSelectedPlan }: PlanSe
 
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', bgcolor: 'white', borderRadius: 1.5 }}>
-      <Stack sx={{ m: 'auto' }} spacing={3} direction="row">
+      <Stack sx={{ m: 'auto' }} spacing={3} direction="row" alignItems="center">
         {
           plans.map(({ name, price }) => (
             <PlanOption
@@ -33,6 +33,7 @@ export const PlanSelection = observer(({ selectedPlan, setSelectedPlan }: PlanSe
               price={price}
               selected={selectedPlan === name}
               setSelected={setSelectedPlan}
+              mostPopular={name === "3 Months"}
             />
           ))
         }

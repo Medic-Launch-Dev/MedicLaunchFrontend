@@ -7,28 +7,28 @@
 <path d="M61.5164 52.3076C61.5164 51.7251 61.0442 51.2529 60.4617 51.2529H36C35.4175 51.2529 34.9453 51.7251 34.9453 52.3076C34.9453 52.8901 35.4175 53.3623 36 53.3623H60.4617C61.0442 53.3623 61.5164 52.8901 61.5164 52.3076Z" fill="url(#paint5_linear_1303_94673)"/>
 <defs>
 <linearGradient id="paint0_linear_1303_94673" x1="2.32812" y1="2.12808" x2="84.4938" y2="38.672" gradientUnits="userSpaceOnUse">
-<stop offset="0.0532222" stop-color="#2496C7"/>
-<stop offset="1" stop-color="#046E9B"/>
+<stop offset="0.0532222" stopColor="#2496C7"/>
+<stop offset="1" stopColor="#046E9B"/>
 </linearGradient>
 <linearGradient id="paint1_linear_1303_94673" x1="58.7344" y1="30.052" x2="74.4889" y2="31.9474" gradientUnits="userSpaceOnUse">
-<stop offset="0.0532222" stop-color="#2496C7"/>
-<stop offset="1" stop-color="#046E9B"/>
+<stop offset="0.0532222" stopColor="#2496C7"/>
+<stop offset="1" stopColor="#046E9B"/>
 </linearGradient>
 <linearGradient id="paint2_linear_1303_94673" x1="22.1328" y1="23.3592" x2="22.8539" y2="29.761" gradientUnits="userSpaceOnUse">
-<stop offset="0.0532222" stop-color="#2496C7"/>
-<stop offset="1" stop-color="#046E9B"/>
+<stop offset="0.0532222" stopColor="#2496C7"/>
+<stop offset="1" stopColor="#046E9B"/>
 </linearGradient>
 <linearGradient id="paint3_linear_1303_94673" x1="22.1328" y1="30.3485" x2="22.8539" y2="36.7503" gradientUnits="userSpaceOnUse">
-<stop offset="0.0532222" stop-color="#2496C7"/>
-<stop offset="1" stop-color="#046E9B"/>
+<stop offset="0.0532222" stopColor="#2496C7"/>
+<stop offset="1" stopColor="#046E9B"/>
 </linearGradient>
 <linearGradient id="paint4_linear_1303_94673" x1="22.1328" y1="37.3372" x2="22.8539" y2="43.739" gradientUnits="userSpaceOnUse">
-<stop offset="0.0532222" stop-color="#2496C7"/>
-<stop offset="1" stop-color="#046E9B"/>
+<stop offset="0.0532222" stopColor="#2496C7"/>
+<stop offset="1" stopColor="#046E9B"/>
 </linearGradient>
 <linearGradient id="paint5_linear_1303_94673" x1="34.9453" y1="51.3153" x2="35.9983" y2="57.6225" gradientUnits="userSpaceOnUse">
-<stop offset="0.0532222" stop-color="#2496C7"/>
-<stop offset="1" stop-color="#046E9B"/>
+<stop offset="0.0532222" stopColor="#2496C7"/>
+<stop offset="1" stopColor="#046E9B"/>
 </linearGradient>
 </defs>
 </svg>

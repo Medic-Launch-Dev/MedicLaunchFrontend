@@ -15,9 +15,7 @@ function Subscribe() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
-  const [selectedPlan, setSelectedPlan] = useState<string>("");
-
-  console.log(selectedPlan);
+  const [selectedPlan, setSelectedPlan] = useState<string>("3 Months");
 
   const { showSnackbar, snackbarProps } = useSnackbar();
 

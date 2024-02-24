@@ -2,7 +2,7 @@ import MedicLaunchApiClient from "../services/MedicLaunchApiClient";
 
 export class PaymentStore {
     private apiClient: MedicLaunchApiClient;
-    
+
     constructor(apiClient: MedicLaunchApiClient) {
         this.apiClient = apiClient;
     }
@@ -11,7 +11,7 @@ export class PaymentStore {
         return await this.apiClient.getPaymentClientSecret(planId);
     }
 
-    async getPubishaableKey() {
+    async getPubishableKey() {
         return await this.apiClient.getPublishableKey();
     }
 }
