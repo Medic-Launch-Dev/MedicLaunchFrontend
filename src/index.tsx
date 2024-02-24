@@ -21,6 +21,7 @@ import "./index.css";
 import AuthorPortal from "./pages/AuthorPortal";
 import CreateSession from "./pages/CreateSession";
 import EditQuestion from "./pages/EditQuestion";
+import MyProfile from "./pages/MyProfile";
 import QuestionPreview from "./pages/QuestionPreview";
 import Subscribe from "./pages/Subscribe";
 import UserManagement from "./pages/UserManagement";
@@ -81,6 +82,10 @@ const App = () => {
         {
           path: "/subscribe",
           element: <Subscribe />
+        },
+        {
+          path: "/my-profile",
+          element: <MyProfile />
         },
       ],
     },

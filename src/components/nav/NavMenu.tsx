@@ -26,8 +26,9 @@ export default function NavMenu() {
         </Box>
         <Stack sx={{ width: '100%', pt: 12 }} gap={2}>
           <NavLink text="Study Portal" selected={!!useMatch("/")} href="/" />
-          <NavLink text="My Profile" href="/" />
+          <NavLink text="My Profile" selected={!!useMatch("/my-profile")} href="/my-profile" />
           <NavLink text="Author Portal" selected={!!useMatch("/author-portal")} href="/author-portal" />
+          <NavLink text="User Management" selected={!!useMatch("/user-management")} href="/user-management" />
         </Stack>
       </Stack>
     </Drawer>

@@ -112,7 +112,8 @@ theme.components = {
     },
     defaultProps: {
       disableElevation: true,
-      disableRipple: true
+      disableRipple: true,
+      size: "small"
     }
   },
   MuiTextField: {
@@ -174,8 +175,14 @@ theme.components = {
 
       }
     }
-  }
-
+  },
+  MuiPaper: {
+    styleOverrides: {
+      root: {
+        boxShadow: '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)'
+      }
+    }
+  },
 }
 
 export default theme;

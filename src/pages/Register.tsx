@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import AgreementCheckbox from "../components/register/AgreementCheckbox";
 import { useSnackbar } from "../hooks/useSnackbar";
-import { MedicLauncUser } from "../models/User";
+import { MedicLauncUser as MedicLaunchUser } from "../models/User";
 import userStore from "../stores/userStore";
 import { primaryGradient, primaryGradientText, unstyledLink } from "../theme";
 
@@ -62,7 +62,7 @@ export default function Register() {
 
   async function handleSubmit(values: FormValues) {
     try {
-      const userData: MedicLauncUser = {
+      const userData: MedicLaunchUser = {
         email: values.email,
         password: values.password,
         city: values.city,
