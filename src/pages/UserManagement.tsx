@@ -3,6 +3,7 @@ import { Button, Container, InputAdornment, OutlinedInput, Stack, Typography } f
 import Box from '@mui/material/Box';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import PageWithNav from '../components/nav/PageWithNav';
 import AddUserModal from '../components/userManagement/AddUserModal';
 import { primaryGradientText } from '../theme';
@@ -18,6 +19,9 @@ const columns: GridColDef[] = [
 		field: 'fullName',
 		headerName: 'USER',
 		width: 200,
+		renderCell: (params) => (
+			<Link to={`/my-profile`} style={{ color: "#2394c4", textDecoration: 'none' }}>{params.value}</Link>
+		)
 	},
 	{
 		field: 'email',
@@ -102,8 +106,8 @@ export default function UserManagement() {
 							}
 							sx={{ width: '40%' }}
 						/>
-						<Stack direction='row' gap={2}>
-							{/* <Button variant='contained'>Delete</Button> */}
+						<Stack direction='row' gap={1}>
+							<Button variant='contained'>Delete</Button>
 							<Button variant='contained'>Send Notification</Button>
 						</Stack>
 					</Stack>

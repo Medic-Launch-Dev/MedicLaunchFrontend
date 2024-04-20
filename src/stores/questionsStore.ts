@@ -94,7 +94,40 @@ export class QuestionsStore {
   }
 
   async getSpecialities(): Promise<Speciality[]> {
-    const specialities = await this.apiClient.getSpecialitiesList();
+    // const specialities = await this.apiClient.getSpecialitiesList();
+    const specialities = [
+      { id: "1", name: "Acute Medicine" },
+      { id: "2", name: "Cardiology" },
+      { id: "3", name: "Dermatology" },
+      { id: "4", name: "Endocrinology" },
+      { id: "5", name: "Gastroenterology" },
+      { id: "6", name: "Geriatric Medicine" },
+      { id: "7", name: "Haematology" },
+      { id: "8", name: "Infectious Diseases" },
+      { id: "9", name: "Nephrology" },
+      { id: "10", name: "Neurology" },
+      { id: "11", name: "Oncology" },
+      { id: "12", name: "Paediatrics" },
+      { id: "13", name: "Psychiatry" },
+      { id: "14", name: "Respiratory Medicine" },
+      { id: "15", name: "Rheumatology" },
+      { id: "16", name: "Allergy and Immunology" },
+      { id: "17", name: "Anesthesiology" },
+      { id: "18", name: "Critical Care Medicine" },
+      { id: "19", name: "Emergency Medicine" },
+      { id: "20", name: "Family Medicine" },
+      { id: "21", name: "Internal Medicine" },
+      { id: "22", name: "Medical Genetics" },
+      { id: "23", name: "Medical Oncology" },
+      { id: "24", name: "Pain Medicine" },
+      { id: "25", name: "Physical Medicine and Rehabilitation" },
+      { id: "26", name: "Plastic Surgery" },
+      { id: "27", name: "Radiation Oncology" },
+      { id: "28", name: "Sleep Medicine" },
+      { id: "29", name: "Sports Medicine" },
+      { id: "30", name: "Urology" }
+    ]
+
     return specialities;
   }
 

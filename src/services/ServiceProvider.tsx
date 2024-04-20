@@ -1,15 +1,17 @@
 import React, { useContext } from 'react';
+import { FlashCardStore } from '../stores/flashCardStore';
+import { PaymentStore } from '../stores/paymentStore';
 import { PracticeStore } from '../stores/practiceStore';
 import { QuestionsStore } from '../stores/questionsStore';
 import AxiosProvider from './AxiosProvider';
 import MedicLaunchApiClient from './MedicLaunchApiClient';
-import { PaymentStore } from '../stores/paymentStore';
 
 
 interface ServiceProvderContextValues {
     practiceStore: PracticeStore;
     questionsStore: QuestionsStore;
     paymentStore: PaymentStore;
+    flashCardStore: FlashCardStore;
 }
 
 export const ServiceProviderContext = React.createContext<ServiceProvderContextValues | null>(null);
@@ -21,9 +23,10 @@ export const ServiceProvider = ({ children }) => {
     const practiceStore = new PracticeStore(medicLaunchApiClient);
     const questionsStore = new QuestionsStore(medicLaunchApiClient);
     const paymentStore = new PaymentStore(medicLaunchApiClient);
+    const flashCardStore = new FlashCardStore(medicLaunchApiClient);
 
     return (
-        <ServiceProviderContext.Provider value={{ practiceStore, questionsStore, paymentStore }}>
+        <ServiceProviderContext.Provider value={{ practiceStore, questionsStore, paymentStore, flashCardStore }}>
             {children}
         </ServiceProviderContext.Provider>
     )

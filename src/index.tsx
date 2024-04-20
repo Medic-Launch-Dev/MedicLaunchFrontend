@@ -21,8 +21,10 @@ import "./index.css";
 import AuthorPortal from "./pages/AuthorPortal";
 import CreateSession from "./pages/CreateSession";
 import EditQuestion from "./pages/EditQuestion";
+import FlashCards from "./pages/FlashCards";
 import MyProfile from "./pages/MyProfile";
 import QuestionPreview from "./pages/QuestionPreview";
+import SelectFlashCards from "./pages/SelectFlashCards";
 import Subscribe from "./pages/Subscribe";
 import UserManagement from "./pages/UserManagement";
 import { AuthGuard } from "./services/AuthGuard";
@@ -87,6 +89,14 @@ const App = () => {
           path: "/my-profile",
           element: <MyProfile />
         },
+        {
+          path: "/flash-cards",
+          element: <SelectFlashCards />
+        },
+        {
+          path: "/flash-cards/:specialityId",
+          element: <FlashCards />
+        }
       ],
     },
     {
