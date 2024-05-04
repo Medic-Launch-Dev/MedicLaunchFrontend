@@ -9,11 +9,12 @@ interface TextSelect extends SelectProps {
   options: Option[];
   selected?: string;
   setSelected: (string) => void;
+  fullWidth?: boolean;
 }
 
-export default function TextSelect({ label, options, selected, setSelected, ...rest }: TextSelect) {
+export default function TextSelect({ fullWidth, label, options, selected, setSelected, ...rest }: TextSelect) {
   return (
-    <FormControl fullWidth>
+    <FormControl fullWidth={fullWidth}>
       <InputLabel>{label}</InputLabel>
       <Select
         value={selected}

@@ -39,11 +39,11 @@ function Root() {
                 title="Question Bank"
                 primary
                 action={
-                  <Button variant="contained" color="secondary">
-                    <Link style={unstyledLink} to="create-session">
+                  <Link style={unstyledLink} to="create-session">
+                    <Button variant="contained" color="secondary">
                       Start Questions
-                    </Link>
-                  </Button>
+                    </Button>
+                  </Link>
                 }
                 icon={<img src={QuestionBankIcon} width={64} />}
               >
@@ -55,11 +55,12 @@ function Root() {
                 title="Flash Cards"
                 primary
                 action={
-                  <Button variant="contained" color="secondary">
-                    <Link style={unstyledLink} to="flash-cards">
+                  <Link style={unstyledLink} to="flash-cards">
+                    <Button variant="contained" color="secondary">
                       Learn
-                    </Link>
-                  </Button>}
+                    </Button>
+                  </Link>
+                }
                 icon={<img src={FlashCardsIcon} width={64} />}
               >
                 Interactive, efficient flashcard revision
@@ -95,7 +96,13 @@ function Root() {
             <Grid item xs={12} sm={6}>
               <Card
                 title="Notes"
-                action={<Button variant="contained">View</Button>}
+                action={
+                  <Link style={unstyledLink} to="revision-notes">
+                    <Button variant="contained" color="primary">
+                      View
+                    </Button>
+                  </Link>
+                }
                 icon={<img src={NotesIcon} width={64} />}
               >
                 AI-generated notes for mastering medical knowledge efficiently

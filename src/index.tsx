@@ -23,8 +23,11 @@ import CreateSession from "./pages/CreateSession";
 import EditQuestion from "./pages/EditQuestion";
 import FlashCards from "./pages/FlashCards";
 import MyProfile from "./pages/MyProfile";
+import Notifications from "./pages/Notifications";
 import QuestionPreview from "./pages/QuestionPreview";
+import RevisionNotes from "./pages/RevisionNotes";
 import SelectFlashCards from "./pages/SelectFlashCards";
+import SpecialityAnalyser from "./pages/SpecialityAnalyser";
 import Subscribe from "./pages/Subscribe";
 import UserManagement from "./pages/UserManagement";
 import { AuthGuard } from "./services/AuthGuard";
@@ -96,7 +99,19 @@ const App = () => {
         {
           path: "/flash-cards/:specialityId",
           element: <FlashCards />
-        }
+        },
+        {
+          path: "/revision-notes",
+          element: <RevisionNotes />
+        },
+        {
+          path: "/notifications",
+          element: <Notifications />
+        },
+        {
+          path: "/speciality-analyser",
+          element: <SpecialityAnalyser />
+        },
       ],
     },
     {

@@ -186,7 +186,7 @@ theme.components = {
   MuiCard: {
     styleOverrides: {
       root: {
-        padding: 16,
+        padding: 20,
         boxShadow: 'none',
         border: '1px solid #DFE5F9',
         borderRadius: 16,

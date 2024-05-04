@@ -65,6 +65,7 @@ function UserProfile({ adminView }: UserProfileProps) {
             <Paper sx={{ p: 3 }}>
               <Stack direction="row" justifyContent="space-between" alignItems="center">
                 <Typography fontSize={17} fontWeight={500}>My Subscription</Typography>
+                {/* Clicking on reset questions should bring up a warning modal */}
                 <Button size="small" variant="contained" startIcon={<Loop />}>
                   Reset Questions
                 </Button>

@@ -27,7 +27,7 @@ export default function SelectFlashCards() {
           <LinkButton variant="contained" to={"/"}>
             Study Portal
           </LinkButton>
-          <Typography variant="h2" color="primary">Flashcard - Select Speciality</Typography>
+          <Typography variant="h2" color="primary">Flashcards - Select Speciality</Typography>
           <Button sx={{ visibility: "hidden" }}>Study Portal</Button>
         </Stack>
         <Box
