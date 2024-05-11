@@ -13,14 +13,16 @@ import LinkButton from "../util/LinkButton";
 import AnswerOption from "./AnswerOption";
 import AnswersGrid from "./AnswersGrid";
 import LabValues from "./LabValues";
+import Timer from "./Timer";
 
 interface QuestionViewProps {
   question: QuestionModelUI;
   inPreview?: boolean;
+  withTimer?: boolean;
 }
 
-function QuestionView({ question: questionFromProps, inPreview }: QuestionViewProps) {
-  const { questionsStore } = useServiceProvider();
+function QuestionView({ question: questionFromProps, inPreview, withTimer }: QuestionViewProps) {
+  const { questionsStore, practiceStore } = useServiceProvider();
   const question = inPreview ? questionsStore.previewQuestion : questionFromProps;
 
   const [selectedOption, setSelectedOption] = useState<Option>();
@@ -137,6 +139,7 @@ function QuestionView({ question: questionFromProps, inPreview }: QuestionViewPr
 
   const rightSideMarkup = (
     <Stack spacing={2} sx={{ maxHeight: 450 }}>
+      {withTimer && <Timer />}
       {
         !inPreview &&
         <Box sx={{ flexShrink: 0 }}>

@@ -27,6 +27,7 @@ import Notifications from "./pages/Notifications";
 import QuestionPreview from "./pages/QuestionPreview";
 import RevisionNotes from "./pages/RevisionNotes";
 import SelectFlashCards from "./pages/SelectFlashCards";
+import SelectMock from "./pages/SelectMock";
 import SpecialityAnalyser from "./pages/SpecialityAnalyser";
 import Subscribe from "./pages/Subscribe";
 import UserManagement from "./pages/UserManagement";
@@ -111,6 +112,10 @@ const App = () => {
         {
           path: "/speciality-analyser",
           element: <SpecialityAnalyser />
+        },
+        {
+          path: "/select-mock",
+          element: <SelectMock />
         },
       ],
     },

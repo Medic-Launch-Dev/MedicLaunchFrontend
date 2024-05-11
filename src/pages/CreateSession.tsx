@@ -8,7 +8,7 @@ import {
   Stack,
   Step,
   StepLabel,
-  Stepper,
+  Stepper
 } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
@@ -21,11 +21,14 @@ import { useSnackbar } from "../hooks/useSnackbar";
 import { useServiceProvider } from "../services/ServiceProvider";
 
 function CreateSession() {
+  const params = new URLSearchParams(window.location.search);
+
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const { practiceStore, questionsStore } = useServiceProvider();
   const { showSnackbar, snackbarProps } = useSnackbar();
+
 
   const steps = [
     {

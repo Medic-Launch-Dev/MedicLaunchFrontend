@@ -5,11 +5,11 @@ import { Navigate } from "react-router-dom";
 import QuestionView from "../components/practiceSession/QuestionView";
 import LinkButton from "../components/util/LinkButton";
 import { useServiceProvider } from "../services/ServiceProvider";
+import { TimerState } from "../stores/practiceStore";
 import { primaryGradientText } from "../theme";
 
 function PracticeSession() {
-  const { questionsStore } = useServiceProvider();
-  console.log(questionsStore.questions.length);
+  const { questionsStore, practiceStore } = useServiceProvider();
 
   function calculateProgress() {
     if (!questionsStore.questions) return 0;
@@ -18,14 +18,11 @@ function PracticeSession() {
   }
 
   useEffect(() => {
-    const handleBeforeUnload = (e) => {
-      e.returnValue = 'something';
-    };
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-
+    if (practiceStore.examTimerState === TimerState.STOPPED) {
+      practiceStore.startTimer();
+    }
     return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
+      practiceStore.resetTimer();
     };
   }, []);
 
@@ -59,7 +56,7 @@ function PracticeSession() {
           </LinkButton>
         </Box>
       </Stack>
-      <QuestionView question={questionsStore.currentQuestion} />
+      <QuestionView question={questionsStore.currentQuestion} withTimer={true} />
     </Container>
   )
 }

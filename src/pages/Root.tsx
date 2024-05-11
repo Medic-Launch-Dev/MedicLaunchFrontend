@@ -87,7 +87,11 @@ function Root() {
             <Grid item xs={12} sm={6}>
               <Card
                 title="Mock Examination"
-                action={<Button variant="contained">Start Mock</Button>}
+                action={
+                  <Link style={unstyledLink} to="select-mock">
+                    <Button variant="contained">Start Mock</Button>
+                  </Link>
+                }
                 icon={<img src={MockExamIcon} width={64} />}
               >
                 Challenge yourself through realistic exam simulations
