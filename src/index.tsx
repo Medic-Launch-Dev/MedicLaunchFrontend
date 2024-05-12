@@ -19,7 +19,9 @@ import Root from "./pages/Root";
 // import reportWebVitals from "./reportWebVitals";
 import "./index.css";
 import AuthorPortal from "./pages/AuthorPortal";
+import CreateFlashCard from "./pages/CreateFlashCard";
 import CreateSession from "./pages/CreateSession";
+import EditFlashCards from "./pages/EditFlashCards";
 import EditQuestion from "./pages/EditQuestion";
 import FlashCards from "./pages/FlashCards";
 import MyProfile from "./pages/MyProfile";
@@ -100,6 +102,14 @@ const App = () => {
         {
           path: "/flash-cards/:specialityId",
           element: <FlashCards />
+        },
+        {
+          path: "/create-flash-card",
+          element: <CreateFlashCard />
+        },
+        {
+          path: "/edit-flash-cards",
+          element: <EditFlashCards />
         },
         {
           path: "/revision-notes",
