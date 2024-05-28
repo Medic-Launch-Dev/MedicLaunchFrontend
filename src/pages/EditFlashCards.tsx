@@ -6,6 +6,7 @@ import { useSearchParams } from "react-router-dom";
 import LinkButton from "../components/util/LinkButton";
 import TextSelect from "../components/util/TextSelect";
 import { useSnackbar } from "../hooks/useSnackbar";
+import { Flashcard } from "../models/Flashcard";
 import Speciality from "../models/Speciality";
 import { useServiceProvider } from "../services/ServiceProvider";
 import { primaryGradientText } from "../theme";
@@ -13,24 +14,38 @@ import { primaryGradientText } from "../theme";
 const EditFlashCards = () => {
   const [searchParams] = useSearchParams();
   const defaultSpeciality = searchParams.get('speciality');
-
+  
   const { showSnackbar, snackbarProps } = useSnackbar();
+  const { questionsStore, flashCardStore } = useServiceProvider();
 
+  const [loading, setLoading] = useState(true);
   const [specialities, setSpecialities] = useState<Speciality[]>([]);
   const [selectedSpeciality, setSelectedSpeciality] = useState<string>();
-  const { questionsStore } = useServiceProvider();
+  const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
 
   useEffect(() => {
-    questionsStore.getSpecialities()
-      .then((specialities) => {
-        setSpecialities(specialities);
-        if (defaultSpeciality) setSelectedSpeciality(defaultSpeciality);
-      })
-      .catch(e => {
-        console.error(e);
-        showSnackbar('Failed to get specialities', 'error');
-      });
+    init();
   }, []);
+
+  async function init() {
+    try {
+      await questionsStore.getSpecialities();
+      if (defaultSpeciality) setSelectedSpeciality(defaultSpeciality);
+    } catch (e) {
+      console.error(e);
+      showSnackbar('Failed to get specialities', 'error');
+    }
+
+    try {
+      const flashcards = await flashCardStore.getAllFlashCards();
+      if (flashcards) setFlashcards(flashcards);
+    } catch (e) {
+      console.error(e);
+      showSnackbar('Failed to get flash cards', 'error');
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <Container>

@@ -68,6 +68,19 @@ function AuthorPortal() {
                 View your historic questions and edit here
               </Card>
             </Grid>
+            <Grid item xs={12} sm={6}>
+              <Card
+                title="Review flashcards"
+                action={
+                  <Link to="/edit-flash-cards">
+                    <Button variant="contained">View flashcards</Button>
+                  </Link>
+                }
+                icon={<img src={CoursesIcon} width={64} />}
+              >
+                View your historic flashcards and edit here
+              </Card>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>

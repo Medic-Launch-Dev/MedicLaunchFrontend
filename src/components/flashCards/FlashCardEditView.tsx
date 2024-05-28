@@ -9,11 +9,13 @@ import TextSelect from "../util/TextSelect";
 const FlashCardEditView = () => {
   const { showSnackbar, snackbarProps } = useSnackbar();
 
-  const { questionsStore } = useServiceProvider();
+  const { questionsStore, flashCardStore } = useServiceProvider();
 
+  const [loading, setLoading] = useState(false);
   const [image, setImage] = useState<string>();
   const [specialities, setSpecialities] = useState<Speciality[]>([]);
   const [selectedSpeciality, setSelectedSpeciality] = useState<string>();
+  const [condition, setCondition] = useState<string>();
 
   useEffect(() => {
     questionsStore.getSpecialities()
@@ -26,14 +28,11 @@ const FlashCardEditView = () => {
       });
   }, []);
 
-  const handleImageChange = (event) => {
+  const handleImageChange = async (event) => {
     const file = event.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setImage(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+      const imageUrl = await flashCardStore.uploadFlashCardImage(file);
+      setImage(imageUrl);
     }
   };
 
@@ -50,7 +49,12 @@ const FlashCardEditView = () => {
           selected={selectedSpeciality}
           setSelected={setSelectedSpeciality}
         />
-        <TextField label="Condition" sx={{ minWidth: 300 }} />
+        <TextField
+          label="Condition"
+          sx={{ minWidth: 300 }}
+          value={condition}
+          onChange={(e) => setCondition(e.target.value)}
+        />
       </Stack>
       <Stack alignItems="center" mt={2} spacing={2}>
         <input

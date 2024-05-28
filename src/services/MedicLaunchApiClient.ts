@@ -1,6 +1,7 @@
 
 import { AxiosInstance } from "axios";
 import { FamiliarityCounts } from "../models/FamiliarityCounts";
+import { Flashcard } from "../models/Flashcard";
 import { PracticeFilter } from "../models/PracticeFilter";
 import { Question } from "../models/Question";
 import Speciality from "../models/Speciality";
@@ -84,14 +85,52 @@ export default class MedicLaunchApiClient {
     return response.data;
   }
 
-  async getPaymentClientSecret(planId: number) : Promise<string> {
+  async getPaymentClientSecret(planId: number): Promise<string> {
     const response = await this.axios.post(`${this.apiUrl}/payment/create-payment-intent?planId=${planId}`);
     const clientSecret = response.data.clientSecret;
     return clientSecret;
   }
 
-  async getPublishableKey() : Promise<string> {
+  async getPublishableKey(): Promise<string> {
     const response = await this.axios.get(`${this.apiUrl}/payment/publishable-key`);
     return response.data.publishableKey;
+  }
+
+  async uploadFlashCardImage(image: File) {
+    const formData = new FormData();
+    formData.append('image', image);
+
+    const response = await this.axios.post(`${this.apiUrl}/flashcard/upload-image`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  }
+
+  async saveFlashCard(specialityId: string, name: string, imageUrl: string) {
+    const response = await this.axios.post(`${this.apiUrl}/flashcard/create`, {
+      specialityId,
+      name,
+      imageUrl
+    });
+
+    return response.status === 200;
+  }
+
+  async overwriteFlashCard(id: string, name: string, imageUrl: string, specialityId: string) {
+    const response = await this.axios.post(`${this.apiUrl}/flashcard/update`, {
+      id,
+      name,
+      imageUrl,
+      specialityId
+    });
+
+    return response.status === 200;
+  }
+
+  async retrieveAllFlashcards(): Promise<Flashcard[]> {
+    const response = await this.axios.get<Flashcard[]>(`${this.apiUrl}/flashcard/list`);
+    return response.data;
   }
 }

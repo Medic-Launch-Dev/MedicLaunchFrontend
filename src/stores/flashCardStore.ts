@@ -14,7 +14,29 @@ export class FlashCardStore {
     this.selectedSpecialityId = specialityId;
   }
 
+  async getAllFlashCards() {
+    try {
+      const response = await this.apiClient.retrieveAllFlashcards();
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   async getFlashCardsBySpeciality(specialityId: string) {
+    // implement this method
+  }
+
+  async uploadFlashCardImage(file: File) {
+    try {
+      const imgUrl: string = await this.apiClient.uploadFlashCardImage(file);
+      return imgUrl;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async addFlashCard() {
     // implement this method
   }
 }

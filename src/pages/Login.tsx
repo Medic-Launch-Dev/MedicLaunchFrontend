@@ -89,8 +89,9 @@ export default function Login() {
                   sx={{ fontSize: 16, fontWeight: 500, py: 1.5 }}
                   onClick={handleLogin}
                   loading={loading}
+                  loadingPosition="start"
                 >
-                  Log in
+                  {loading ? "Logging you in..." : "Log in"}
                 </LoadingButton>
                 <Typography>
                   Don't have an account?{" "}

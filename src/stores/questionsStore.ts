@@ -96,7 +96,7 @@ export class QuestionsStore {
   async getSpecialities(): Promise<Speciality[]> {
     const specialities = await this.apiClient.getSpecialitiesList();
 
-    return specialities;
+    return specialities.slice().sort((a, b) => a.name.localeCompare(b.name));
   }
 
   async setPracticeQuestions(questions: Question[]) {
