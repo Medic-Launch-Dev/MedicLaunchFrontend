@@ -94,4 +94,17 @@ export default class MedicLaunchApiClient {
     const response = await this.axios.get(`${this.apiUrl}/payment/publishable-key`);
     return response.data.publishableKey;
   }
+
+  // uploads image and returns URL
+  async uploadImage(file: File) {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const response = await this.axios.post(`${this.apiUrl}/flashcard/upload-image`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
+    });
+    return response.data;
+  }
 }

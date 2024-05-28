@@ -17,4 +17,8 @@ export class FlashCardStore {
   async getFlashCardsBySpeciality(specialityId: string) {
     // implement this method
   }
+
+  async uploadImage(file: File) {
+    return this.apiClient.uploadImage(file);
+  }
 }

@@ -9,20 +9,21 @@ import TextSelect from "../util/TextSelect";
 const FlashCardEditView = () => {
   const { showSnackbar, snackbarProps } = useSnackbar();
 
-  const { questionsStore } = useServiceProvider();
+  const { questionsStore, flashCardStore } = useServiceProvider();
 
   const [image, setImage] = useState<string>();
   const [specialities, setSpecialities] = useState<Speciality[]>([]);
   const [selectedSpeciality, setSelectedSpeciality] = useState<string>();
 
   useEffect(() => {
-    questionsStore.getSpecialities()
+    questionsStore
+      .getSpecialities()
       .then((specialities) => {
         setSpecialities(specialities);
       })
-      .catch(e => {
+      .catch((e) => {
         console.error(e);
-        showSnackbar('Failed to get specialities', 'error');
+        showSnackbar("Failed to get specialities", "error");
       });
   }, []);
 
@@ -34,6 +35,14 @@ const FlashCardEditView = () => {
         setImage(reader.result as string);
       };
       reader.readAsDataURL(file);
+
+      // save image to backend
+      const imageUrl = flashCardStore.uploadImage(file).catch((e) => {
+        console.error(e);
+        showSnackbar("Failed to upload image", "error");
+      });
+
+      console.log("Image URL: ", imageUrl);
     }
   };
 
@@ -42,10 +51,10 @@ const FlashCardEditView = () => {
       <Stack direction="row" alignItems="center" spacing={1}>
         <TextSelect
           label="Speciality"
-          sx={{ minWidth: 300, bgcolor: 'white' }}
-          options={specialities.map(speciality => ({
+          sx={{ minWidth: 300, bgcolor: "white" }}
+          options={specialities.map((speciality) => ({
             value: speciality.id,
-            displayText: speciality.name
+            displayText: speciality.name,
           }))}
           selected={selectedSpeciality}
           setSelected={setSelectedSpeciality}
@@ -57,7 +66,7 @@ const FlashCardEditView = () => {
           type="file"
           accept="image/*"
           onChange={handleImageChange}
-          style={{ display: 'none' }}
+          style={{ display: "none" }}
           id="image-upload"
         />
         <label htmlFor="image-upload">
@@ -65,15 +74,20 @@ const FlashCardEditView = () => {
             {image ? "Replace Image" : "Upload Image"}
           </Button>
         </label>
-        {
-          image ?
-            <img src={image} alt="Uploaded" style={{ maxWidth: '100%', maxHeight: 600, borderRadius: 16 }} />
-            :
-            <Typography py={5} fontSize={16}>Upload an image to preview it here</Typography>
-        }
+        {image ? (
+          <img
+            src={image}
+            alt="Uploaded"
+            style={{ maxWidth: "100%", maxHeight: 600, borderRadius: 16 }}
+          />
+        ) : (
+          <Typography py={5} fontSize={16}>
+            Upload an image to preview it here
+          </Typography>
+        )}
       </Stack>
     </div>
   );
-}
+};
 
 export default observer(FlashCardEditView);
