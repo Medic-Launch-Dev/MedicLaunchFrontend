@@ -108,11 +108,9 @@ export default class MedicLaunchApiClient {
     return response.data;
   }
 
-  async saveFlashCard(specialityId: string, name: string, imageUrl: string) {
-    const response = await this.axios.post(`${this.apiUrl}/flashcard/create`, {
-      specialityId,
-      name,
-      imageUrl
+  async saveFlashCard(flashcard: Flashcard) {
+    const response = await this.axios.post<Flashcard>(`${this.apiUrl}/flashcard/create`, {
+      ...flashcard
     });
 
     return response.status === 200;

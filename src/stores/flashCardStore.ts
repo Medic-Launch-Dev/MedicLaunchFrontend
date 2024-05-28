@@ -1,4 +1,5 @@
 import { makeAutoObservable } from "mobx";
+import { Flashcard } from "../models/Flashcard";
 import MedicLaunchApiClient from "../services/MedicLaunchApiClient";
 
 export class FlashCardStore {
@@ -36,7 +37,12 @@ export class FlashCardStore {
     }
   }
 
-  async addFlashCard() {
-    // implement this method
+  async createFlashCard(flashcard: Flashcard) {
+    try {
+      const response = await this.apiClient.saveFlashCard(flashcard);
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
   }
 }

@@ -1,5 +1,5 @@
 export class Flashcard {
-  id: string;
+  id?: string;
   name: string;
   imageUrl: string;
   specialityId: string;

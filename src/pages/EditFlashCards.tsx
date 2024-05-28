@@ -74,14 +74,25 @@ const EditFlashCards = () => {
           <TableHead>
             <TableRow>
               <TableCell>Condition</TableCell>
-              <TableCell>Speciality</TableCell>
               <TableCell>Image</TableCell>
               <TableCell sx={{ paddingLeft: "32px" }}>Edit</TableCell>
             </TableRow>
           </TableHead>
         </Table>
         <Stack alignItems="center" my={5} justifyContent="center" width="100%">
-          No flash cards to show
+          {
+            flashcards.map(flashcard => (
+              <TableRow>
+                <TableCell>{flashcard.name}</TableCell>
+                <TableCell>
+                  <img src={flashcard.imageUrl} alt={flashcard.name} height="100" />
+                </TableCell>
+                <TableCell>
+                  <LinkButton to={`/edit-flash-card/${flashcard.id}`}>Edit</LinkButton>
+                </TableCell>
+              </TableRow>
+            ))
+          }
         </Stack>
       </TableContainer>
 

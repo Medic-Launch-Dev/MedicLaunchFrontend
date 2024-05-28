@@ -1,21 +1,29 @@
-import { Button, Stack, TextField, Typography } from "@mui/material";
+import { AddPhotoAlternateOutlined } from "@mui/icons-material";
+import { LoadingButton } from "@mui/lab";
+import { Snackbar, Stack, TextField, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 import { useSnackbar } from "../../hooks/useSnackbar";
+import { Flashcard } from "../../models/Flashcard";
 import Speciality from "../../models/Speciality";
 import { useServiceProvider } from "../../services/ServiceProvider";
 import TextSelect from "../util/TextSelect";
 
-const FlashCardEditView = () => {
+interface FlashCardEditViewProps {
+  flashcard: Flashcard;
+  setFlashcard: (flashcard: Flashcard) => void;
+}
+
+
+const FlashcardEditView = ({ flashcard, setFlashcard }: FlashCardEditViewProps) => {
   const { showSnackbar, snackbarProps } = useSnackbar();
 
   const { questionsStore, flashCardStore } = useServiceProvider();
 
   const [loading, setLoading] = useState(false);
-  const [image, setImage] = useState<string>();
+  const [loadingImage, setLoadingImage] = useState(false);
   const [specialities, setSpecialities] = useState<Speciality[]>([]);
-  const [selectedSpeciality, setSelectedSpeciality] = useState<string>();
-  const [condition, setCondition] = useState<string>();
+  const [selectedSpeciality, setSelectedSpeciality] = useState<string>(flashcard?.specialityId || '');
 
   useEffect(() => {
     questionsStore.getSpecialities()
@@ -31,13 +39,22 @@ const FlashCardEditView = () => {
   const handleImageChange = async (event) => {
     const file = event.target.files[0];
     if (file) {
-      const imageUrl = await flashCardStore.uploadFlashCardImage(file);
-      setImage(imageUrl);
+      try {
+        setLoadingImage(true);
+        const imageUrl = await flashCardStore.uploadFlashCardImage(file);
+        if (imageUrl) setFlashcard({ ...flashcard, imageUrl });
+      } catch (e) {
+        console.error(e);
+        showSnackbar('Failed to upload image', 'error');
+      } finally {
+        setLoadingImage(false);
+      }
     }
   };
 
   return (
     <div>
+      <Snackbar {...snackbarProps} />
       <Stack direction="row" alignItems="center" spacing={1}>
         <TextSelect
           label="Speciality"
@@ -46,14 +63,14 @@ const FlashCardEditView = () => {
             value: speciality.id,
             displayText: speciality.name
           }))}
-          selected={selectedSpeciality}
-          setSelected={setSelectedSpeciality}
+          selected={flashcard.specialityId}
+          setSelected={(specialityId) => setFlashcard({ ...flashcard, specialityId })}
         />
         <TextField
           label="Condition"
           sx={{ minWidth: 300 }}
-          value={condition}
-          onChange={(e) => setCondition(e.target.value)}
+          value={flashcard.name || ''}
+          onChange={(e) => setFlashcard({ ...flashcard, name: e.target.value })}
         />
       </Stack>
       <Stack alignItems="center" mt={2} spacing={2}>
@@ -65,13 +82,22 @@ const FlashCardEditView = () => {
           id="image-upload"
         />
         <label htmlFor="image-upload">
-          <Button component="span" variant="outlined" color="primary">
-            {image ? "Replace Image" : "Upload Image"}
-          </Button>
+          <LoadingButton
+            component="span"
+            variant="outlined"
+            color="primary"
+            loading={loadingImage}
+            loadingPosition="start"
+            startIcon={<AddPhotoAlternateOutlined />}
+          >
+            {
+              flashcard.imageUrl ? "Replace Image" : "Upload Image"
+            }
+          </LoadingButton>
         </label>
         {
-          image ?
-            <img src={image} alt="Uploaded" style={{ maxWidth: '100%', maxHeight: 600, borderRadius: 16 }} />
+          flashcard.imageUrl ?
+            <img src={flashcard.imageUrl} alt="Uploaded" style={{ maxWidth: '100%', maxHeight: 600, borderRadius: 16 }} />
             :
             <Typography py={5} fontSize={16}>Upload an image to preview it here</Typography>
         }
@@ -80,4 +106,4 @@ const FlashCardEditView = () => {
   );
 }
 
-export default observer(FlashCardEditView);
+export default observer(FlashcardEditView);
