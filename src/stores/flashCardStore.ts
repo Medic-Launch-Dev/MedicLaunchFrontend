@@ -24,8 +24,13 @@ export class FlashCardStore {
     }
   }
 
-  async getFlashCardsBySpeciality(specialityId: string) {
-    // implement this method
+  async getFlashcardById(flashcardId: string) {
+    try {
+      const response = await this.apiClient.retrieveFlashcardById(flashcardId);
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   async uploadFlashCardImage(file: File) {

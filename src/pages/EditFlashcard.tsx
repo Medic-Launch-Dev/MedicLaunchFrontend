@@ -1,24 +1,26 @@
 import { LoadingButton } from "@mui/lab";
-import { Container, Snackbar, Stack, Typography } from "@mui/material";
-import { observer } from "mobx-react-lite";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { CircularProgress, Container, Snackbar, Stack, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import FlashcardEditView from "../components/flashCards/FlashcardEditView";
 import { useSnackbar } from "../hooks/useSnackbar";
 import { Flashcard } from "../models/Flashcard";
 import { useServiceProvider } from "../services/ServiceProvider";
 import { primaryGradientText } from "../theme";
 
-const CreateFlashCard = () => {
-  const navigate = useNavigate();
+export default function EditFlascard() {
+  const { id = "" } = useParams();
   const { showSnackbar, snackbarProps } = useSnackbar();
 
   const { questionsStore, flashCardStore } = useServiceProvider();
 
+  const [loading, setLoading] = useState(true);
   const [loadingSave, setLoadingSave] = useState(false);
   const [flashcard, setFlashcard] = useState<Flashcard>({ name: '', imageUrl: '', specialityId: '' });
 
-  console.log(flashcard);
+  useEffect(() => {
+    getFlashcard();
+  }, []);
 
   const handleSubmit = async () => {
     if (!flashcard) return;
@@ -27,12 +29,23 @@ const CreateFlashCard = () => {
       setLoadingSave(true);
       await flashCardStore.createFlashCard(flashcard);
       showSnackbar('Flashcard created successfully', 'success');
-      navigate('/edit-flash-cards');
     } catch (e) {
       console.error(e);
       showSnackbar('Failed to create flashcard', 'error');
     } finally {
       setLoadingSave(false);
+    }
+  }
+
+  const getFlashcard = async () => {
+    try {
+      const flashcard = await flashCardStore.getFlashcardById(id);
+      if (flashcard) setFlashcard(flashcard);
+    } catch (e) {
+      console.error(e);
+      showSnackbar('Failed to get flash card', 'error');
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -46,20 +59,23 @@ const CreateFlashCard = () => {
         mb={3}
       >
         <Typography variant="h2" style={primaryGradientText}>
-          Create new flashcard
+          Edit flash card
         </Typography>
         <LoadingButton
           variant="contained"
           disabled={!flashcard.specialityId || !flashcard.name || !flashcard.imageUrl}
-          onClick={handleSubmit}
-          loading={loadingSave}
-        >
-          Submit
+          onClick={handleSubmit}>
+          Save
         </LoadingButton>
       </Stack>
-      <FlashcardEditView flashcard={flashcard} setFlashcard={setFlashcard} />
+      {
+        loading ?
+          <Stack alignItems="center" my={5}>
+            <CircularProgress />
+          </Stack>
+          :
+          <FlashcardEditView flashcard={flashcard} setFlashcard={setFlashcard} />
+      }
     </Container>
-  );
+  )
 }
-
-export default observer(CreateFlashCard);

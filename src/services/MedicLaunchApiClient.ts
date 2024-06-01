@@ -98,7 +98,7 @@ export default class MedicLaunchApiClient {
 
   async uploadFlashCardImage(image: File) {
     const formData = new FormData();
-    formData.append('image', image);
+    formData.append('file', image);
 
     const response = await this.axios.post(`${this.apiUrl}/flashcard/upload-image`, formData, {
       headers: {
@@ -129,6 +129,11 @@ export default class MedicLaunchApiClient {
 
   async retrieveAllFlashcards(): Promise<Flashcard[]> {
     const response = await this.axios.get<Flashcard[]>(`${this.apiUrl}/flashcard/list`);
+    return response.data;
+  }
+
+  async retrieveFlashcardById(id: string): Promise<Flashcard> {
+    const response = await this.axios.get<Flashcard>(`${this.apiUrl}/flashcard/${id}`);
     return response.data;
   }
 }

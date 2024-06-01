@@ -1,5 +1,5 @@
 import { Add } from "@mui/icons-material";
-import { Container, Snackbar, Stack, Table, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { CircularProgress, Container, Snackbar, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -14,7 +14,7 @@ import { primaryGradientText } from "../theme";
 const EditFlashCards = () => {
   const [searchParams] = useSearchParams();
   const defaultSpeciality = searchParams.get('speciality');
-  
+
   const { showSnackbar, snackbarProps } = useSnackbar();
   const { questionsStore, flashCardStore } = useServiceProvider();
 
@@ -78,22 +78,31 @@ const EditFlashCards = () => {
               <TableCell sx={{ paddingLeft: "32px" }}>Edit</TableCell>
             </TableRow>
           </TableHead>
-        </Table>
-        <Stack alignItems="center" my={5} justifyContent="center" width="100%">
-          {
-            flashcards.map(flashcard => (
+          <TableBody>
+            {
+              loading? 
               <TableRow>
-                <TableCell>{flashcard.name}</TableCell>
-                <TableCell>
-                  <img src={flashcard.imageUrl} alt={flashcard.name} height="100" />
-                </TableCell>
-                <TableCell>
-                  <LinkButton to={`/edit-flash-card/${flashcard.id}`}>Edit</LinkButton>
+                <TableCell colSpan={3}>
+                  <Stack alignItems="center" my={3}>
+                    <CircularProgress />
+                  </Stack>
                 </TableCell>
               </TableRow>
-            ))
-          }
-        </Stack>
+              :
+              flashcards.map(flashcard => (
+                <TableRow>
+                  <TableCell>{flashcard.name}</TableCell>
+                  <TableCell>
+                    <img src={flashcard.imageUrl} alt={flashcard.name} height="200" />
+                  </TableCell>
+                  <TableCell>
+                    <LinkButton to={`/edit-flashcard/${flashcard.id}`}>Edit</LinkButton>
+                  </TableCell>
+                </TableRow>
+              ))
+            }
+          </TableBody>
+        </Table>
       </TableContainer>
 
     </Container>

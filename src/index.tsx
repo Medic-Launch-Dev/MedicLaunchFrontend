@@ -22,6 +22,7 @@ import AuthorPortal from "./pages/AuthorPortal";
 import CreateFlashCard from "./pages/CreateFlashCard";
 import CreateSession from "./pages/CreateSession";
 import EditFlashCards from "./pages/EditFlashCards";
+import EditFlascard from "./pages/EditFlashcard";
 import EditQuestion from "./pages/EditQuestion";
 import FlashCards from "./pages/FlashCards";
 import MyProfile from "./pages/MyProfile";
@@ -110,6 +111,10 @@ const App = () => {
         {
           path: "/edit-flash-cards",
           element: <EditFlashCards />
+        },
+        {
+          path: "/edit-flashcard/:id",
+          element: <EditFlascard />
         },
         {
           path: "/revision-notes",
