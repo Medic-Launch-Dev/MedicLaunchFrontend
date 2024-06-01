@@ -12,5 +12,18 @@ export default class AxiosProvider {
             }
             return config;
         });
+
+        // Add an interceptor to handle 401 responses. If we get a 401 response, we'll redirect the user to the login page.
+        this.defaultInstance.interceptors.response.use(
+            (response) => {
+                return response;
+            },
+            (error) => {
+                if (error.response.status === 401) {
+                    window.location.href = '/login';
+                }
+                return Promise.reject(error);
+            }
+        );
     }
 }

@@ -8,7 +8,6 @@ import Speciality from "../models/Speciality";
 import { MedicLauncUser } from "../models/User";
 import AxiosProvider from "./AxiosProvider";
 
-
 export default class MedicLaunchApiClient {
   private readonly apiUrl: string;
   private readonly axios: AxiosInstance;
@@ -133,5 +132,25 @@ export default class MedicLaunchApiClient {
   async retrieveAllFlashcards(): Promise<Flashcard[]> {
     const response = await this.axios.get<Flashcard[]>(`${this.apiUrl}/flashcard/list`);
     return response.data;
+  }
+
+  async postData(endpoint: string, data: any) {
+    const response = await this.axios.post(`${this.apiUrl}/${endpoint}`, data);
+    return response.status === 200;
+  }
+  
+  async getData(endpoint: string): Promise<any> {
+    const response = await this.axios.get<any>(`${this.apiUrl}/${endpoint}`);
+    return response.data;
+  }
+  
+  async putData(endpoint: string, data: any) {
+    const response = await this.axios.put(`${this.apiUrl}/${endpoint}`, data);
+    return response.status === 200;
+  }
+  
+  async deleteData(endpoint: string, id: string) {
+    const response = await this.axios.delete(`${this.apiUrl}/${endpoint}/${id}`);
+    return response.status === 200;
   }
 }
