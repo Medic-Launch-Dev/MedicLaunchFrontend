@@ -6,16 +6,20 @@ import { PracticeFilter } from "../models/PracticeFilter";
 import { Question } from "../models/Question";
 import Speciality from "../models/Speciality";
 import { MedicLauncUser } from "../models/User";
+import { ErrorStore } from "../stores/errorStore";
 import AxiosProvider from "./AxiosProvider";
 
 export default class MedicLaunchApiClient {
   private readonly apiUrl: string;
   private readonly axios: AxiosInstance;
   private readonly baseUrl: string;
-  constructor(axiosProvider: AxiosProvider) {
+  private readonly errorStore?: ErrorStore;
+
+  constructor(axiosProvider: AxiosProvider, errorStore?: ErrorStore) {
     this.baseUrl = process.env.REACT_APP_MEDIC_LAUNCH_URL!;
     this.apiUrl = this.baseUrl + '/api';
     this.axios = axiosProvider.defaultInstance;
+    this.errorStore = errorStore;
   }
 
   async getQuestionsInSpeciality(specialityId: string, questionBank): Promise<Question[]> {
@@ -130,31 +134,49 @@ export default class MedicLaunchApiClient {
   }
 
   async retrieveAllFlashcards(): Promise<Flashcard[]> {
-    const response = await this.axios.get<Flashcard[]>(`${this.apiUrl}/flashcard/list`);
-    return response.data;
+    return await this.getData('flashcard/list');
   }
 
   async retrieveFlashcardById(id: string): Promise<Flashcard> {
-    const response = await this.axios.get<Flashcard>(`${this.apiUrl}/flashcard/${id}`);
-    return response.data;
+    return await this.getData(`flashcard/${id}`);
   }
+
+  async handleRequest(promise: Promise<any>) {
+    try {
+      const response = await promise;
+      this.errorStore?.clearError();
+      return response;
+    } catch (error) {
+      this.errorStore?.setError("An error occurred while processing your request. Please refresh the page or try again later.");
+      throw error;
+    }
+  }
+
   async postData(endpoint: string, data: any) {
-    const response = await this.axios.post(`${this.apiUrl}/${endpoint}`, data);
+    const response = await this.handleRequest(
+      this.axios.post(`${this.apiUrl}/${endpoint}`, data)
+    );
     return response.status === 200;
   }
-  
+
   async getData(endpoint: string): Promise<any> {
-    const response = await this.axios.get<any>(`${this.apiUrl}/${endpoint}`);
+    const response = await this.handleRequest(
+      this.axios.get<any>(`${this.apiUrl}/${endpoint}`)
+    );
     return response.data;
   }
-  
+
   async putData(endpoint: string, data: any) {
-    const response = await this.axios.put(`${this.apiUrl}/${endpoint}`, data);
+    const response = await this.handleRequest(
+      this.axios.put(`${this.apiUrl}/${endpoint}`, data)
+    );
     return response.status === 200;
   }
-  
+
   async deleteData(endpoint: string, id: string) {
-    const response = await this.axios.delete(`${this.apiUrl}/${endpoint}/${id}`);
+    const response = await this.handleRequest(
+      this.axios.delete(`${this.apiUrl}/${endpoint}/${id}`)
+    );
     return response.status === 200;
   }
 }

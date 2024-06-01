@@ -1,13 +1,24 @@
 import { Notifications } from "@mui/icons-material";
-import { Avatar, Badge, Box, IconButton, Stack, Toolbar } from "@mui/material";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Alert, Avatar, Badge, Box, IconButton, Stack, Toolbar } from "@mui/material";
+import { observer } from "mobx-react-lite";
+import { useEffect } from "react";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import Logo from "../../assets/logo.svg";
+import { useServiceProvider } from "../../services/ServiceProvider";
 
-export default function AppShell() {
+function AppShell() {
   const navigate = useNavigate();
+  const location = useLocation();
+  
+  const { errorStore } = useServiceProvider();
+
+  useEffect(() => {
+    if (errorStore.errorMessage)
+      errorStore.clearError();
+  }, [location]);
 
   return (
-    <Box sx={{ height: "100vh" }}>
+    <Box sx={{ height: "100vh" }}>  
       <Toolbar sx={{ backgroundColor: "#fff" }}>
         <Stack sx={{ width: '100%' }} direction="row" justifyContent="space-between" alignItems="center">
           <img src={Logo} height={40} alt="Medic launch" style={{ cursor: 'pointer' }} onClick={() => navigate("/")} />
@@ -31,8 +42,18 @@ export default function AppShell() {
         </Stack>
       </Toolbar>
       <Box sx={{ p: 3, height: "calc(100% - 64px)", overflowY: "scroll" }}>
+        {
+          errorStore.errorMessage &&
+          <Stack alignItems="end" mb={3}>
+            <Alert severity="error" sx={{ width: "max-content" }}>
+              {errorStore.errorMessage}
+            </Alert>
+          </Stack>
+        }
         <Outlet />
       </Box>
     </Box >
   )
 }
+
+export default observer(AppShell);
