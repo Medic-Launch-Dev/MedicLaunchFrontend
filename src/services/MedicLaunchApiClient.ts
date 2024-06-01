@@ -8,7 +8,6 @@ import Speciality from "../models/Speciality";
 import { MedicLauncUser } from "../models/User";
 import AxiosProvider from "./AxiosProvider";
 
-
 export default class MedicLaunchApiClient {
   private readonly apiUrl: string;
   private readonly axios: AxiosInstance;
@@ -19,14 +18,17 @@ export default class MedicLaunchApiClient {
     this.axios = axiosProvider.defaultInstance;
   }
 
-  async getQuestionsInSpeciality(specialityId: string): Promise<Question[]> {
-    const response = await this.axios.get<Question[]>(`${this.apiUrl}/questions/speciality/${specialityId}`);
+  async getQuestionsInSpeciality(specialityId: string, questionBank): Promise<Question[]> {
+    const response = await this.axios.post<Question[]>(`${this.apiUrl}/questions/list`, {
+      specialityId: specialityId,
+      questionType: questionBank
+    });
     return response.data;
   }
 
   async filterQuestions(practiceFilter: PracticeFilter): Promise<Question[]> {
     console.log("Practice Filter: ", practiceFilter);
-    const response = await this.axios.post(`${this.apiUrl}/questions/filter`, {
+    const response = await this.axios.post(`${this.apiUrl}/practice/filter`, {
       ...practiceFilter,
       familiarity: practiceFilter.familiarity.toString(),
     });
@@ -77,7 +79,7 @@ export default class MedicLaunchApiClient {
   }
 
   async getFamiliarityCounts(specialityIds: string[], allSpecialitiesSelected: boolean): Promise<FamiliarityCounts> {
-    const response = await this.axios.post(`${this.apiUrl}/questions/familiaritycounts`, {
+    const response = await this.axios.post(`${this.apiUrl}/practice/familiaritycounts`, {
       specialityIds: specialityIds,
       allSpecialitiesSelected: allSpecialitiesSelected
     });
@@ -132,8 +134,23 @@ export default class MedicLaunchApiClient {
     return response.data;
   }
 
-  async retrieveFlashcardById(id: string): Promise<Flashcard> {
-    const response = await this.axios.get<Flashcard>(`${this.apiUrl}/flashcard/${id}`);
+  async postData(endpoint: string, data: any) {
+    const response = await this.axios.post(`${this.apiUrl}/${endpoint}`, data);
+    return response.status === 200;
+  }
+  
+  async getData(endpoint: string): Promise<any> {
+    const response = await this.axios.get<any>(`${this.apiUrl}/${endpoint}`);
     return response.data;
+  }
+  
+  async putData(endpoint: string, data: any) {
+    const response = await this.axios.put(`${this.apiUrl}/${endpoint}`, data);
+    return response.status === 200;
+  }
+  
+  async deleteData(endpoint: string, id: string) {
+    const response = await this.axios.delete(`${this.apiUrl}/${endpoint}/${id}`);
+    return response.status === 200;
   }
 }

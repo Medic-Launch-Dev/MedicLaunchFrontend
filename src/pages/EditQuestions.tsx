@@ -35,6 +35,8 @@ function EditQuestions() {
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
 
+	const [selectedQuestionBank, setSelectedQuestionBank] = useState<string>("General");
+
 	function getStatusChip(status?: string) {
 		if (status === "approved") return <Chip label="Approved" sx={{ backgroundColor: "#A4E29F" }} />
 		if (status === "not approved") return <Chip label="Not Approved" sx={{ backgroundColor: "#FFABAB" }} />
@@ -43,9 +45,9 @@ function EditQuestions() {
 
 	const questionBankOptions = ["General", "Mock Paper 1", "Mock Paper 2"];
 
-	const loadQuestions = async (specialityId: string) => {
+	const loadQuestions = async (specialityId: string, questionBank: string) => {
 		setLoading(true);
-		const questions = await questionsStore.getSpecialityQuestions(specialityId);
+		const questions = await questionsStore.getSpecialityQuestions(specialityId, questionBank);
 		setQuestions(questions);
 		setLoading(false);
 	}
@@ -78,8 +80,20 @@ function EditQuestions() {
 	}, []);
 
 	useEffect(() => {
-		if (selectedSpeciality) loadQuestions(selectedSpeciality);
-	}, [selectedSpeciality])
+		// set question bank to General, PaperOneMockExam, or PaperTwoMockExam
+		let questionBank = "General";
+		switch (selectedQuestionBank) {
+			case "Mock Paper 1":
+				questionBank = "PaperOneMockExam";
+				break;
+			case "Mock Paper 2":
+				questionBank = "PaperTwoMockExam";
+				break;
+			default:
+				questionBank = "General";
+		}
+		if (selectedSpeciality) loadQuestions(selectedSpeciality, questionBank);
+	}, [selectedSpeciality, selectedQuestionBank])
 
 
 
@@ -118,7 +132,8 @@ function EditQuestions() {
 									label="Question bank"
 									defaultValue={questionBankOptions[0]}
 									options={questionBankOptions.map(option => ({ value: option }))}
-									setSelected={() => { }}
+									selected={selectedQuestionBank}
+									setSelected={setSelectedQuestionBank}
 								/>
 							</Grid>
 						</Grid>
