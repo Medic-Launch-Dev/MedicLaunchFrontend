@@ -134,6 +134,10 @@ export default class MedicLaunchApiClient {
     return response.data;
   }
 
+  async retrieveFlashcardById(id: string): Promise<Flashcard> {
+    const response = await this.axios.get<Flashcard>(`${this.apiUrl}/flashcard/${id}`);
+    return response.data;
+  }
   async postData(endpoint: string, data: any) {
     const response = await this.axios.post(`${this.apiUrl}/${endpoint}`, data);
     return response.status === 200;
