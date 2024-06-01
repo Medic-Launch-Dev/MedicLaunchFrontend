@@ -19,14 +19,17 @@ export default class MedicLaunchApiClient {
     this.axios = axiosProvider.defaultInstance;
   }
 
-  async getQuestionsInSpeciality(specialityId: string): Promise<Question[]> {
-    const response = await this.axios.get<Question[]>(`${this.apiUrl}/questions/speciality/${specialityId}`);
+  async getQuestionsInSpeciality(specialityId: string, questionBank): Promise<Question[]> {
+    const response = await this.axios.post<Question[]>(`${this.apiUrl}/questions/list`, {
+      specialityId: specialityId,
+      questionType: questionBank
+    });
     return response.data;
   }
 
   async filterQuestions(practiceFilter: PracticeFilter): Promise<Question[]> {
     console.log("Practice Filter: ", practiceFilter);
-    const response = await this.axios.post(`${this.apiUrl}/questions/filter`, {
+    const response = await this.axios.post(`${this.apiUrl}/practice/filter`, {
       ...practiceFilter,
       familiarity: practiceFilter.familiarity.toString(),
     });
@@ -77,7 +80,7 @@ export default class MedicLaunchApiClient {
   }
 
   async getFamiliarityCounts(specialityIds: string[], allSpecialitiesSelected: boolean): Promise<FamiliarityCounts> {
-    const response = await this.axios.post(`${this.apiUrl}/questions/familiaritycounts`, {
+    const response = await this.axios.post(`${this.apiUrl}/practice/familiaritycounts`, {
       specialityIds: specialityIds,
       allSpecialitiesSelected: allSpecialitiesSelected
     });

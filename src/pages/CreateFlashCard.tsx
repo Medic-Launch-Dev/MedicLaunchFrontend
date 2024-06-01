@@ -2,7 +2,7 @@ import { LoadingButton } from "@mui/lab";
 import { Container, Snackbar, Stack, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
-import FlashcardEditView from "../components/flashCards/FlashcardEditView";
+import FlashcardEditView from "../components/flashCards/FlashCardEditView";
 import { useSnackbar } from "../hooks/useSnackbar";
 import { Flashcard } from "../models/Flashcard";
 import { useServiceProvider } from "../services/ServiceProvider";
