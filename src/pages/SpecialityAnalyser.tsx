@@ -1,10 +1,11 @@
-import { Button, Card, Container, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
+import { Button, Card, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
+import Page from "../components/nav/Page";
 import LinkButton from "../components/util/LinkButton";
 import { primaryGradientText } from "../theme";
 
 export default function SpecialityAnalyser() {
   return (
-    <Container maxWidth="lg">
+    <Page>
       <LinkButton to="/" sx={{ my: 2 }}>
         Study Portal
       </LinkButton>
@@ -131,6 +132,6 @@ export default function SpecialityAnalyser() {
           </TableBody>
         </Table>
       </Card>
-    </Container>
+    </Page>
   );
 }

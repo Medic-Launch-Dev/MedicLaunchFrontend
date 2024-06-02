@@ -1,7 +1,6 @@
 import { LoadingButton } from "@mui/lab";
 import {
   Button,
-  Container,
   Snackbar,
   Stack,
   Typography
@@ -9,6 +8,7 @@ import {
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Page from "../components/nav/Page";
 import QuestionEditView from "../components/questionCreation/QuestionEditView";
 import { useSnackbar } from "../hooks/useSnackbar";
 import { Question } from "../models/Question";
@@ -45,7 +45,7 @@ const CreateQuestion = () => {
   };
 
   return (
-    <Container>
+    <Page>
       <Snackbar {...snackbarProps} />
       <Stack
         direction="row"
@@ -67,7 +67,7 @@ const CreateQuestion = () => {
         question={question}
         setQuestion={setQuestion}
       />
-    </Container>
+    </Page>
   );
 };
 

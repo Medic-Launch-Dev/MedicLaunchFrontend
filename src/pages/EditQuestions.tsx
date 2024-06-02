@@ -2,7 +2,6 @@ import { Add } from "@mui/icons-material"
 import {
 	Button,
 	Chip,
-	Container,
 	Grid,
 	Stack,
 	Table,
@@ -16,6 +15,7 @@ import {
 import { observer } from "mobx-react-lite"
 import { useEffect, useState } from "react"
 import { useNavigate, useSearchParams } from "react-router-dom"
+import Page from "../components/nav/Page"
 import { LoadingWrapper } from "../components/util/LoadingWrapper"
 import TextSelect from "../components/util/TextSelect"
 import { Question } from "../models/Question"
@@ -103,7 +103,7 @@ function EditQuestions() {
 	}
 
 	return (
-		<Container>
+		<Page>
 			<Stack direction="row" alignItems="center" justifyContent="space-between" mb={3}>
 				<Button variant="contained" onClick={navigateToAuthorPortal}>Author Portal</Button>
 				<Button variant="contained" onClick={navigateToQuestionCreation}><Add /> Add Question</Button>
@@ -196,7 +196,7 @@ function EditQuestions() {
 				}
 			</LoadingWrapper>
 
-		</Container>
+		</Page>
 
 	)
 }

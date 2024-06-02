@@ -1,7 +1,8 @@
 import { Add, DeleteOutline } from "@mui/icons-material";
-import { Button, Card, Container, Divider, FormControl, IconButton, InputLabel, Select, Stack, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
+import { Button, Card, Divider, FormControl, IconButton, InputLabel, Select, Stack, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import Page from "../components/nav/Page";
 import RevisionNoteModal from "../components/revisionNotes/RevisionNoteModal";
 import LinkButton from "../components/util/LinkButton";
 import Speciality from "../models/Speciality";
@@ -43,7 +44,7 @@ export default function RevisionNotes() {
   }
 
   return (
-    <Container maxWidth="lg" sx={{ pt: 2 }}>
+    <Page sx={{ pt: 2 }}>
       <RevisionNoteModal open={open} onClose={() => setOpen(false)} defaultValue={defaultValue} />
 
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
@@ -104,6 +105,6 @@ export default function RevisionNotes() {
         </Table>
       </Card>
 
-    </Container>
+    </Page>
   )
 }

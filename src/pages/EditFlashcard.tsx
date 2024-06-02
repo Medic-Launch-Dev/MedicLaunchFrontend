@@ -1,8 +1,9 @@
 import { LoadingButton } from "@mui/lab";
-import { CircularProgress, Container, Snackbar, Stack, Typography } from "@mui/material";
+import { CircularProgress, Snackbar, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import FlashcardEditView from "../components/flashCards/FlashcardEditView";
+import Page from "../components/nav/Page";
 import { useSnackbar } from "../hooks/useSnackbar";
 import { Flashcard } from "../models/Flashcard";
 import { useServiceProvider } from "../services/ServiceProvider";
@@ -50,7 +51,7 @@ export default function EditFlascard() {
   }
 
   return (
-    <Container maxWidth="md">
+    <Page maxWidth="md">
       <Snackbar {...snackbarProps} />
       <Stack
         direction="row"
@@ -76,6 +77,6 @@ export default function EditFlascard() {
           :
           <FlashcardEditView flashcard={flashcard} setFlashcard={setFlashcard} />
       }
-    </Container>
+    </Page>
   )
 }

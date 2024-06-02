@@ -1,7 +1,8 @@
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
-import { Button, Card, Container, Divider, IconButton, Stack, TextField, Typography } from "@mui/material";
+import { Button, Card, Divider, IconButton, Stack, TextField, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import Page from "../components/nav/Page";
 import LinkButton from "../components/util/LinkButton";
 
 export default function FlashCards() {
@@ -13,7 +14,7 @@ export default function FlashCards() {
   }, []);
 
   return (
-    <Container maxWidth="xl" sx={{ height: "100%" }}>
+    <Page sx={{ height: "100%" }}>
       <Stack direction="row" sx={{ height: '100%' }}>
         <Stack width={350} gap={2} height="100%">
           <Card sx={{ flexShrink: 0 }}>
@@ -96,6 +97,6 @@ export default function FlashCards() {
           </Card>
         </Stack>
       </Stack>
-    </Container>
+    </Page>
   );
 }

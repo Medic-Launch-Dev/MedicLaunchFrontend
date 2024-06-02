@@ -1,8 +1,9 @@
 import { Add } from "@mui/icons-material";
-import { CircularProgress, Container, Snackbar, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { CircularProgress, Snackbar, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import Page from "../components/nav/Page";
 import LinkButton from "../components/util/LinkButton";
 import TextSelect from "../components/util/TextSelect";
 import { useSnackbar } from "../hooks/useSnackbar";
@@ -48,7 +49,7 @@ const EditFlashCards = () => {
   }
 
   return (
-    <Container>
+    <Page>
       <Snackbar {...snackbarProps} />
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={3}>
         <LinkButton variant="contained" to="/author-portal">Author Portal</LinkButton>
@@ -105,7 +106,7 @@ const EditFlashCards = () => {
         </Table>
       </TableContainer>
 
-    </Container>
+    </Page>
   );
 }
 

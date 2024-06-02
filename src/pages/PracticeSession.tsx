@@ -1,7 +1,8 @@
-import { Box, Container, LinearProgress, Stack, Typography } from "@mui/material";
+import { Box, LinearProgress, Stack, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import { Navigate } from "react-router-dom";
+import Page from "../components/nav/Page";
 import QuestionView from "../components/practiceSession/QuestionView";
 import LinkButton from "../components/util/LinkButton";
 import { useServiceProvider } from "../services/ServiceProvider";
@@ -29,7 +30,7 @@ function PracticeSession() {
   if (!questionsStore.questions.length) return <Navigate to="/create-session" />
 
   return (
-    <Container maxWidth="lg">
+    <Page>
       <Stack direction="row" spacing={2} alignItems="center" justifyContent="center" mb={3}>
         <Stack
           direction="row"
@@ -57,7 +58,7 @@ function PracticeSession() {
         </Box>
       </Stack>
       <QuestionView question={questionsStore.currentQuestion} withTimer={true} />
-    </Container>
+    </Page>
   )
 }
 

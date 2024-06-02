@@ -4,13 +4,13 @@ import CoursesIcon from '../../src/assets/icons/courses.svg';
 import PodcastsIcon from '../../src/assets/icons/podcasts.svg';
 import QuestionBankIcon from '../../src/assets/icons/question-bank.svg';
 import WelcomeImg from '../../src/assets/images/Welcome.png';
-import PageWithNav from '../components/nav/PageWithNav';
+import Page from '../components/nav/Page';
 import Card from '../components/util/Card';
 import { primaryGradient, unstyledLink } from '../theme';
 
 function AuthorPortal() {
   return (
-    <PageWithNav>
+    <Page withNav fullWidth>
       <Grid container spacing={2}>
         <Grid item xs={12} lg={6}>
           <Grid container spacing={2}>
@@ -84,7 +84,7 @@ function AuthorPortal() {
           </Grid>
         </Grid>
       </Grid>
-    </PageWithNav>
+    </Page>
   );
 }
 

@@ -1,9 +1,10 @@
 import { LoadingButton } from "@mui/lab";
-import { Container, Snackbar, Stack, Typography } from "@mui/material";
+import { Snackbar, Stack, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FlashcardEditView from "../components/flashCards/FlashcardEditView";
+import Page from "../components/nav/Page";
 import { useSnackbar } from "../hooks/useSnackbar";
 import { Flashcard } from "../models/Flashcard";
 import { useServiceProvider } from "../services/ServiceProvider";
@@ -37,7 +38,7 @@ const CreateFlashCard = () => {
   }
 
   return (
-    <Container maxWidth="md">
+    <Page maxWidth="md">
       <Snackbar {...snackbarProps} />
       <Stack
         direction="row"
@@ -58,7 +59,7 @@ const CreateFlashCard = () => {
         </LoadingButton>
       </Stack>
       <FlashcardEditView flashcard={flashcard} setFlashcard={setFlashcard} />
-    </Container>
+    </Page>
   );
 }
 

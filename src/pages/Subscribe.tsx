@@ -1,9 +1,10 @@
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import { Box, Button, Container, Snackbar, Stack, Step, StepLabel, Stepper, Typography } from "@mui/material";
+import { Box, Button, Snackbar, Stack, Step, StepLabel, Stepper, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Page from "../components/nav/Page";
 import { Payment } from "../components/subscribe/Payment";
 import { PlanSelection } from "../components/subscribe/PlanSelection";
 import { QuestionBankSelection } from "../components/subscribe/QuestionBankSelection";
@@ -54,7 +55,7 @@ function Subscribe() {
   }
 
   return (
-    <Container maxWidth="lg" sx={{ height: "100%" }}>
+    <Page sx={{ height: "100%" }}>
       <Snackbar {...snackbarProps} />
       <Stack height="100%" gap={3} py={2}>
         <Stack direction="row" justifyContent="space-between">
@@ -133,7 +134,7 @@ function Subscribe() {
           </LoadingButton>
         </Stack>
       </Stack>
-    </Container>
+    </Page>
   );
 }
 

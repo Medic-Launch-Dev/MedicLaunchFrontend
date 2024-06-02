@@ -1,9 +1,10 @@
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import { Box, Button, Container, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FlashCardSpecialitySelection } from "../components/flashCards/FlashCardSpecialitySelection";
+import Page from "../components/nav/Page";
 import LinkButton from "../components/util/LinkButton";
 
 export default function SelectFlashCards() {
@@ -16,7 +17,7 @@ export default function SelectFlashCards() {
   }
 
   return (
-    <Container maxWidth="lg" sx={{ height: "100%" }}>
+    <Page sx={{ height: "100%" }}>
       <Stack height="100%" gap={3} py={2}>
         <Stack
           direction="row"
@@ -71,6 +72,6 @@ export default function SelectFlashCards() {
         </Stack>
       </Stack>
 
-    </Container>
+    </Page>
   )
 }

@@ -2,7 +2,6 @@ import { ChevronLeft } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import {
   Button,
-  Container,
   Snackbar,
   Stack,
   Typography
@@ -10,6 +9,7 @@ import {
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Page from "../components/nav/Page";
 import QuestionEditView from "../components/questionCreation/QuestionEditView";
 import LinkButton from "../components/util/LinkButton";
 import { useSnackbar } from "../hooks/useSnackbar";
@@ -48,7 +48,7 @@ const EditQuestion = () => {
   };
 
   return (
-    <Container>
+    <Page>
       <Snackbar {...snackbarProps} />
       <Stack
         direction="row"
@@ -75,7 +75,7 @@ const EditQuestion = () => {
         question={question}
         setQuestion={setQuestion}
       />
-    </Container>
+    </Page>
   );
 };
 

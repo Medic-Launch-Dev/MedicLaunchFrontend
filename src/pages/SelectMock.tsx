@@ -1,8 +1,9 @@
 import { ChevronRight } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import { Box, Container, Grid, Snackbar, Stack } from "@mui/material";
+import { Box, Grid, Snackbar, Stack } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Page from "../components/nav/Page";
 import MockSelector from "../components/practiceSession/MockSelector";
 import LinkButton from "../components/util/LinkButton";
 import { useSnackbar } from "../hooks/useSnackbar";
@@ -93,7 +94,7 @@ export default function SelectMock() {
   }
 
   return (
-    <Container maxWidth="lg" sx={{ height: "100%" }}>
+    <Page sx={{ height: "100%" }}>
       <Snackbar {...snackbarProps} />
       <Stack height="100%" gap={3} py={2}>
         <LinkButton to="/" sx={{ width: "max-content", flexShrink: 0 }}>
@@ -163,6 +164,6 @@ export default function SelectMock() {
           </LoadingButton>
         </Stack>
       </Stack>
-    </Container>
+    </Page>
   )
 }

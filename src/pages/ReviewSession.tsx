@@ -1,4 +1,4 @@
-import { Container, Grid, Stack, Typography } from "@mui/material";
+import { Grid, Stack, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -6,6 +6,7 @@ import AnalyticsIcon from '../../src/assets/icons/analytics.svg';
 import CorrectIcon from '../../src/assets/icons/correct.svg';
 import QuestionsIcon from '../../src/assets/icons/questions.svg';
 import RestartIcon from '../../src/assets/icons/restart.svg';
+import Page from "../components/nav/Page";
 import ReviewQuestionsTable from "../components/review/ReviewQuestionsTable";
 import ReviewCard from "../components/review/ReviewStatCard";
 import LinkButton from "../components/util/LinkButton";
@@ -31,7 +32,7 @@ function ReviewSession() {
   }, []);
 
   return (
-    <Container maxWidth="lg" sx={{ pt: 2 }}>
+    <Page sx={{ pt: 2 }}>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
         <LinkButton to="/">
           Study Portal
@@ -80,7 +81,7 @@ function ReviewSession() {
           <ReviewQuestionsTable />
         </Grid>
       </Grid>
-    </Container>
+    </Page>
   )
 };
 

@@ -3,7 +3,6 @@ import { LoadingButton } from "@mui/lab";
 import {
   Box,
   Button,
-  Container,
   Snackbar,
   Stack,
   Step,
@@ -16,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { FamiliaritySelection } from "../components/createSession/FamiliaritySelection";
 import { OrderQuantitySelection } from "../components/createSession/OrderQuantitySelection";
 import { SpecialitySelection } from "../components/createSession/SpecialitySelection";
+import Page from "../components/nav/Page";
 import LinkButton from "../components/util/LinkButton";
 import { useSnackbar } from "../hooks/useSnackbar";
 import { useServiceProvider } from "../services/ServiceProvider";
@@ -83,7 +83,7 @@ function CreateSession() {
   }
 
   return (
-    <Container maxWidth="lg" sx={{ height: "100%" }}>
+    <Page sx={{ height: "100%" }}>
       <Snackbar {...snackbarProps} />
       <Stack height="100%" gap={3} py={2}>
         <LinkButton to="/" sx={{ width: "max-content", flexShrink: 0 }}>
@@ -154,7 +154,7 @@ function CreateSession() {
           </LoadingButton>
         </Stack>
       </Stack>
-    </Container>
+    </Page>
   );
 }
 

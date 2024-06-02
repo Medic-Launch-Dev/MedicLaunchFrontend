@@ -1,7 +1,8 @@
 import { ChevronLeft } from "@mui/icons-material";
-import { Button, Container, Stack, Typography } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useSearchParams } from "react-router-dom";
+import Page from "../components/nav/Page";
 import QuestionView from "../components/practiceSession/QuestionView";
 import LinkButton from "../components/util/LinkButton";
 import { useServiceProvider } from "../services/ServiceProvider";
@@ -22,7 +23,7 @@ function QuestionPreview() {
   }
 
   return (
-    <Container maxWidth="lg">
+    <Page>
       <Stack
         direction="row"
         justifyContent="space-between"
@@ -46,7 +47,7 @@ function QuestionPreview() {
           :
           <Typography textAlign="center">Add required fields to question in order to preview</Typography>
       }
-    </Container>
+    </Page>
   )
 }
 
