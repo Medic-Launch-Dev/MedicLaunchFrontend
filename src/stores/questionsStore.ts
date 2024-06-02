@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import { FamiliarityCounts } from "../models/FamiliarityCounts";
 import { PracticeFilter, QuestionsOrder } from "../models/PracticeFilter";
 import { Question } from "../models/Question";
@@ -24,7 +24,13 @@ export class QuestionsStore {
     this._correctAnswers = 0;
     this._incorrectAnswers = 0;
     this.apiClient = apClient;
-    makeAutoObservable(this);
+    this.familiarityCounts = {
+      newQuestions: 0,
+      incorrectQuestions: 0,
+      flaggedQuestions: 0,
+      allQuestions: 0,
+    };
+    makeAutoObservable(this, {}, { autoBind: true });
   }
 
   get currentQuestionIdx() {
@@ -147,6 +153,7 @@ export class QuestionsStore {
   }
 
   async setFamiliarityCounts(specialityIds: string[], allSpecialitesSelected: boolean) {
-    this.familiarityCounts = await this.apiClient.getFamiliarityCounts(specialityIds, allSpecialitesSelected);
+    const counts = await this.apiClient.getFamiliarityCounts(specialityIds, allSpecialitesSelected);
+    runInAction(() => this.familiarityCounts = counts);
   }
 }
