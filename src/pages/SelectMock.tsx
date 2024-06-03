@@ -87,7 +87,7 @@ export default function SelectMock() {
       // const practiceQuestion = await practiceStore.getPracticeQuestions();
       questionsStore.setPracticeQuestions(sampleQuestions);
       practiceStore.setQuestionsCount(sampleQuestions.length);
-      navigate(`/practice-session?mock=true`);
+      navigate(`/practice-session?isMock=true`);
     } catch (e) {
       console.error(e);
     }

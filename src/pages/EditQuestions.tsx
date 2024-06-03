@@ -72,6 +72,7 @@ function EditQuestions() {
 			.then((specialities) => {
 				setSpecialitiesList(specialities);
 				if (defaultSpeciality) setSelectedSpeciality(defaultSpeciality);
+				else setSelectedSpeciality(specialities[0].id);
 			})
 			.catch(e => {
 				console.error(e);
@@ -80,7 +81,6 @@ function EditQuestions() {
 	}, []);
 
 	useEffect(() => {
-		// set question bank to General, PaperOneMockExam, or PaperTwoMockExam
 		let questionBank = "General";
 		switch (selectedQuestionBank) {
 			case "Mock Paper 1":
@@ -102,6 +102,8 @@ function EditQuestions() {
 		navigate("/edit-question")
 	}
 
+	console.log(selectedSpeciality)
+
 	return (
 		<Page>
 			<Stack direction="row" alignItems="center" justifyContent="space-between" mb={3}>
@@ -122,15 +124,13 @@ function EditQuestions() {
 										value: speciality.id,
 										displayText: speciality.name
 									}))}
-									defaultValue={defaultSpeciality}
-									selected={selectedSpeciality}
+									selected={selectedSpeciality || ""}
 									setSelected={setSelectedSpeciality}
 								/>
 							</Grid>
 							<Grid item xs={6}>
 								<TextSelect
 									label="Question bank"
-									defaultValue={questionBankOptions[0]}
 									options={questionBankOptions.map(option => ({ value: option }))}
 									selected={selectedQuestionBank}
 									setSelected={setSelectedQuestionBank}

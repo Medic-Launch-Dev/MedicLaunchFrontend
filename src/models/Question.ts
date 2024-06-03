@@ -19,7 +19,7 @@ export class Question {
     explanation: string;
     clinicalTips: string;
     learningPoints: string;
-    isSubmitted: boolean;
+    isSubmitted?: boolean;
     specialityName?: string;
     questionCode?: string;
     previousSpecialityId?: string;

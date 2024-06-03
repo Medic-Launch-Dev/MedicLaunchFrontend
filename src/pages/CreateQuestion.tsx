@@ -22,12 +22,20 @@ const CreateQuestion = () => {
   const [question, setQuestion] = useState<Question>(questionsStore.previewQuestion);
   const navigate = useNavigate();
 
-  const handleSubmit = async () => {
+  const handleCreate = async (isSubmitted: boolean) => {
     try {
       if (!question) return;
       setLoading(true);
 
-      await questionsStore.addQuestion(question);
+      console.log({
+        ...question,
+        isSubmitted
+      });
+
+      await questionsStore.addQuestion({
+        ...question,
+        isSubmitted
+      });
 
       navigate(`/edit-questions?speciality=${question.specialityId}`);
     } catch (e) {
@@ -44,6 +52,21 @@ const CreateQuestion = () => {
     navigate("/question-preview?from=create");
   };
 
+  const canSubmit = () => {
+    if (!question) return false;
+
+    return (
+      question.questionType &&
+      question.specialityId &&
+      question.questionText &&
+      question.options.every(option => option.text) &&
+      question.correctAnswerLetter &&
+      question.explanation &&
+      question.learningPoints &&
+      question.clinicalTips
+    );
+  }
+
   return (
     <Page>
       <Snackbar {...snackbarProps} />
@@ -58,8 +81,11 @@ const CreateQuestion = () => {
         </Typography>
         <Stack direction="row" spacing={1}>
           <Button variant="outlined" onClick={handleClickPreview}>Preview</Button>
-          <LoadingButton variant="contained" onClick={handleSubmit} loading={loading} disabled={!question?.questionType || !question.specialityId}>
+          <LoadingButton variant="contained" onClick={() => handleCreate(false)} loading={loading} disabled={!canSubmit()}>
             Create Draft
+          </LoadingButton>
+          <LoadingButton variant="contained" onClick={() => handleCreate(true)} loading={loading} disabled={!canSubmit()}>
+            Submit Question
           </LoadingButton>
         </Stack>
       </Stack>

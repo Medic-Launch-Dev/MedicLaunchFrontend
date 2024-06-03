@@ -1,7 +1,7 @@
 import { Box, LinearProgress, Stack, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useSearchParams } from "react-router-dom";
 import Page from "../components/nav/Page";
 import QuestionView from "../components/practiceSession/QuestionView";
 import LinkButton from "../components/util/LinkButton";
@@ -10,6 +10,8 @@ import { TimerState } from "../stores/practiceStore";
 import { primaryGradientText } from "../theme";
 
 function PracticeSession() {
+  const [searchParams] = useSearchParams();
+  const isMock = searchParams.get("isMock")
   const { questionsStore, practiceStore } = useServiceProvider();
 
   function calculateProgress() {
@@ -26,6 +28,8 @@ function PracticeSession() {
       practiceStore.resetTimer();
     };
   }, []);
+
+  console.log(isMock);
 
   if (!questionsStore.questions.length) return <Navigate to="/create-session" />
 
@@ -57,7 +61,7 @@ function PracticeSession() {
           </LinkButton>
         </Box>
       </Stack>
-      <QuestionView question={questionsStore.currentQuestion} withTimer={true} />
+      <QuestionView question={questionsStore.currentQuestion} withTimer={Boolean(isMock)} />
     </Page>
   )
 }

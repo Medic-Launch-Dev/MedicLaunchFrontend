@@ -71,7 +71,6 @@ export default function QuestionEditView({ question, setQuestion }: QuestionEdit
       options,
       correctAnswerLetter: answer,
       questionType: selectedQuestionBank,
-      isSubmitted: true,
     });
   }, [selectedSpeciality, selectedQuestionBank, questionText, options, answer, explanation, learningPoints, clinicalTips]);
 

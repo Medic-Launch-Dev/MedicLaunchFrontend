@@ -12,7 +12,7 @@ interface TextSelect extends SelectProps {
   fullWidth?: boolean;
 }
 
-export default function TextSelect({ fullWidth, label, options, selected, setSelected, ...rest }: TextSelect) {
+export default function TextSelect({ fullWidth, label, options, selected, setSelected, sx, ...rest }: TextSelect) {
   return (
     <FormControl fullWidth={fullWidth}>
       <InputLabel>{label}</InputLabel>
@@ -20,7 +20,7 @@ export default function TextSelect({ fullWidth, label, options, selected, setSel
         value={selected}
         label={label}
         onChange={e => setSelected(e.target.value as string)}
-        sx={{ backgroundColor: "#fff" }}
+        sx={{ backgroundColor: "#fff", minWidth: 200, ...sx }}
         {...rest}
       >
         {options.map(option => <MenuItem value={option.value} key={option.value}>{option.displayText ?? option.value}</MenuItem>)}
