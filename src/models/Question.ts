@@ -20,6 +20,7 @@ export class Question {
     clinicalTips: string;
     learningPoints: string;
     isSubmitted?: boolean;
+    isFlagged?: boolean;
     specialityName?: string;
     questionCode?: string;
     previousSpecialityId?: string;

@@ -1,4 +1,5 @@
 import { ChevronRight, Flag, KeyboardArrowLeft } from "@mui/icons-material";
+import { LoadingButton } from "@mui/lab";
 import { Box, Button, Grid, Stack, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { RichTextReadOnly } from "mui-tiptap";
@@ -22,17 +23,44 @@ interface QuestionViewProps {
 }
 
 function QuestionView({ question: questionFromProps, inPreview, withTimer }: QuestionViewProps) {
-  const { questionsStore, practiceStore } = useServiceProvider();
+  const { questionsStore } = useServiceProvider();
   const question = inPreview ? questionsStore.previewQuestion : questionFromProps;
 
+  const [loadingSubmit, setLoadingSubmit] = useState(false);
+  const [loadingFlag, setLoadingFlag] = useState(false);
   const [selectedOption, setSelectedOption] = useState<Option>();
-  const [isFlagged, setIsFlagged] = useState<boolean>();
   const wasAttempted = !!question?.submittedAnswerLetter;
   const correctOption = question?.options?.filter(option => option.letter === question?.correctAnswerLetter);
 
   const extensions = useExtensions({
     placeholder: ""
   });
+
+  async function handleSubmitAnswer() {
+    if (!selectedOption) return;
+
+    setLoadingSubmit(true);
+    await questionsStore.submitAnswer(selectedOption.letter);
+    setLoadingSubmit(false);
+  }
+
+  async function handleFlagQuestion() {
+    setLoadingFlag(true);
+    await questionsStore.flagQuestion();
+    setLoadingFlag(false);
+  }
+
+  const flagButtonMarkup = (
+    <LoadingButton
+      startIcon={<Flag />}
+      onClick={handleFlagQuestion}
+      loading={loadingFlag}
+      variant={question.isFlagged ? "contained" : "outlined"}
+      sx={question.isFlagged ? { border: '2px solid transparent' } : undefined}
+    >
+      Flag
+    </LoadingButton>
+  );
 
   const questionBodyMarkup = (
     <>
@@ -57,7 +85,7 @@ function QuestionView({ question: questionFromProps, inPreview, withTimer }: Que
               padding: "5px 15px",
             }}
           >
-            {question.specialityName}
+            {question?.specialityName}
           </Box>
           <Typography fontWeight={600}>{`Question ${questionsStore.getQuestionNumber()}`}</Typography>
         </Box>
@@ -98,23 +126,17 @@ function QuestionView({ question: questionFromProps, inPreview, withTimer }: Que
       {
         !wasAttempted && !inPreview &&
         <Stack sx={{ width: "max-content" }} spacing={1} alignItems="center">
-          <Button
+          <LoadingButton
             variant="contained"
             sx={{ px: 12, py: 1.25 }}
             disabled={!selectedOption}
-            onClick={() => questionsStore.submitAnswer(selectedOption!.letter)}
+            loading={loadingSubmit}
+            onClick={handleSubmitAnswer}
           >
             Submit
-          </Button>
+          </LoadingButton>
           <Stack direction="row" spacing={1}>
-            <Button
-              startIcon={<Flag />}
-              onClick={() => setIsFlagged(prevIsFlagged => !prevIsFlagged)}
-              variant={isFlagged ? "contained" : "outlined"}
-              sx={isFlagged ? { border: '2px solid transparent' } : undefined}
-            >
-              Flag
-            </Button>
+            {flagButtonMarkup}
             <Button
               startIcon={<KeyboardArrowLeft />}
               variant="outlined"
@@ -225,14 +247,7 @@ function QuestionView({ question: questionFromProps, inPreview, withTimer }: Que
           </Button>
         )}
         <Stack direction="row" spacing={1}>
-          <Button
-            startIcon={<Flag />}
-            onClick={() => setIsFlagged(prevIsFlagged => !prevIsFlagged)}
-            variant={isFlagged ? "contained" : "outlined"}
-            disabled={inPreview}
-          >
-            Flag
-          </Button>
+          {flagButtonMarkup}
           <Button
             startIcon={<KeyboardArrowLeft />}
             variant="outlined"

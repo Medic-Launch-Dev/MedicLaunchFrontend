@@ -1,7 +1,7 @@
 import { Button, Chip, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { RichTextReadOnly } from "mui-tiptap";
 import { useNavigate } from "react-router";
 import { useServiceProvider } from "../../services/ServiceProvider";
-import { RichTextReadOnly } from "mui-tiptap";
 import useExtensions from "../tiptap/useExtensions";
 
 
@@ -17,7 +17,7 @@ export default function ReviewQuestionsTable() {
 
   function handleClickReview(idx) {
     questionsStore.setCurrentQuestion(idx);
-    navigate("/practice-session");
+    navigate("/practice-session?inReview=true");
   }
 
   function getResultChip(answeredCorrectly?: boolean) {

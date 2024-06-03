@@ -2,6 +2,7 @@ import { makeAutoObservable, runInAction } from "mobx";
 import { FamiliarityCounts } from "../models/FamiliarityCounts";
 import { PracticeFilter, QuestionsOrder } from "../models/PracticeFilter";
 import { Question } from "../models/Question";
+import { QuestionAttempt } from "../models/QuestionAttempt";
 import Speciality from "../models/Speciality";
 import MedicLaunchApiClient from "../services/MedicLaunchApiClient";
 
@@ -81,10 +82,26 @@ export class QuestionsStore {
     }
   }
 
-  submitAnswer(answerLetter: string) {
+  async submitAnswer(answerLetter: string) {
     this.currentQuestion.submittedAnswerLetter = answerLetter;
     if (answerLetter === this.currentQuestion.correctAnswerLetter) this._correctAnswers += 1;
     else this._incorrectAnswers += 1;
+
+    const questionAttempt: QuestionAttempt = {
+      questionId: this.currentQuestion.id || "",
+      chosenAnswer: answerLetter,
+      correctAnswer: this.currentQuestion.correctAnswerLetter,
+      isCorrect: answerLetter === this.currentQuestion.correctAnswerLetter,
+    };
+
+    console.log("Question Attempt: ", questionAttempt);
+
+    await this.apiClient.postData("practice/attemptquestion", questionAttempt);
+  }
+
+  async flagQuestion() {
+    runInAction(() => this.currentQuestion.isFlagged = !this.currentQuestion.isFlagged);
+    await this.apiClient.postData(`practice/flagquestion/${this.currentQuestion.id}`, {});
   }
 
   async getSpecialityQuestions(specialityId: string, questionBank: string) {
