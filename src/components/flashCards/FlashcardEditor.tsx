@@ -9,13 +9,13 @@ import Speciality from "../../models/Speciality";
 import { useServiceProvider } from "../../services/ServiceProvider";
 import TextSelect from "../util/TextSelect";
 
-interface FlashCardEditViewProps {
+interface FlashcardEditorProps {
   flashcard: Flashcard;
   setFlashcard: (flashcard: Flashcard) => void;
 }
 
 
-const FlashcardEditView = ({ flashcard, setFlashcard }: FlashCardEditViewProps) => {
+const FlashcardEditor = ({ flashcard, setFlashcard }: FlashcardEditorProps) => {
   const { showSnackbar, snackbarProps } = useSnackbar();
 
   const { questionsStore, flashCardStore } = useServiceProvider();
@@ -106,4 +106,4 @@ const FlashcardEditView = ({ flashcard, setFlashcard }: FlashCardEditViewProps) 
   );
 }
 
-export default observer(FlashcardEditView);
+export default observer(FlashcardEditor);

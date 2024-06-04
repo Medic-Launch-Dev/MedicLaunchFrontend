@@ -3,7 +3,7 @@ import { Snackbar, Stack, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import FlashcardEditView from "../components/flashCards/FlashcardEditView";
+import FlashcardEditor from "../components/flashCards/FlashcardEditor";
 import Page from "../components/nav/Page";
 import { useSnackbar } from "../hooks/useSnackbar";
 import { Flashcard } from "../models/Flashcard";
@@ -58,7 +58,7 @@ const CreateFlashCard = () => {
           Submit
         </LoadingButton>
       </Stack>
-      <FlashcardEditView flashcard={flashcard} setFlashcard={setFlashcard} />
+      <FlashcardEditor flashcard={flashcard} setFlashcard={setFlashcard} />
     </Page>
   );
 }

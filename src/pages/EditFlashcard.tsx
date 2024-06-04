@@ -2,7 +2,7 @@ import { LoadingButton } from "@mui/lab";
 import { CircularProgress, Snackbar, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import FlashcardEditView from "../components/flashCards/FlashcardEditView";
+import FlashcardEditor from "../components/flashCards/FlashcardEditor";
 import Page from "../components/nav/Page";
 import { useSnackbar } from "../hooks/useSnackbar";
 import { Flashcard } from "../models/Flashcard";
@@ -75,7 +75,7 @@ export default function EditFlascard() {
             <CircularProgress />
           </Stack>
           :
-          <FlashcardEditView flashcard={flashcard} setFlashcard={setFlashcard} />
+          <FlashcardEditor flashcard={flashcard} setFlashcard={setFlashcard} />
       }
     </Page>
   )
