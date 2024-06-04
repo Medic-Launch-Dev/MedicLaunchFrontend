@@ -1,0 +1,36 @@
+name: Medic Launch Prod Deployment
+on:
+    workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 16
+
+    - name: Install dependencies and build
+      run: |
+        npm ci
+        CI=false npm run build
+        
+    - uses: azure/login@v1
+      with:
+          creds: ${{ secrets.AZURE_CREDENTIALS_PRODUCTION }}
+
+    - name: Upload to blob storage
+      uses: azure/CLI@v1
+      with:
+        inlineScript: |
+            az storage blob upload-batch --account-name mediclaunchprod --auth-mode key -d '$web' --source ./build --overwrite
+
+  # Azure logout
+    - name: logout
+      run: |
+            az logout
+      if: always()
