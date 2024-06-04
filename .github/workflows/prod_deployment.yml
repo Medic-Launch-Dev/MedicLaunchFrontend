@@ -1,5 +1,4 @@
-name: Deploy Medic Launch React App CI
-
+name: Medic Launch Prod Deployment
 on:
     workflow_dispatch:
 
