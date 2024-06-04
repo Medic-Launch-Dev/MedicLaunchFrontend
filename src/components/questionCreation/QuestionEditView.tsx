@@ -11,6 +11,7 @@ import { Option, Question, QuestionType } from "../../models/Question";
 import Speciality from "../../models/Speciality";
 import { useServiceProvider } from "../../services/ServiceProvider";
 import { primaryGradientText } from "../../theme";
+import { getInnerTextFromHTML } from "../../utils/RichTextUtils";
 
 const emptyOptions = [
   { letter: "A", text: '' },
@@ -23,9 +24,10 @@ const emptyOptions = [
 interface QuestionEditViewProps {
   question?: Question;
   setQuestion: (question: Question) => void;
+  setCanSubmit?: (newValue: boolean) => void;
 }
 
-export default function QuestionEditView({ question, setQuestion }: QuestionEditViewProps) {
+export default function QuestionEditView({ question, setQuestion, setCanSubmit }: QuestionEditViewProps) {
   const { questionsStore } = useServiceProvider();
   const [specialities, setSpecialities] = useState<Speciality[]>([]);
 
@@ -73,6 +75,20 @@ export default function QuestionEditView({ question, setQuestion }: QuestionEdit
       questionType: selectedQuestionBank,
     });
   }, [selectedSpeciality, selectedQuestionBank, questionText, options, answer, explanation, learningPoints, clinicalTips]);
+
+  useEffect(() => {
+    if (
+      selectedSpeciality &&
+      selectedQuestionBank &&
+      getInnerTextFromHTML(questionText) &&
+      options.every(option => option.text) &&
+      answer &&
+      getInnerTextFromHTML(explanation) &&
+      getInnerTextFromHTML(learningPoints) &&
+      getInnerTextFromHTML(clinicalTips)
+    ) setCanSubmit?.(true);
+    else setCanSubmit?.(false);
+  }, [question]);
 
   return (
     <Grid container spacing={3}>

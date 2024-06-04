@@ -100,8 +100,13 @@ export class QuestionsStore {
   }
 
   async flagQuestion() {
-    runInAction(() => this.currentQuestion.isFlagged = !this.currentQuestion.isFlagged);
     await this.apiClient.postData(`practice/flagquestion/${this.currentQuestion.id}`, {});
+    runInAction(() => this.currentQuestion.isFlagged = true);
+  }
+
+  async unflagQuestion() {
+    await this.apiClient.postData(`practice/unflagquestion/${this.currentQuestion.id}`, {});
+    runInAction(() => this.currentQuestion.isFlagged = false);
   }
 
   async getSpecialityQuestions(specialityId: string, questionBank: string) {

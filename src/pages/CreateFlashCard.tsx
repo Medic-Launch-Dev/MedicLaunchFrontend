@@ -14,12 +14,10 @@ const CreateFlashCard = () => {
   const navigate = useNavigate();
   const { showSnackbar, snackbarProps } = useSnackbar();
 
-  const { questionsStore, flashCardStore } = useServiceProvider();
+  const { flashCardStore } = useServiceProvider();
 
   const [loadingSave, setLoadingSave] = useState(false);
   const [flashcard, setFlashcard] = useState<Flashcard>({ name: '', imageUrl: '', specialityId: '' });
-
-  console.log(flashcard);
 
   const handleSubmit = async () => {
     if (!flashcard) return;

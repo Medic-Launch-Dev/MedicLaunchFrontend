@@ -25,6 +25,7 @@ const EditQuestion = () => {
   const [loadingSave, setLoadingSave] = useState(false);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [question, setQuestion] = useState<Question>(questionsStore.previewQuestion);
+  const [canSubmit, setCanSubmit] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (submitDraft?: boolean) => {
@@ -37,7 +38,9 @@ const EditQuestion = () => {
 
       await questionsStore.updateQuestion(updatedQuestion);
 
-      showSnackbar("Question updated", "success");
+      if(submitDraft) navigate(`/edit-questions?speciality=${question.specialityId}`);
+
+      showSnackbar(submitDraft ? "Question submitted" : "Question updated", "success");
     } catch (e) {
       console.error(e);
       showSnackbar("Failed to update", "error");
@@ -77,12 +80,12 @@ const EditQuestion = () => {
         </Stack>
         <Stack direction="row" spacing={1}>
           <Button variant="outlined" onClick={handleClickPreview}>Preview</Button>
-          <LoadingButton variant="contained" onClick={() => handleSubmit()} loading={loadingSave}>
+          <LoadingButton variant="contained" onClick={() => handleSubmit()} loading={loadingSave} disabled={!canSubmit}>
             Save
           </LoadingButton>
           {
             !question?.isSubmitted &&
-            <LoadingButton variant="contained" onClick={() => handleSubmit(true)} loading={loadingSubmit}>
+            <LoadingButton variant="contained" onClick={() => handleSubmit(true)} loading={loadingSubmit} disabled={!canSubmit}>
               Submit question
             </LoadingButton>   
           }
@@ -90,7 +93,7 @@ const EditQuestion = () => {
       </Stack>
       {
         question ? 
-        <QuestionEditView question={question} setQuestion={setQuestion} /> :
+        <QuestionEditView question={question} setQuestion={setQuestion} setCanSubmit={setCanSubmit} /> :
         <Stack alignItems="center" my={5}>
           <CircularProgress />
         </Stack>

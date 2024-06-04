@@ -18,19 +18,16 @@ import { primaryGradientText } from "../theme";
 const CreateQuestion = () => {
   const { questionsStore } = useServiceProvider();
   const { showSnackbar, snackbarProps } = useSnackbar();
-  const [loading, setLoading] = useState(false);
+  const [loadingDraft, setLoadingDraft] = useState(false);
+  const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [question, setQuestion] = useState<Question>(questionsStore.previewQuestion);
+  const [canSubmit, setCanSubmit] = useState(false);
   const navigate = useNavigate();
 
   const handleCreate = async (isSubmitted: boolean) => {
     try {
       if (!question) return;
-      setLoading(true);
-
-      console.log({
-        ...question,
-        isSubmitted
-      });
+      isSubmitted ? setLoadingSubmit(true) : setLoadingDraft(true);
 
       await questionsStore.addQuestion({
         ...question,
@@ -42,7 +39,8 @@ const CreateQuestion = () => {
       console.error(e);
       showSnackbar("Failed to submit", "error");
     } finally {
-      setLoading(false);
+      setLoadingDraft(false);
+      setLoadingSubmit(false);
     }
   };
 
@@ -51,21 +49,6 @@ const CreateQuestion = () => {
     questionsStore.setPreviewQuestion(question);
     navigate("/question-preview?from=create");
   };
-
-  const canSubmit = () => {
-    if (!question) return false;
-
-    return (
-      question.questionType &&
-      question.specialityId &&
-      question.questionText &&
-      question.options.every(option => option.text) &&
-      question.correctAnswerLetter &&
-      question.explanation &&
-      question.learningPoints &&
-      question.clinicalTips
-    );
-  }
 
   return (
     <Page>
@@ -81,10 +64,10 @@ const CreateQuestion = () => {
         </Typography>
         <Stack direction="row" spacing={1}>
           <Button variant="outlined" onClick={handleClickPreview}>Preview</Button>
-          <LoadingButton variant="contained" onClick={() => handleCreate(false)} loading={loading} disabled={!canSubmit()}>
+          <LoadingButton variant="contained" onClick={() => handleCreate(false)} loading={loadingDraft} disabled={!canSubmit}>
             Create Draft
           </LoadingButton>
-          <LoadingButton variant="contained" onClick={() => handleCreate(true)} loading={loading} disabled={!canSubmit()}>
+          <LoadingButton variant="contained" onClick={() => handleCreate(true)} loading={loadingSubmit} disabled={!canSubmit}>
             Submit Question
           </LoadingButton>
         </Stack>
@@ -92,6 +75,7 @@ const CreateQuestion = () => {
       <QuestionEditView
         question={question}
         setQuestion={setQuestion}
+        setCanSubmit={setCanSubmit}
       />
     </Page>
   );

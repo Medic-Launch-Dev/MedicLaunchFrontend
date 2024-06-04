@@ -46,7 +46,8 @@ function QuestionView({ question: questionFromProps, inPreview, withTimer }: Que
 
   async function handleFlagQuestion() {
     setLoadingFlag(true);
-    await questionsStore.flagQuestion();
+    if (question.isFlagged) await questionsStore.unflagQuestion();
+    else await questionsStore.flagQuestion();
     setLoadingFlag(false);
   }
 
@@ -54,6 +55,7 @@ function QuestionView({ question: questionFromProps, inPreview, withTimer }: Que
     <LoadingButton
       startIcon={<Flag />}
       onClick={handleFlagQuestion}
+      disabled={inPreview}
       loading={loadingFlag}
       variant={question.isFlagged ? "contained" : "outlined"}
       sx={question.isFlagged ? { border: '2px solid transparent' } : undefined}
@@ -95,31 +97,34 @@ function QuestionView({ question: questionFromProps, inPreview, withTimer }: Que
       </Box>
       <Stack spacing={1} mb={3}>
         {
-          question?.options?.map((option, index) => {
-            let style: "base" | "correct" | "incorrect" | "subdued";
-            if (!wasAttempted) {
-              style = "base";
-            } else {
-              if (question?.correctAnswerLetter === option.letter) {
-                style = "correct"
-              } else if (question?.submittedAnswerLetter === option.letter) {
-                style = "incorrect";
+          question?.options
+            ?.slice()
+            ?.sort((a, b) => a.letter.localeCompare(b.letter))
+            ?.map((option, index) => {
+              let style: "base" | "correct" | "incorrect" | "subdued";
+              if (!wasAttempted) {
+                style = "base";
               } else {
-                style = "subdued";
+                if (question?.correctAnswerLetter === option.letter) {
+                  style = "correct"
+                } else if (question?.submittedAnswerLetter === option.letter) {
+                  style = "incorrect";
+                } else {
+                  style = "subdued";
+                }
               }
-            }
 
-            return (
-              <AnswerOption
-                key={index}
-                selected={!wasAttempted && selectedOption === option}
-                style={style}
-                option={option}
-                setSelectedOption={setSelectedOption}
-                disabled={wasAttempted || inPreview}
-              />
-            )
-          })
+              return (
+                <AnswerOption
+                  key={index}
+                  selected={!wasAttempted && selectedOption === option}
+                  style={style}
+                  option={option}
+                  setSelectedOption={setSelectedOption}
+                  disabled={wasAttempted || inPreview}
+                />
+              )
+            })
         }
       </Stack>
 

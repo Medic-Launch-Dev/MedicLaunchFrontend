@@ -161,7 +161,11 @@ function EditQuestions() {
 											<TableRow key={index}>
 												<TableCell component="th" scope="row">{p.questionCode}</TableCell>
 												<TableCell>
-													{getStatusChip(p.isSubmitted ? "Submitted" : "Draft")}
+													{
+														p.isSubmitted ?
+														<Chip label="Submitted" sx={{ backgroundColor: "#A4E29F" }} /> :
+														<Chip label="Pending" />
+													}
 												</TableCell>
 												<TableCell>{p.specialityName}</TableCell>
 												<TableCell>{index + 1}</TableCell>
