@@ -1,4 +1,4 @@
-name: Deploy Medic Launch React App CI
+name: Medic Launch Dev Deployment
 
 on:
     workflow_dispatch: {}
@@ -20,7 +20,7 @@ jobs:
     - name: Install dependencies and build
       run: |
         npm ci
-        CI=false npm run build
+        CI=false npm run build:dev
         
     - uses: azure/login@v1
       with:
