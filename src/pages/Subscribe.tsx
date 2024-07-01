@@ -122,16 +122,19 @@ function Subscribe() {
           >
             Back
           </Button>
-          <LoadingButton
-            variant="contained"
-            sx={{ width: "max-content", flexShrink: 0, py: 1 }}
-            size="large"
-            endIcon={<ChevronRight />}
-            onClick={handleNext}
-            loading={loading}
-          >
-            {activeStep === steps.length - 1 ? "Pay now" : "Next"}
-          </LoadingButton>
+          {
+            activeStep < steps.length - 1 ? 
+              <LoadingButton
+              variant="contained"
+              sx={{ width: "max-content", flexShrink: 0, py: 1 }}
+              size="large"
+              endIcon={<ChevronRight />}
+              onClick={handleNext}
+              loading={loading}
+            >
+              Next
+            </LoadingButton> : <></>
+          }
         </Stack>
       </Stack>
     </Page>

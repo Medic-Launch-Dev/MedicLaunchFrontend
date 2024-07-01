@@ -1,11 +1,19 @@
-import React, {useState} from 'react';
-import {useStripe, useElements, PaymentElement} from '@stripe/react-stripe-js';
+import React, { useState } from "react";
+import {
+  useStripe,
+  useElements,
+  PaymentElement,
+} from "@stripe/react-stripe-js";
+import { LoadingButton } from "@mui/lab";
+import { Button } from "@mui/material";
 
 const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
 
-  const [errorMessage, setErrorMessage] = useState<string | undefined | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | undefined | null>(
+    null
+  );
 
   const handleSubmit = async (event) => {
     // We don't want to let default form submission happen here,
@@ -18,14 +26,13 @@ const CheckoutForm = () => {
       return;
     }
 
-    const {error} = await stripe.confirmPayment({
+    const { error } = await stripe.confirmPayment({
       //`Elements` instance that was used to create the Payment Element
       elements,
       confirmParams: {
-        return_url: `${window.location.origin}/payment-complete`
+        return_url: `${window.location.origin}/payment-complete`,
       },
     });
-
 
     if (error) {
       // This point will only be reached if there is an immediate error when
@@ -42,11 +49,21 @@ const CheckoutForm = () => {
   return (
     <form onSubmit={handleSubmit}>
       <PaymentElement />
-      <button disabled={!stripe}>Submit</button>
+      {/* <button disabled={!stripe}>Submit</button> */}
+      <Button
+        variant="contained"
+        sx={{ width: "max-content", flexShrink: 0, py: 1, my: 2}}
+        size="large"
+        // onClick={handleNext}
+        disabled={!stripe}
+        type="submit"
+      >
+        Pay now
+      </Button>
       {/* Show error message to your customers */}
       {errorMessage && <div>{errorMessage}</div>}
     </form>
-  )
+  );
 };
 
 export default CheckoutForm;
