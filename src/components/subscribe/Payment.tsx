@@ -4,6 +4,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { useEffect, useState } from "react";
 import { useServiceProvider } from "../../services/ServiceProvider";
 import { LoadingWrapper } from "../util/LoadingWrapper";
+import CheckoutForm from "./CheckoutForm";
 
 export const Payment = () => {
   // const stripePromise = loadStripe("pk_test_51HZ948JUITqc1TPfw9cgfD1S0DZdrHoIgGTcDYuGtkRjBDg0giuikEK6tlUQV7JdC4IJQRF6bct8K8tT525tASxV00Rxj75OBt");
@@ -13,7 +14,6 @@ export const Payment = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const { paymentStore } = useServiceProvider();
-
 
   useEffect(() => {
     // TODO: change plan id based on user selection
@@ -47,7 +47,7 @@ export const Payment = () => {
             </Stack>
           </Stack>
           <Elements stripe={stripePromise} options={{ clientSecret }}>
-            <PaymentElement />
+            <CheckoutForm />
           </Elements>
         </Box>
       </Box>

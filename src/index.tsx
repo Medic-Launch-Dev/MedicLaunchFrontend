@@ -132,6 +132,10 @@ const App = () => {
           path: "/select-mock",
           element: <SelectMock />
         },
+        {
+          path: "/payment-complete",
+          element: <div>Payment Complete</div>
+        }
       ],
     },
     {
