@@ -102,8 +102,6 @@ function EditQuestions() {
 		navigate("/edit-question")
 	}
 
-	console.log(selectedSpeciality)
-
 	return (
 		<Page>
 			<Stack direction="row" alignItems="center" justifyContent="space-between" mb={3}>

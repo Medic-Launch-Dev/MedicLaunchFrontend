@@ -4,7 +4,7 @@ import { FamiliarityCounts } from "../models/FamiliarityCounts";
 import { Flashcard } from "../models/Flashcard";
 import { PracticeFilter } from "../models/PracticeFilter";
 import { Question } from "../models/Question";
-import Speciality from "../models/Speciality";
+import Speciality, { SpecialityAnalytics } from "../models/Speciality";
 import { MedicLauncUser } from "../models/User";
 import { ErrorStore } from "../stores/errorStore";
 import AxiosProvider from "./AxiosProvider";
@@ -31,7 +31,6 @@ export default class MedicLaunchApiClient {
   }
 
   async filterQuestions(practiceFilter: PracticeFilter): Promise<Question[]> {
-    console.log("Practice Filter: ", practiceFilter);
     const response = await this.axios.post(`${this.apiUrl}/practice/filter`, {
       ...practiceFilter,
       familiarity: practiceFilter.familiarity.toString(),
@@ -44,8 +43,6 @@ export default class MedicLaunchApiClient {
       ...question
     });
 
-    console.log("Response: ", response.data);
-
     return response.status === 200;
   }
 
@@ -53,8 +50,6 @@ export default class MedicLaunchApiClient {
     const response = await this.axios.post<Question>(`${this.apiUrl}/questions/update/${question.id}`, {
       ...question
     });
-
-    console.log("Response: ", response.data);
 
     return response.status === 200;
   }
@@ -139,6 +134,10 @@ export default class MedicLaunchApiClient {
 
   async retrieveFlashcardById(id: string): Promise<Flashcard> {
     return await this.getData(`flashcard/${id}`);
+  }
+
+  async retrieveSpecialityAnalytics(): Promise<SpecialityAnalytics[]> {
+    return await this.getData('practice/specialityanalytics');
   }
 
   async handleRequest(promise: Promise<any>) {

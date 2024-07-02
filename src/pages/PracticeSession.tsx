@@ -21,6 +21,8 @@ function PracticeSession() {
     return Math.ceil((totalAnswered / questionsStore.questions.length) * 100);
   }
 
+  console.log(questionsStore.questions);
+
   useEffect(() => {
     if (practiceStore.examTimerState === TimerState.STOPPED) {
       practiceStore.startTimer();

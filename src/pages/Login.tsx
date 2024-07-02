@@ -1,7 +1,9 @@
 import { Box, Button, Grid, Stack, TextField, Typography } from "@mui/material";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useSnackbar } from "../hooks/useSnackbar";
+import { useAuth } from "../services/AuthProvider";
 import { primaryGradient, primaryGradientText } from "../theme";
-// import { useAuth } from "./services/AuthProvider";
 
 export default function Login() {
   const [email, setEmail] = useState("");

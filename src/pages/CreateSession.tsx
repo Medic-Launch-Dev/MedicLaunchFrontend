@@ -10,7 +10,7 @@ import {
   Stepper
 } from "@mui/material";
 import { observer } from "mobx-react-lite";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FamiliaritySelection } from "../components/createSession/FamiliaritySelection";
 import { OrderQuantitySelection } from "../components/createSession/OrderQuantitySelection";
@@ -22,6 +22,7 @@ import { useServiceProvider } from "../services/ServiceProvider";
 
 function CreateSession() {
   const params = new URLSearchParams(window.location.search);
+  const specialityId = params.get("specialityId");
 
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -29,6 +30,11 @@ function CreateSession() {
   const { practiceStore, questionsStore } = useServiceProvider();
   const { showSnackbar, snackbarProps } = useSnackbar();
 
+  useEffect(() => {
+    if (specialityId) {
+      practiceStore.setSelectedSpecialities([specialityId]);
+    }
+  }, []);
 
   const steps = [
     {
@@ -77,7 +83,6 @@ function CreateSession() {
   }
 
   function handleStartPractice() {
-    // add quanitity and order logic
     questionsStore.applyOrderAndQuantity(practiceStore.practiceFilter);
     navigate("/practice-session");
   }
@@ -116,11 +121,7 @@ function CreateSession() {
           sx={{
             flexGrow: 1,
             maxHeight: "100%",
-<<<<<<< Updated upstream
             minHeight: 400,
-=======
-            minHeight: 450,
->>>>>>> Stashed changes
             overflowY: "hidden",
           }}
         >

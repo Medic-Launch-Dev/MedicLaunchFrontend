@@ -1,5 +1,4 @@
-import { Percent } from '@mui/icons-material';
-import { Button, Divider, Grid, Card as MuiCard, Stack, ToggleButton, Typography } from '@mui/material';
+import { Button, Grid, Card as MuiCard, Stack, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import CoursesIcon from '../../src/assets/icons/courses.svg';
 import MockExamIcon from '../../src/assets/icons/exam.svg';
@@ -8,8 +7,8 @@ import NotesIcon from '../../src/assets/icons/notes.svg';
 import PodcastsIcon from '../../src/assets/icons/podcasts.svg';
 import QuestionBankIcon from '../../src/assets/icons/question-bank.svg';
 import WelcomeImg from '../../src/assets/images/Welcome.png';
-import ProgressBar from '../components/charts/ProgressBar';
 import Page from '../components/nav/Page';
+import SpecialityAnalyserChart from '../components/specialityAnalyser/SpecialityAnalyserChart';
 import Card from '../components/util/Card';
 import { primaryGradient, unstyledLink } from '../theme';
 
@@ -130,93 +129,7 @@ function Root() {
             </Grid>
 
           </Grid>
-          <MuiCard sx={{ p: 3, mt: 2 }}>
-            <Stack direction="row" justifyContent="space-between" alignItems="center">
-              <Typography color="primary" variant="h3">Speciality Analyser</Typography>
-              <ToggleButton value="sort" size="small"><Percent /></ToggleButton>
-            </Stack>
-            <Divider sx={{ my: 2 }} />
-            <Grid container alignItems="center" rowSpacing={2}>
-              <Grid item xs={4}>
-                <Typography variant="h6" >Acute Medicine</Typography>
-              </Grid>
-              <Grid item xs={8}>
-                <ProgressBar correctQuestions={5} incorrectQuestions={10} totalQuestions={20} />
-              </Grid>
-              <Grid item xs={4}>
-                <Typography variant="h6" >Acute Medicine</Typography>
-              </Grid>
-              <Grid item xs={8}>
-                <ProgressBar correctQuestions={5} incorrectQuestions={10} totalQuestions={20} />
-              </Grid>
-              <Grid item xs={4}>
-                <Typography variant="h6" >Acute Medicine</Typography>
-              </Grid>
-              <Grid item xs={8}>
-                <ProgressBar correctQuestions={5} incorrectQuestions={10} totalQuestions={20} />
-              </Grid>
-              <Grid item xs={4}>
-                <Typography variant="h6" >Acute Medicine</Typography>
-              </Grid>
-              <Grid item xs={8}>
-                <ProgressBar correctQuestions={5} incorrectQuestions={10} totalQuestions={20} />
-              </Grid>
-              <Grid item xs={4}>
-                <Typography variant="h6" >Acute Medicine</Typography>
-              </Grid>
-              <Grid item xs={8}>
-                <ProgressBar correctQuestions={5} incorrectQuestions={10} totalQuestions={20} />
-              </Grid>
-              <Grid item xs={4}>
-                <Typography variant="h6" >Acute Medicine</Typography>
-              </Grid>
-              <Grid item xs={8}>
-                <ProgressBar correctQuestions={5} incorrectQuestions={10} totalQuestions={20} />
-              </Grid>
-              <Grid item xs={4}>
-                <Typography variant="h6" >Acute Medicine</Typography>
-              </Grid>
-              <Grid item xs={8}>
-                <ProgressBar correctQuestions={5} incorrectQuestions={10} totalQuestions={20} />
-              </Grid>
-              <Grid item xs={4}>
-                <Typography variant="h6" >Acute Medicine</Typography>
-              </Grid>
-              <Grid item xs={8}>
-                <ProgressBar correctQuestions={5} incorrectQuestions={10} totalQuestions={20} />
-              </Grid>
-              <Grid item xs={4}>
-                <Typography variant="h6" >Acute Medicine</Typography>
-              </Grid>
-              <Grid item xs={8}>
-                <ProgressBar correctQuestions={5} incorrectQuestions={10} totalQuestions={20} />
-              </Grid>
-              <Grid item xs={4}>
-                <Typography variant="h6" >Acute Medicine</Typography>
-              </Grid>
-              <Grid item xs={8}>
-                <ProgressBar correctQuestions={5} incorrectQuestions={10} totalQuestions={20} />
-              </Grid>
-              <Grid item xs={4}>
-                <Typography variant="h6" >Acute Medicine</Typography>
-              </Grid>
-              <Grid item xs={8}>
-                <ProgressBar correctQuestions={5} incorrectQuestions={10} totalQuestions={20} />
-              </Grid>
-              <Grid item xs={4}>
-                <Typography variant="h6" >Acute Medicine</Typography>
-              </Grid>
-              <Grid item xs={8}>
-                <ProgressBar correctQuestions={5} incorrectQuestions={10} totalQuestions={20} />
-              </Grid>
-              <Grid item xs={4}>
-                <Typography variant="h6" >Acute Medicine</Typography>
-              </Grid>
-              <Grid item xs={8}>
-                <ProgressBar correctQuestions={5} incorrectQuestions={10} totalQuestions={20} />
-              </Grid>
-            </Grid>
-          </MuiCard>
+          <SpecialityAnalyserChart />
         </Grid>
       </Grid>
     </Page>

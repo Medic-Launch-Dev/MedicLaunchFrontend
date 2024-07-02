@@ -59,8 +59,6 @@ export default function QuestionEditView({ question, setQuestion, setCanSubmit }
   const [answer, setAnswer] = useState(question?.correctAnswerLetter || '');
   const [videoUrl, setVideoUrl] = useState(question?.videoUrl || '');
 
-  console.log(question?.videoUrl);
-
   useEffect(() => {
     questionsStore.getSpecialities().then((data) => {
       setSpecialities(data);

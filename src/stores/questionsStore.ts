@@ -94,8 +94,6 @@ export class QuestionsStore {
       isCorrect: answerLetter === this.currentQuestion.correctAnswerLetter,
     };
 
-    console.log("Question Attempt: ", questionAttempt);
-
     await this.apiClient.postData("practice/attemptquestion", questionAttempt);
   }
 
@@ -134,13 +132,14 @@ export class QuestionsStore {
   applyOrderAndQuantity(practiceFilter: PracticeFilter) {
     const questionsOrder = practiceFilter.selectionOrder;
     const quantity = practiceFilter.questionsCount;
-    console.log("Questions Order: ", questionsOrder);
-    console.log("Questions Quantity: ", quantity);
-
-
+    
     if (this.questions.length === 0) {
       return;
     }
+    
+    this._currentQuestionIdx = 0;
+    this._correctAnswers = 0;
+    this._incorrectAnswers = 0;
 
     let practiceQuestions: QuestionModelUI[] = [];
 
@@ -163,7 +162,6 @@ export class QuestionsStore {
     } else {
       this.questions = practiceQuestions;
     }
-    console.log("Practice Questions: ", this.questions);
   }
 
   setPreviewQuestion(question: QuestionModelUI) {
@@ -177,5 +175,10 @@ export class QuestionsStore {
   async setFamiliarityCounts(specialityIds: string[], allSpecialitesSelected: boolean) {
     const counts = await this.apiClient.getFamiliarityCounts(specialityIds, allSpecialitesSelected);
     runInAction(() => this.familiarityCounts = counts);
+  }
+
+  async getSpecialityAnalytics() {
+    const specialityAnalytics = await this.apiClient.retrieveSpecialityAnalytics();
+    return specialityAnalytics.sort((a, b) => a.specialityName.localeCompare(b.specialityName));
   }
 }

@@ -61,7 +61,7 @@ function ReviewSession() {
           />
         </Grid>
         <Grid item lg={3}>
-          <Link style={unstyledLink} to="/">
+          <Link style={unstyledLink} to="/speciality-analyser">
             <ReviewCard
               primary
               title="View Specialty Analytics"
