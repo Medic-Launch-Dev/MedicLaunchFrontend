@@ -5,6 +5,7 @@ import { useFormik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import AgreementCheckbox from "../components/register/AgreementCheckbox";
+<<<<<<< Updated upstream
 import { useSnackbar } from "../hooks/useSnackbar";
 import { MedicLauncUser as MedicLaunchUser } from "../models/User";
 import userStore from "../stores/userStore";
@@ -22,6 +23,12 @@ interface FormValues {
   howDidYouHearAboutUs: string;
   confirmPassword: string;
 }
+=======
+import UniversitySelect from "../components/register/UniversitySelect";
+import { MedicLauncUser } from "../models/User";
+import userStore from "../stores/userStore";
+import { primaryGradient, primaryGradientText, unstyledLink } from "../theme";
+>>>>>>> Stashed changes
 
 const validationSchema = yup.object({
   email: yup
@@ -87,7 +94,30 @@ export default function Register() {
     return requiredFields.some((value) => value === "");
   };
 
+<<<<<<< Updated upstream
   console.log(requiredFieldsAreEmpty());
+=======
+  return (
+    <Grid container sx={{ height: "100vh" }}>
+      <Grid item lg={7} xs={12} sx={{ height: "100%", maxWidth: 600 }}>
+        <Stack
+          sx={{ m: "auto", minHeight: "100%", py: 3 }}
+          alignItems="center"
+          justifyContent="center"
+          spacing={2}
+        >
+          <Box maxWidth="md" width="100%" px={12}>
+            <form onSubmit={formik.handleSubmit}>
+              <Typography
+                variant="h1"
+                sx={primaryGradientText}
+                fontSize={36}
+                fontWeight={500}
+                textAlign="center"
+              >
+                Register
+              </Typography>
+>>>>>>> Stashed changes
 
   return (
     <>
@@ -263,6 +293,15 @@ export default function Register() {
           sx={{ height: "100%", background: primaryGradient, display: { xs: 'none', lg: 'block' } }}
         ></Grid>
       </Grid>
+<<<<<<< Updated upstream
     </>
+=======
+      <Grid
+        item
+        lg={5}
+        sx={{ height: "100%", background: primaryGradient, display: { xs: 'none', lg: 'block' } }}
+      ></Grid>
+    </Grid>
+>>>>>>> Stashed changes
   );
 }

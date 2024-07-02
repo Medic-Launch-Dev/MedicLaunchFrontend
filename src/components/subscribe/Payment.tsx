@@ -1,19 +1,17 @@
 import { Box, Stack, Typography } from "@mui/material";
-import { Elements, PaymentElement } from "@stripe/react-stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useEffect, useState } from "react";
 import { useServiceProvider } from "../../services/ServiceProvider";
 import { LoadingWrapper } from "../util/LoadingWrapper";
+import CheckoutForm from "./CheckoutForm";
 
 export const Payment = () => {
-  // const stripePromise = loadStripe("pk_test_51HZ948JUITqc1TPfw9cgfD1S0DZdrHoIgGTcDYuGtkRjBDg0giuikEK6tlUQV7JdC4IJQRF6bct8K8tT525tASxV00Rxj75OBt");
-  // const clientSecret = "pi_3OkynBJUITqc1TPf0i4uxpSV_secret_GbZCiNKpaR7hR0N2VO0MULLHf";
   const [stripePromise, setStripePromise] = useState<any>(null);
   const [clientSecret, setClientSecret] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
 
   const { paymentStore } = useServiceProvider();
-
 
   useEffect(() => {
     // TODO: change plan id based on user selection
@@ -47,7 +45,7 @@ export const Payment = () => {
             </Stack>
           </Stack>
           <Elements stripe={stripePromise} options={{ clientSecret }}>
-            <PaymentElement />
+            <CheckoutForm />
           </Elements>
         </Box>
       </Box>

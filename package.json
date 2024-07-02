@@ -44,6 +44,7 @@
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.18",
     "axios": "^1.6.5",
+    "env-cmd": "^10.1.0",
     "formik": "^2.4.5",
     "html-react-parser": "^5.1.1",
     "mobx": "^6.12.0",
@@ -59,9 +60,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build:dev": "env-cmd -f .env.development react-scripts build",
+    "build:prod": "env-cmd -f .env.production react-scripts build"
   },
   "eslintConfig": {
     "extends": [

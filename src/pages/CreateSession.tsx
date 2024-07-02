@@ -116,7 +116,11 @@ function CreateSession() {
           sx={{
             flexGrow: 1,
             maxHeight: "100%",
+<<<<<<< Updated upstream
             minHeight: 400,
+=======
+            minHeight: 450,
+>>>>>>> Stashed changes
             overflowY: "hidden",
           }}
         >
