@@ -55,12 +55,12 @@ export default function SpecialityAnalyserChart() {
         loading ?
           <Stack alignItems="center" my={5}><CircularProgress /></Stack>
           :
-          <Grid container alignItems="center" rowSpacing={1}>
+          <Grid container alignItems="center" rowSpacing={1.5}>
             {
               getSortedAnalytics().map(({ specialityName, totalQuestions, correct, incorrect }) => (
                 <React.Fragment key={specialityName}>
                   <Grid item xs={4}>
-                    <Typography variant="h6">{specialityName}</Typography>
+                    <Typography variant="h6" color="#333333" fontWeight={500}>{specialityName}</Typography>
                   </Grid>
                   <Grid item xs={8}>
                     <ProgressBar correctQuestions={correct} incorrectQuestions={incorrect} totalQuestions={totalQuestions} />

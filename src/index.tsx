@@ -27,6 +27,7 @@ import EditQuestion from "./pages/EditQuestion";
 import FlashCards from "./pages/FlashCards";
 import MyProfile from "./pages/MyProfile";
 import Notifications from "./pages/Notifications";
+import PaymentComplete from "./pages/PaymentComplete";
 import QuestionPreview from "./pages/QuestionPreview";
 import RevisionNotes from "./pages/RevisionNotes";
 import SelectFlashCards from "./pages/SelectFlashCards";
@@ -134,7 +135,7 @@ const App = () => {
         },
         {
           path: "/payment-complete",
-          element: <div>Payment Complete</div>
+          element: <PaymentComplete />
         }
       ],
     },

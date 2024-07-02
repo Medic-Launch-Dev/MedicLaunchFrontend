@@ -1,23 +1,21 @@
-import React, { useState } from "react";
-import {
-  useStripe,
-  useElements,
-  PaymentElement,
-} from "@stripe/react-stripe-js";
 import { LoadingButton } from "@mui/lab";
-import { Button } from "@mui/material";
+import { Alert } from "@mui/material";
+import {
+  PaymentElement,
+  useElements,
+  useStripe,
+} from "@stripe/react-stripe-js";
+import { useState } from "react";
 
 const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
 
-  const [errorMessage, setErrorMessage] = useState<string | undefined | null>(
-    null
-  );
+  const [errorMessage, setErrorMessage] = useState<string | undefined | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event) => {
-    // We don't want to let default form submission happen here,
-    // which would refresh the page.
+    setLoading(true);
     event.preventDefault();
 
     if (!stripe || !elements) {
@@ -44,24 +42,24 @@ const CheckoutForm = () => {
       // methods like iDEAL, your customer will be redirected to an intermediate
       // site first to authorize the payment, then redirected to the `return_url`.
     }
+
+    setLoading(false);
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <PaymentElement />
-      {/* <button disabled={!stripe}>Submit</button> */}
-      <Button
+      <LoadingButton
         variant="contained"
         sx={{ width: "max-content", flexShrink: 0, py: 1, my: 2}}
         size="large"
-        // onClick={handleNext}
-        disabled={!stripe}
+        disabled={!stripe || !elements}
+        loading={loading}
         type="submit"
       >
         Pay now
-      </Button>
-      {/* Show error message to your customers */}
-      {errorMessage && <div>{errorMessage}</div>}
+      </LoadingButton>
+      {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
     </form>
   );
 };
