@@ -4,6 +4,10 @@ import {
   Button,
   Chip,
   CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   Snackbar,
   Stack,
   Typography
@@ -26,6 +30,8 @@ const EditQuestion = () => {
   const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [question, setQuestion] = useState<Question>(questionsStore.previewQuestion);
   const [canSubmit, setCanSubmit] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [loadingDelete, setLoadingDelete] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (submitDraft?: boolean) => {
@@ -38,7 +44,7 @@ const EditQuestion = () => {
 
       await questionsStore.updateQuestion(updatedQuestion);
 
-      if(submitDraft) navigate(`/edit-questions?speciality=${question.specialityId}`);
+      if (submitDraft) navigate(`/edit-questions?speciality=${question.specialityId}`);
 
       showSnackbar(submitDraft ? "Question submitted" : "Question updated", "success");
     } catch (e) {
@@ -50,13 +56,29 @@ const EditQuestion = () => {
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      if (!question || !question.id) return;
+
+      setLoadingDelete(true);
+      const res = await questionsStore.deleteQuestion(question.id, question.specialityId);
+
+      if (res) navigate(`/edit-questions?speciality=${question.specialityId}`);
+    } catch (e) {
+      console.error(e);
+      showSnackbar("Failed to delete", "error");
+    } finally {
+      setLoadingDelete(false);
+    }
+  }
+
   const handleClickPreview = () => {
     questionsStore.setPreviewQuestion(question);
     navigate("/question-preview");
   };
 
   useEffect(() => {
-    if (!questionsStore.previewQuestion) 
+    if (!questionsStore.previewQuestion)
       navigate("/edit-questions");
   }, [questionsStore.previewQuestion]);
 
@@ -80,6 +102,7 @@ const EditQuestion = () => {
         </Stack>
         <Stack direction="row" spacing={1}>
           <Button variant="outlined" onClick={handleClickPreview}>Preview</Button>
+          <Button variant="outlined" color="error" onClick={() => setOpen(true)}>Delete</Button>
           <LoadingButton variant="contained" onClick={() => handleSubmit()} loading={loadingSave} disabled={!canSubmit}>
             Save
           </LoadingButton>
@@ -87,17 +110,31 @@ const EditQuestion = () => {
             !question?.isSubmitted &&
             <LoadingButton variant="contained" onClick={() => handleSubmit(true)} loading={loadingSubmit} disabled={!canSubmit}>
               Submit question
-            </LoadingButton>   
+            </LoadingButton>
           }
         </Stack>
       </Stack>
       {
-        question ? 
-        <QuestionEditView question={question} setQuestion={setQuestion} setCanSubmit={setCanSubmit} /> :
-        <Stack alignItems="center" my={5}>
-          <CircularProgress />
-        </Stack>
+        question ?
+          <QuestionEditView question={question} setQuestion={setQuestion} setCanSubmit={setCanSubmit} /> :
+          <Stack alignItems="center" my={5}>
+            <CircularProgress />
+          </Stack>
       }
+
+      <Dialog open={open} onClose={() => setOpen(false)}>
+        <DialogTitle color="error">Delete Question</DialogTitle>
+        <DialogContent>
+          <Typography>Are you sure you want to delete this question?</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button variant="text" onClick={() => setOpen(false)}>Cancel</Button>
+          <LoadingButton variant="contained" color="error" onClick={handleDelete} loading={loadingDelete}>
+            Delete
+          </LoadingButton>
+        </DialogActions>
+      </Dialog>
+
     </Page>
   );
 };

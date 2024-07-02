@@ -50,4 +50,8 @@ export class FlashCardStore {
       console.error(error);
     }
   }
+
+  async deleteFlashCard(flashcardId: string) {
+    return await this.apiClient.removeFlashCard(flashcardId);
+  }
 }

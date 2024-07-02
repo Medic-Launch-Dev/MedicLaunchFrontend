@@ -54,6 +54,10 @@ export default class MedicLaunchApiClient {
     return response.status === 200;
   }
 
+  async removeQuestion(questionId: string, specialityId: string) {
+    return await this.deleteData(`questions/delete/${specialityId}`, questionId);
+  }
+
   async registerUser(userData: MedicLauncUser): Promise<boolean> {
     const response = await this.axios.post(`${this.apiUrl}/account/register`, {
       ...userData
@@ -126,6 +130,10 @@ export default class MedicLaunchApiClient {
     });
 
     return response.status === 200;
+  }
+
+  async removeFlashCard(flashcardId: string) {
+    return await this.deleteData('flashcard/delete', flashcardId);
   }
 
   async retrieveAllFlashcards(): Promise<Flashcard[]> {

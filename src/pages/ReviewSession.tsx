@@ -70,11 +70,13 @@ function ReviewSession() {
           </Link>
         </Grid>
         <Grid item lg={3}>
-          <ReviewCard
-            primary
-            title="Continue Questions"
-            icon={<img src={RestartIcon} width={48} />}
-          />
+          <Link style={unstyledLink} to="/create-session">
+            <ReviewCard
+              primary
+              title="Continue Questions"
+              icon={<img src={RestartIcon} width={48} />}
+            />
+          </Link>
         </Grid>
 
         <Grid item lg={12}>

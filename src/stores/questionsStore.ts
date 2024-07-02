@@ -119,6 +119,10 @@ export class QuestionsStore {
     await this.apiClient.overwriteQuestion(question);
   }
 
+  async deleteQuestion(questionId: string, specialityId: string) {
+    return await this.apiClient.removeQuestion(questionId, specialityId);
+  }
+
   async getSpecialities(): Promise<Speciality[]> {
     const specialities = await this.apiClient.getSpecialitiesList();
 
@@ -136,7 +140,7 @@ export class QuestionsStore {
     if (this.questions.length === 0) {
       return;
     }
-    
+
     this._currentQuestionIdx = 0;
     this._correctAnswers = 0;
     this._incorrectAnswers = 0;

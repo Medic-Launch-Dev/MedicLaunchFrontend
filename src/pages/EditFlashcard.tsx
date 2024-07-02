@@ -1,7 +1,7 @@
 import { LoadingButton } from "@mui/lab";
-import { CircularProgress, Snackbar, Stack, Typography } from "@mui/material";
+import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, Snackbar, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import FlashcardEditor from "../components/flashCards/FlashcardEditor";
 import Page from "../components/nav/Page";
 import { useSnackbar } from "../hooks/useSnackbar";
@@ -12,11 +12,13 @@ import { primaryGradientText } from "../theme";
 export default function EditFlascard() {
   const { id = "" } = useParams();
   const { showSnackbar, snackbarProps } = useSnackbar();
-
-  const { questionsStore, flashCardStore } = useServiceProvider();
+  const navigate = useNavigate();
+  const { flashCardStore } = useServiceProvider();
 
   const [loading, setLoading] = useState(true);
   const [loadingSave, setLoadingSave] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [loadingDelete, setLoadingDelete] = useState(false);
   const [flashcard, setFlashcard] = useState<Flashcard>({ name: '', imageUrl: '', specialityId: '' });
 
   useEffect(() => {
@@ -50,6 +52,22 @@ export default function EditFlascard() {
     }
   }
 
+  const handleDelete = async () => {
+    try {
+      if (!flashcard || !flashcard.id) return;
+
+      setLoadingDelete(true);
+      const res = await flashCardStore.deleteFlashCard(flashcard.id);
+
+      if (res) navigate(`/edit-flash-cards`);
+    } catch (e) {
+      console.error(e);
+      showSnackbar("Failed to delete", "error");
+    } finally {
+      setLoadingDelete(false);
+    }
+  }
+
   return (
     <Page maxWidth="md">
       <Snackbar {...snackbarProps} />
@@ -62,12 +80,17 @@ export default function EditFlascard() {
         <Typography variant="h2" style={primaryGradientText}>
           Edit flash card
         </Typography>
-        <LoadingButton
-          variant="contained"
-          disabled={!flashcard.specialityId || !flashcard.name || !flashcard.imageUrl}
-          onClick={handleSubmit}>
-          Save
-        </LoadingButton>
+        <Stack direction="row" alignItems="center" spacing={1}>
+          <Button variant="outlined" color="error" onClick={() => setOpen(true)}>Delete</Button>
+          <LoadingButton
+            variant="contained"
+            disabled={!flashcard.specialityId || !flashcard.name || !flashcard.imageUrl}
+            onClick={handleSubmit}
+            loading={loadingSave}
+          >
+            Save
+          </LoadingButton>
+        </Stack>
       </Stack>
       {
         loading ?
@@ -77,6 +100,19 @@ export default function EditFlascard() {
           :
           <FlashcardEditor flashcard={flashcard} setFlashcard={setFlashcard} />
       }
+
+      <Dialog open={open} onClose={() => setOpen(false)}>
+        <DialogTitle color="error">Delete Flash card</DialogTitle>
+        <DialogContent>
+          <Typography>Are you sure you want to delete this flash card?</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button variant="text" onClick={() => setOpen(false)}>Cancel</Button>
+          <LoadingButton variant="contained" color="error" onClick={handleDelete} loading={loadingDelete}>
+            Delete
+          </LoadingButton>
+        </DialogActions>
+      </Dialog>
     </Page>
   )
 }

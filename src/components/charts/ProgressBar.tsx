@@ -10,7 +10,7 @@ const ProgressBar = ({ totalQuestions, correctQuestions, incorrectQuestions }) =
           backgroundColor: '#A4E29F',
           height: '100%',
           float: 'left',
-          borderRadius: "12px 0 0 12px"
+          borderRadius: incorrectPercentage > 0 ? "12px 0 0 12px" : "12px"
         }}
       />
       <div
