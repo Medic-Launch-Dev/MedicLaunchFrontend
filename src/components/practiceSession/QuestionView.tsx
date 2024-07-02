@@ -46,7 +46,7 @@ function QuestionView({ question: questionFromProps, inPreview, withTimer }: Que
 
   async function handleFlagQuestion() {
     setLoadingFlag(true);
-    if (question.isFlagged) await questionsStore.unflagQuestion();
+    if (question?.isFlagged) await questionsStore.unflagQuestion();
     else await questionsStore.flagQuestion();
     setLoadingFlag(false);
   }
@@ -57,8 +57,8 @@ function QuestionView({ question: questionFromProps, inPreview, withTimer }: Que
       onClick={handleFlagQuestion}
       disabled={inPreview}
       loading={loadingFlag}
-      variant={question.isFlagged ? "contained" : "outlined"}
-      sx={question.isFlagged ? { border: '2px solid transparent' } : undefined}
+      variant={question?.isFlagged ? "contained" : "outlined"}
+      sx={question?.isFlagged ? { border: '2px solid transparent' } : undefined}
     >
       Flag
     </LoadingButton>

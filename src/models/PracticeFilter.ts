@@ -9,8 +9,8 @@ export enum Familiarity {
 }
 
 export enum QuestionsOrder {
-    Randomized = "Randomized",
-    OrderBySpeciality = "Order By Speciality"
+    OrderBySpeciality = "Order By Speciality",
+    Randomized = "Randomized"
 }
 
 export class PracticeFilter {

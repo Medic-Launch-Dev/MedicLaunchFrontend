@@ -24,6 +24,8 @@ const CreateQuestion = () => {
   const [canSubmit, setCanSubmit] = useState(false);
   const navigate = useNavigate();
 
+  console.log(question);
+
   const handleCreate = async (isSubmitted: boolean) => {
     try {
       if (!question) return;

@@ -19,6 +19,7 @@ export class Question {
     explanation: string;
     clinicalTips: string;
     learningPoints: string;
+    videoUrl?: string;
     isSubmitted?: boolean;
     isFlagged?: boolean;
     specialityName?: string;

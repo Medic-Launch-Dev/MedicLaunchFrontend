@@ -1,6 +1,8 @@
 import {
+  Box,
   Grid,
   Stack,
+  TextField,
   Typography
 } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -10,7 +12,7 @@ import TextSelect from "../../components/util/TextSelect";
 import { Option, Question, QuestionType } from "../../models/Question";
 import Speciality from "../../models/Speciality";
 import { useServiceProvider } from "../../services/ServiceProvider";
-import { primaryGradientText } from "../../theme";
+import { primaryGradient, primaryGradientText } from "../../theme";
 import { getInnerTextFromHTML } from "../../utils/RichTextUtils";
 
 const emptyOptions = [
@@ -55,6 +57,9 @@ export default function QuestionEditView({ question, setQuestion, setCanSubmit }
   const [clinicalTips, setClinicalTips] = useState(question?.clinicalTips || '');
   const [options, setOptions] = useState<Option[]>(question?.options || emptyOptions);
   const [answer, setAnswer] = useState(question?.correctAnswerLetter || '');
+  const [videoUrl, setVideoUrl] = useState(question?.videoUrl || '');
+
+  console.log(question?.videoUrl);
 
   useEffect(() => {
     questionsStore.getSpecialities().then((data) => {
@@ -73,8 +78,9 @@ export default function QuestionEditView({ question, setQuestion, setCanSubmit }
       options,
       correctAnswerLetter: answer,
       questionType: selectedQuestionBank,
+      videoUrl
     });
-  }, [selectedSpeciality, selectedQuestionBank, questionText, options, answer, explanation, learningPoints, clinicalTips]);
+  }, [selectedSpeciality, selectedQuestionBank, questionText, options, answer, explanation, learningPoints, clinicalTips, videoUrl]);
 
   useEffect(() => {
     if (
@@ -162,6 +168,30 @@ export default function QuestionEditView({ question, setQuestion, setCanSubmit }
               setValue={setClinicalTips}
             />
           </Stack>
+        </Stack>
+      </Grid>
+      <Grid item xs={4}>
+        <Stack direction="row" spacing={1}>
+          <Box
+            sx={{
+              background: primaryGradient,
+              color: "#fff",
+              px: 2,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              fontWeight: 500,
+              borderRadius: 1,
+              flexShrink: 0
+            }}
+          >
+            Video URL
+          </Box>
+          <TextField
+            sx={{ flexGrow: 1 }}
+            size="small"
+            onBlur={(e) => setVideoUrl(e.target.value)}
+          />
         </Stack>
       </Grid>
     </Grid>
