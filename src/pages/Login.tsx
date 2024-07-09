@@ -1,15 +1,15 @@
-import { Box, Button, Grid, Stack, TextField, Typography } from "@mui/material";
+import { Box, Button, Grid, Snackbar, Stack, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSnackbar } from "../hooks/useSnackbar";
 import { useAuth } from "../services/AuthProvider";
 import { primaryGradient, primaryGradientText } from "../theme";
+import { LoadingButton } from "@mui/lab";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-
 
   const { showSnackbar, snackbarProps } = useSnackbar();
   const { login } = useAuth();
@@ -22,13 +22,15 @@ export default function Login() {
       if (isAuthenticated) navigate("/");
     } catch (e) {
       console.error(e);
-      showSnackbar('Login failed', 'error')
+      showSnackbar("Login failed", "error");
     } finally {
       setLoading(false);
     }
   };
 
   return (
+   <>
+    <Snackbar {...snackbarProps} />
     <Grid container sx={{ height: "100vh" }}>
       <Grid item lg={7} sx={{ height: "100%" }}>
         <Stack
@@ -79,14 +81,15 @@ export default function Login() {
               <Typography fontSize={14}>Forgot password?</Typography>
             </Stack>
             <Stack spacing={2} width="100%" alignItems="center" sx={{ mt: 4 }}>
-              <Button
+              <LoadingButton
                 variant="contained"
                 fullWidth
                 sx={{ fontSize: 16, fontWeight: 500, py: 1.5 }}
                 onClick={handleLogin}
+                loading={loading}
               >
                 Log in
-              </Button>
+              </LoadingButton>
               <Typography>
                 Don't have an account?{" "}
                 <Link
@@ -106,5 +109,6 @@ export default function Login() {
         sx={{ height: "100%", background: primaryGradient }}
       ></Grid>
     </Grid>
+   </>
   );
 }

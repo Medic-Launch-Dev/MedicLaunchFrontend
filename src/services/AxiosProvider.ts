@@ -19,7 +19,8 @@ export default class AxiosProvider {
                 return response;
             },
             (error) => {
-                if (error.response.status === 401) {
+                const currentUrl = window.location.href;
+                if (error?.response?.status === 401 && !currentUrl.includes('/login') && !currentUrl.includes('/register')) {
                     window.location.href = '/login';
                 }
                 return Promise.reject(error);
