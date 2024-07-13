@@ -9,7 +9,6 @@ import LinkButton from "../components/util/LinkButton";
 
 export default function SelectFlashCards() {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
   const [selectedSpecialityId, setSelectedSpecialityId] = useState("");
 
   function handleNext() {
@@ -64,7 +63,6 @@ export default function SelectFlashCards() {
             size="large"
             endIcon={<ChevronRight />}
             onClick={handleNext}
-            loading={loading}
             disabled={!selectedSpecialityId}
           >
             Next

@@ -98,7 +98,7 @@ theme.components = {
         border: '2px solid transparent',
         ":hover": {
           backgroundColor: '#d2eefa',
-        }
+        },
       },
       outlinedPrimary: {
         borderWidth: 2,
@@ -107,13 +107,23 @@ theme.components = {
         },
         "&.Mui-disabled": {
           borderWidth: 2,
+          borderColor: "red",
         }
-      }
+      },
     },
     defaultProps: {
       disableElevation: true,
       disableRipple: true,
       size: "small"
+    }
+  },
+  MuiIconButton: {
+    styleOverrides: {
+      root: {
+        "&.Mui-disabled": {
+          borderColor: "#b4b6bc",
+        }
+      }
     }
   },
   MuiTextField: {

@@ -33,6 +33,16 @@ export class FlashCardStore {
     }
   }
 
+  async getFlashcardsBySpecialityId(specialityId: string) {
+    try {
+      const response = await this.apiClient.retrieveAllFlashcards();
+      const flashcards = response.filter((flashcard: Flashcard) => flashcard.specialityId === specialityId);
+      return flashcards;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   async uploadFlashCardImage(file: File) {
     try {
       const imgUrl: string = await this.apiClient.uploadFlashCardImage(file);
