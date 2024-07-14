@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { AccountStore } from '../stores/accountStore';
 import { ErrorStore } from '../stores/errorStore';
 import { FlashCardStore } from '../stores/flashCardStore';
 import { PaymentStore } from '../stores/paymentStore';
@@ -15,6 +16,7 @@ interface ServiceProviderContextValues {
   flashCardStore: FlashCardStore;
   userStore: UserStore;
   errorStore: ErrorStore;
+  accountStore: AccountStore;
 }
 
 export const ServiceProviderContext = React.createContext<ServiceProviderContextValues | null>(null);
@@ -29,6 +31,7 @@ export const ServiceProvider = ({ children }) => {
   const paymentStore = new PaymentStore(medicLaunchApiClient);
   const flashCardStore = new FlashCardStore(medicLaunchApiClient);
   const userStore = new UserStore(medicLaunchApiClient);
+  const accountStore = new AccountStore(medicLaunchApiClient);
 
   return (
     <ServiceProviderContext.Provider value={{
@@ -37,7 +40,8 @@ export const ServiceProvider = ({ children }) => {
       paymentStore,
       flashCardStore,
       userStore,
-      errorStore
+      errorStore,
+      accountStore
     }}>
       {children}
     </ServiceProviderContext.Provider>

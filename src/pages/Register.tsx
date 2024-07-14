@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import AgreementCheckbox from "../components/register/AgreementCheckbox";
 import { useSnackbar } from "../hooks/useSnackbar";
-import { MedicLauncUser as MedicLaunchUser } from "../models/User";
+import { MedicLaunchUser } from "../models/User";
 import userStore from "../stores/userStore";
 import { primaryGradient, primaryGradientText, unstyledLink } from "../theme";
 

@@ -5,7 +5,7 @@ export interface TokenData {
   refreshToken: string;
 }
 
-export interface MedicLauncUser {
+export interface MedicLaunchUser {
   email: string;
   password: string;
   firstName: string;
@@ -15,4 +15,18 @@ export interface MedicLauncUser {
   displayName: string;
   university: string;
   howDidYouHearAboutUs: string;
+}
+
+export interface UserProfile {
+  city: string;
+  displayName: string;
+  email: string;
+  graduationYear: number;
+  hasActiveSubscription: boolean;
+  id: string;
+  questionsCompleted: number;
+  subscribeToPromotions: boolean;
+  subscriptionMonths: string;
+  subscriptionPurchaseDate: string;
+  university: string;
 }

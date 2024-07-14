@@ -1,7 +1,7 @@
 import { makeAutoObservable } from "mobx";
-import MedicLaunchApiClient from "../services/MedicLaunchApiClient";
+import { MedicLaunchUser } from "../models/User";
 import AxiosProvider from "../services/AxiosProvider";
-import { MedicLauncUser } from "../models/User";
+import MedicLaunchApiClient from "../services/MedicLaunchApiClient";
 
 export class UserStore {
   apiClient: MedicLaunchApiClient;
@@ -11,28 +11,28 @@ export class UserStore {
     makeAutoObservable(this);
   }
 
-  public async createUser(userData: MedicLauncUser): Promise<boolean> {
+  public async createUser(userData: MedicLaunchUser): Promise<boolean> {
     return await this.apiClient.registerUser(userData);
   }
-  
+
   public async getUserList(): Promise<any> {
-      return await this.apiClient.getData('users/list');
+    return await this.apiClient.getData('users/list');
   }
 
   public async updateUser(data: any): Promise<boolean> {
-      return await this.apiClient.postData('users/update', data);
+    return await this.apiClient.postData('users/update', data);
   }
 
   public async resetUserPassword(data: any): Promise<boolean> {
-      return await this.apiClient.postData('users/resetuserpassword', data);
+    return await this.apiClient.postData('users/resetuserpassword', data);
   }
 
   public async deleteUser(userId: string): Promise<boolean> {
-      return await this.apiClient.deleteData('users/delete', userId);
+    return await this.apiClient.deleteData('users/delete', userId);
   }
 
   public async addUser(data: any): Promise<boolean> {
-      return await this.apiClient.postData('users/add', data);
+    return await this.apiClient.postData('users/add', data);
   }
 }
 

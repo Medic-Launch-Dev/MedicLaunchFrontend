@@ -1,4 +1,5 @@
 import { Button, Grid, Card as MuiCard, Stack, Typography } from '@mui/material';
+import { observer } from 'mobx-react-lite';
 import { Link } from 'react-router-dom';
 import CoursesIcon from '../../src/assets/icons/courses.svg';
 import MockExamIcon from '../../src/assets/icons/exam.svg';
@@ -10,9 +11,14 @@ import WelcomeImg from '../../src/assets/images/Welcome.png';
 import Page from '../components/nav/Page';
 import SpecialityAnalyserChart from '../components/specialityAnalyser/SpecialityAnalyserChart';
 import Card from '../components/util/Card';
+import { useServiceProvider } from '../services/ServiceProvider';
 import { primaryGradient, unstyledLink } from '../theme';
 
 function Root() {
+  const { accountStore: { myProfile, isSubscribed, roles } } = useServiceProvider();
+
+  console.log(myProfile, isSubscribed, roles)
+
   return (
     <Page withNav fullWidth>
       <Grid container spacing={2}>
@@ -136,4 +142,4 @@ function Root() {
   );
 }
 
-export default Root;
+export default observer(Root);

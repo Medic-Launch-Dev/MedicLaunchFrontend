@@ -5,7 +5,7 @@ import { Flashcard } from "../models/Flashcard";
 import { PracticeFilter } from "../models/PracticeFilter";
 import { Question } from "../models/Question";
 import Speciality, { SpecialityAnalytics } from "../models/Speciality";
-import { MedicLauncUser } from "../models/User";
+import { MedicLaunchUser } from "../models/User";
 import { ErrorStore } from "../stores/errorStore";
 import AxiosProvider from "./AxiosProvider";
 
@@ -58,7 +58,7 @@ export default class MedicLaunchApiClient {
     return await this.deleteData(`questions/delete/${specialityId}`, questionId);
   }
 
-  async registerUser(userData: MedicLauncUser): Promise<boolean> {
+  async registerUser(userData: MedicLaunchUser): Promise<boolean> {
     const response = await this.axios.post(`${this.apiUrl}/account/register`, {
       ...userData
     });
@@ -74,6 +74,10 @@ export default class MedicLaunchApiClient {
 
     const { token } = response.data;
     return token;
+  }
+
+  async retrieveUserProfile() {
+    return await this.getData('account/myprofile');
   }
 
   async getSpecialitiesList(): Promise<Speciality[]> {
