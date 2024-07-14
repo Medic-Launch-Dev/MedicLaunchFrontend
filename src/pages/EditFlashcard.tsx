@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import FlashcardEditor from "../components/flashCards/FlashcardEditor";
 import Page from "../components/nav/Page";
+import LinkButton from "../components/util/LinkButton";
 import { useSnackbar } from "../hooks/useSnackbar";
 import { Flashcard } from "../models/Flashcard";
 import { useServiceProvider } from "../services/ServiceProvider";
@@ -77,9 +78,12 @@ export default function EditFlascard() {
         justifyContent="space-between"
         mb={3}
       >
-        <Typography variant="h2" style={primaryGradientText}>
-          Edit flash card
-        </Typography>
+        <Stack direction="row" alignItems="center" spacing={2}>
+          <LinkButton variant="outlined" to="/edit-flash-cards">Back</LinkButton>
+          <Typography variant="h2" style={primaryGradientText}>
+            Edit flash card
+          </Typography>
+        </Stack>
         <Stack direction="row" alignItems="center" spacing={1}>
           <Button variant="outlined" color="error" onClick={() => setOpen(true)}>Delete</Button>
           <LoadingButton
