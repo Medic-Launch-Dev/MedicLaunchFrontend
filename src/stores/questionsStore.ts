@@ -136,7 +136,7 @@ export class QuestionsStore {
   applyOrderAndQuantity(practiceFilter: PracticeFilter) {
     const questionsOrder = practiceFilter.selectionOrder;
     const quantity = practiceFilter.questionsCount;
-    
+
     if (this.questions.length === 0) {
       return;
     }

@@ -1,7 +1,17 @@
+import { Flashcard } from "./Flashcard";
+import { Question } from "./Question";
+import Speciality from "./Speciality";
+
 export class Note {
-  id?: string;
-  specialityId?: string;
-  questionId?: string;
+  content: string;
+  createdOn?: string;
+  flashcard?: Flashcard;
   flashcardId?: string;
-  content?: string;
+  id?: string;
+  question?: Question;
+  questionId?: string;
+  speciality?: Speciality;
+  specialityId?: string;
+  updatedOn?: string;
+  userId?: string;
 }

@@ -33,9 +33,9 @@ export default function NavMenu() {
       <Stack alignItems="center" justifyContent="space-between" height="100%">
         <div style={{ width: '100%' }}>
           <Box sx={{ m: 4 }}>
-            <img src={LogoWhite} width={150} />
+            <img src={LogoWhite} width={140} />
           </Box>
-          <Stack sx={{ width: '100%', pt: 4 }} gap={2}>
+          <Stack sx={{ width: '100%', pt: 4 }} gap={1.5}>
             <NavLink text="Study Portal" selected={!!useMatch("/")} href="/" />
             <NavLink text="My Profile" selected={!!useMatch("/my-profile")} href="/my-profile" />
             <NavLink text="Author Portal" selected={!!useMatch("/author-portal")} href="/author-portal" />

@@ -107,7 +107,7 @@ theme.components = {
         },
         "&.Mui-disabled": {
           borderWidth: 2,
-          borderColor: "red",
+          borderColor: "#b4b6bc",
         }
       },
     },

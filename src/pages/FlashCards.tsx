@@ -1,8 +1,9 @@
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
-import { Button, Card, Divider, IconButton, Skeleton, Stack, TextField, Typography } from "@mui/material";
+import { Button, Card, CircularProgress, Divider, IconButton, Skeleton, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Page from "../components/nav/Page";
+import EditNote from "../components/notes/EditNote";
 import LinkButton from "../components/util/LinkButton";
 import { Flashcard } from "../models/Flashcard";
 import { useServiceProvider } from "../services/ServiceProvider";
@@ -10,7 +11,7 @@ import { useServiceProvider } from "../services/ServiceProvider";
 export default function FlashCards() {
   const { specialityId = "" } = useParams();
   const navigate = useNavigate();
-  const { flashCardStore } = useServiceProvider();
+  const { flashCardStore, notesStore } = useServiceProvider();
 
   const [flashcards, setFlashcards] = useState<Flashcard[]>();
   const [currentIdx, setCurrentIdx] = useState(0);
@@ -23,10 +24,19 @@ export default function FlashCards() {
   async function init() {
     if (!specialityId) return;
     const flashcards = await flashCardStore.getFlashcardsBySpecialityId(specialityId);
-    setFlashcards(flashcards);
+    if (flashcards) {
+      setFlashcards(flashcards);
+      console.log(flashcards);
+    }
   }
 
-  console.log(flashcards);
+  if (!flashcards) return (
+    <Stack alignItems="center" py={5}>
+      <CircularProgress />
+    </Stack>
+  );
+
+  console.log(flashcards[currentIdx]);
 
   return (
     <Page sx={{ height: "100%" }} maxWidth="xl">
@@ -37,7 +47,7 @@ export default function FlashCards() {
               <Typography color="#B9B9B9" fontWeight={600} fontSize={13}>Speciality</Typography>
               <Link to="/flash-cards" style={{ color: 'black', fontSize: 13, fontWeight: 500 }}>Change</Link>
             </Stack>
-            <Typography variant="h3" color="primary" mt={0.5}>Cardiovascular</Typography>
+            <Typography variant="h3" color="primary" mt={0.5}>{flashcards[0].speciality?.name}</Typography>
           </Card>
           <Card sx={{ flexGrow: 1 }}>
             <Typography color="#B9B9B9" fontWeight={600} fontSize={13}>Conditions</Typography>
@@ -89,7 +99,7 @@ export default function FlashCards() {
             </IconButton>
           </Stack>
         </Stack>
-        <Stack width={350} gap={2} height="100%" pb={12}>
+        <Stack width={350} gap={2} height="100%">
           <LinkButton variant="contained" to={"/"} sx={{ width: 'max-content' }}>
             Study Portal
           </LinkButton>
@@ -99,23 +109,13 @@ export default function FlashCards() {
               <Button variant="contained">View all notes</Button>
             </Stack>
             <Divider sx={{ my: 2 }} />
-            <Stack height="calc(100% - 70px)" alignItems="end">
-              <TextField
-                multiline
-                sx={{ flexGrow: 1 }}
-                inputProps={{
-                  style: {
-                    height: "100%",
-                  },
-                }}
-                InputProps={{
-                  sx: { height: '100%' }
-                }}
-                fullWidth
-                placeholder="Add a note"
-              />
-              <Button variant="contained" sx={{ width: 'max-content', height: 'max-content', mt: 2 }}>Save</Button>
-            </Stack>
+            <EditNote
+              height="calc(100% - 70px)"
+              alignItems="end"
+              note={flashcards[currentIdx].note}
+              flashcardId={flashcards[currentIdx].id}
+              specialityId={flashcards[currentIdx].specialityId}
+            />
           </Card>
         </Stack>
       </Stack>

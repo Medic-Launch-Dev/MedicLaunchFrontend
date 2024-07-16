@@ -1,4 +1,3 @@
-// src/stores/ErrorStore.js
 import { makeAutoObservable } from "mobx";
 
 export class ErrorStore {

@@ -9,7 +9,7 @@ interface RevisionNoteModalProps {
 export default function RevisionNoteModal({ open, onClose, defaultValue }: RevisionNoteModalProps) {
   return (
     <Dialog open={open} onClose={onClose} maxWidth="lg" fullWidth>
-      <DialogTitle sx={{ fontSize: 20 }}>Add Note</DialogTitle>
+      <DialogTitle sx={{ fontSize: 20 }}>Note</DialogTitle>
       <DialogContent sx={{ height: 500 }}>
         <TextField
           placeholder="Add note..."
@@ -29,7 +29,6 @@ export default function RevisionNoteModal({ open, onClose, defaultValue }: Revis
       </DialogContent>
       <DialogActions sx={{ m: 2 }}>
         <Button variant="contained" onClick={onClose}>Save</Button>
-        <Button variant="contained" onClick={onClose}>View all notes</Button>
       </DialogActions>
     </Dialog>
   )
