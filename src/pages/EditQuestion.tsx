@@ -18,13 +18,14 @@ import { useNavigate } from "react-router-dom";
 import Page from "../components/nav/Page";
 import QuestionEditView from "../components/questionCreation/QuestionEditView";
 import LinkButton from "../components/util/LinkButton";
+import Unauthorized from "../components/util/Unauthorized";
 import { useSnackbar } from "../hooks/useSnackbar";
 import { Question } from "../models/Question";
 import { useServiceProvider } from "../services/ServiceProvider";
 import { primaryGradientText } from "../theme";
 
 const EditQuestion = () => {
-  const { questionsStore } = useServiceProvider();
+  const { questionsStore, accountStore: { hasQuestionAuthorAccess, hasAdminAccess } } = useServiceProvider();
   const { showSnackbar, snackbarProps } = useSnackbar();
   const [loadingSave, setLoadingSave] = useState(false);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
@@ -82,6 +83,8 @@ const EditQuestion = () => {
       navigate("/edit-questions");
   }, [questionsStore.previewQuestion]);
 
+  if (!hasQuestionAuthorAccess) return <Unauthorized />;
+
   return (
     <Page>
       <Snackbar {...snackbarProps} />
@@ -107,7 +110,7 @@ const EditQuestion = () => {
             Save
           </LoadingButton>
           {
-            !question?.isSubmitted &&
+            !question?.isSubmitted && hasAdminAccess &&
             <LoadingButton variant="contained" onClick={() => handleSubmit(true)} loading={loadingSubmit} disabled={!canSubmit}>
               Submit question
             </LoadingButton>

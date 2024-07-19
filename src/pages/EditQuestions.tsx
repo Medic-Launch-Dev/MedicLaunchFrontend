@@ -18,6 +18,7 @@ import { useNavigate, useSearchParams } from "react-router-dom"
 import Page from "../components/nav/Page"
 import { LoadingWrapper } from "../components/util/LoadingWrapper"
 import TextSelect from "../components/util/TextSelect"
+import Unauthorized from "../components/util/Unauthorized"
 import { Question } from "../models/Question"
 import Speciality from "../models/Speciality"
 import { useServiceProvider } from "../services/ServiceProvider"
@@ -28,7 +29,7 @@ function EditQuestions() {
 	let [searchParams] = useSearchParams();
 	const defaultSpeciality = searchParams.get('speciality');
 
-	const { questionsStore } = useServiceProvider();
+	const { questionsStore, accountStore: { hasQuestionAuthorAccess } } = useServiceProvider();
 	const [specialities, setSpecialitiesList] = useState<Speciality[]>([]);
 	const [selectedSpeciality, setSelectedSpeciality] = useState<string>();
 	const [questions, setQuestions] = useState<QuestionModelUI[]>([]);
@@ -95,12 +96,12 @@ function EditQuestions() {
 		if (selectedSpeciality) loadQuestions(selectedSpeciality, questionBank);
 	}, [selectedSpeciality, selectedQuestionBank])
 
-
-
 	function handleClickEdit(question: QuestionModelUI) {
 		questionsStore.setPreviewQuestion(question);
 		navigate("/edit-question")
 	}
+
+	if (!hasQuestionAuthorAccess) return <Unauthorized />;
 
 	return (
 		<Page>
@@ -161,8 +162,8 @@ function EditQuestions() {
 												<TableCell>
 													{
 														p.isSubmitted ?
-														<Chip label="Submitted" sx={{ backgroundColor: "#A4E29F" }} /> :
-														<Chip label="Pending" />
+															<Chip label="Submitted" sx={{ backgroundColor: "#A4E29F" }} /> :
+															<Chip label="Pending" />
 													}
 												</TableCell>
 												<TableCell>{p.specialityName}</TableCell>

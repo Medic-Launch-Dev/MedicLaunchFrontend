@@ -1,13 +1,21 @@
 import { Logout } from "@mui/icons-material";
 import { Box, Button, Drawer, Stack } from "@mui/material";
+import { observer } from "mobx-react-lite";
 import { useMatch, useNavigate } from "react-router-dom";
 import LogoWhite from "../../assets/logo-white.svg";
 import { useAuth } from "../../services/AuthProvider";
+import { useServiceProvider } from "../../services/ServiceProvider";
 import NavLink from "./NavLink";
 
-export default function NavMenu() {
+function NavMenu() {
+  const { accountStore: { hasAdminAccess, hasAuthorAccess } } = useServiceProvider();
   const { logout } = useAuth();
   const navigate = useNavigate();
+
+  const matchHome = useMatch("/");
+  const matchMyProfile = useMatch("/my-profile");
+  const matchAuthorPortal = useMatch("/author-portal");
+  const matchUserManagement = useMatch("/user-management");
 
   async function handleLogout() {
     await logout();
@@ -17,11 +25,11 @@ export default function NavMenu() {
   return (
     <Drawer
       sx={{
-        width: 300,
+        width: 240,
         flexShrink: 0,
         '& .MuiDrawer-paper': {
           backgroundColor: "#1f263e",
-          width: 300,
+          width: 240,
           boxSizing: 'border-box',
           border: 'none'
         },
@@ -36,10 +44,10 @@ export default function NavMenu() {
             <img src={LogoWhite} width={140} />
           </Box>
           <Stack sx={{ width: '100%', pt: 4 }} gap={1.5}>
-            <NavLink text="Study Portal" selected={!!useMatch("/")} href="/" />
-            <NavLink text="My Profile" selected={!!useMatch("/my-profile")} href="/my-profile" />
-            <NavLink text="Author Portal" selected={!!useMatch("/author-portal")} href="/author-portal" />
-            <NavLink text="User Management" selected={!!useMatch("/user-management")} href="/user-management" />
+            <NavLink text="Study Portal" selected={!!matchHome} href="/" />
+            <NavLink text="My Profile" selected={!!matchMyProfile} href="/my-profile" />
+            {hasAuthorAccess && <NavLink text="Author Portal" selected={!!matchAuthorPortal} href="/author-portal" />}
+            {hasAdminAccess && <NavLink text="User Management" selected={!!matchUserManagement} href="/user-management" />}
           </Stack>
         </div>
 
@@ -57,3 +65,5 @@ export default function NavMenu() {
     </Drawer>
   )
 }
+
+export default observer(NavMenu);

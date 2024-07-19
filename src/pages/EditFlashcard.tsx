@@ -1,20 +1,22 @@
 import { LoadingButton } from "@mui/lab";
 import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, Snackbar, Stack, Typography } from "@mui/material";
+import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import FlashcardEditor from "../components/flashCards/FlashcardEditor";
 import Page from "../components/nav/Page";
 import LinkButton from "../components/util/LinkButton";
+import Unauthorized from "../components/util/Unauthorized";
 import { useSnackbar } from "../hooks/useSnackbar";
 import { Flashcard } from "../models/Flashcard";
 import { useServiceProvider } from "../services/ServiceProvider";
 import { primaryGradientText } from "../theme";
 
-export default function EditFlascard() {
+function EditFlascard() {
   const { id = "" } = useParams();
   const { showSnackbar, snackbarProps } = useSnackbar();
   const navigate = useNavigate();
-  const { flashCardStore } = useServiceProvider();
+  const { flashCardStore, accountStore: { hasFlashcardAuthorAccess } } = useServiceProvider();
 
   const [loading, setLoading] = useState(true);
   const [loadingSave, setLoadingSave] = useState(false);
@@ -69,6 +71,8 @@ export default function EditFlascard() {
     }
   }
 
+  if (!hasFlashcardAuthorAccess) return <Unauthorized />;
+
   return (
     <Page maxWidth="md">
       <Snackbar {...snackbarProps} />
@@ -120,3 +124,5 @@ export default function EditFlascard() {
     </Page>
   )
 }
+
+export default observer(EditFlascard);

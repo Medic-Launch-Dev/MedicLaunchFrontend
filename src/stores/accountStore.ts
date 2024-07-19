@@ -14,6 +14,22 @@ export class AccountStore {
     makeAutoObservable(this);
   }
 
+  get hasAdminAccess() {
+    return this.roles.includes('Admin');
+  }
+
+  get hasAuthorAccess() {
+    return this.roles.includes("FlashcardAuthor") || this.roles.includes("QuestionAuthor") || this.roles.includes("Admin");
+  }
+
+  get hasFlashcardAuthorAccess() {
+    return this.roles.includes("FlashcardAuthor") || this.roles.includes("Admin");
+  }
+
+  get hasQuestionAuthorAccess() {
+    return this.roles.includes("QuestionAuthor") || this.roles.includes("Admin");
+  }
+
   public async getMyProfile() {
     const profile: UserProfile = await this.apiClient.getData('account/myprofile');
     runInAction(() => {

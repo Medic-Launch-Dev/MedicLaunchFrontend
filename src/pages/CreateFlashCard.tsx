@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FlashcardEditor from "../components/flashCards/FlashcardEditor";
 import Page from "../components/nav/Page";
+import Unauthorized from "../components/util/Unauthorized";
 import { useSnackbar } from "../hooks/useSnackbar";
 import { Flashcard } from "../models/Flashcard";
 import { useServiceProvider } from "../services/ServiceProvider";
@@ -14,7 +15,7 @@ const CreateFlashCard = () => {
   const navigate = useNavigate();
   const { showSnackbar, snackbarProps } = useSnackbar();
 
-  const { flashCardStore } = useServiceProvider();
+  const { flashCardStore, accountStore: { hasFlashcardAuthorAccess } } = useServiceProvider();
 
   const [loadingSave, setLoadingSave] = useState(false);
   const [flashcard, setFlashcard] = useState<Flashcard>({ name: '', imageUrl: '', specialityId: '' });
@@ -34,6 +35,8 @@ const CreateFlashCard = () => {
       setLoadingSave(false);
     }
   }
+
+  if (!hasFlashcardAuthorAccess) return <Unauthorized />;
 
   return (
     <Page maxWidth="md">

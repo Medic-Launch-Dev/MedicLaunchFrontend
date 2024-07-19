@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import Page from "../components/nav/Page";
 import LinkButton from "../components/util/LinkButton";
+import Unauthorized from "../components/util/Unauthorized";
 import { Flashcard } from "../models/Flashcard";
 import Speciality from "../models/Speciality";
 import { useServiceProvider } from "../services/ServiceProvider";
@@ -15,7 +16,7 @@ const EditFlashCards = () => {
   const [searchParams] = useSearchParams();
   const defaultSpeciality = searchParams.get('speciality');
 
-  const { questionsStore, flashCardStore } = useServiceProvider();
+  const { questionsStore, flashCardStore, accountStore: { hasFlashcardAuthorAccess } } = useServiceProvider();
 
   const [loading, setLoading] = useState(true);
   const [specialities, setSpecialities] = useState<Speciality[]>([]);
@@ -47,6 +48,8 @@ const EditFlashCards = () => {
     }
     fetchFlashcards();
   }, [selectedSpeciality, flashCardStore]);
+
+  if (!hasFlashcardAuthorAccess) return <Unauthorized />;
 
   return (
     <Page>

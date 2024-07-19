@@ -10,13 +10,14 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Page from "../components/nav/Page";
 import QuestionEditView from "../components/questionCreation/QuestionEditView";
+import Unauthorized from "../components/util/Unauthorized";
 import { useSnackbar } from "../hooks/useSnackbar";
 import { Question } from "../models/Question";
 import { useServiceProvider } from "../services/ServiceProvider";
 import { primaryGradientText } from "../theme";
 
 const CreateQuestion = () => {
-  const { questionsStore } = useServiceProvider();
+  const { questionsStore, accountStore: { hasQuestionAuthorAccess, hasAdminAccess } } = useServiceProvider();
   const { showSnackbar, snackbarProps } = useSnackbar();
   const [loadingDraft, setLoadingDraft] = useState(false);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
@@ -50,6 +51,8 @@ const CreateQuestion = () => {
     navigate("/question-preview?from=create");
   };
 
+  if (!hasQuestionAuthorAccess) return <Unauthorized />;
+
   return (
     <Page>
       <Snackbar {...snackbarProps} />
@@ -67,9 +70,12 @@ const CreateQuestion = () => {
           <LoadingButton variant="contained" onClick={() => handleCreate(false)} loading={loadingDraft} disabled={!canSubmit}>
             Create Draft
           </LoadingButton>
-          <LoadingButton variant="contained" onClick={() => handleCreate(true)} loading={loadingSubmit} disabled={!canSubmit}>
-            Submit Question
-          </LoadingButton>
+          {
+            hasAdminAccess &&
+            <LoadingButton variant="contained" onClick={() => handleCreate(true)} loading={loadingSubmit} disabled={!canSubmit}>
+              Submit Question
+            </LoadingButton>
+          }
         </Stack>
       </Stack>
       <QuestionEditView

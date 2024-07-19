@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Page from '../components/nav/Page';
 import AddUserModal from '../components/userManagement/AddUserModal';
+import Unauthorized from '../components/util/Unauthorized';
 import { useServiceProvider } from '../services/ServiceProvider';
 import { primaryGradientText } from '../theme';
 
@@ -73,7 +74,7 @@ const dataGridStyles = {
 
 export default function UserManagement() {
 	const [open, setOpen] = useState(false);
-	const { userStore } = useServiceProvider();
+	const { userStore, accountStore: { hasAdminAccess } } = useServiceProvider();
 	const [rows, setRows] = useState([]);
 
 	// Create use effect to fetch data from the server
@@ -85,6 +86,8 @@ export default function UserManagement() {
 			console.error(e);
 		});
 	}, []);
+
+	if (!hasAdminAccess) return <Unauthorized />;
 
 	return rows && (
 		<Page withNav>

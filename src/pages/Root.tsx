@@ -15,9 +15,7 @@ import { useServiceProvider } from '../services/ServiceProvider';
 import { primaryGradient, unstyledLink } from '../theme';
 
 function Root() {
-  const { accountStore: { myProfile, isSubscribed, roles } } = useServiceProvider();
-
-  console.log(myProfile, isSubscribed, roles)
+  const { accountStore: { myProfile } } = useServiceProvider();
 
   return (
     <Page withNav fullWidth>
@@ -35,7 +33,7 @@ function Root() {
                 justifyContent="space-between"
                 alignItems="center"
               >
-                <Typography variant="h2" color="#fff">Welcome, {myProfile?.displayName}!</Typography>
+                <Typography variant="h2" color="#fff">Welcome, {myProfile?.firstName}!</Typography>
                 <img src={WelcomeImg} height={140} />
               </Stack>
             </Grid>
@@ -73,24 +71,6 @@ function Root() {
             </Grid>
             <Grid item xs={12} sm={6}>
               <Card
-                title="Podcasts"
-                action={<Button variant="contained">Listen</Button>}
-                icon={<img src={PodcastsIcon} width={64} />}
-              >
-                Insightful discussions, clinical gems
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Card
-                title="My Courses"
-                action={<Button variant="contained">View</Button>}
-                icon={<img src={CoursesIcon} width={64} />}
-              >
-                Explore your registered courses and webinars
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Card
                 title="Mock Examination"
                 action={
                   <Link style={unstyledLink} to="select-mock">
@@ -115,6 +95,24 @@ function Root() {
                 icon={<img src={NotesIcon} width={64} />}
               >
                 AI-generated notes for mastering medical knowledge efficiently
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Card
+                title="Podcasts"
+                action={<Button variant="contained" disabled>Coming soon..</Button>}
+                icon={<img src={PodcastsIcon} width={64} />}
+              >
+                Insightful discussions, clinical gems
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Card
+                title="My Courses"
+                action={<Button variant="contained" disabled>Coming soon..</Button>}
+                icon={<img src={CoursesIcon} width={64} />}
+              >
+                Explore your registered courses and webinars
               </Card>
             </Grid>
           </Grid>
