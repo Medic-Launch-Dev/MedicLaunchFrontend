@@ -35,7 +35,7 @@ function Root() {
                 justifyContent="space-between"
                 alignItems="center"
               >
-                <Typography variant="h2" color="#fff">Welcome, Sajjaad!</Typography>
+                <Typography variant="h2" color="#fff">Welcome, {myProfile?.displayName}!</Typography>
                 <img src={WelcomeImg} height={140} />
               </Stack>
             </Grid>

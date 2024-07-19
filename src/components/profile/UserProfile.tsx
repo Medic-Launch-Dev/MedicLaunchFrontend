@@ -1,8 +1,12 @@
-import { Add, Check, Loop } from "@mui/icons-material";
-import { Box, Button, Divider, Grid, Paper, Stack, Typography } from "@mui/material";
+import { Check, Loop } from "@mui/icons-material";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grid, Paper, Snackbar, Stack, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSnackbar } from "../../hooks/useSnackbar";
+import { useServiceProvider } from "../../services/ServiceProvider";
+import accountStore from "../../stores/accountStore";
 import { primaryGradient } from "../../theme";
+import { formatDate } from "../../utils/DateTimeUtils";
 import EditProfileModal from "./EditProfileModal";
 import ResetPasswordModal from "./ResetPasswordModal";
 
@@ -11,25 +15,42 @@ interface UserProfileProps {
 }
 
 function UserProfile({ adminView }: UserProfileProps) {
+  const { accountStore: { myProfile }, practiceStore } = useServiceProvider();
+  const { showSnackbar, snackbarProps } = useSnackbar();
+
   const [editOpen, setEditOpen] = useState(false);
   const [passwordOpen, setPasswordOpen] = useState(false);
+  const [resetOpen, setResetOpen] = useState(false);
+
+  useEffect(() => {
+    accountStore.getMyProfile();
+  }, [])
+
+  async function handleResetQuestions() {
+    const success = await practiceStore.resetPracticeQuestions();
+    if (success) {
+      showSnackbar('Questions reset', 'success');
+      window.location.reload(); // come up with better solution
+    }
+  }
 
   return (
     <>
+      <Snackbar {...snackbarProps} />
       <Box sx={{ bgcolor: "white", borderRadius: 1, p: 3 }}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={5}>
             <Paper sx={{ p: 3 }}>
               <Stack alignItems="center">
                 <Box sx={{ background: primaryGradient, height: 50, width: 50, borderRadius: 0.5 }} />
-                <Typography fontSize={16} fontWeight={500} mt={2}>Riaz Riaz</Typography>
+                <Typography fontSize={16} fontWeight={500} mt={2}>{myProfile?.firstName} {myProfile?.lastName}</Typography>
 
                 <Stack direction="row" spacing={2} alignItems="center" mt={3}>
                   <Box sx={{ bgcolor: "#2684FF1F", height: 40, width: 40, borderRadius: 0.5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <Check color="primary" />
                   </Box>
                   <Stack>
-                    <Typography fontSize={20} fontWeight={400}>1,090</Typography>
+                    <Typography fontSize={20} fontWeight={400}>{myProfile?.questionsCompleted}</Typography>
                     <Typography fontSize={13} fontWeight={400} color="#3A3541AD">Questions Completed</Typography>
                   </Stack>
                 </Stack>
@@ -38,12 +59,11 @@ function UserProfile({ adminView }: UserProfileProps) {
                   <Typography fontSize={17} fontWeight={500}>Details</Typography>
                   <Divider sx={{ my: 1.5 }} />
                   <Stack spacing={1}>
-                    <ProfileField label="Display Name" value="@RiazK" />
-                    <ProfileField label="Full Name" value="Riaz Riaz" />
-                    <ProfileField label="University" value="Nottingham" />
-                    <ProfileField label="Graduation Year" value="2024" />
-                    <ProfileField label="City" value="London" />
-                    <ProfileField label="Mobile" value="+123456789" />
+                    <ProfileField label="Full Name" value={`${myProfile?.firstName} ${myProfile?.lastName}`} />
+                    <ProfileField label="University" value={myProfile?.university} />
+                    <ProfileField label="Graduation Year" value={myProfile?.graduationYear.toString()} />
+                    <ProfileField label="City" value={myProfile?.city} />
+                    <ProfileField label="Mobile" value={myProfile?.phone} />
                   </Stack>
                 </Stack>
 
@@ -65,23 +85,22 @@ function UserProfile({ adminView }: UserProfileProps) {
             <Paper sx={{ p: 3 }}>
               <Stack direction="row" justifyContent="space-between" alignItems="center">
                 <Typography fontSize={17} fontWeight={500}>My Subscription</Typography>
-                {/* Clicking on reset questions should bring up a warning modal */}
-                <Button size="small" variant="contained" startIcon={<Loop />}>
+                <Button size="small" variant="contained" startIcon={<Loop />} onClick={() => setResetOpen(true)} disabled={myProfile?.questionsCompleted === 0}>
                   Reset Questions
                 </Button>
               </Stack>
               <Divider sx={{ my: 2 }} />
               <Stack direction="row" justifyContent="space-between">
                 <SubscriptionField label="Subscription" value="UKMLA" />
-                <SubscriptionField label="Plan" value="1 month" />
-                <SubscriptionField label="Date purchased" value="11:00AM - 23/11/23" />
+                <SubscriptionField label="Plan" value={`${myProfile?.subscriptionMonths} month`} />
+                <SubscriptionField label="Date purchased" value={formatDate(myProfile?.subscriptionPurchaseDate)} />
               </Stack>
             </Paper>
             <Paper sx={{ p: 3, mt: 3 }}>
               <Stack direction="row" justifyContent="space-between" alignItems="center">
                 <Typography fontSize={17} fontWeight={500}>My Courses</Typography>
-                <Button size="small" variant="contained" startIcon={<Add />}>
-                  Add Course
+                <Button size="small" variant="contained" disabled>
+                  Coming soon...
                 </Button>
               </Stack>
               <Divider sx={{ my: 2 }} />
@@ -90,6 +109,17 @@ function UserProfile({ adminView }: UserProfileProps) {
           </Grid>
         </Grid>
       </Box>
+      <Dialog open={resetOpen} onClose={() => setResetOpen(false)}>
+        <DialogTitle>Are you sure?</DialogTitle>
+        <DialogContent>
+          <Typography>Are you sure you want to <b>reset all questions?</b></Typography>
+          <Typography>This action cannot be undone.</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setResetOpen(false)}>Cancel</Button>
+          <Button variant="contained" color="error" onClick={handleResetQuestions}>Reset</Button>
+        </DialogActions>
+      </Dialog>
       <EditProfileModal open={editOpen} onClose={() => setEditOpen(false)} />
       <ResetPasswordModal open={passwordOpen} onClose={() => setPasswordOpen(false)} />
     </>

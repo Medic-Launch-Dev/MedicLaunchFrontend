@@ -6,24 +6,27 @@ export interface TokenData {
 }
 
 export interface MedicLaunchUser {
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
   city: string;
-  graduationYear: number;
   displayName: string;
-  university: string;
+  email: string;
+  firstName: string;
+  graduationYear: number;
   howDidYouHearAboutUs: string;
+  lastName: string;
+  password: string;
+  university: string;
 }
 
 export interface UserProfile {
   city: string;
   displayName: string;
   email: string;
+  firstName: string;
   graduationYear: number;
   hasActiveSubscription: boolean;
   id: string;
+  lastName: string;
+  phone: string;
   questionsCompleted: number;
   subscribeToPromotions: boolean;
   subscriptionMonths: string;

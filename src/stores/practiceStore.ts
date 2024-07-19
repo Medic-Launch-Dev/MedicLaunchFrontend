@@ -12,7 +12,7 @@ export class PracticeStore {
 	private apiClient: MedicLaunchApiClient;
 	practiceFilter: PracticeFilter;
 	examTimerState: TimerState = TimerState.STOPPED;
-	timeRemaining: number = 7;
+	timeRemaining: number = 7200;
 	showEndMessage: boolean = false;
 	private timerInterval: NodeJS.Timeout;
 
@@ -76,5 +76,9 @@ export class PracticeStore {
 
 	async getPracticeStats() {
 		return await this.apiClient.getData(`practice/practicestats`);
+	}
+
+	async resetPracticeQuestions() {
+		return await this.apiClient.postData(`practice/reset`, {});
 	}
 }

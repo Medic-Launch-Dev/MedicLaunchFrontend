@@ -57,16 +57,21 @@ export default function SpecialityAnalyserChart() {
           :
           <Grid container alignItems="center" rowSpacing={1.5}>
             {
-              getSortedAnalytics().map(({ specialityName, totalQuestions, correct, incorrect }) => (
-                <React.Fragment key={specialityName}>
-                  <Grid item xs={4}>
-                    <Typography variant="h6" color="#333333" fontWeight={500}>{specialityName}</Typography>
-                  </Grid>
-                  <Grid item xs={8}>
-                    <ProgressBar correctQuestions={correct} incorrectQuestions={incorrect} totalQuestions={totalQuestions} />
-                  </Grid>
-                </React.Fragment>
-              ))
+              getSortedAnalytics().length > 0 ?
+                getSortedAnalytics().map(({ specialityName, totalQuestions, correct, incorrect }) => (
+                  <React.Fragment key={specialityName}>
+                    <Grid item xs={4}>
+                      <Typography variant="h6" color="#333333" fontWeight={500}>{specialityName}</Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                      <ProgressBar correctQuestions={correct} incorrectQuestions={incorrect} totalQuestions={totalQuestions} />
+                    </Grid>
+                  </React.Fragment>
+                ))
+                :
+                <Grid item xs={12}>
+                  <Typography variant="body1" color="textSecondary" py={3} align="center">No data available</Typography>
+                </Grid>
             }
           </Grid>
       }

@@ -1,3 +1,5 @@
+import { Note } from "./Note";
+
 export enum QuestionType {
     General = "General",
     PaperOneMockExam = "PaperOneMockExam",
@@ -10,19 +12,20 @@ export class Option {
 }
 
 export class Question {
-    id?: string;
-    specialityId: string;
-    questionType: QuestionType;
-    questionText: string;
-    options: Option[];
+    clinicalTips: string;
     correctAnswerLetter: string;
     explanation: string;
-    clinicalTips: string;
-    learningPoints: string;
-    videoUrl?: string;
-    isSubmitted?: boolean;
+    id?: string;
     isFlagged?: boolean;
-    specialityName?: string;
-    questionCode?: string;
+    isSubmitted?: boolean;
+    learningPoints: string;
+    note?: Note;
+    options: Option[];
     previousSpecialityId?: string;
+    questionCode?: string;
+    questionText: string;
+    questionType: QuestionType;
+    specialityId: string;
+    specialityName?: string;
+    videoUrl?: string;
 }

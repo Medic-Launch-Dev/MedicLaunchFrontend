@@ -8,7 +8,7 @@ interface EditProfileModalProps {
 export default function ResetPasswordModal({ open, onClose }: EditProfileModalProps) {
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="xs">
-      <DialogTitle sx={{ fontSize: 17 }}>Reset Password</DialogTitle>
+      <DialogTitle>Reset Password</DialogTitle>
       <DialogContent>
         <Stack sx={{ mt: 1 }} spacing={2}>
           <TextField

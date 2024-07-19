@@ -204,7 +204,13 @@ theme.components = {
       }
     }
   },
-
+  MuiDialogTitle: {
+    styleOverrides: {
+      root: {
+        fontSize: 17,
+      }
+    }
+  }
 }
 
 export default theme;

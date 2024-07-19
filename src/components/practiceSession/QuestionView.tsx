@@ -1,4 +1,4 @@
-import { ChevronRight, Flag, KeyboardArrowLeft } from "@mui/icons-material";
+import { Add, ChevronRight, Flag, KeyboardArrowLeft } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { Box, Button, Grid, Stack, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
@@ -9,6 +9,7 @@ import { useServiceProvider } from "../../services/ServiceProvider";
 import { QuestionModelUI } from "../../stores/questionsStore";
 import { primaryGradient } from "../../theme";
 import { getInnerTextFromHTML } from "../../utils/RichTextUtils";
+import EditNoteDialog from "../notes/EditNoteDialog";
 import useExtensions from "../tiptap/useExtensions";
 import LinkButton from "../util/LinkButton";
 import AnswerOption from "./AnswerOption";
@@ -19,13 +20,14 @@ import Timer from "./Timer";
 interface QuestionViewProps {
   question: QuestionModelUI;
   inPreview?: boolean;
-  withTimer?: boolean;
+  isMock?: boolean;
 }
 
-function QuestionView({ question: questionFromProps, inPreview, withTimer }: QuestionViewProps) {
-  const { questionsStore } = useServiceProvider();
+function QuestionView({ question: questionFromProps, inPreview, isMock }: QuestionViewProps) {
+  const { questionsStore, practiceStore } = useServiceProvider();
   const question = inPreview ? questionsStore.previewQuestion : questionFromProps;
 
+  const [open, setOpen] = useState(false);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [loadingFlag, setLoadingFlag] = useState(false);
   const [selectedOption, setSelectedOption] = useState<Option>();
@@ -165,8 +167,8 @@ function QuestionView({ question: questionFromProps, inPreview, withTimer }: Que
   );
 
   const rightSideMarkup = (
-    <Stack spacing={2} sx={{ maxHeight: 450 }}>
-      {withTimer && <Timer />}
+    <Stack spacing={2} sx={{ maxHeight: 500 }}>
+      {isMock && <Timer />}
       {
         !inPreview &&
         <Box sx={{ flexShrink: 0 }}>
@@ -176,6 +178,15 @@ function QuestionView({ question: questionFromProps, inPreview, withTimer }: Que
       <Box sx={{ flexGrow: 1, overflowY: 'scroll', backgroundColor: "white", borderRadius: 1, p: 3 }}>
         <LabValues />
       </Box>
+      <Button
+        variant="contained"
+        color="secondary"
+        sx={{ color: "black", fontWeight: 500, visibility: !wasAttempted || inPreview ? "hidden" : "visible" }}
+        startIcon={<Add />}
+        onClick={() => setOpen(true)}
+      >
+        Add Note
+      </Button>
     </Stack>
   );
 
@@ -267,17 +278,26 @@ function QuestionView({ question: questionFromProps, inPreview, withTimer }: Que
   );
 
   return (
-    <Grid container spacing={3} pb={3}>
-      <Grid item xs={12} lg={7}>
-        {questionBodyMarkup}
+    <>
+      <Grid container spacing={3} pb={3}>
+        <Grid item xs={12} lg={7}>
+          {questionBodyMarkup}
+        </Grid>
+        <Grid item xs={12} lg={5}>
+          {rightSideMarkup}
+        </Grid>
+        <Grid item xs={12}>
+          {(wasAttempted || inPreview) && !isMock && explanationMarkup}
+        </Grid>
       </Grid>
-      <Grid item xs={12} lg={5}>
-        {rightSideMarkup}
-      </Grid>
-      <Grid item xs={12}>
-        {(wasAttempted || inPreview) && explanationMarkup}
-      </Grid>
-    </Grid>
+      <EditNoteDialog
+        open={open}
+        onClose={() => setOpen(false)}
+        note={question?.note}
+        specialityId={question?.specialityId}
+        questionId={question?.id}
+      />
+    </>
   )
 }
 

@@ -26,7 +26,6 @@ export default function FlashCards() {
     const flashcards = await flashCardStore.getFlashcardsBySpecialityId(specialityId);
     if (flashcards) {
       setFlashcards(flashcards);
-      console.log(flashcards);
     }
   }
 
@@ -35,8 +34,6 @@ export default function FlashCards() {
       <CircularProgress />
     </Stack>
   );
-
-  console.log(flashcards[currentIdx]);
 
   return (
     <Page sx={{ height: "100%" }} maxWidth="xl">

@@ -46,7 +46,7 @@ function CreateSession() {
       onNext: handleSelectFamiliarity,
     },
     {
-      label: "Select number of questions",
+      label: "Select quantity",
       onNext: handleStartPractice,
     },
   ];

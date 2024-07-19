@@ -1,10 +1,10 @@
 import { Add, DeleteOutline } from "@mui/icons-material";
-import { Button, Card, Dialog, DialogContent, DialogTitle, Divider, FormControl, IconButton, InputLabel, MenuItem, Select, Stack, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
+import { Button, Card, Divider, FormControl, IconButton, InputLabel, MenuItem, Select, Stack, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import Page from "../components/nav/Page";
-import EditNote from "../components/notes/EditNote";
+import EditNoteDialog from "../components/notes/EditNoteDialog";
 import LinkButton from "../components/util/LinkButton";
 import { Note } from "../models/Note";
 import Speciality from "../models/Speciality";
@@ -63,21 +63,18 @@ function RevisionNotes() {
     await notesStore.getAllNotes();
   }
 
+  console.log(notesStore.notes);
+
   return (
     <Page sx={{ pt: 2 }}>
-      <Dialog open={open} onClose={() => setOpen(false)} maxWidth="lg" fullWidth>
-        <DialogTitle sx={{ fontSize: 20 }}>Note</DialogTitle>
-        <DialogContent>
-          <EditNote
-            height={600}
-            alignItems="end"
-            note={currentNote}
-            specialityId={currentNote?.specialityId || selectedSpeciality}
-            questionId={currentNote?.questionId}
-            flashcardId={currentNote?.flashcardId}
-          />
-        </DialogContent>
-      </Dialog>
+      <EditNoteDialog
+        open={open}
+        onClose={() => setOpen(false)}
+        note={currentNote}
+        specialityId={currentNote?.specialityId || selectedSpeciality}
+        questionId={currentNote?.questionId}
+        flashcardId={currentNote?.flashcardId}
+      />
 
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
         <LinkButton to="/">
@@ -86,15 +83,13 @@ function RevisionNotes() {
         <Typography variant="h2" sx={primaryGradientText} align="center">
           Revision Notes Summary
         </Typography>
-        <Button variant="contained" startIcon={<Add />} onClick={() => handleOpen()}>
-          Add Note
-        </Button>
+        <Button variant="contained" sx={{ visibility: "hidden" }}>Add Note</Button>
       </Stack>
 
       <Card>
         <Typography variant="h3" sx={primaryGradientText}>Notes</Typography>
         <Divider sx={{ my: 2 }} />
-        <Stack spacing={2} direction="row" alignItems="center" justifyContent="right">
+        <Stack spacing={2} direction="row" alignItems="center" justifyContent="space-between">
           <FormControl size="small">
             <InputLabel id="speciality-select-label">Speciality</InputLabel>
             <Select
@@ -107,6 +102,9 @@ function RevisionNotes() {
               {specialities.map(speciality => <MenuItem value={speciality.id} key={speciality.id}>{speciality.name}</MenuItem>)}
             </Select>
           </FormControl>
+          <Button variant="contained" startIcon={<Add />} onClick={() => handleOpen()}>
+            Add Note
+          </Button>
         </Stack>
         <Table>
           <TableHead>

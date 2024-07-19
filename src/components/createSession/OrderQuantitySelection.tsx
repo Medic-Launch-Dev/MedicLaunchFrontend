@@ -56,7 +56,7 @@ export const OrderQuantitySelection = observer(() => {
           }}
         >
           <Typography fontSize={18} fontWeight={600}>
-            Select number of questions
+            Select quantity
           </Typography>
           <Slider
             step={1}

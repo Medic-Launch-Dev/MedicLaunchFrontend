@@ -1,20 +1,26 @@
 import { Button, Snackbar, Stack, StackProps, TextField } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSnackbar } from "../../hooks/useSnackbar";
 import { Note } from "../../models/Note";
 import { useServiceProvider } from "../../services/ServiceProvider";
 
-interface EditNoteProps extends StackProps {
+export interface EditNoteProps extends StackProps {
   note?: Note;
   specialityId?: string;
   flashcardId?: string;
   questionId?: string;
+  onSave?: () => void;
 }
 
-export default function EditNote({ note, specialityId, flashcardId, questionId, ...rest }: EditNoteProps) {
+export default function EditNote({ note, specialityId, flashcardId, questionId, onSave, ...rest }: EditNoteProps) {
   const { notesStore } = useServiceProvider();
   const { showSnackbar, snackbarProps } = useSnackbar();
   const [content, setContent] = useState(note?.content || "");
+
+  useEffect(() => {
+    setContent(note?.content || "");
+    console.log("Note changed");
+  }, [note, flashcardId, questionId, specialityId]);
 
   async function saveNote() {
     if (!note) {
@@ -27,6 +33,7 @@ export default function EditNote({ note, specialityId, flashcardId, questionId, 
       if (success) {
         await notesStore.getAllNotes();
         showSnackbar('Saved', 'success');
+        if (onSave) onSave();
       }
     } else {
       note.content = content;

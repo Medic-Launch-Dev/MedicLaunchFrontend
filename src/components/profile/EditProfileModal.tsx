@@ -9,7 +9,7 @@ interface EditProfileModalProps {
 export default function EditProfileModal({ open, onClose }: EditProfileModalProps) {
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="md">
-      <DialogTitle sx={{ fontSize: 17 }}>Edit Profile</DialogTitle>
+      <DialogTitle>Edit Profile</DialogTitle>
       <DialogContent>
         <UserProfileForm />
         <div style={{ height: 150 }} />

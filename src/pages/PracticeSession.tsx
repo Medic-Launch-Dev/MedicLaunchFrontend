@@ -88,7 +88,7 @@ function PracticeSession() {
       <Box mb={3}>
         {inReview ? inReviewMarkup : progressBarMarkup}
       </Box>
-      <QuestionView question={questionsStore.currentQuestion} withTimer={Boolean(isMock)} />
+      <QuestionView question={questionsStore.currentQuestion} isMock={Boolean(isMock)} />
     </Page>
   )
 }
