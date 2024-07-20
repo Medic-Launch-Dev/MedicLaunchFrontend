@@ -16,9 +16,11 @@ function Subscribe() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
-  const [selectedPlan, setSelectedPlan] = useState<string>("3 Months");
+  const [selectedPlanId, setSelectedPlanId] = useState<number>(2);
 
   const { showSnackbar, snackbarProps } = useSnackbar();
+
+  console.log(selectedPlanId);
 
   const steps = [
     {
@@ -63,7 +65,7 @@ function Subscribe() {
             Study Portal
           </LinkButton>
           <Typography fontSize={28} fontWeight={500} sx={primaryGradientText}>
-            Add Subscription
+            Subscription
           </Typography>
           <LinkButton to="/" sx={{ width: "max-content", flexShrink: 0, visibility: "hidden" }} startIcon={<ChevronLeft />}>
             Study Portal
@@ -101,8 +103,8 @@ function Subscribe() {
           }}
         >
           {activeStep === 0 && <QuestionBankSelection />}
-          {activeStep === 1 && <PlanSelection selectedPlan={selectedPlan} setSelectedPlan={setSelectedPlan} />}
-          {activeStep === 2 && <Payment />}
+          {activeStep === 1 && <PlanSelection selectedPlanId={selectedPlanId} setSelectedPlanId={setSelectedPlanId} />}
+          {activeStep === 2 && <Payment selectedPlanId={selectedPlanId} />}
         </Box>
         <Stack
           direction="row"
@@ -123,17 +125,17 @@ function Subscribe() {
             Back
           </Button>
           {
-            activeStep < steps.length - 1 ? 
+            activeStep < steps.length - 1 ?
               <LoadingButton
-              variant="contained"
-              sx={{ width: "max-content", flexShrink: 0, py: 1 }}
-              size="large"
-              endIcon={<ChevronRight />}
-              onClick={handleNext}
-              loading={loading}
-            >
-              Next
-            </LoadingButton> : <></>
+                variant="contained"
+                sx={{ width: "max-content", flexShrink: 0, py: 1 }}
+                size="large"
+                endIcon={<ChevronRight />}
+                onClick={handleNext}
+                loading={loading}
+              >
+                Next
+              </LoadingButton> : <></>
           }
         </Stack>
       </Stack>

@@ -51,7 +51,7 @@ const CheckoutForm = () => {
       <PaymentElement />
       <LoadingButton
         variant="contained"
-        sx={{ width: "max-content", flexShrink: 0, py: 1, my: 2}}
+        sx={{ width: "max-content", flexShrink: 0, py: 1, my: 2 }}
         size="large"
         disabled={!stripe || !elements}
         loading={loading}

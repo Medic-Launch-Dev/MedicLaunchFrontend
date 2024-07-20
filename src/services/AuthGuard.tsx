@@ -8,9 +8,11 @@ export const AuthGuard = ({ children }) => {
   const { accountStore } = useServiceProvider();
 
   useEffect(() => {
-    accountStore.getMyProfile();
-    accountStore.getSubsriptionStatus();
-    accountStore.getRoles();
+    if (isLoggedIn()) {
+      accountStore.getMyProfile();
+      accountStore.getSubscriptionStatus();
+      accountStore.getRoles();
+    }
   }, []);
 
   if (!isLoggedIn()) {

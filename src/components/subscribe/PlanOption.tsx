@@ -1,15 +1,14 @@
 import { Stack, Typography } from "@mui/material";
+import { Plan } from "../../models/Payment";
 import { primaryGradient } from "../../theme";
 
-interface PlanOptionProps {
-  name: string;
-  price: number;
+interface PlanOptionProps extends Plan {
   mostPopular?: boolean;
   selected: boolean;
-  setSelected: (plan: string) => void;
+  setSelected: (planId: number) => void;
 }
 
-export default function PlanOption({ name, price, mostPopular, selected, setSelected }: PlanOptionProps) {
+export default function PlanOption({ id, name, price, mostPopular, selected, setSelected }: PlanOptionProps) {
   const planFeatures = [
     "Clinical Question Bank",
     "Detailed Explanations",
@@ -52,13 +51,13 @@ export default function PlanOption({ name, price, mostPopular, selected, setSele
           fontWeight: 500,
           cursor: "pointer",
         }}
-        onClick={() => setSelected(name)}
+        onClick={() => setSelected(id)}
       >
         <Stack>
           <Typography fontSize={18} fontWeight={600} color={selected ? "white" : "primary"} textAlign="center">{name}</Typography>
           <Typography fontSize={28} fontWeight={600} color={selected ? "white" : "primary"} textAlign="center">£ {price}</Typography>
         </Stack>
-        <Stack spacing={2} sx={{ p: 3, bgcolor: "#f9f9ff", borderRadius: 1, width: 280 }}>
+        <Stack spacing={2} sx={{ p: 3, py: mostPopular ? 4 : 3, bgcolor: "#f9f9ff", borderRadius: 1, width: 280 }}>
           {
             planFeatures.map(feature => (
               <Stack direction="row" spacing={1} alignItems="center">

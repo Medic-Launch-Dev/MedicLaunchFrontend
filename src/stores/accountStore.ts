@@ -37,7 +37,7 @@ export class AccountStore {
     });
   }
 
-  public async getSubsriptionStatus() {
+  public async getSubscriptionStatus() {
     const response: boolean = await this.apiClient.getData('account/hasactivesubscription');
     runInAction(() => {
       this.isSubscribed = response;
