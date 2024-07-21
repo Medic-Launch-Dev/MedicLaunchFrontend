@@ -42,7 +42,7 @@ export class UserStore {
   }
 
   public async deleteUser(userId: string): Promise<boolean> {
-    return await this.apiClient.deleteData('users/delete', userId);
+    return await this.apiClient.postData(`users/delete/${userId}`, {});
   }
 
   public async addUser(data: any): Promise<boolean> {

@@ -7,6 +7,7 @@ import Page from '../components/nav/Page';
 import SendNotificationModal from '../components/notifications/SendNotificationModal';
 import UserProfile from '../components/profile/UserProfile';
 import AddUserModal from '../components/userManagement/AddUserModal';
+import DeleteUserModal from '../components/userManagement/DeleteUserModal';
 import Unauthorized from '../components/util/Unauthorized';
 import { useServiceProvider } from '../services/ServiceProvider';
 import { primaryGradientText } from '../theme';
@@ -39,6 +40,8 @@ function UserManagement() {
 	const [openAdd, setOpenAdd] = useState(false);
 	const [openEdit, setOpenEdit] = useState(false);
 	const [openSend, setOpenSend] = useState(false);
+	const [openDelete, setOpenDelete] = useState(false);
+	const [userToDeleteId, setUserToDeleteId] = useState('');
 	const { userStore, accountStore: { hasAdminAccess } } = useServiceProvider();
 	const [rows, setRows] = useState<TableRow[]>([]);
 	const [selectedRows, setSelectedRows] = useState<TableRow[]>([]);
@@ -124,7 +127,16 @@ function UserManagement() {
 			</Stack>
 
 			<Stack direction='row' justifyContent='right' alignItems='center' pb={3} spacing={1}>
-				{/* <Button variant='contained' disabled={selectedRows.length !== 1}>Delete</Button> */}
+				<Button
+					variant='contained'
+					disabled={selectedRows.length !== 1}
+					onClick={() => {
+						setUserToDeleteId(selectedRows[0].userId);
+						setOpenDelete(true);
+					}}
+				>
+					Delete
+				</Button>
 				<Button variant='contained' disabled={selectedRows.length < 1} onClick={() => setOpenSend(true)}>Send Notification</Button>
 			</Stack>
 
@@ -148,6 +160,7 @@ function UserManagement() {
 				setOpen={setOpenSend}
 				userIds={selectedRows.map(row => row.userId)}
 			/>
+			<DeleteUserModal open={openDelete} setOpen={setOpenDelete} userId={userToDeleteId} />
 			<Dialog open={openEdit} onClose={() => setOpenEdit(false)} fullWidth maxWidth="lg">
 				<DialogTitle>View User Profile</DialogTitle>
 				<DialogContent>

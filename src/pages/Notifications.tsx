@@ -1,9 +1,26 @@
-import { Button, Card, Paper, Stack, Typography } from "@mui/material";
+import { Card, Stack, Typography } from "@mui/material";
+import { observer } from "mobx-react-lite";
+import { useEffect, useState } from "react";
 import Page from "../components/nav/Page";
+import NotificationCard from "../components/notifications/NotificationCard";
 import LinkButton from "../components/util/LinkButton";
+import { Notification } from "../models/Notification";
+import { useServiceProvider } from "../services/ServiceProvider";
 import { primaryGradientText } from "../theme";
 
-export default function Notifications() {
+function Notifications() {
+  const { notificationsStore } = useServiceProvider();
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+
+  useEffect(() => {
+    init();
+  })
+
+  async function init() {
+    const notifications = await notificationsStore.getUserNotifications();
+    setNotifications(notifications);
+  }
+
   return (
     <Page withNav>
       <LinkButton to="/" sx={{ my: 2 }}>
@@ -11,68 +28,19 @@ export default function Notifications() {
       </LinkButton>
 
       <Card>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={2}>
-          <Typography variant="h3" sx={primaryGradientText}>Notifications</Typography>
-          <Button variant="contained" color="primary">Delete</Button>
-        </Stack>
+        <Typography variant="h3" sx={primaryGradientText} mb={2}>Notifications</Typography>
 
         <Stack spacing={1.5}>
-          <Paper>
-            <Stack direction="row" alignItems="center" justifyContent="space-between" p={2}>
-              <Typography fontWeight={500}>New exam added</Typography>
-              <Typography color="grey" fontWeight={500}>12-10-23</Typography>
-            </Stack>
-          </Paper>
-          <Paper>
-            <Stack direction="row" alignItems="center" justifyContent="space-between" p={2}>
-              <Typography fontWeight={500}>New exam added</Typography>
-              <Typography color="grey" fontWeight={500}>12-10-23</Typography>
-            </Stack>
-          </Paper>
-          <Paper>
-            <Stack direction="row" alignItems="center" justifyContent="space-between" p={2}>
-              <Typography fontWeight={500}>New exam added</Typography>
-              <Typography color="grey" fontWeight={500}>12-10-23</Typography>
-            </Stack>
-          </Paper>
-          <Paper>
-            <Stack direction="row" alignItems="center" justifyContent="space-between" p={2}>
-              <Typography fontWeight={500}>New exam added</Typography>
-              <Typography color="grey" fontWeight={500}>12-10-23</Typography>
-            </Stack>
-          </Paper>
-          <Paper>
-            <Stack direction="row" alignItems="center" justifyContent="space-between" p={2}>
-              <Typography fontWeight={500}>New exam added</Typography>
-              <Typography color="grey" fontWeight={500}>12-10-23</Typography>
-            </Stack>
-          </Paper>
-          <Paper>
-            <Stack direction="row" alignItems="center" justifyContent="space-between" p={2}>
-              <Typography fontWeight={500}>New exam added</Typography>
-              <Typography color="grey" fontWeight={500}>12-10-23</Typography>
-            </Stack>
-          </Paper>
-          <Paper>
-            <Stack direction="row" alignItems="center" justifyContent="space-between" p={2}>
-              <Typography fontWeight={500}>New exam added</Typography>
-              <Typography color="grey" fontWeight={500}>12-10-23</Typography>
-            </Stack>
-          </Paper>
-          <Paper>
-            <Stack direction="row" alignItems="center" justifyContent="space-between" p={2}>
-              <Typography fontWeight={500}>New exam added</Typography>
-              <Typography color="grey" fontWeight={500}>12-10-23</Typography>
-            </Stack>
-          </Paper>
-          <Paper>
-            <Stack direction="row" alignItems="center" justifyContent="space-between" p={2}>
-              <Typography fontWeight={500}>New exam added</Typography>
-              <Typography color="grey" fontWeight={500}>12-10-23</Typography>
-            </Stack>
-          </Paper>
+          {
+            notifications.length > 0 ?
+              notifications.map(notification => <NotificationCard key={notification.id} notification={notification} />)
+              :
+              <Typography align="center" py={2}>No notifications to show</Typography>
+          }
         </Stack>
       </Card>
     </Page>
   );
 }
+
+export default observer(Notifications);
