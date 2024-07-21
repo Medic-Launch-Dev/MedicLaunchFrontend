@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
+import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 import UserProfileForm from "../profile/UserProfileForm";
 
 interface EditProfileModalProps {
@@ -11,13 +11,8 @@ export default function AddUserModal({ open, onClose }: EditProfileModalProps) {
 		<Dialog open={open} onClose={onClose} fullWidth maxWidth="md">
 			<DialogTitle sx={{ fontSize: 17 }}>Add User</DialogTitle>
 			<DialogContent>
-				<UserProfileForm newUser />
-				<div style={{ height: 150 }} />
+				<UserProfileForm newUser onClose={onClose} />
 			</DialogContent>
-			<DialogActions sx={{ pb: 2 }}>
-				<Button variant="contained">Add User</Button>
-				<Button onClick={onClose}>Cancel</Button>
-			</DialogActions>
 		</Dialog>
 	)
 }

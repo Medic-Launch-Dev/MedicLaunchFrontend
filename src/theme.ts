@@ -134,6 +134,14 @@ theme.components = {
       }
     }
   },
+  MuiSelect: {
+    styleOverrides: {
+      root: {
+        backgroundColor: "#fff",
+        borderRadius: 12
+      }
+    }
+  },
   MuiCheckbox: {
     styleOverrides: {
       root: {

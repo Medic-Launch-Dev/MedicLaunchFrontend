@@ -20,8 +20,6 @@ function Subscribe() {
 
   const { showSnackbar, snackbarProps } = useSnackbar();
 
-  console.log(selectedPlanId);
-
   const steps = [
     {
       label: "Select Question Bank",

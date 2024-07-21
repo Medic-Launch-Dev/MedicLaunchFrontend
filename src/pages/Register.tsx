@@ -1,7 +1,8 @@
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import { Box, Button, Grid, Snackbar, Stack, TextField, Typography } from "@mui/material";
+import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, Snackbar, Stack, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import AgreementCheckbox from "../components/register/AgreementCheckbox";
@@ -13,14 +14,14 @@ import { primaryGradient, primaryGradientText, unstyledLink } from "../theme";
 interface FormValues {
   email: string;
   password: string;
-  city: string;
   graduationYear: string;
   university: string;
   firstName: string;
   lastName: string;
-  displayName: string;
   howDidYouHearAboutUs: string;
   confirmPassword: string;
+  phone: string;
+  subscribeToPromotions: boolean;
 }
 
 const validationSchema = yup.object({
@@ -36,42 +37,49 @@ const validationSchema = yup.object({
     ),
   confirmPassword: yup
     .string()
-    .oneOf([yup.ref('password')], 'Passwords must match')
+    .oneOf([yup.ref('password')], 'Passwords must match'),
+  graduationYear: yup
+    .string()
+    .matches(/^\d{4}$/, "Graduation must be a valid year")
 });
 
 export default function Register() {
   const navigate = useNavigate();
   const { showSnackbar, snackbarProps } = useSnackbar();
+  const [howDidYouHearAboutUs, setHowDidYouHearAboutUs] = useState("");
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
 
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
-      city: "",
       graduationYear: "",
       university: "",
       firstName: "",
       lastName: "",
-      displayName: "",
       howDidYouHearAboutUs: "",
       confirmPassword: "",
+      phone: "",
+      subscribeToPromotions: false
     },
     validationSchema: validationSchema,
     onSubmit: handleSubmit,
   });
+
+  const customHowDidYouHearAboutUs = formik.values.howDidYouHearAboutUs === "Other" || formik.values.howDidYouHearAboutUs === "Friend Referral";
 
   async function handleSubmit(values: FormValues) {
     try {
       const userData: MedicLaunchUser = {
         email: values.email,
         password: values.password,
-        city: values.city,
         graduationYear: Number(values.graduationYear),
         university: values.university,
         firstName: values.firstName,
         lastName: values.lastName,
-        displayName: values.displayName,
-        howDidYouHearAboutUs: values.howDidYouHearAboutUs,
+        howDidYouHearAboutUs: customHowDidYouHearAboutUs ? howDidYouHearAboutUs : values.howDidYouHearAboutUs,
+        phone: values.phone,
+        subscribeToPromotions: values.subscribeToPromotions,
       };
 
       const successfullyRegistered = await userStore.createUser(userData);
@@ -119,6 +127,7 @@ export default function Register() {
                       value={formik.values.firstName}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
+                      required
                     />
                   </Grid>
                   <Grid item md={6}>
@@ -129,16 +138,18 @@ export default function Register() {
                       value={formik.values.lastName}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
+                      required
                     />
                   </Grid>
                   <Grid item md={6}>
                     <TextField
                       fullWidth
-                      name="displayName"
-                      label="Display name"
-                      value={formik.values.displayName}
+                      name="phone"
+                      label="Mobile Number"
+                      value={formik.values.phone}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
+                      required
                     />
                   </Grid>
                   <Grid item md={6}>
@@ -151,6 +162,7 @@ export default function Register() {
                       onBlur={formik.handleBlur}
                       error={formik.touched.email && Boolean(formik.errors.email)}
                       helperText={formik.touched.email && formik.errors.email}
+                      required
                     />
                   </Grid>
                   <Grid item md={6}>
@@ -161,6 +173,7 @@ export default function Register() {
                       value={formik.values.university}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
+                      required
                     />
                   </Grid>
                   <Grid item md={6}>
@@ -171,27 +184,45 @@ export default function Register() {
                       value={formik.values.graduationYear}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
+                      type="number"
+                      error={formik.touched.graduationYear && Boolean(formik.errors.graduationYear)}
+                      helperText={formik.touched.graduationYear && formik.errors.graduationYear}
+                      required
                     />
                   </Grid>
                   <Grid item md={6}>
-                    <TextField
-                      fullWidth
-                      name="city"
-                      label="City"
-                      value={formik.values.city}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                    />
+                    <FormControl fullWidth>
+                      <InputLabel id="select-label">How did you hear about us</InputLabel>
+                      <Select
+                        labelId="select-label"
+                        value={formik.values.howDidYouHearAboutUs}
+                        label="How did you hear about us"
+                        onChange={e => {
+                          formik.setFieldValue("howDidYouHearAboutUs", e.target.value as string)
+                          if (customHowDidYouHearAboutUs) setHowDidYouHearAboutUs("");
+                        }}
+                      >
+                        <MenuItem value={"Internet Search"}>Internet Search</MenuItem>
+                        <MenuItem value={"Facebook"}>Facebook</MenuItem>
+                        <MenuItem value={"Instagram"}>Instagram</MenuItem>
+                        <MenuItem value={"X"}>X</MenuItem>
+                        <MenuItem value={"LinkedIn"}>LinkedIn</MenuItem>
+                        <MenuItem value={"Friend Referral"}>Friend Referral</MenuItem>
+                        <MenuItem value={"Other"}>Other</MenuItem>
+                      </Select>
+                    </FormControl>
                   </Grid>
                   <Grid item md={6}>
-                    <TextField
-                      fullWidth
-                      name="howDidYouHearAboutUs"
-                      label="How did you hear about us"
-                      value={formik.values.howDidYouHearAboutUs}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                    />
+                    {
+                      customHowDidYouHearAboutUs &&
+                      <TextField
+                        fullWidth
+                        label={formik.values.howDidYouHearAboutUs === "Friend Referral" ? "Friend's email" : "Please specify"}
+                        value={howDidYouHearAboutUs}
+                        onChange={(e) => setHowDidYouHearAboutUs(e.target.value)}
+                        required
+                      />
+                    }
                   </Grid>
                   <Grid item md={6}>
                     <TextField
@@ -204,6 +235,7 @@ export default function Register() {
                       onBlur={formik.handleBlur}
                       error={formik.touched.password && Boolean(formik.errors.password)}
                       helperText={formik.touched.password && formik.errors.password}
+                      required
                     />
                   </Grid>
                   <Grid item md={6}>
@@ -217,12 +249,21 @@ export default function Register() {
                       onBlur={formik.handleBlur}
                       error={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}
                       helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
+                      required
                     />
                   </Grid>
                 </Grid>
                 <Stack mt={3}>
-                  <AgreementCheckbox text="I agree to Terms & Conditions and Privacy Policy" />
-                  <AgreementCheckbox text="Send me updates and promotions via email/text" />
+                  <AgreementCheckbox
+                    checked={agreedToTerms}
+                    onChange={e => setAgreedToTerms(e.target.checked)}
+                    text="I agree to Terms & Conditions and Privacy Policy"
+                  />
+                  <AgreementCheckbox
+                    text="Send me updates and promotions via email/text"
+                    checked={formik.values.subscribeToPromotions}
+                    onChange={e => formik.setFieldValue("subscribeToPromotions", e.target.checked)}
+                  />
                 </Stack>
                 <Stack
                   direction="row"
@@ -244,7 +285,7 @@ export default function Register() {
                     variant="contained"
                     sx={{ fontSize: 16, fontWeight: 500, py: 1.5, px: 6 }}
                     endIcon={<ChevronRight />}
-                    disabled={!formik.isValid || requiredFieldsAreEmpty()}
+                    disabled={!formik.isValid || requiredFieldsAreEmpty() || !agreedToTerms || (customHowDidYouHearAboutUs && !howDidYouHearAboutUs)}
                     loading={formik.isSubmitting}
                     type="submit"
                   >

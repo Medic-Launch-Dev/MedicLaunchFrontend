@@ -19,7 +19,6 @@ export default function EditNote({ note, specialityId, flashcardId, questionId, 
 
   useEffect(() => {
     setContent(note?.content || "");
-    console.log("Note changed");
   }, [note, flashcardId, questionId, specialityId]);
 
   async function saveNote() {

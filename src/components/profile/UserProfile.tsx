@@ -7,6 +7,7 @@ import { useServiceProvider } from "../../services/ServiceProvider";
 import accountStore from "../../stores/accountStore";
 import { primaryGradient } from "../../theme";
 import { formatDate } from "../../utils/DateTimeUtils";
+import LinkButton from "../util/LinkButton";
 import EditProfileModal from "./EditProfileModal";
 import ResetPasswordModal from "./ResetPasswordModal";
 
@@ -15,7 +16,7 @@ interface UserProfileProps {
 }
 
 function UserProfile({ adminView }: UserProfileProps) {
-  const { accountStore: { myProfile }, practiceStore } = useServiceProvider();
+  const { accountStore: { myProfile, isSubscribed }, practiceStore } = useServiceProvider();
   const { showSnackbar, snackbarProps } = useSnackbar();
 
   const [editOpen, setEditOpen] = useState(false);
@@ -60,9 +61,9 @@ function UserProfile({ adminView }: UserProfileProps) {
                   <Divider sx={{ my: 1.5 }} />
                   <Stack spacing={1}>
                     <ProfileField label="Full Name" value={`${myProfile?.firstName} ${myProfile?.lastName}`} />
+                    <ProfileField label="Email" value={myProfile?.email} />
                     <ProfileField label="University" value={myProfile?.university} />
                     <ProfileField label="Graduation Year" value={myProfile?.graduationYear.toString()} />
-                    <ProfileField label="City" value={myProfile?.city} />
                     <ProfileField label="Mobile" value={myProfile?.phone} />
                   </Stack>
                 </Stack>
@@ -85,16 +86,28 @@ function UserProfile({ adminView }: UserProfileProps) {
             <Paper sx={{ p: 3 }}>
               <Stack direction="row" justifyContent="space-between" alignItems="center">
                 <Typography fontSize={17} fontWeight={500}>My Subscription</Typography>
-                <Button size="small" variant="contained" startIcon={<Loop />} onClick={() => setResetOpen(true)} disabled={myProfile?.questionsCompleted === 0}>
-                  Reset Questions
-                </Button>
+                {
+                  isSubscribed ?
+                    <Button size="small" variant="contained" startIcon={<Loop />} onClick={() => setResetOpen(true)} disabled={myProfile?.questionsCompleted === 0}>
+                      Reset Questions
+                    </Button>
+                    :
+                    <LinkButton to="/subscribe" variant="contained" size="small">
+                      Purchase Subscription
+                    </LinkButton>
+                }
               </Stack>
               <Divider sx={{ my: 2 }} />
-              <Stack direction="row" justifyContent="space-between">
-                <SubscriptionField label="Subscription" value="UKMLA" />
-                <SubscriptionField label="Plan" value={`${myProfile?.subscriptionMonths} month`} />
-                <SubscriptionField label="Date purchased" value={formatDate(myProfile?.subscriptionPurchaseDate)} />
-              </Stack>
+              {
+                isSubscribed ?
+                  <Stack direction="row" justifyContent="space-between">
+                    <SubscriptionField label="Subscription" value="UKMLA" />
+                    <SubscriptionField label="Plan" value={`${myProfile?.subscriptionMonths} month`} />
+                    <SubscriptionField label="Date purchased" value={formatDate(myProfile?.subscriptionPurchaseDate)} />
+                  </Stack>
+                  :
+                  <Typography textAlign="center" py={2}>No subscription active</Typography>
+              }
             </Paper>
             <Paper sx={{ p: 3, mt: 3 }}>
               <Stack direction="row" justifyContent="space-between" alignItems="center">

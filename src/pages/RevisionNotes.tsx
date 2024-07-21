@@ -63,8 +63,6 @@ function RevisionNotes() {
     await notesStore.getAllNotes();
   }
 
-  console.log(notesStore.notes);
-
   return (
     <Page sx={{ pt: 2 }}>
       <EditNoteDialog

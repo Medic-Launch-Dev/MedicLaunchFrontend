@@ -8,7 +8,7 @@ export class ErrorStore {
   }
 
   setError(message) {
-    console.log("Error: ", message);
+    console.error(message);
     this.errorMessage = message;
   }
 

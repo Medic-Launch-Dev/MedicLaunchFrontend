@@ -38,9 +38,11 @@ const CheckedIcon = styled(Icon)({
 
 interface AgreementCheckboxProps {
   text: string;
+  checked: boolean;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export default function AgreementCheckbox({ text }: AgreementCheckboxProps) {
+export default function AgreementCheckbox({ text, checked, onChange }: AgreementCheckboxProps) {
   return (
     <FormControlLabel
       control={
@@ -53,6 +55,8 @@ export default function AgreementCheckbox({ text }: AgreementCheckboxProps) {
           checkedIcon={<CheckedIcon />}
           icon={<Icon />}
           inputProps={{ 'aria-label': 'Checkbox demo' }}
+          checked={checked}
+          onChange={onChange}
         />
       }
       label={text}
