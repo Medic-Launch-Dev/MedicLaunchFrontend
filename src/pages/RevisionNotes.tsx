@@ -72,6 +72,7 @@ function RevisionNotes() {
         specialityId={currentNote?.specialityId || selectedSpeciality}
         questionId={currentNote?.questionId}
         flashcardId={currentNote?.flashcardId}
+        onSave={notesStore.getAllNotes}
       />
 
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>

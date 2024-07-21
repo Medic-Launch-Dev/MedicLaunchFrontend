@@ -3,4 +3,6 @@ export class Notification {
   id?: string;
   title: string;
   message: string;
+  createdOn?: string;
+  isRead?: boolean;
 }

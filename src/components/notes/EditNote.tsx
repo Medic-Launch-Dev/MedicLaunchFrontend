@@ -9,11 +9,11 @@ export interface EditNoteProps extends StackProps {
   specialityId?: string;
   flashcardId?: string;
   questionId?: string;
-  onSave?: () => void;
+  onSave?: () => Promise<any>;
 }
 
 export default function EditNote({ note, specialityId, flashcardId, questionId, onSave, ...rest }: EditNoteProps) {
-  const { notesStore } = useServiceProvider();
+  const { notesStore, flashCardStore } = useServiceProvider();
   const { showSnackbar, snackbarProps } = useSnackbar();
   const [content, setContent] = useState(note?.content || "");
 
@@ -30,14 +30,15 @@ export default function EditNote({ note, specialityId, flashcardId, questionId, 
       newNote.content = content;
       const success = await notesStore.createNote(newNote);
       if (success) {
+        await flashCardStore.getAllFlashCards();
         await notesStore.getAllNotes();
         showSnackbar('Saved', 'success');
-        if (onSave) onSave();
       }
     } else {
       note.content = content;
       const success = await notesStore.updateNote(note);
       if (success) {
+        await flashCardStore.getAllFlashCards();
         await notesStore.getAllNotes();
         showSnackbar('Saved', 'success');
       }

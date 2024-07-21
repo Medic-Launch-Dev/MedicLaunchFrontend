@@ -1,17 +1,21 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import { Notification } from "../models/Notification";
 import MedicLaunchApiClient from "../services/MedicLaunchApiClient";
 
 export class NotificationsStore {
   private apiClient: MedicLaunchApiClient;
+  notifications: Notification[] = [];
 
   constructor(apiClient: MedicLaunchApiClient) {
     this.apiClient = apiClient;
     makeAutoObservable(this);
   }
 
-  async getUserNotifications(): Promise<Notification[]> {
-    return await this.apiClient.getData('notification/user-notifications');
+  async getUserNotifications() {
+    const data: Notification[] = await this.apiClient.getData('notification/user-notifications');
+    runInAction(() => {
+      this.notifications = data;
+    });
   }
 
   async markNotificationAsRead(notificationId: string) {

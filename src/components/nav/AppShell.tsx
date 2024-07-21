@@ -1,15 +1,15 @@
-import { Notifications } from "@mui/icons-material";
-import { Avatar, Badge, Box, IconButton, Stack, Toolbar } from "@mui/material";
+import { Avatar, Box, Stack, Toolbar } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
-import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Logo from "../../assets/logo.svg";
 import { useServiceProvider } from "../../services/ServiceProvider";
+import NotificationBellButton from "../notifications/NotificationBellButton";
 
 function AppShell() {
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   const { errorStore } = useServiceProvider();
 
   useEffect(() => {
@@ -18,25 +18,12 @@ function AppShell() {
   }, [location]);
 
   return (
-    <Box sx={{ height: "100vh" }}>  
+    <Box sx={{ height: "100vh" }}>
       <Toolbar sx={{ backgroundColor: "#fff" }}>
         <Stack sx={{ width: '100%' }} direction="row" justifyContent="space-between" alignItems="center">
           <img src={Logo} height={40} alt="Medic launch" style={{ cursor: 'pointer' }} onClick={() => navigate("/")} />
           <Stack direction="row" alignItems="center" spacing={2}>
-            <Badge badgeContent={4} color="primary"
-              sx={{
-                '& .MuiBadge-badge': {
-                  right: 5,
-                  top: 5,
-                }
-              }}
-            >
-              <Link to="/notifications">
-                <IconButton>
-                  <Notifications />
-                </IconButton>
-              </Link>
-            </Badge>
+            <NotificationBellButton />
             <Avatar />
           </Stack>
         </Stack>

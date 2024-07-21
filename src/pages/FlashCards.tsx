@@ -1,5 +1,5 @@
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
-import { Button, Card, CircularProgress, Divider, IconButton, Skeleton, Stack, Typography } from "@mui/material";
+import { Card, CircularProgress, Divider, IconButton, Skeleton, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Page from "../components/nav/Page";
@@ -103,7 +103,7 @@ export default function FlashCards() {
           <Card sx={{ flexGrow: 1 }}>
             <Stack direction="row" justifyContent="space-between" alignItems="center">
               <Typography color="primary" variant="h3">Notes</Typography>
-              <Button variant="contained">View all notes</Button>
+              <LinkButton variant="contained" to="/revision-notes">View all notes</LinkButton>
             </Stack>
             <Divider sx={{ my: 2 }} />
             <EditNote
@@ -112,6 +112,7 @@ export default function FlashCards() {
               note={flashcards[currentIdx].note}
               flashcardId={flashcards[currentIdx].id}
               specialityId={flashcards[currentIdx].specialityId}
+              onSave={flashCardStore.getAllFlashCards}
             />
           </Card>
         </Stack>
