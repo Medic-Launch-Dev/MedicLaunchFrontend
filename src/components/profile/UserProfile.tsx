@@ -16,7 +16,7 @@ interface UserProfileProps {
 }
 
 function UserProfile({ adminView }: UserProfileProps) {
-  const { accountStore: { myProfile, isSubscribed }, practiceStore } = useServiceProvider();
+  const { accountStore: { myProfile, isSubscribed }, userStore, practiceStore } = useServiceProvider();
   const { showSnackbar, snackbarProps } = useSnackbar();
 
   const [editOpen, setEditOpen] = useState(false);
@@ -35,6 +35,8 @@ function UserProfile({ adminView }: UserProfileProps) {
     }
   }
 
+  const userProfile = adminView ? userStore.userInView : myProfile;
+
   return (
     <>
       <Snackbar {...snackbarProps} />
@@ -44,27 +46,38 @@ function UserProfile({ adminView }: UserProfileProps) {
             <Paper sx={{ p: 3 }}>
               <Stack alignItems="center">
                 <Box sx={{ background: primaryGradient, height: 50, width: 50, borderRadius: 0.5 }} />
-                <Typography fontSize={16} fontWeight={500} mt={2}>{myProfile?.firstName} {myProfile?.lastName}</Typography>
+                <Typography fontSize={16} fontWeight={500} mt={2}>{userProfile?.firstName} {userProfile?.lastName}</Typography>
 
                 <Stack direction="row" spacing={2} alignItems="center" mt={3}>
-                  <Box sx={{ bgcolor: "#2684FF1F", height: 40, width: 40, borderRadius: 0.5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <Check color="primary" />
-                  </Box>
-                  <Stack>
-                    <Typography fontSize={20} fontWeight={400}>{myProfile?.questionsCompleted}</Typography>
-                    <Typography fontSize={13} fontWeight={400} color="#3A3541AD">Questions Completed</Typography>
-                  </Stack>
+                  {adminView ?
+                    <Box sx={{ background: primaryGradient, p: 1, color: "white", fontSize: 16, fontWeight: 500, borderRadius: 1 }}>
+                      £130
+                    </Box>
+                    :
+                    <Box sx={{ bgcolor: "#2684FF1F", height: 40, width: 40, borderRadius: 0.5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <Check color="primary" />
+                    </Box>
+                  }
+                  {
+                    adminView ?
+                      <Typography fontSize={13} fontWeight={400} color="#3A3541AD">Total Revenue</Typography>
+                      :
+                      <Stack>
+                        <Typography fontSize={20} fontWeight={400}>{userProfile?.questionsCompleted}</Typography>
+                        <Typography fontSize={13} fontWeight={400} color="#3A3541AD">Questions Completed</Typography>
+                      </Stack>
+                  }
                 </Stack>
 
                 <Stack width="100%" mt={4}>
                   <Typography fontSize={17} fontWeight={500}>Details</Typography>
                   <Divider sx={{ my: 1.5 }} />
                   <Stack spacing={1}>
-                    <ProfileField label="Full Name" value={`${myProfile?.firstName} ${myProfile?.lastName}`} />
-                    <ProfileField label="Email" value={myProfile?.email} />
-                    <ProfileField label="University" value={myProfile?.university} />
-                    <ProfileField label="Graduation Year" value={myProfile?.graduationYear.toString()} />
-                    <ProfileField label="Mobile" value={myProfile?.phone} />
+                    <ProfileField label="Full Name" value={`${userProfile?.firstName} ${userProfile?.lastName}`} />
+                    <ProfileField label="Email" value={userProfile?.email} />
+                    <ProfileField label="University" value={userProfile?.university} />
+                    <ProfileField label="Graduation Year" value={userProfile?.graduationYear.toString()} />
+                    <ProfileField label="Mobile" value={userProfile?.phone} />
                   </Stack>
                 </Stack>
 
@@ -87,14 +100,16 @@ function UserProfile({ adminView }: UserProfileProps) {
               <Stack direction="row" justifyContent="space-between" alignItems="center">
                 <Typography fontSize={17} fontWeight={500}>My Subscription</Typography>
                 {
-                  isSubscribed ?
-                    <Button size="small" variant="contained" startIcon={<Loop />} onClick={() => setResetOpen(true)} disabled={myProfile?.questionsCompleted === 0}>
-                      Reset Questions
-                    </Button>
-                    :
-                    <LinkButton to="/subscribe" variant="contained" size="small">
-                      Purchase Subscription
-                    </LinkButton>
+                  !adminView && (
+                    isSubscribed ?
+                      <Button size="small" variant="contained" startIcon={<Loop />} onClick={() => setResetOpen(true)} disabled={userProfile?.questionsCompleted === 0}>
+                        Reset Questions
+                      </Button>
+                      :
+                      <LinkButton to="/subscribe" variant="contained" size="small">
+                        Purchase Subscription
+                      </LinkButton>
+                  )
                 }
               </Stack>
               <Divider sx={{ my: 2 }} />
@@ -102,8 +117,8 @@ function UserProfile({ adminView }: UserProfileProps) {
                 isSubscribed ?
                   <Stack direction="row" justifyContent="space-between">
                     <SubscriptionField label="Subscription" value="UKMLA" />
-                    <SubscriptionField label="Plan" value={`${myProfile?.subscriptionMonths} month`} />
-                    <SubscriptionField label="Date purchased" value={formatDate(myProfile?.subscriptionPurchaseDate)} />
+                    <SubscriptionField label="Plan" value={`${userProfile?.subscriptionMonths} month`} />
+                    <SubscriptionField label="Date purchased" value={formatDate(userProfile?.subscriptionPurchaseDate)} />
                   </Stack>
                   :
                   <Typography textAlign="center" py={2}>No subscription active</Typography>

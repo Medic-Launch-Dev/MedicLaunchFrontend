@@ -110,7 +110,7 @@ export default function Register() {
               <form onSubmit={formik.handleSubmit}>
                 <Typography
                   variant="h1"
-                  sx={primaryGradientText}
+                  sx={{ ...primaryGradientText, flexShrink: 0, pb: 4 }}
                   fontSize={36}
                   fontWeight={500}
                   textAlign="center"
@@ -118,7 +118,7 @@ export default function Register() {
                   Register
                 </Typography>
 
-                <Grid container spacing={3} mt={3}>
+                <Grid container spacing={3}>
                   <Grid item md={6}>
                     <TextField
                       fullWidth
@@ -301,7 +301,7 @@ export default function Register() {
           lg={5}
           sx={{ height: "100%", background: primaryGradient, display: { xs: 'none', lg: 'block' } }}
         ></Grid>
-      </Grid>
+      </Grid >
     </>
   );
 }

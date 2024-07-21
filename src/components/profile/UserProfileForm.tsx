@@ -7,9 +7,8 @@ import * as yup from "yup";
 import { useSnackbar } from "../../hooks/useSnackbar";
 import { plans } from "../../models/Payment";
 import { useServiceProvider } from "../../services/ServiceProvider";
-import accountStore from "../../stores/accountStore";
 
-interface FormikValues {
+export interface EditProfileFormData {
   id?: string;
   firstName: string;
   lastName: string;
@@ -49,20 +48,41 @@ function UserProfileForm({ newUser, onClose }: UserProfileFormProps) {
   const { accountStore: { myProfile }, userStore } = useServiceProvider();
   const [loading, setLoading] = useState(false);
 
+  const profileToEdit = userStore.userInView || myProfile;
+
+  const getIniitalProfile = () => {
+    if (newUser) {
+      return {
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        university: "",
+        graduationYear: "",
+        password: "",
+        subscriptionPlanId: 1,
+        displayName: "",
+        city: "",
+      };
+    } else {
+      return {
+        id: profileToEdit?.id || "",
+        firstName: profileToEdit?.firstName || "",
+        lastName: profileToEdit?.lastName || "",
+        email: profileToEdit?.email || "",
+        phone: profileToEdit?.phone || "",
+        university: profileToEdit?.university || "",
+        graduationYear: profileToEdit?.graduationYear?.toString() || "",
+        password: "",
+        subscriptionPlanId: 1,
+        displayName: "",
+        city: "",
+      };
+    }
+  }
+
   const formik = useFormik({
-    initialValues: {
-      id: myProfile?.id || "",
-      firstName: myProfile?.firstName || "",
-      lastName: myProfile?.lastName || "",
-      email: myProfile?.email || "",
-      phone: myProfile?.phone || "",
-      university: myProfile?.university || "",
-      graduationYear: myProfile?.graduationYear?.toString() || "",
-      password: "",
-      subscriptionPlanId: 2,
-      displayName: "",
-      city: "",
-    },
+    initialValues: getIniitalProfile(),
     validationSchema: validationSchema,
     onSubmit: (values) => {
       if (newUser) {
@@ -73,7 +93,7 @@ function UserProfileForm({ newUser, onClose }: UserProfileFormProps) {
     },
   });
 
-  async function handleUpdateUser(values: FormikValues) {
+  async function handleUpdateUser(values: EditProfileFormData) {
     try {
       setLoading(true);
       delete values.subscriptionPlanId;
@@ -81,10 +101,10 @@ function UserProfileForm({ newUser, onClose }: UserProfileFormProps) {
       delete values.email;
 
       const success = await userStore.updateUser(values);
-      await accountStore.getMyProfile();
       if (success) {
         showSnackbar("Profile updated", "success");
-        window.location.reload();
+        if (userStore.userInView) userStore.getUserList();
+        else window.location.reload();
       }
     } catch (error) {
       showSnackbar("Error updating profile", "error");
@@ -93,7 +113,7 @@ function UserProfileForm({ newUser, onClose }: UserProfileFormProps) {
     }
   }
 
-  async function handleAddUser(values: FormikValues) {
+  async function handleAddUser(values: EditProfileFormData) {
     try {
       setLoading(true);
 

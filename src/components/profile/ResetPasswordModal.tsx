@@ -68,7 +68,7 @@ export default function ResetPasswordModal({ open, onClose }: EditProfileModalPr
               fullWidth
               size="small"
               name="password"
-              label="Password"
+              label="New Password"
               type="password"
               value={formik.values.password}
               onChange={formik.handleChange}
@@ -81,7 +81,7 @@ export default function ResetPasswordModal({ open, onClose }: EditProfileModalPr
               fullWidth
               size="small"
               name="confirmPassword"
-              label="Confirm password"
+              label="Confirm New Password"
               type="password"
               value={formik.values.confirmPassword}
               onChange={formik.handleChange}
