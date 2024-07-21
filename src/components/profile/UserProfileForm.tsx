@@ -70,7 +70,7 @@ function UserProfileForm({ newUser, onClose }: UserProfileFormProps) {
         firstName: profileToEdit?.firstName || "",
         lastName: profileToEdit?.lastName || "",
         email: profileToEdit?.email || "",
-        phone: profileToEdit?.phone || "",
+        phone: profileToEdit?.phoneNumber || "",
         university: profileToEdit?.university || "",
         graduationYear: profileToEdit?.graduationYear?.toString() || "",
         password: "",

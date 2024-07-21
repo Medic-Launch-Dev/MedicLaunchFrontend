@@ -20,7 +20,7 @@ interface FormValues {
   lastName: string;
   howDidYouHearAboutUs: string;
   confirmPassword: string;
-  phone: string;
+  phoneNumber: string;
   subscribeToPromotions: boolean;
 }
 
@@ -59,7 +59,7 @@ export default function Register() {
       lastName: "",
       howDidYouHearAboutUs: "",
       confirmPassword: "",
-      phone: "",
+      phoneNumber: "",
       subscribeToPromotions: false
     },
     validationSchema: validationSchema,
@@ -78,7 +78,7 @@ export default function Register() {
         firstName: values.firstName,
         lastName: values.lastName,
         howDidYouHearAboutUs: customHowDidYouHearAboutUs ? howDidYouHearAboutUs : values.howDidYouHearAboutUs,
-        phone: values.phone,
+        phoneNumber: values.phoneNumber,
         subscribeToPromotions: values.subscribeToPromotions,
       };
 
@@ -144,9 +144,9 @@ export default function Register() {
                   <Grid item md={6}>
                     <TextField
                       fullWidth
-                      name="phone"
+                      name="phoneNumber"
                       label="Mobile Number"
-                      value={formik.values.phone}
+                      value={formik.values.phoneNumber}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                       required

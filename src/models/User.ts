@@ -13,7 +13,7 @@ export interface UserProfile {
   hasActiveSubscription?: boolean;
   id?: string;
   lastName: string;
-  phone: string;
+  phoneNumber: string;
   questionsCompleted?: number;
   subscribeToPromotions: boolean;
   subscriptionMonths?: string;

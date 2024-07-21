@@ -4,6 +4,7 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
 import Page from '../components/nav/Page';
+import SendNotificationModal from '../components/notifications/SendNotificationModal';
 import UserProfile from '../components/profile/UserProfile';
 import AddUserModal from '../components/userManagement/AddUserModal';
 import Unauthorized from '../components/util/Unauthorized';
@@ -12,6 +13,7 @@ import { primaryGradientText } from '../theme';
 
 interface TableRow {
 	id: string;
+	userId: string;
 	fullName: string;
 	email: string;
 	totalProducts: number;
@@ -34,8 +36,9 @@ const dataGridStyles = {
 
 
 function UserManagement() {
-	const [open, setOpen] = useState(false);
-	const [editOpen, setEditOpen] = useState(false);
+	const [openAdd, setOpenAdd] = useState(false);
+	const [openEdit, setOpenEdit] = useState(false);
+	const [openSend, setOpenSend] = useState(false);
 	const { userStore, accountStore: { hasAdminAccess } } = useServiceProvider();
 	const [rows, setRows] = useState<TableRow[]>([]);
 	const [selectedRows, setSelectedRows] = useState<TableRow[]>([]);
@@ -49,7 +52,7 @@ function UserManagement() {
 				<div style={{ color: "#2394c4", cursor: "pointer" }} onClick={e => {
 					e.stopPropagation();
 					userStore.userInViewIdx = parseInt(params.row.id);
-					setEditOpen(true);
+					setOpenEdit(true);
 				}}>
 					{params.value}
 				</div>
@@ -90,6 +93,7 @@ function UserManagement() {
 		if (userStore.users) {
 			const newRows: TableRow[] = userStore.users.map((user, idx) => ({
 				id: idx.toString(),
+				userId: user.id || "",
 				fullName: `${user.firstName} ${user.lastName}`,
 				email: user.email,
 				totalProducts: 0,
@@ -114,14 +118,14 @@ function UserManagement() {
 		<Page withNav fullWidth>
 			<Stack direction='row' justifyContent='space-between' alignItems='baseline' my={4}>
 				<Typography variant='h2' style={primaryGradientText}>Medic Launch HQ</Typography>
-				<Button variant='contained' startIcon={<Add />} onClick={() => setOpen(true)}>
+				<Button variant='contained' startIcon={<Add />} onClick={() => setOpenAdd(true)}>
 					Add User
 				</Button>
 			</Stack>
 
 			<Stack direction='row' justifyContent='right' alignItems='center' pb={3} spacing={1}>
-				<Button variant='contained' disabled={selectedRows.length !== 1}>Delete</Button>
-				<Button variant='contained' disabled={selectedRows.length < 1}>Send Notification</Button>
+				{/* <Button variant='contained' disabled={selectedRows.length !== 1}>Delete</Button> */}
+				<Button variant='contained' disabled={selectedRows.length < 1} onClick={() => setOpenSend(true)}>Send Notification</Button>
 			</Stack>
 
 			<Card sx={{ height: '100%', p: 0, minWidth: 0 }}>
@@ -138,8 +142,13 @@ function UserManagement() {
 					}}
 				/>
 			</Card>
-			<AddUserModal open={open} onClose={() => setOpen(false)} />
-			<Dialog open={editOpen} onClose={() => setEditOpen(false)} fullWidth maxWidth="lg">
+			<AddUserModal open={openAdd} onClose={() => setOpenAdd(false)} />
+			<SendNotificationModal
+				open={openSend}
+				setOpen={setOpenSend}
+				userIds={selectedRows.map(row => row.userId)}
+			/>
+			<Dialog open={openEdit} onClose={() => setOpenEdit(false)} fullWidth maxWidth="lg">
 				<DialogTitle>View User Profile</DialogTitle>
 				<DialogContent>
 					<UserProfile adminView />

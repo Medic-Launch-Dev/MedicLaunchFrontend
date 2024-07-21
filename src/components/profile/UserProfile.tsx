@@ -37,6 +37,8 @@ function UserProfile({ adminView }: UserProfileProps) {
 
   const userProfile = adminView ? userStore.userInView : myProfile;
 
+  console.log(userProfile);
+
   return (
     <>
       <Snackbar {...snackbarProps} />
@@ -77,7 +79,7 @@ function UserProfile({ adminView }: UserProfileProps) {
                     <ProfileField label="Email" value={userProfile?.email} />
                     <ProfileField label="University" value={userProfile?.university} />
                     <ProfileField label="Graduation Year" value={userProfile?.graduationYear.toString()} />
-                    <ProfileField label="Mobile" value={userProfile?.phone} />
+                    <ProfileField label="Mobile" value={userProfile?.phoneNumber} />
                   </Stack>
                 </Stack>
 
