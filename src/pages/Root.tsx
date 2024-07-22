@@ -1,6 +1,6 @@
 import { Button, Grid, Card as MuiCard, Stack, Typography } from '@mui/material';
 import { observer } from 'mobx-react-lite';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import CoursesIcon from '../../src/assets/icons/courses.svg';
 import MockExamIcon from '../../src/assets/icons/exam.svg';
 import FlashCardsIcon from '../../src/assets/icons/flash-cards.svg';
@@ -15,7 +15,19 @@ import { useServiceProvider } from '../services/ServiceProvider';
 import { primaryGradient, unstyledLink } from '../theme';
 
 function Root() {
-  const { accountStore: { myProfile } } = useServiceProvider();
+  const { accountStore: { myProfile, isSubscribed }, questionsStore } = useServiceProvider();
+  const navigate = useNavigate();
+
+  async function handleStartFreeTrial() {
+    await questionsStore.getTrialQuestions();
+    console.log(questionsStore.questions.length);
+  }
+
+  async function handleCreateFreeTrialQuestion() {
+
+  }
+
+  console.log(isSubscribed);
 
   return (
     <Page withNav fullWidth>
@@ -42,11 +54,16 @@ function Root() {
                 title="Question Bank"
                 primary
                 action={
-                  <Link style={unstyledLink} to="create-session">
-                    <Button variant="contained" color="secondary">
-                      Start Questions
+                  isSubscribed ?
+                    <Link style={unstyledLink} to="create-session">
+                      <Button variant="contained" color="secondary">
+                        Start Questions
+                      </Button>
+                    </Link>
+                    :
+                    <Button variant="contained" color="secondary" onClick={handleStartFreeTrial}>
+                      Start Free Trial
                     </Button>
-                  </Link>
                 }
                 icon={<img src={QuestionBankIcon} width={64} />}
               >
@@ -58,7 +75,7 @@ function Root() {
                 title="Flash Cards"
                 primary
                 action={
-                  <Link style={unstyledLink} to="flash-cards">
+                  <Link style={unstyledLink} to={isSubscribed ? "flash-cards" : "subscribe"}>
                     <Button variant="contained" color="secondary">
                       Learn
                     </Button>
@@ -73,7 +90,7 @@ function Root() {
               <Card
                 title="Mock Examination"
                 action={
-                  <Link style={unstyledLink} to="select-mock">
+                  <Link style={unstyledLink} to={isSubscribed ? "select-mock" : "subscribe"}>
                     <Button variant="contained">Start Mock</Button>
                   </Link>
                 }
@@ -86,7 +103,7 @@ function Root() {
               <Card
                 title="Notes"
                 action={
-                  <Link style={unstyledLink} to="revision-notes">
+                  <Link style={unstyledLink} to={isSubscribed ? "revision-notes" : "subscribe"}>
                     <Button variant="contained" color="primary">
                       View
                     </Button>

@@ -63,7 +63,7 @@ function Subscribe() {
             Study Portal
           </LinkButton>
           <Typography fontSize={28} fontWeight={500} sx={primaryGradientText}>
-            Subscription
+            Purchase Subscription
           </Typography>
           <LinkButton to="/" sx={{ width: "max-content", flexShrink: 0, visibility: "hidden" }} startIcon={<ChevronLeft />}>
             Study Portal

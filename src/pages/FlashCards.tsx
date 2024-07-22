@@ -1,7 +1,7 @@
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
 import { Card, CircularProgress, Divider, IconButton, Skeleton, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import Page from "../components/nav/Page";
 import EditNote from "../components/notes/EditNote";
 import LinkButton from "../components/util/LinkButton";
@@ -11,7 +11,7 @@ import { useServiceProvider } from "../services/ServiceProvider";
 export default function FlashCards() {
   const { specialityId = "" } = useParams();
   const navigate = useNavigate();
-  const { flashCardStore, notesStore } = useServiceProvider();
+  const { flashCardStore, accountStore: { isSubscribed } } = useServiceProvider();
 
   const [flashcards, setFlashcards] = useState<Flashcard[]>();
   const [currentIdx, setCurrentIdx] = useState(0);
@@ -34,6 +34,8 @@ export default function FlashCards() {
       <CircularProgress />
     </Stack>
   );
+
+  if (!isSubscribed) return <Navigate to="/subscribe" />;
 
   return (
     <Page sx={{ height: "100%" }} maxWidth="xl">

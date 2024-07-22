@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { FamiliaritySelection } from "../components/createSession/FamiliaritySelection";
 import { OrderQuantitySelection } from "../components/createSession/OrderQuantitySelection";
 import { SpecialitySelection } from "../components/createSession/SpecialitySelection";
@@ -27,7 +27,7 @@ function CreateSession() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
-  const { practiceStore, questionsStore } = useServiceProvider();
+  const { practiceStore, questionsStore, accountStore: { isSubscribed } } = useServiceProvider();
   const { showSnackbar, snackbarProps } = useSnackbar();
 
   useEffect(() => {
@@ -85,6 +85,10 @@ function CreateSession() {
   function handleStartPractice() {
     questionsStore.applyOrderAndQuantity(practiceStore.practiceFilter);
     navigate("/practice-session");
+  }
+
+  if (!isSubscribed) {
+    return <Navigate to="/subscribe" />;
   }
 
   return (

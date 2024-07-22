@@ -185,4 +185,9 @@ export class QuestionsStore {
     const specialityAnalytics = await this.apiClient.retrieveSpecialityAnalytics();
     return specialityAnalytics.sort((a, b) => a.specialityName.localeCompare(b.specialityName));
   }
+
+  async getTrialQuestions() {
+    const trialQuestions = await this.apiClient.getData("questions/trial-questions");
+    this.questions = trialQuestions;
+  }
 }

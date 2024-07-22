@@ -104,7 +104,7 @@ function UserProfileForm({ newUser, onClose }: UserProfileFormProps) {
       if (success) {
         showSnackbar("Profile updated", "success");
         if (userStore.userInView) userStore.getUserList();
-        else window.location.reload();
+        // else window.location.reload();
       }
     } catch (error) {
       showSnackbar("Error updating profile", "error");
