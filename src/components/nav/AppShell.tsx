@@ -1,16 +1,17 @@
 import { Avatar, Box, Stack, Toolbar } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import Logo from "../../assets/logo.svg";
 import { useServiceProvider } from "../../services/ServiceProvider";
+import { primaryGradient } from "../../theme";
 import NotificationBellButton from "../notifications/NotificationBellButton";
 
 function AppShell() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { errorStore } = useServiceProvider();
+  const { accountStore: { myProfile }, errorStore } = useServiceProvider();
 
   useEffect(() => {
     if (errorStore.errorMessage)
@@ -24,7 +25,11 @@ function AppShell() {
           <img src={Logo} height={40} alt="Medic launch" style={{ cursor: 'pointer' }} onClick={() => navigate("/")} />
           <Stack direction="row" alignItems="center" spacing={2}>
             <NotificationBellButton />
-            <Avatar />
+            <Link to="/my-profile" style={{ textDecoration: 'none' }}>
+              <Avatar sx={{ background: primaryGradient }}>
+                {myProfile?.firstName.charAt(0)}{myProfile?.lastName.charAt(0)}
+              </Avatar>
+            </Link>
           </Stack>
         </Stack>
       </Toolbar>

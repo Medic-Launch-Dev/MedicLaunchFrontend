@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight } from "@mui/icons-material";
+import { ChevronLeft, ChevronRight, ShoppingCart } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
@@ -116,7 +116,12 @@ function CreateSession() {
                   "& .MuiStepIcon-text": { fontSize: "1rem" },
                 }}
               >
-                <StepLabel sx={{ fontSize: "1.5rem" }}>{label}</StepLabel>
+                <StepLabel sx={{ fontSize: "1.5rem" }}>
+                  <Stack direction="row" alignItems="center" gap={1}>
+                    <span>{label}</span>
+                    <ShoppingCart sx={{ fontSize: 16 }} />
+                  </Stack>
+                </StepLabel>
               </Step>
             );
           })}

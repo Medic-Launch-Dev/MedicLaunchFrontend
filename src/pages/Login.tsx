@@ -1,32 +1,38 @@
 import { LoadingButton } from "@mui/lab";
 import { Box, Grid, Snackbar, Stack, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { useFormik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
+import * as Yup from "yup";
 import { useSnackbar } from "../hooks/useSnackbar";
 import { useAuth } from "../services/AuthProvider";
 import { primaryGradient, primaryGradientText } from "../theme";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-
   const { showSnackbar, snackbarProps } = useSnackbar();
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
-    try {
-      setLoading(true);
-      const isAuthenticated = await login(email, password);
-      if (isAuthenticated) navigate("/");
-    } catch (e) {
-      console.error(e);
-      showSnackbar("Login failed", "error");
-    } finally {
-      setLoading(false);
-    }
-  };
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: Yup.object({
+      email: Yup.string().email("Invalid email address").required("Required"),
+      password: Yup.string().required("Required"),
+    }),
+    onSubmit: async (values, { setSubmitting }) => {
+      try {
+        const isAuthenticated = await login(values.email, values.password);
+        if (isAuthenticated) navigate("/");
+      } catch (e) {
+        console.error(e);
+        showSnackbar("Login failed", "error");
+      } finally {
+        setSubmitting(false);
+      }
+    },
+  });
 
   return (
     <>
@@ -34,11 +40,12 @@ export default function Login() {
       <Grid container sx={{ height: "100vh" }}>
         <Grid item lg={7} sx={{ height: "100%" }}>
           <Stack
-            sx={{ m: "auto", minHeight: "100%", py: 2 }}
+            sx={{ m: "auto", minHeight: "100%", py: 2, position: "relative" }}
             alignItems="center"
             justifyContent="center"
             spacing={2}
           >
+            <img src="https://mediclaunch.co.uk/wp-content/uploads/2021/07/Final-Logo.png" width={140} style={{ position: "absolute", top: 24, left: 24 }} />
             <Box maxWidth="sm">
               <Typography
                 variant="h1"
@@ -49,56 +56,60 @@ export default function Login() {
               >
                 Login
               </Typography>
-              <Typography
-                variant="body1"
-                color="#828282"
-                fontSize={16}
-                textAlign="center"
-              >
-                Enter your credentials to access your account
-              </Typography>
-              <TextField
-                fullWidth
-                label="Email address"
-                sx={{ mt: 6 }}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <TextField
-                fullWidth
-                type="password"
-                label="Password"
-                sx={{ mt: 3 }}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <Stack
-                direction="row"
-                justifyContent="end"
-                alignItems="end"
-                width="100%"
-                sx={{ mt: 1 }}
-              >
-                <Typography fontSize={14}>Forgot password?</Typography>
-              </Stack>
-              <Stack spacing={2} width="100%" alignItems="center" sx={{ mt: 4 }}>
-                <LoadingButton
-                  variant="contained"
+              <form onSubmit={formik.handleSubmit}>
+                <TextField
                   fullWidth
-                  sx={{ fontSize: 16, fontWeight: 500, py: 1.5 }}
-                  onClick={handleLogin}
-                  loading={loading}
+                  label="Email address"
+                  name="email"
+                  sx={{ mt: 6 }}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.email}
+                  error={formik.touched.email && Boolean(formik.errors.email)}
+                  helperText={formik.touched.email && formik.errors.email}
+                />
+                <TextField
+                  fullWidth
+                  type="password"
+                  label="Password"
+                  name="password"
+                  sx={{ mt: 3 }}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.password}
+                  error={formik.touched.password && Boolean(formik.errors.password)}
+                  helperText={formik.touched.password && formik.errors.password}
+                />
+                <Stack
+                  direction="row"
+                  justifyContent="end"
+                  alignItems="end"
+                  width="100%"
+                  sx={{ mt: 1 }}
                 >
-                  Log in
-                </LoadingButton>
-                <Typography>
-                  Don't have an account?{" "}
-                  <Link
-                    to="/register"
-                    style={{ textDecoration: "none", color: "#2394c4" }}
+                  <Typography fontSize={14}>Forgot password?</Typography>
+                </Stack>
+                <Stack spacing={2} width="100%" alignItems="center" sx={{ mt: 4 }}>
+                  <LoadingButton
+                    variant="contained"
+                    fullWidth
+                    sx={{ fontSize: 16, fontWeight: 500, py: 1.5 }}
+                    type="submit"
+                    loading={formik.isSubmitting}
                   >
-                    Register here
-                  </Link>
-                </Typography>
-              </Stack>
+                    Log in
+                  </LoadingButton>
+                  <Typography>
+                    Don't have an account?{" "}
+                    <Link
+                      to="/register"
+                      style={{ textDecoration: "none", color: "#2394c4" }}
+                    >
+                      Register here
+                    </Link>
+                  </Typography>
+                </Stack>
+              </form>
             </Box>
           </Stack>
         </Grid>

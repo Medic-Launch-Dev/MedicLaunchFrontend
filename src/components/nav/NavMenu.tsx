@@ -41,7 +41,7 @@ function NavMenu() {
       <Stack alignItems="center" justifyContent="space-between" height="100%">
         <div style={{ width: '100%' }}>
           <Box sx={{ m: 4 }}>
-            <img src={LogoWhite} width={140} />
+            <img src={LogoWhite} width={120} />
           </Box>
           <Stack sx={{ width: '100%', pt: 4 }} gap={1.5}>
             <NavLink text="Study Portal" selected={!!matchHome} href="/" />

@@ -111,7 +111,7 @@ function Root() {
                 }
                 icon={<img src={NotesIcon} width={64} />}
               >
-                AI-generated notes for mastering medical knowledge efficiently
+                Create notes to help you master medical knowledge efficiently
               </Card>
             </Grid>
             <Grid item xs={12} sm={6}>

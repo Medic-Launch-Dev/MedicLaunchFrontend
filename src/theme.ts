@@ -91,24 +91,28 @@ theme.components = {
       root: {
         textTransform: 'none',
         fontWeight: 600,
-        padding: `6px 22px`,
+        padding: '6px 22px',
+        ':focus': {
+          outline: `2px solid #66b1d1`,
+          outlineOffset: 2,
+        },
       },
       containedSecondary: {
-        background: `#fff`,
+        background: '#fff',
         border: '2px solid transparent',
-        ":hover": {
+        ':hover': {
           backgroundColor: '#d2eefa',
         },
       },
       outlinedPrimary: {
         borderWidth: 2,
-        ":hover": {
+        ':hover': {
           borderWidth: 2,
         },
-        "&.Mui-disabled": {
+        '&.Mui-disabled': {
           borderWidth: 2,
-          borderColor: "#b4b6bc",
-        }
+          borderColor: '#b4b6bc',
+        },
       },
     },
     defaultProps: {

@@ -25,7 +25,7 @@ function NotificationBellButton() {
             }
           }}
         >
-          <IconButton color={unreadNotifications.length > 0 ? "primary" : "default"}>
+          <IconButton color="primary">
             <Notifications />
           </IconButton>
         </Badge>

@@ -48,14 +48,14 @@ export default function SpecialityAnalyserChart() {
     <Card sx={{ p: 3, mt: 2, maxHeight: 600, overflowY: 'auto' }}>
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <Typography color="primary" variant="h3">Speciality Analyser</Typography>
-        <ToggleButton value="sort" size="small" onClick={toggleSortOrder}><Percent /></ToggleButton>
+        <ToggleButton value="sort" size="small" onClick={toggleSortOrder}><Percent sx={{ fontSize: 18 }} /></ToggleButton>
       </Stack>
       <Divider sx={{ my: 2 }} />
       {
         loading ?
           <Stack alignItems="center" my={5}><CircularProgress /></Stack>
           :
-          <Grid container alignItems="center" rowSpacing={1.5}>
+          <Grid container alignItems="center" rowSpacing={1.5} sx={{ maxHeight: 810, overflowY: 'auto' }}>
             {
               getSortedAnalytics().length > 0 ?
                 getSortedAnalytics().map(({ specialityName, totalQuestions, correct, incorrect }) => (
