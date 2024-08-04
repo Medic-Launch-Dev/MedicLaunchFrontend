@@ -11,8 +11,9 @@ import WelcomeImg from '../../src/assets/images/Welcome.png';
 import Page from '../components/nav/Page';
 import SpecialityAnalyserChart from '../components/specialityAnalyser/SpecialityAnalyserChart';
 import Card from '../components/util/Card';
+import LinkButton from '../components/util/LinkButton';
 import { useServiceProvider } from '../services/ServiceProvider';
-import { primaryGradient, unstyledLink } from '../theme';
+import { primaryGradient, primaryGradientText, unstyledLink } from '../theme';
 
 function Root() {
   const { accountStore: { myProfile, isSubscribed }, questionsStore } = useServiceProvider();
@@ -34,6 +35,14 @@ function Root() {
       <Grid container spacing={2}>
         <Grid item xs={12} lg={7}>
           <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <MuiCard>
+                <Stack direction="row" justifyContent="space-between" alignItems="center">
+                  <Typography variant="h4" sx={{ ...primaryGradientText }}>Subscribe to unlock all features</Typography>
+                  <LinkButton to="subscribe">Subscribe</LinkButton>
+                </Stack>
+              </MuiCard>
+            </Grid>
             <Grid item xs={12}>
               <Stack
                 sx={{
