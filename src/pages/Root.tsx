@@ -35,14 +35,17 @@ function Root() {
       <Grid container spacing={2}>
         <Grid item xs={12} lg={7}>
           <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <MuiCard>
-                <Stack direction="row" justifyContent="space-between" alignItems="center">
-                  <Typography variant="h4" sx={{ ...primaryGradientText }}>Subscribe to unlock all features</Typography>
-                  <LinkButton to="subscribe">Subscribe</LinkButton>
-                </Stack>
-              </MuiCard>
-            </Grid>
+            {
+              !isSubscribed &&
+              <Grid item xs={12}>
+                <MuiCard>
+                  <Stack direction="row" justifyContent="space-between" alignItems="center">
+                    <Typography variant="h4" sx={{ ...primaryGradientText }}>Subscribe to unlock all features</Typography>
+                    <LinkButton to="subscribe">Subscribe</LinkButton>
+                  </Stack>
+                </MuiCard>
+              </Grid>
+            }
             <Grid item xs={12}>
               <Stack
                 sx={{
