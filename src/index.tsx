@@ -25,6 +25,7 @@ import EditFlashCards from "./pages/EditFlashCards";
 import EditFlascard from "./pages/EditFlashcard";
 import EditQuestion from "./pages/EditQuestion";
 import FlashCards from "./pages/FlashCards";
+import FreeTrial from "./pages/FreeTrial";
 import MyProfile from "./pages/MyProfile";
 import Notifications from "./pages/Notifications";
 import PaymentComplete from "./pages/PaymentComplete";
@@ -136,6 +137,10 @@ const App = () => {
         {
           path: "/payment-complete",
           element: <PaymentComplete />
+        },
+        {
+          path: "/free-trial",
+          element: <FreeTrial />
         }
       ],
     },

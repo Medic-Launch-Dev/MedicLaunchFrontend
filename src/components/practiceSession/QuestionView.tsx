@@ -1,6 +1,6 @@
 import { Add, ChevronRight, Flag, KeyboardArrowLeft } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import { Box, Button, Grid, Stack, Typography } from "@mui/material";
+import { Box, Button, Chip, Grid, Stack, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { RichTextReadOnly } from "mui-tiptap";
 import { useState } from "react";
@@ -21,9 +21,10 @@ interface QuestionViewProps {
   question: QuestionModelUI;
   inPreview?: boolean;
   isMock?: boolean;
+  isFreeTrial?: boolean;
 }
 
-function QuestionView({ question: questionFromProps, inPreview, isMock }: QuestionViewProps) {
+function QuestionView({ question: questionFromProps, inPreview, isMock, isFreeTrial }: QuestionViewProps) {
   const { questionsStore, practiceStore } = useServiceProvider();
   const question = inPreview ? questionsStore.previewQuestion : questionFromProps;
 
@@ -42,7 +43,7 @@ function QuestionView({ question: questionFromProps, inPreview, isMock }: Questi
     if (!selectedOption) return;
 
     setLoadingSubmit(true);
-    await questionsStore.submitAnswer(selectedOption.letter);
+    await questionsStore.submitAnswer(selectedOption.letter, isFreeTrial);
     setLoadingSubmit(false);
   }
 
@@ -92,6 +93,7 @@ function QuestionView({ question: questionFromProps, inPreview, isMock }: Questi
             {question?.specialityName}
           </Box>
           <Typography fontWeight={600}>{`Question ${questionsStore.getQuestionNumber()}`}</Typography>
+          <Chip label="Free Trial" />
         </Box>
       }
       <Box mb={2}>
@@ -143,7 +145,7 @@ function QuestionView({ question: questionFromProps, inPreview, isMock }: Questi
             Submit
           </LoadingButton>
           <Stack direction="row" spacing={1}>
-            {flagButtonMarkup}
+            {!isFreeTrial && flagButtonMarkup}
             <Button
               startIcon={<KeyboardArrowLeft />}
               variant="outlined"
@@ -179,6 +181,7 @@ function QuestionView({ question: questionFromProps, inPreview, isMock }: Questi
         <LabValues />
       </Box>
       <Button
+        disabled={isFreeTrial}
         variant="contained"
         color="secondary"
         sx={{ color: "black", fontWeight: 500, visibility: !wasAttempted || inPreview ? "hidden" : "visible" }}
@@ -250,20 +253,24 @@ function QuestionView({ question: questionFromProps, inPreview, isMock }: Questi
         }
       </Box>
       <Stack sx={{ width: "max-content" }} spacing={1} alignItems="center">
-        {questionsStore.onLastQuestion ? (
-          <LinkButton sx={{ px: 12, py: 1.25 }} to="/review-session">End Session</LinkButton>
-        ) : (
-          <Button
-            sx={{ px: 12, py: 1.25 }}
-            variant="contained"
-            disabled={inPreview}
-            onClick={() => questionsStore.incrementQuestion()}
-          >
-            Next Question
-          </Button>
-        )}
+        {
+          questionsStore.onLastQuestion
+            ?
+            <LinkButton sx={{ px: 12, py: 1.25 }} to={isFreeTrial ? "/subscribe" : "/review-session"}>
+              {isFreeTrial ? "Subscribe" : "End Session"}
+            </LinkButton>
+            :
+            <Button
+              sx={{ px: 12, py: 1.25 }}
+              variant="contained"
+              disabled={inPreview}
+              onClick={() => questionsStore.incrementQuestion()}
+            >
+              Next Question
+            </Button>
+        }
         <Stack direction="row" spacing={1}>
-          {flagButtonMarkup}
+          {!isFreeTrial && flagButtonMarkup}
           <Button
             startIcon={<KeyboardArrowLeft />}
             variant="outlined"

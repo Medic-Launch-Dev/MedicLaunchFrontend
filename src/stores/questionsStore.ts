@@ -82,19 +82,22 @@ export class QuestionsStore {
     }
   }
 
-  async submitAnswer(answerLetter: string) {
+  async submitAnswer(answerLetter: string, isFreeTrial?: boolean) {
     this.currentQuestion.submittedAnswerLetter = answerLetter;
     if (answerLetter === this.currentQuestion.correctAnswerLetter) this._correctAnswers += 1;
     else this._incorrectAnswers += 1;
 
-    const questionAttempt: QuestionAttempt = {
-      questionId: this.currentQuestion.id || "",
-      chosenAnswer: answerLetter,
-      correctAnswer: this.currentQuestion.correctAnswerLetter,
-      isCorrect: answerLetter === this.currentQuestion.correctAnswerLetter,
-    };
+    if (!isFreeTrial) {
+      const questionAttempt: QuestionAttempt = {
+        questionId: this.currentQuestion.id || "",
+        chosenAnswer: answerLetter,
+        correctAnswer: this.currentQuestion.correctAnswerLetter,
+        isCorrect: answerLetter === this.currentQuestion.correctAnswerLetter,
+      };
 
-    await this.apiClient.postData("practice/attemptquestion", questionAttempt);
+      await this.apiClient.postData("practice/attemptquestion", questionAttempt);
+    }
+
   }
 
   async flagQuestion() {
@@ -186,8 +189,11 @@ export class QuestionsStore {
     return specialityAnalytics.sort((a, b) => a.specialityName.localeCompare(b.specialityName));
   }
 
-  async getTrialQuestions() {
+  async startFreeTrial() {
     const trialQuestions = await this.apiClient.getData("questions/trial-questions");
+    this._currentQuestionIdx = 0;
+    this._correctAnswers = 0;
+    this._incorrectAnswers = 0;
     this.questions = trialQuestions;
   }
 }

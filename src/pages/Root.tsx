@@ -20,12 +20,8 @@ function Root() {
   const navigate = useNavigate();
 
   async function handleStartFreeTrial() {
-    await questionsStore.getTrialQuestions();
-    console.log(questionsStore.questions.length);
-  }
-
-  async function handleCreateFreeTrialQuestion() {
-
+    await questionsStore.startFreeTrial();
+    navigate("/free-trial");
   }
 
   console.log(isSubscribed);

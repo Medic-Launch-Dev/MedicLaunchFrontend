@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight, ShoppingCart } from "@mui/icons-material";
+import { BarChart, ChevronLeft, ChevronRight, School, Star } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
@@ -39,14 +39,17 @@ function CreateSession() {
   const steps = [
     {
       label: "Select speciality",
+      icon: <School sx={{ color: "primary.main" }} />,
       onNext: handleSelectSpeciality,
     },
     {
       label: "Select familiarity",
+      icon: <Star color="primary" sx={{ color: activeStep >= 1 ? "primary.main" : "#ababab" }} />,
       onNext: handleSelectFamiliarity,
     },
     {
       label: "Select quantity",
+      icon: <BarChart color="primary" sx={{ color: activeStep >= 2 ? "primary.main" : "#ababab" }} />,
       onNext: handleStartPractice,
     },
   ];
@@ -105,7 +108,7 @@ function CreateSession() {
             "& .MuiStepConnector-line": { borderTopWidth: 2 },
           }}
         >
-          {steps.map(({ label, onNext }) => {
+          {steps.map(({ label, icon }) => {
             const stepProps: { completed?: boolean } = {};
             return (
               <Step
@@ -119,7 +122,7 @@ function CreateSession() {
                 <StepLabel sx={{ fontSize: "1.5rem" }}>
                   <Stack direction="row" alignItems="center" gap={1}>
                     <span>{label}</span>
-                    <ShoppingCart sx={{ fontSize: 16 }} />
+                    {icon}
                   </Stack>
                 </StepLabel>
               </Step>
