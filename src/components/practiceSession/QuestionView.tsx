@@ -93,7 +93,7 @@ function QuestionView({ question: questionFromProps, inPreview, isMock, isFreeTr
             {question?.specialityName}
           </Box>
           <Typography fontWeight={600}>{`Question ${questionsStore.getQuestionNumber()}`}</Typography>
-          <Chip label="Free Trial" />
+          {isFreeTrial && <Chip label="Free Trial" />}
         </Box>
       }
       <Box mb={2}>
