@@ -64,7 +64,7 @@ function ReviewSession() {
           <Link style={unstyledLink} to="/speciality-analyser">
             <ReviewCard
               primary
-              title="View Specialty Analytics"
+              title="View Speciality Analytics"
               icon={<img src={AnalyticsIcon} width={48} />}
             />
           </Link>
