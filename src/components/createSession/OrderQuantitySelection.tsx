@@ -61,7 +61,7 @@ export const OrderQuantitySelection = observer(() => {
           <Slider
             step={1}
             min={1}
-            max={questionsCount}
+            max={Math.min(200, questionsCount)}
             valueLabelDisplay="on"
             onChange={(e, value) => onQuanityChange(value as number)}
           />

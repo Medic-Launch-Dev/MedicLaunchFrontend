@@ -17,7 +17,6 @@ function SendNotificationModal({ userIds, open, setOpen }: SendNotificationModal
   const [message, setMessage] = useState('');
 
   async function handleSend() {
-    console.log(userIds, title, message);
     try {
       await notificationsStore.createNotification({ userIds, title, message });
       showSnackbar('Notification sent', 'success');

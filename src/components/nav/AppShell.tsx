@@ -30,8 +30,6 @@ function AppShell() {
     else navigate(location);
   }
 
-  console.log(shouldNavigateConfirm);
-
   return (
     <Box sx={{ height: "100vh" }}>
       <Toolbar sx={{ backgroundColor: "#fff" }}>

@@ -184,10 +184,16 @@ export class QuestionsStore {
     runInAction(() => this.familiarityCounts = counts);
   }
 
+  async getQuestionCount() {
+    const counts = await this.apiClient.getFamiliarityCounts([], true);
+    return counts.allQuestions;
+  }
+
   async getSpecialityAnalytics() {
     const specialityAnalytics = await this.apiClient.retrieveSpecialityAnalytics();
     return specialityAnalytics.sort((a, b) => a.specialityName.localeCompare(b.specialityName));
   }
+
 
   async startFreeTrial() {
     const trialQuestions = await this.apiClient.getData("questions/trial-questions");

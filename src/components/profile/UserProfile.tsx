@@ -37,8 +37,6 @@ function UserProfile({ adminView }: UserProfileProps) {
 
   const userProfile = adminView ? userStore.userInView : myProfile;
 
-  console.log(userProfile);
-
   return (
     <>
       <Snackbar {...snackbarProps} />

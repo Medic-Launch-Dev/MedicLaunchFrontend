@@ -27,6 +27,8 @@ function AnswersGrid() {
         p: 1.5,
         borderRadius: 1,
         backgroundColor: "white",
+        overflowY: 'scroll',
+        maxHeight: 110,
       }}
     >
       {
@@ -37,8 +39,8 @@ function AnswersGrid() {
               justifyContent="center"
               sx={{
                 backgroundColor: getBackgroundColor(wasAnsweredCorrectly(question)),
-                height: 25,
-                width: 25,
+                height: 24.7,
+                width: 24.7,
                 borderRadius: 0.5,
                 cursor: "pointer",
                 border: index === questionsStore.currentQuestionIdx ? "2px solid #2394c4" : undefined

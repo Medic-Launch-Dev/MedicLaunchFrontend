@@ -8,6 +8,8 @@ import NotesIcon from '../../src/assets/icons/notes.svg';
 import PodcastsIcon from '../../src/assets/icons/podcasts.svg';
 import QuestionBankIcon from '../../src/assets/icons/question-bank.svg';
 import WelcomeImg from '../../src/assets/images/Welcome.png';
+import ExamDate from '../components/home/ExamDate';
+import ProgressPieChart from '../components/home/ProgressPieChart';
 import Page from '../components/nav/Page';
 import SpecialityAnalyserChart from '../components/specialityAnalyser/SpecialityAnalyserChart';
 import Card from '../components/util/Card';
@@ -23,8 +25,6 @@ function Root() {
     await questionsStore.startFreeTrial();
     navigate("/free-trial");
   }
-
-  console.log(isSubscribed);
 
   return (
     <Page withNav fullWidth>
@@ -98,9 +98,10 @@ function Root() {
               <Card
                 title="Mock Examination"
                 action={
-                  <Link style={unstyledLink} to={isSubscribed ? "select-mock" : "subscribe"}>
-                    <Button variant="contained">Start Mock</Button>
-                  </Link>
+                  <Button variant="contained" disabled>Coming soon..</Button>
+                  // <Link style={unstyledLink} to={isSubscribed ? "select-mock" : "subscribe"}>
+                  //   <Button variant="contained">Start Mock</Button>
+                  // </Link>
                 }
                 icon={<img src={MockExamIcon} width={64} />}
               >
@@ -145,18 +146,15 @@ function Root() {
         <Grid item xs={12} lg={5}>
           <Grid container spacing={2}>
             <Grid item xs={6}>
-              <MuiCard sx={{ height: 145 }}>
-
-              </MuiCard>
-
+              <Card title="My UKMLA Progress">
+                <Stack alignItems="center" mt={2} mb={-1}>
+                  <ProgressPieChart />
+                </Stack>
+              </Card>
             </Grid>
             <Grid item xs={6}>
-              <MuiCard sx={{ height: 145 }}>
-
-              </MuiCard>
-
+              <ExamDate />
             </Grid>
-
           </Grid>
           <SpecialityAnalyserChart />
         </Grid>
