@@ -33,6 +33,8 @@ function CreateSession() {
   useEffect(() => {
     if (specialityId) {
       practiceStore.setSelectedSpecialities([specialityId]);
+    } else {
+      practiceStore.resetPracticeFilter();
     }
   }, []);
 

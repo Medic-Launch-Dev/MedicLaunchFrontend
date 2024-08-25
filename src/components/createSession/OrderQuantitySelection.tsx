@@ -37,7 +37,7 @@ export const OrderQuantitySelection = observer(() => {
         {orders.map((o) => (
           <Box>
             <FilterOption
-              text={o === "Randomized" ? "Randomised" : o}
+              text={o}
               selected={order.toString() === o.toString()}
               setSelected={setOrder}
             />

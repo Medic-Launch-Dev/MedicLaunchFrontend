@@ -30,7 +30,7 @@ export default function FilterOption({ text, selected, setSelected, disabled }: 
       onClick={() => !disabled && setSelected(text)}
     >
       <Typography fontSize={16} fontWeight={500} color={selected ? "white" : disabled ? "gray" : undefined}>
-        {text}
+        {text === "Randomized" ? "Randomised" : text}
       </Typography>
     </Stack>
   )

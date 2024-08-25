@@ -50,6 +50,10 @@ export class PracticeStore {
 		this.showEndMessage = showEndMessage;
 	}
 
+	resetPracticeFilter() {
+		this.practiceFilter = new PracticeFilter();
+	}
+
 	setSelectedSpecialities(specialities: string[]) {
 		this.practiceFilter.specialityIds = specialities;
 	}

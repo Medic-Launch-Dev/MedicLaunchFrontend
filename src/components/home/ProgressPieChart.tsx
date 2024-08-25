@@ -51,7 +51,7 @@ function ProgressPieChart() {
         fontWeight={600}
         fill="#2092c2"
       >
-        {percentageCompleted}%
+        {!Number.isNaN(percentageCompleted) && `${percentageCompleted}%`}
       </text>
     </PieChart>
   )

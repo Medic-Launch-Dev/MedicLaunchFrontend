@@ -83,11 +83,12 @@ function Root() {
                 title="Flash Cards"
                 primary
                 action={
-                  <Link style={unstyledLink} to={isSubscribed ? "flash-cards" : "subscribe"}>
-                    <Button variant="contained" color="secondary">
-                      Learn
-                    </Button>
-                  </Link>
+                  <Button variant="contained" color="secondary" disabled >Coming soon..</Button>
+                  // <Link style={unstyledLink} to={isSubscribed ? "flash-cards" : "subscribe"}>
+                  //   <Button variant="contained" color="secondary">
+                  //     Learn
+                  //   </Button>
+                  // </Link>
                 }
                 icon={<img src={FlashCardsIcon} width={64} />}
               >
