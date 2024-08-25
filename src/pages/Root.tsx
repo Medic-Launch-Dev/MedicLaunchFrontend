@@ -83,7 +83,7 @@ function Root() {
                 title="Flash Cards"
                 primary
                 action={
-                  <Button variant="contained" color="secondary" disabled >Coming soon..</Button>
+                  <Button variant="contained" color="secondary" disabled sx={{ "&.Mui-disabled": { color: "#9bd3eb" } }}>Coming soon..</Button>
                   // <Link style={unstyledLink} to={isSubscribed ? "flash-cards" : "subscribe"}>
                   //   <Button variant="contained" color="secondary">
                   //     Learn
