@@ -48,6 +48,14 @@ export class UserStore {
   public async addUser(data: any): Promise<boolean> {
     return await this.apiClient.postData('users/add', data);
   }
+
+  public async editAccount(data: any): Promise<boolean> {
+    return await this.apiClient.putData('account/edit', data);
+  }
+
+  public async resetAccountPassword(data: any): Promise<boolean> {
+    return await this.apiClient.postData('account/resetpassword', data);
+  }
 }
 
 const axiosProvider = new AxiosProvider();

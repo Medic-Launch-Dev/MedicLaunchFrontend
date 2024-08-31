@@ -148,7 +148,7 @@ function UserProfile({ adminView }: UserProfileProps) {
           <Button variant="contained" color="error" onClick={handleResetQuestions}>Reset</Button>
         </DialogActions>
       </Dialog>
-      <EditProfileModal open={editOpen} onClose={() => setEditOpen(false)} />
+      <EditProfileModal open={editOpen} onClose={() => setEditOpen(false)} adminView={adminView} />
       <ResetPasswordModal open={passwordOpen} onClose={() => setPasswordOpen(false)} />
     </>
   )

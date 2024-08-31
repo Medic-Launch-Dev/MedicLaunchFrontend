@@ -222,6 +222,14 @@ theme.components = {
         fontSize: 17,
       }
     }
+  },
+  MuiLink: {
+    styleOverrides: {
+      root: {
+        color: "#2394c4",
+        textDecoration: "none",
+      }
+    }
   }
 }
 

@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 import Page from "../components/nav/Page";
 import QuestionEditView from "../components/questionCreation/QuestionEditView";
 import LinkButton from "../components/util/LinkButton";
-import Unauthorized from "../components/util/Unauthorized";
+import Unauthorised from "../components/util/Unauthorised";
 import { useSnackbar } from "../hooks/useSnackbar";
 import { Question } from "../models/Question";
 import { useServiceProvider } from "../services/ServiceProvider";
@@ -83,7 +83,7 @@ const EditQuestion = () => {
       navigate("/edit-questions");
   }, [questionsStore.previewQuestion]);
 
-  if (!hasQuestionAuthorAccess) return <Unauthorized />;
+  if (!hasQuestionAuthorAccess) return <Unauthorised />;
 
   return (
     <Page>

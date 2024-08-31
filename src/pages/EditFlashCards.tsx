@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import Page from "../components/nav/Page";
 import LinkButton from "../components/util/LinkButton";
-import Unauthorized from "../components/util/Unauthorized";
+import Unauthorised from "../components/util/Unauthorised";
 import { Flashcard } from "../models/Flashcard";
 import Speciality from "../models/Speciality";
 import { useServiceProvider } from "../services/ServiceProvider";
@@ -49,7 +49,7 @@ const EditFlashCards = () => {
     fetchFlashcards();
   }, [selectedSpeciality, flashCardStore]);
 
-  if (!hasFlashcardAuthorAccess) return <Unauthorized />;
+  if (!hasFlashcardAuthorAccess) return <Unauthorised />;
 
   return (
     <Page>

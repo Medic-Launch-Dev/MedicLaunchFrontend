@@ -6,7 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import FlashcardEditor from "../components/flashCards/FlashcardEditor";
 import Page from "../components/nav/Page";
 import LinkButton from "../components/util/LinkButton";
-import Unauthorized from "../components/util/Unauthorized";
+import Unauthorised from "../components/util/Unauthorised";
 import { useSnackbar } from "../hooks/useSnackbar";
 import { Flashcard } from "../models/Flashcard";
 import { useServiceProvider } from "../services/ServiceProvider";
@@ -71,7 +71,7 @@ function EditFlascard() {
     }
   }
 
-  if (!hasFlashcardAuthorAccess) return <Unauthorized />;
+  if (!hasFlashcardAuthorAccess) return <Unauthorised />;
 
   return (
     <Page maxWidth="md">

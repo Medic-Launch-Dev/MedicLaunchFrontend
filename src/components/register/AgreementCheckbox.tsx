@@ -1,4 +1,4 @@
-import { Checkbox, FormControlLabel, styled } from "@mui/material";
+import { Checkbox, Stack, styled } from "@mui/material";
 
 const Icon = styled('span')({
   borderRadius: 3,
@@ -37,29 +37,28 @@ const CheckedIcon = styled(Icon)({
 });
 
 interface AgreementCheckboxProps {
-  text: string;
+  text: string | React.ReactNode;
   checked: boolean;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function AgreementCheckbox({ text, checked, onChange }: AgreementCheckboxProps) {
   return (
-    <FormControlLabel
-      control={
-        <Checkbox
-          sx={{
-            '&:hover': { bgcolor: 'transparent' },
-          }}
-          disableRipple
-          color="default"
-          checkedIcon={<CheckedIcon />}
-          icon={<Icon />}
-          inputProps={{ 'aria-label': 'Checkbox demo' }}
-          checked={checked}
-          onChange={onChange}
-        />
-      }
-      label={text}
-    />
+    <Stack direction="row" alignItems="center">
+      <Checkbox
+        sx={{
+          '&:hover': { bgcolor: 'transparent' },
+        }}
+        disableRipple
+        color="default"
+        checkedIcon={<CheckedIcon />}
+        icon={<Icon />}
+        inputProps={{ 'aria-label': 'Checkbox demo' }}
+        checked={checked}
+        onChange={onChange}
+      />
+      <span>{text}</span>
+    </Stack>
+
   )
 }

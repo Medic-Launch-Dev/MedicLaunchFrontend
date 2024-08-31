@@ -54,13 +54,13 @@ function Timer() {
   return (
     <Stack direction="row" width="100%" spacing={1}>
       <Dialog open={open} onClose={() => setOpen(false)}>
-        <DialogTitle sx={{ fontSize: 16 }}>Exam time finished</DialogTitle>
+        <DialogTitle sx={{ fontSize: 16 }}>Time's Up! 🕒</DialogTitle>
         <DialogContent>
-          <p>The time for this mock exam has finished. You may continue the questions or end the session now.</p>
+          <p>Your allocated time for the mock exam has ended. Please submit your answers now to ensure they are recorded.</p>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setOpen(false)}>Continue Questions</Button>
-          <Button variant="contained" onClick={() => navigate("/review-session")}>End Session</Button>
+          <Button variant="contained" onClick={() => navigate("/review-session")}>Submit Now</Button>
         </DialogActions>
       </Dialog>
       <Container sx={{ flexGrow: 1 }}>

@@ -14,7 +14,6 @@ export default function PlanOption({ id, name, price, mostPopular, selected, set
     "Detailed Explanations",
     "Personalised Dashboard",
     "Analytics",
-    "Video Tutorials",
     "Educational Resources",
     "Flashcards",
     "Podcast Library",
@@ -55,7 +54,13 @@ export default function PlanOption({ id, name, price, mostPopular, selected, set
       >
         <Stack>
           <Typography fontSize={18} fontWeight={600} color={selected ? "white" : "primary"} textAlign="center">{name}</Typography>
-          <Typography fontSize={28} fontWeight={600} color={selected ? "white" : "primary"} textAlign="center">£ {price}</Typography>
+          <Stack direction="row" alignItems="center" justifyContent="center" spacing={1}>
+            <Typography fontSize={22} fontWeight={500} color={selected ? "#d7e8ef" : "#a0a0a0"} textAlign="center" sx={{ textDecoration: "line-through" }}>£{price * 2}</Typography>
+            <Typography fontSize={28} fontWeight={600} color={selected ? "white" : "primary"} textAlign="center">£{price}</Typography>
+          </Stack>
+          <Typography fontSize={13} fontWeight={500} color={selected ? "white" : "primary"} textAlign="center">
+            Limited Promotional Offer: Save 50%!
+          </Typography>
         </Stack>
         <Stack spacing={2} sx={{ p: 3, py: mostPopular ? 4 : 3, bgcolor: "#f9f9ff", borderRadius: 1, width: 280 }}>
           {

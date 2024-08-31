@@ -18,7 +18,7 @@ import { useNavigate, useSearchParams } from "react-router-dom"
 import Page from "../components/nav/Page"
 import { LoadingWrapper } from "../components/util/LoadingWrapper"
 import TextSelect from "../components/util/TextSelect"
-import Unauthorized from "../components/util/Unauthorized"
+import Unauthorised from "../components/util/Unauthorised"
 import { Question } from "../models/Question"
 import Speciality from "../models/Speciality"
 import { useServiceProvider } from "../services/ServiceProvider"
@@ -37,13 +37,6 @@ function EditQuestions() {
 	const navigate = useNavigate();
 
 	const [selectedQuestionBank, setSelectedQuestionBank] = useState<string>("General");
-
-	function getStatusChip(status?: string) {
-		if (status === "approved") return <Chip label="Approved" sx={{ backgroundColor: "#A4E29F" }} />
-		if (status === "not approved") return <Chip label="Not Approved" sx={{ backgroundColor: "#FFABAB" }} />
-		return <Chip label="Pending" />
-	}
-
 	const questionBankOptions = ["General", "Mock Paper 1", "Mock Paper 2"];
 
 	const loadQuestions = async (specialityId: string, questionBank: string) => {
@@ -101,7 +94,7 @@ function EditQuestions() {
 		navigate("/edit-question")
 	}
 
-	if (!hasQuestionAuthorAccess) return <Unauthorized />;
+	if (!hasQuestionAuthorAccess) return <Unauthorised />;
 
 	return (
 		<Page>

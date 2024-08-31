@@ -9,11 +9,11 @@ import QuestionBankOption from "./QuestionBankOption";
 export const QuestionBankSelection = observer(() => {
   const questionBanks = [
     {
-      name: "UKMLA AKT MEDICAL STUDENT",
+      name: "UKMLA AKT - Medical Student",
       icon: IMGIcon,
     },
     {
-      name: "UKMLA AKT IMG",
+      name: "UKMLA AKT - International Medical Graduate",
       icon: MedicalStudentIcon,
     }
   ]
@@ -21,7 +21,7 @@ export const QuestionBankSelection = observer(() => {
 
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', bgcolor: 'white', borderRadius: 1.5 }}>
-      <Stack sx={{ maxWidth: 400, m: 'auto' }} spacing={3}>
+      <Stack sx={{ maxWidth: 500, m: 'auto' }} spacing={3}>
         {
           questionBanks.map(({ name, icon: Icon }) => (
             <QuestionBankOption

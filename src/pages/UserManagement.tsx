@@ -8,7 +8,7 @@ import SendNotificationModal from '../components/notifications/SendNotificationM
 import UserProfile from '../components/profile/UserProfile';
 import AddUserModal from '../components/userManagement/AddUserModal';
 import DeleteUserModal from '../components/userManagement/DeleteUserModal';
-import Unauthorized from '../components/util/Unauthorized';
+import Unauthorised from '../components/util/Unauthorised';
 import { useServiceProvider } from '../services/ServiceProvider';
 import { primaryGradientText } from '../theme';
 
@@ -115,7 +115,7 @@ function UserManagement() {
 		};
 	}, []);
 
-	if (!hasAdminAccess) return <Unauthorized />;
+	if (!hasAdminAccess) return <Unauthorised />;
 
 	return rows && (
 		<Page withNav fullWidth>

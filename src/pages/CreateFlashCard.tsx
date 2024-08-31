@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FlashcardEditor from "../components/flashCards/FlashcardEditor";
 import Page from "../components/nav/Page";
-import Unauthorized from "../components/util/Unauthorized";
+import Unauthorised from "../components/util/Unauthorised";
 import { useSnackbar } from "../hooks/useSnackbar";
 import { Flashcard } from "../models/Flashcard";
 import { useServiceProvider } from "../services/ServiceProvider";
@@ -36,7 +36,7 @@ const CreateFlashCard = () => {
     }
   }
 
-  if (!hasFlashcardAuthorAccess) return <Unauthorized />;
+  if (!hasFlashcardAuthorAccess) return <Unauthorised />;
 
   return (
     <Page maxWidth="md">

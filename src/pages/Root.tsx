@@ -83,7 +83,7 @@ function Root() {
                 title="Flash Cards"
                 primary
                 action={
-                  <Button variant="contained" color="secondary" disabled sx={{ "&.Mui-disabled": { color: "#9bd3eb" } }}>Coming soon..</Button>
+                  <Button variant="contained" color="secondary" disabled sx={{ "&.Mui-disabled": { color: "#9bd3eb" } }}>Coming soon...</Button>
                   // <Link style={unstyledLink} to={isSubscribed ? "flash-cards" : "subscribe"}>
                   //   <Button variant="contained" color="secondary">
                   //     Learn
@@ -127,7 +127,7 @@ function Root() {
             <Grid item xs={12} sm={6}>
               <Card
                 title="Podcasts"
-                action={<Button variant="contained" disabled>Coming soon..</Button>}
+                action={<Button variant="contained" disabled>Coming soon...</Button>}
                 icon={<img src={PodcastsIcon} width={64} />}
               >
                 Insightful discussions, clinical gems
@@ -136,7 +136,7 @@ function Root() {
             <Grid item xs={12} sm={6}>
               <Card
                 title="My Courses"
-                action={<Button variant="contained" disabled>Coming soon..</Button>}
+                action={<Button variant="contained" disabled>Coming soon...</Button>}
                 icon={<img src={CoursesIcon} width={64} />}
               >
                 Explore your registered courses and webinars

@@ -1,6 +1,6 @@
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, Snackbar, Stack, TextField, Typography } from "@mui/material";
+import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Link as MuiLink, Select, Snackbar, Stack, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -257,7 +257,17 @@ export default function Register() {
                   <AgreementCheckbox
                     checked={agreedToTerms}
                     onChange={e => setAgreedToTerms(e.target.checked)}
-                    text="I agree to Terms & Conditions and Privacy Policy"
+                    text={
+                      <div>I agree to&nbsp;
+                        <MuiLink href="https://comprehensive-choices-886902.framer.app/terms" target="_blank" rel="noreferrer">
+                          Terms & Conditions
+                        </MuiLink>
+                        &nbsp;and&nbsp;
+                        <MuiLink href="https://comprehensive-choices-886902.framer.app/privacy" target="_blank" rel="noreferrer">
+                          Privacy Policy
+                        </MuiLink>
+                      </div>
+                    }
                   />
                   <AgreementCheckbox
                     text="Send me updates and promotions via email/text"

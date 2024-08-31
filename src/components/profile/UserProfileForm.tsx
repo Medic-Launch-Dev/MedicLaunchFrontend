@@ -13,7 +13,7 @@ export interface EditProfileFormData {
   firstName: string;
   lastName: string;
   email?: string;
-  phone: string;
+  phoneNumber: string;
   university: string;
   graduationYear: string;
   password?: string;
@@ -23,6 +23,7 @@ export interface EditProfileFormData {
 }
 
 interface UserProfileFormProps {
+  adminView?: boolean;
   newUser?: boolean;
   onClose?: () => void;
 }
@@ -43,7 +44,7 @@ const validationSchema = yup.object({
     .matches(/^\d{4}$/, "Graduation must be a valid year")
 });
 
-function UserProfileForm({ newUser, onClose }: UserProfileFormProps) {
+function UserProfileForm({ adminView, newUser, onClose }: UserProfileFormProps) {
   const { showSnackbar, snackbarProps } = useSnackbar();
   const { accountStore: { myProfile }, userStore } = useServiceProvider();
   const [loading, setLoading] = useState(false);
@@ -56,7 +57,7 @@ function UserProfileForm({ newUser, onClose }: UserProfileFormProps) {
         firstName: "",
         lastName: "",
         email: "",
-        phone: "",
+        phoneNumber: "",
         university: "",
         graduationYear: "",
         password: "",
@@ -70,7 +71,7 @@ function UserProfileForm({ newUser, onClose }: UserProfileFormProps) {
         firstName: profileToEdit?.firstName || "",
         lastName: profileToEdit?.lastName || "",
         email: profileToEdit?.email || "",
-        phone: profileToEdit?.phoneNumber || "",
+        phoneNumber: profileToEdit?.phoneNumber || "",
         university: profileToEdit?.university || "",
         graduationYear: profileToEdit?.graduationYear?.toString() || "",
         password: "",
@@ -97,10 +98,16 @@ function UserProfileForm({ newUser, onClose }: UserProfileFormProps) {
     try {
       setLoading(true);
       delete values.subscriptionPlanId;
-      delete values.password;
-      delete values.email;
+      if (adminView) {
+        delete values.password;
+        delete values.email;
+      } else {
+        delete values.id;
+      }
 
-      const success = await userStore.updateUser(values);
+      const success = adminView ?
+        await userStore.updateUser(values) :
+        await userStore.editAccount(values);
       if (success) {
         showSnackbar("Profile updated", "success");
         if (userStore.userInView) userStore.getUserList();
@@ -204,12 +211,12 @@ function UserProfileForm({ newUser, onClose }: UserProfileFormProps) {
             fullWidth
             size="small"
             label="Mobile Number"
-            name="phone"
-            value={formik.values.phone}
+            name="phoneNumber"
+            value={formik.values.phoneNumber}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={formik.touched.phone && Boolean(formik.errors.phone)}
-            helperText={formik.touched.phone && formik.errors.phone}
+            error={formik.touched.phoneNumber && Boolean(formik.errors.phoneNumber)}
+            helperText={formik.touched.phoneNumber && formik.errors.phoneNumber}
             required
           />
         </Grid>

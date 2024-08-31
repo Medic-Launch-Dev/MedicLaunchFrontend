@@ -2,13 +2,13 @@ import { LockOutlined } from "@mui/icons-material";
 import { Card, Stack, Typography } from "@mui/material";
 import LinkButton from "./LinkButton";
 
-export default function Unauthorized() {
+export default function Unauthorised() {
   return (
     <Stack alignItems="center" mt={4}>
       <Card sx={{ width: "max-content", p: 4, px: 8 }}>
         <Stack spacing={2} alignItems="center">
           <LockOutlined sx={{ color: "#353535", fontSize: 40 }} />
-          <Typography variant="h4">Unauthorized</Typography>
+          <Typography variant="h4">Unauthorised</Typography>
 
           <Typography>
             You do not have permission to view this page.

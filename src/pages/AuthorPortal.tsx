@@ -8,14 +8,14 @@ import WelcomeImg from '../../src/assets/images/Welcome.png';
 import Page from '../components/nav/Page';
 import Card from '../components/util/Card';
 import LinkButton from '../components/util/LinkButton';
-import Unauthorized from '../components/util/Unauthorized';
+import Unauthorised from '../components/util/Unauthorised';
 import { useServiceProvider } from '../services/ServiceProvider';
 import { primaryGradient } from '../theme';
 
 function AuthorPortal() {
   const { accountStore: { hasAuthorAccess, hasFlashcardAuthorAccess, hasQuestionAuthorAccess } } = useServiceProvider();
 
-  if (!hasAuthorAccess) return <Unauthorized />;
+  if (!hasAuthorAccess) return <Unauthorised />;
 
   return (
     <Page withNav fullWidth>
