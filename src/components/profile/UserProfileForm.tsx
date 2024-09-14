@@ -46,10 +46,10 @@ const validationSchema = yup.object({
 
 function UserProfileForm({ adminView, newUser, onClose }: UserProfileFormProps) {
   const { showSnackbar, snackbarProps } = useSnackbar();
-  const { accountStore: { myProfile }, userStore } = useServiceProvider();
+  const { accountStore, userStore } = useServiceProvider();
   const [loading, setLoading] = useState(false);
 
-  const profileToEdit = userStore.userInView || myProfile;
+  const profileToEdit = userStore.userInView || accountStore.myProfile;
 
   const getIniitalProfile = () => {
     if (newUser) {
@@ -109,9 +109,9 @@ function UserProfileForm({ adminView, newUser, onClose }: UserProfileFormProps) 
         await userStore.updateUser(values) :
         await userStore.editAccount(values);
       if (success) {
-        showSnackbar("Profile updated", "success");
         if (userStore.userInView) userStore.getUserList();
-        // else window.location.reload();
+        if (!adminView) accountStore.getMyProfile();
+        if (onClose) onClose();
       }
     } catch (error) {
       showSnackbar("Error updating profile", "error");

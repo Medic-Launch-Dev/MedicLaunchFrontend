@@ -12,11 +12,10 @@ export default function PlanOption({ id, name, price, mostPopular, selected, set
   const planFeatures = [
     "Clinical Question Bank",
     "Detailed Explanations",
-    "Personalised Dashboard",
-    "Analytics",
-    "Educational Resources",
-    "Flashcards",
-    "Podcast Library",
+    "Personalised Analytics",
+    "Mock Examinations",
+    "Clinical Tips",
+    "Flashcards"
   ]
 
 

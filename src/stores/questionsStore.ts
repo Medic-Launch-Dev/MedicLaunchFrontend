@@ -1,7 +1,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { FamiliarityCounts } from "../models/FamiliarityCounts";
 import { PracticeFilter, QuestionsOrder } from "../models/PracticeFilter";
-import { Question } from "../models/Question";
+import { Question, QuestionType } from "../models/Question";
 import { QuestionAttempt } from "../models/QuestionAttempt";
 import Speciality from "../models/Speciality";
 import MedicLaunchApiClient from "../services/MedicLaunchApiClient";
@@ -169,6 +169,23 @@ export class QuestionsStore {
     } else {
       this.questions = practiceQuestions;
     }
+  }
+
+  async startMock(mockExamType: QuestionType.PaperOneMockExam | QuestionType.PaperTwoMockExam) {
+    let mockQuestions = await this.apiClient.startMock(mockExamType);
+
+    // Shuffle the questions
+    for (let i = mockQuestions.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [mockQuestions[i], mockQuestions[j]] = [mockQuestions[j], mockQuestions[i]];
+    }
+
+    if (mockQuestions.length > 100) mockQuestions = mockQuestions.slice(0, 100);
+
+    this.questions = mockQuestions;
+    this._currentQuestionIdx = 0;
+    this._correctAnswers = 0;
+    this._incorrectAnswers = 0;
   }
 
   setPreviewQuestion(question: QuestionModelUI) {

@@ -3,7 +3,7 @@ import { AxiosInstance } from "axios";
 import { FamiliarityCounts } from "../models/FamiliarityCounts";
 import { Flashcard } from "../models/Flashcard";
 import { PracticeFilter } from "../models/PracticeFilter";
-import { Question } from "../models/Question";
+import { Question, QuestionType } from "../models/Question";
 import Speciality, { SpecialityAnalytics } from "../models/Speciality";
 import { MedicLaunchUser } from "../models/User";
 import { ErrorStore } from "../stores/errorStore";
@@ -56,6 +56,11 @@ export default class MedicLaunchApiClient {
 
   async removeQuestion(questionId: string, specialityId: string) {
     return await this.deleteData(`questions/delete/${specialityId}`, questionId);
+  }
+
+  async startMock(mockExamType: QuestionType.PaperOneMockExam | QuestionType.PaperTwoMockExam) {
+    const res = await this.axios.post(`${this.apiUrl}/mockexam/start/${mockExamType}`, {});
+    return res.data;
   }
 
   async registerUser(userData: MedicLaunchUser): Promise<boolean> {

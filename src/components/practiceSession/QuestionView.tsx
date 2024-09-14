@@ -133,37 +133,69 @@ function QuestionView({ question: questionFromProps, inPreview, isMock, isFreeTr
       </Stack>
 
       {
-        !wasAttempted && !inPreview &&
-        <Stack sx={{ width: "max-content" }} spacing={1} alignItems="center">
-          <LoadingButton
-            variant="contained"
-            sx={{ px: 12, py: 1.25 }}
-            disabled={!selectedOption}
-            loading={loadingSubmit}
-            onClick={handleSubmitAnswer}
-          >
-            Submit
-          </LoadingButton>
-          <Stack direction="row" spacing={1}>
-            {!isFreeTrial && flagButtonMarkup}
-            <Button
-              startIcon={<KeyboardArrowLeft />}
-              variant="outlined"
-              onClick={() => questionsStore.decrementQuestion()}
-              disabled={questionsStore.onFirstQuestion}
-            >
-              Previous
-            </Button>
-            <Button
-              endIcon={<ChevronRight />}
-              variant="outlined"
-              onClick={() => questionsStore.incrementQuestion()}
-              disabled={questionsStore.onLastQuestion}
-            >
-              Skip
-            </Button>
-          </Stack>
-        </Stack>
+        !inPreview && (
+          wasAttempted ?
+            <Stack sx={{ width: "max-content" }} spacing={1} alignItems="center">
+              {
+                questionsStore.onLastQuestion
+                  ?
+                  <LinkButton sx={{ px: 12, py: 1.25 }} to={isFreeTrial ? "/subscribe" : "/review-session"}>
+                    {isFreeTrial ? "Subscribe" : "End Session"}
+                  </LinkButton>
+                  :
+                  <Button
+                    sx={{ px: 12, py: 1.25 }}
+                    variant="contained"
+                    disabled={inPreview}
+                    onClick={() => questionsStore.incrementQuestion()}
+                  >
+                    Next Question
+                  </Button>
+              }
+              <Stack direction="row" spacing={1}>
+                {!isFreeTrial && flagButtonMarkup}
+                <Button
+                  startIcon={<KeyboardArrowLeft />}
+                  variant="outlined"
+                  onClick={() => questionsStore.decrementQuestion()}
+                  disabled={questionsStore.onFirstQuestion}
+                >
+                  Previous
+                </Button>
+              </Stack>
+            </Stack>
+            :
+            <Stack sx={{ width: "max-content" }} spacing={1} alignItems="center">
+              <LoadingButton
+                variant="contained"
+                sx={{ px: 12, py: 1.25 }}
+                disabled={!selectedOption}
+                loading={loadingSubmit}
+                onClick={handleSubmitAnswer}
+              >
+                Submit
+              </LoadingButton>
+              <Stack direction="row" spacing={1}>
+                {!isFreeTrial && flagButtonMarkup}
+                <Button
+                  startIcon={<KeyboardArrowLeft />}
+                  variant="outlined"
+                  onClick={() => questionsStore.decrementQuestion()}
+                  disabled={questionsStore.onFirstQuestion}
+                >
+                  Previous
+                </Button>
+                <Button
+                  endIcon={<ChevronRight />}
+                  variant="outlined"
+                  onClick={() => questionsStore.incrementQuestion()}
+                  disabled={questionsStore.onLastQuestion}
+                >
+                  Skip
+                </Button>
+              </Stack>
+            </Stack>
+        )
       }
     </>
   );

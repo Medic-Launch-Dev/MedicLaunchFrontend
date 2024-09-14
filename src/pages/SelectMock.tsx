@@ -78,15 +78,13 @@ const sampleQuestions: Question[] = [
 export default function SelectMock() {
   const { practiceStore, questionsStore } = useServiceProvider();
   const { showSnackbar, snackbarProps } = useSnackbar();
-  const [selectedMock, setSelectedMock] = useState<QuestionType>(QuestionType.PaperOneMockExam);
+  const [selectedMock, setSelectedMock] = useState<QuestionType.PaperOneMockExam | QuestionType.PaperTwoMockExam>(QuestionType.PaperOneMockExam);
   const navigate = useNavigate();
 
   async function handleStartMock() {
     try {
-      practiceStore.setAllSpecialitiesSelected(true);
-      // const practiceQuestion = await practiceStore.getPracticeQuestions();
-      questionsStore.setPracticeQuestions(sampleQuestions);
-      practiceStore.setQuestionsCount(sampleQuestions.length);
+      // practiceStore.setAllSpecialitiesSelected(true);
+      await questionsStore.startMock(selectedMock);
       navigate(`/practice-session?isMock=true`);
     } catch (e) {
       console.error(e);

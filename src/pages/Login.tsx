@@ -80,7 +80,7 @@ export default function Login() {
                   error={formik.touched.password && Boolean(formik.errors.password)}
                   helperText={formik.touched.password && formik.errors.password}
                 />
-                <Stack
+                {/* <Stack
                   direction="row"
                   justifyContent="end"
                   alignItems="end"
@@ -88,7 +88,7 @@ export default function Login() {
                   sx={{ mt: 1 }}
                 >
                   <Typography fontSize={14}>Forgot password?</Typography>
-                </Stack>
+                </Stack> */}
                 <Stack spacing={2} width="100%" alignItems="center" sx={{ mt: 4 }}>
                   <LoadingButton
                     variant="contained"

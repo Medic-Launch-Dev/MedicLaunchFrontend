@@ -4,7 +4,6 @@ import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 import { useSnackbar } from "../../hooks/useSnackbar";
 import { useServiceProvider } from "../../services/ServiceProvider";
-import accountStore from "../../stores/accountStore";
 import { primaryGradient } from "../../theme";
 import { formatDate } from "../../utils/DateTimeUtils";
 import LinkButton from "../util/LinkButton";
@@ -16,7 +15,7 @@ interface UserProfileProps {
 }
 
 function UserProfile({ adminView }: UserProfileProps) {
-  const { accountStore: { myProfile, isSubscribed }, userStore, practiceStore } = useServiceProvider();
+  const { accountStore, userStore, practiceStore } = useServiceProvider();
   const { showSnackbar, snackbarProps } = useSnackbar();
 
   const [editOpen, setEditOpen] = useState(false);
@@ -35,7 +34,7 @@ function UserProfile({ adminView }: UserProfileProps) {
     }
   }
 
-  const userProfile = adminView ? userStore.userInView : myProfile;
+  const userProfile = adminView ? userStore.userInView : accountStore.myProfile;
 
   return (
     <>
@@ -101,7 +100,7 @@ function UserProfile({ adminView }: UserProfileProps) {
                 <Typography fontSize={17} fontWeight={500}>My Subscription</Typography>
                 {
                   !adminView && (
-                    isSubscribed ?
+                    accountStore.isSubscribed ?
                       <Button size="small" variant="contained" startIcon={<Loop />} onClick={() => setResetOpen(true)} disabled={userProfile?.questionsCompleted === 0}>
                         Reset Questions
                       </Button>
@@ -114,7 +113,7 @@ function UserProfile({ adminView }: UserProfileProps) {
               </Stack>
               <Divider sx={{ my: 2 }} />
               {
-                isSubscribed ?
+                accountStore.isSubscribed ?
                   <Stack direction="row" justifyContent="space-between">
                     <SubscriptionField label="Subscription" value="UKMLA" />
                     <SubscriptionField label="Plan" value={`${userProfile?.subscriptionMonths} month`} />

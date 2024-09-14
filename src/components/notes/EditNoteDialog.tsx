@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogTitle } from "@mui/material";
+import { Button, Dialog, DialogContent, DialogTitle } from "@mui/material";
 import EditNote, { EditNoteProps } from "./EditNote";
 
 interface EditNoteDialogProps extends EditNoteProps {
@@ -15,6 +15,8 @@ export default function EditNoteDialog({ open, onClose, ...rest }: EditNoteDialo
           height={600}
           alignItems="end"
           {...rest}
+          onSave={onClose}
+          closeButton={<Button variant="text" onClick={onClose}>Cancel</Button>}
         />
       </DialogContent>
     </Dialog>

@@ -17,7 +17,7 @@ export const plans: Plan[] = [
   },
   {
     id: 3,
-    name: "6 Months",
+    name: "12 Months",
     price: 30
   },
 ]

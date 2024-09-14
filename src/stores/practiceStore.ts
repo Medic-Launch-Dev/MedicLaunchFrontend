@@ -42,7 +42,7 @@ export class PracticeStore {
 
 	resetTimer() {
 		this.examTimerState = TimerState.STOPPED;
-		this.timeRemaining = 7;
+		this.timeRemaining = 7200;
 		clearInterval(this.timerInterval);
 	}
 

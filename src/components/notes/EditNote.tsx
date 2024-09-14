@@ -9,10 +9,11 @@ export interface EditNoteProps extends StackProps {
   specialityId?: string;
   flashcardId?: string;
   questionId?: string;
-  onSave?: () => Promise<any>;
+  onSave?: () => void | Promise<any>;
+  closeButton?: React.ReactNode;
 }
 
-export default function EditNote({ note, specialityId, flashcardId, questionId, onSave, ...rest }: EditNoteProps) {
+export default function EditNote({ note, specialityId, flashcardId, questionId, onSave, closeButton, ...rest }: EditNoteProps) {
   const { notesStore, flashCardStore } = useServiceProvider();
   const { showSnackbar, snackbarProps } = useSnackbar();
   const [content, setContent] = useState(note?.content || "");
@@ -33,6 +34,7 @@ export default function EditNote({ note, specialityId, flashcardId, questionId, 
         await flashCardStore.getAllFlashCards();
         await notesStore.getAllNotes();
         showSnackbar('Saved', 'success');
+        if (onSave) onSave();
       }
     } else {
       note.content = content;
@@ -41,6 +43,7 @@ export default function EditNote({ note, specialityId, flashcardId, questionId, 
         await flashCardStore.getAllFlashCards();
         await notesStore.getAllNotes();
         showSnackbar('Saved', 'success');
+        if (onSave) onSave();
       }
     }
   }
@@ -59,14 +62,17 @@ export default function EditNote({ note, specialityId, flashcardId, questionId, 
         value={content}
         onChange={(e) => setContent(e.target.value)}
       />
-      <Button
-        variant="contained"
-        sx={{ width: 'max-content', height: 'max-content', mt: 2 }}
-        onClick={saveNote}
-        disabled={!content || content === note?.content}
-      >
-        Save
-      </Button>
+      <Stack direction="row" spacing={1} alignItems="center" justifyContent="right" mt={2}>
+        {closeButton}
+        <Button
+          variant="contained"
+          sx={{ width: 'max-content', height: 'max-content' }}
+          onClick={saveNote}
+          disabled={!content || content === note?.content}
+        >
+          Save
+        </Button>
+      </Stack>
     </Stack>
   )
 }
