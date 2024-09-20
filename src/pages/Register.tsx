@@ -106,6 +106,7 @@ export default function Register() {
             justifyContent="center"
             spacing={2}
           >
+            <img src="/logo.png" width={140} style={{ position: "absolute", top: 24, left: 24 }} />
             <Box maxWidth="md" width="100%" px={12}>
               <form onSubmit={formik.handleSubmit}>
                 <Typography

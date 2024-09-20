@@ -45,7 +45,7 @@ export default function Login() {
             justifyContent="center"
             spacing={2}
           >
-            <img src="https://mediclaunch.co.uk/wp-content/uploads/2021/07/Final-Logo.png" width={140} style={{ position: "absolute", top: 24, left: 24 }} />
+            <img src="/logo.png" width={140} style={{ position: "absolute", top: 24, left: 24 }} />
             <Box maxWidth="sm">
               <Typography
                 variant="h1"

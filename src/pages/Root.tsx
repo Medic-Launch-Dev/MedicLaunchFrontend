@@ -83,12 +83,11 @@ function Root() {
                 title="Flash Cards"
                 primary
                 action={
-                  <Button variant="contained" color="secondary" disabled sx={{ "&.Mui-disabled": { color: "#9bd3eb" } }}>Coming soon...</Button>
-                  // <Link style={unstyledLink} to={isSubscribed ? "flash-cards" : "subscribe"}>
-                  //   <Button variant="contained" color="secondary">
-                  //     Learn
-                  //   </Button>
-                  // </Link>
+                  <Link style={unstyledLink} to={isSubscribed ? "flash-cards" : "subscribe"}>
+                    <Button variant="contained" color="secondary">
+                      Learn
+                    </Button>
+                  </Link>
                 }
                 icon={<img src={FlashCardsIcon} width={64} />}
               >
@@ -99,7 +98,6 @@ function Root() {
               <Card
                 title="Mock Examination"
                 action={
-                  // <Button variant="contained" disabled>Coming soon..</Button>
                   <Link style={unstyledLink} to={isSubscribed ? "select-mock" : "subscribe"}>
                     <Button variant="contained">Start Mock</Button>
                   </Link>
