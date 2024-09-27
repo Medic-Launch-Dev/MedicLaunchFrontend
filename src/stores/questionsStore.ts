@@ -126,6 +126,22 @@ export class QuestionsStore {
     return await this.apiClient.removeQuestion(questionId, specialityId);
   }
 
+  async getTrialQuestions() {
+    return await this.apiClient.getData("questions/trial-questions");
+  }
+
+  async addTrialQuestion(question: Question) {
+    return await this.apiClient.postData("questions/create-trial", question);
+  }
+
+  async updateTrialQuestion(question: Question) {
+    return await this.apiClient.postData(`questions/update-trial/${question.id}`, question);
+  }
+
+  async deleteTrialQuestion(questionId: string) {
+    return await this.apiClient.deleteData(`questions/delete-trial`, questionId);
+  }
+
   async getSpecialities(): Promise<Speciality[]> {
     const specialities = await this.apiClient.getSpecialitiesList();
 

@@ -1,21 +1,15 @@
 import { Add } from "@mui/icons-material"
 import {
 	Button,
-	Chip,
 	Grid,
 	Stack,
-	Table,
-	TableBody,
-	TableCell,
-	TableContainer,
-	TableHead,
-	TableRow,
 	Typography
 } from "@mui/material"
 import { observer } from "mobx-react-lite"
 import { useEffect, useState } from "react"
 import { useNavigate, useSearchParams } from "react-router-dom"
 import Page from "../components/nav/Page"
+import EditQuestionsTable from "../components/questions/EditQuestionsTable"
 import { LoadingWrapper } from "../components/util/LoadingWrapper"
 import TextSelect from "../components/util/TextSelect"
 import Unauthorised from "../components/util/Unauthorised"
@@ -55,12 +49,6 @@ function EditQuestions() {
 		navigate("/create-question");
 	}
 
-	const getQuestionTextWithoutHtml = (questionText: string) => {
-		const tempContainer = document.createElement('div');
-		tempContainer.innerHTML = questionText;
-		return tempContainer.innerText;
-	}
-
 	useEffect(() => {
 		questionsStore.getSpecialities()
 			.then((specialities) => {
@@ -88,11 +76,6 @@ function EditQuestions() {
 		}
 		if (selectedSpeciality) loadQuestions(selectedSpeciality, questionBank);
 	}, [selectedSpeciality, selectedQuestionBank])
-
-	function handleClickEdit(question: QuestionModelUI) {
-		questionsStore.setPreviewQuestion(question);
-		navigate("/edit-question")
-	}
 
 	if (!hasQuestionAuthorAccess) return <Unauthorised />;
 
@@ -134,64 +117,11 @@ function EditQuestions() {
 			</Grid>
 			<LoadingWrapper isLoading={loading}>
 				{
-					questions.length > 0 ? (
-						<TableContainer>
-							<Table>
-								<TableHead>
-									<TableRow>
-										<TableCell sx={{ width: 160 }}>Question Code</TableCell>
-										<TableCell>Status</TableCell>
-										<TableCell>Speciality</TableCell>
-										<TableCell>Question #</TableCell>
-										<TableCell sx={{ width: 320 }}>Question</TableCell>
-										<TableCell sx={{ paddingLeft: "32px" }}>Edit</TableCell>
-									</TableRow>
-								</TableHead>
-								<TableBody>
-									{questions.map((p, index) => {
-										return (
-											<TableRow key={index}>
-												<TableCell component="th" scope="row">{p.questionCode}</TableCell>
-												<TableCell>
-													{
-														p.isSubmitted ?
-															<Chip label="Submitted" sx={{ backgroundColor: "#A4E29F" }} /> :
-															<Chip label="Pending" />
-													}
-												</TableCell>
-												<TableCell>{p.specialityName}</TableCell>
-												<TableCell>{index + 1}</TableCell>
-												<TableCell sx={{ width: 500 }}>
-													<Typography sx={{ height: 64, overflowY: 'hidden' }}>
-														{getQuestionTextWithoutHtml(p.questionText)}
-													</Typography>
-												</TableCell>
-												<TableCell>
-													<Button
-														variant="contained"
-														sx={{
-															fontWeight: 500,
-															fontSize: "14px",
-															width: "4px",
-															height: "32px",
-															paddingX: "0px",
-															paddingY: "20px"
-														}}
-														onClick={() => handleClickEdit(p)}
-													>
-														Edit
-													</Button>
-												</TableCell>
-											</TableRow>
-										)
-									})}
-								</TableBody>
-							</Table>
-						</TableContainer>
-					) : <Typography variant="h6">No questions in selected speciality and question bank</Typography>
+					questions.length > 0 ?
+						<EditQuestionsTable questions={questions} /> :
+						<Typography variant="h6">No questions in selected speciality and question bank</Typography>
 				}
 			</LoadingWrapper>
-
 		</Page>
 
 	)

@@ -35,7 +35,7 @@ function QuestionPreview() {
           borderRadius: 1,
           mb: 4
         }}>
-        <LinkButton variant="text" color="secondary" to={from === "create" ? "/create-question" : "/edit-question"} startIcon={<ChevronLeft />}>
+        <LinkButton variant="text" color="secondary" to={from ? `/${from}` : "/edit-question"} startIcon={<ChevronLeft />}>
           Back to edit
         </LinkButton>
         <Typography variant="h3" color="secondary">Preview</Typography>

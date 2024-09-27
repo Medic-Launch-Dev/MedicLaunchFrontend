@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Page from "../components/nav/Page";
 import QuestionEditView from "../components/questionCreation/QuestionEditView";
 import Unauthorised from "../components/util/Unauthorised";
@@ -17,6 +17,8 @@ import { useServiceProvider } from "../services/ServiceProvider";
 import { primaryGradientText } from "../theme";
 
 const CreateQuestion = () => {
+  const [searchParams] = useSearchParams();
+  const isTrial = searchParams.get("isTrial");
   const { questionsStore, accountStore: { hasQuestionAuthorAccess, hasAdminAccess } } = useServiceProvider();
   const { showSnackbar, snackbarProps } = useSnackbar();
   const [loadingDraft, setLoadingDraft] = useState(false);
@@ -30,12 +32,19 @@ const CreateQuestion = () => {
       if (!question) return;
       isSubmitted ? setLoadingSubmit(true) : setLoadingDraft(true);
 
-      await questionsStore.addQuestion({
-        ...question,
-        isSubmitted
-      });
+      if (isTrial) {
+        await questionsStore.addTrialQuestion({
+          ...question,
+          isSubmitted
+        });
+      } else {
+        await questionsStore.addQuestion({
+          ...question,
+          isSubmitted
+        });
+      }
 
-      navigate(`/edit-questions?speciality=${question.specialityId}`);
+      navigate(isTrial ? "/edit-trial-questions" : `/edit-questions?speciality=${question.specialityId}`);
     } catch (e) {
       console.error(e);
       showSnackbar("Failed to submit", "error");
@@ -48,7 +57,7 @@ const CreateQuestion = () => {
   const handleClickPreview = () => {
     if (!question) return;
     questionsStore.setPreviewQuestion(question);
-    navigate("/question-preview?from=create");
+    navigate("/question-preview?from=create-question");
   };
 
   if (!hasQuestionAuthorAccess) return <Unauthorised />;
@@ -82,6 +91,7 @@ const CreateQuestion = () => {
         question={question}
         setQuestion={setQuestion}
         setCanSubmit={setCanSubmit}
+        isTrial={Boolean(isTrial)}
       />
     </Page>
   );

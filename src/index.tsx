@@ -24,6 +24,7 @@ import CreateSession from "./pages/CreateSession";
 import EditFlashCards from "./pages/EditFlashCards";
 import EditFlascard from "./pages/EditFlashcard";
 import EditQuestion from "./pages/EditQuestion";
+import EditTrialQuestions from "./pages/EditTrialQuestions";
 import FlashCards from "./pages/FlashCards";
 import FreeTrial from "./pages/FreeTrial";
 import MyProfile from "./pages/MyProfile";
@@ -77,6 +78,10 @@ const App = () => {
         {
           path: "edit-questions",
           element: <EditQuestions />
+        },
+        {
+          path: "edit-trial-questions",
+          element: <EditTrialQuestions />
         },
         {
           path: "edit-question",
