@@ -3,7 +3,7 @@ import { LoadingButton } from "@mui/lab";
 import { Box, Button, Chip, Grid, Stack, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { RichTextReadOnly } from "mui-tiptap";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Option } from "../../models/Question";
 import { useServiceProvider } from "../../services/ServiceProvider";
 import { QuestionModelUI } from "../../stores/questionsStore";
@@ -31,9 +31,13 @@ function QuestionView({ question: questionFromProps, inPreview, isMock, isFreeTr
   const [open, setOpen] = useState(false);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [loadingFlag, setLoadingFlag] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<Option>();
+  const [selectedOption, setSelectedOption] = useState<Option | null>(null);
   const wasAttempted = !!question?.submittedAnswerLetter;
   const correctOption = question?.options?.filter(option => option.letter === question?.correctAnswerLetter);
+
+  useEffect(() => {
+    setSelectedOption(null);
+  }, [questionFromProps])
 
   const extensions = useExtensions({
     placeholder: ""
