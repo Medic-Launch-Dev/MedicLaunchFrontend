@@ -9,14 +9,13 @@ interface PlanOptionProps extends Plan {
 }
 
 export default function PlanOption({ id, name, price, mostPopular, selected, setSelected }: PlanOptionProps) {
-  const planFeatures = [
-    "Clinical Question Bank",
-    "Detailed Explanations",
-    "Personalised Analytics",
-    "Mock Examinations",
-    "Clinical Tips",
-    "Flashcards"
-  ]
+  const basePlanFeatures = ["Clinical Question Bank", "Detailed Explanations", "Personalised Dashboard", "Clinical Tips"];
+
+  const planFeatures = {
+    1: basePlanFeatures,
+    2: [...basePlanFeatures, "Mock Examinations"],
+    3: [...basePlanFeatures, "Mock Examinations", "Flashcards"]
+  }
 
 
   const checkIcon = (
@@ -39,8 +38,7 @@ export default function PlanOption({ id, name, price, mostPopular, selected, set
           background: selected ? primaryGradient : "white",
           color: selected ? "white" : undefined,
           borderRadius: 1.5,
-          px: 3,
-          py: mostPopular ? 5 : 3,
+          p: 3,
           boxShadow: '0px 0px 22px 0px #97979765',
           height: "100%",
           display: 'flex',
@@ -61,9 +59,9 @@ export default function PlanOption({ id, name, price, mostPopular, selected, set
             Limited Promotional Offer: Save 50%!
           </Typography>
         </Stack>
-        <Stack spacing={2} sx={{ p: 3, py: mostPopular ? 4 : 3, bgcolor: "#f9f9ff", borderRadius: 1, width: 280 }}>
+        <Stack spacing={2} sx={{ p: 3, bgcolor: "#f9f9ff", borderRadius: 1, width: 280 }}>
           {
-            planFeatures.map(feature => (
+            planFeatures[id].map(feature => (
               <Stack direction="row" spacing={1} alignItems="center">
                 {checkIcon}
                 <Typography fontWeight={500} color="black">{feature}</Typography>

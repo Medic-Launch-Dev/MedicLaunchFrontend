@@ -13,11 +13,11 @@ export const plans: Plan[] = [
   {
     id: 2,
     name: "3 Months",
-    price: 20
+    price: 29
   },
   {
     id: 3,
     name: "12 Months",
-    price: 30
+    price: 42
   },
 ]
