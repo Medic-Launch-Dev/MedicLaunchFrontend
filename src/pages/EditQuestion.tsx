@@ -48,7 +48,7 @@ const EditQuestion = () => {
       if (isTrial) await questionsStore.updateTrialQuestion(updatedQuestion);
       else await questionsStore.updateQuestion(updatedQuestion);
 
-      if (submitDraft) navigate(isTrial ? "edit-trial-questions" : `/edit-questions?speciality=${question.specialityId}`);
+      if (submitDraft) navigate(isTrial ? "/edit-trial-questions" : `/edit-questions?speciality=${question.specialityId}`);
 
       showSnackbar(submitDraft ? "Question submitted" : "Question updated", "success");
     } catch (e) {
