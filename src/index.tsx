@@ -8,7 +8,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import React from "react";
 import ReactDOM from "react-dom";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import AppShell from "./components/nav/AppShell";
+import NavigationHandler from "./components/nav/NavigationHandler";
 import CreateQuestion from "./pages/CreateQuestion";
 import EditQuestions from './pages/EditQuestions';
 import Login from "./pages/Login";
@@ -49,7 +49,7 @@ const App = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <AuthGuard><AppShell /></AuthGuard>,
+      element: <AuthGuard><NavigationHandler /></AuthGuard>,
       children: [
         {
           index: true,

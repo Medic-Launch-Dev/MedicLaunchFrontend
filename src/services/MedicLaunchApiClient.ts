@@ -6,16 +6,16 @@ import { PracticeFilter } from "../models/PracticeFilter";
 import { Question, QuestionType } from "../models/Question";
 import Speciality, { SpecialityAnalytics } from "../models/Speciality";
 import { MedicLaunchUser } from "../models/User";
-import { ErrorStore } from "../stores/errorStore";
+import { ApplicationStore } from "../stores/applicationStore";
 import AxiosProvider from "./AxiosProvider";
 
 export default class MedicLaunchApiClient {
   private readonly apiUrl: string;
   private readonly axios: AxiosInstance;
   private readonly baseUrl: string;
-  private readonly errorStore?: ErrorStore;
+  private readonly errorStore?: ApplicationStore;
 
-  constructor(axiosProvider: AxiosProvider, errorStore?: ErrorStore) {
+  constructor(axiosProvider: AxiosProvider, errorStore?: ApplicationStore) {
     this.baseUrl = process.env.REACT_APP_MEDIC_LAUNCH_URL!;
     this.apiUrl = this.baseUrl + '/api';
     this.axios = axiosProvider.defaultInstance;

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { AccountStore } from '../stores/accountStore';
-import { ErrorStore } from '../stores/errorStore';
+import { ApplicationStore } from '../stores/applicationStore';
 import { FlashCardStore } from '../stores/flashCardStore';
 import { NotesStore } from '../stores/notesStore';
 import { NotificationsStore } from '../stores/notificationsStore';
@@ -17,7 +17,7 @@ interface ServiceProviderContextValues {
   paymentStore: PaymentStore;
   flashCardStore: FlashCardStore;
   userStore: UserStore;
-  errorStore: ErrorStore;
+  applicationStore: ApplicationStore;
   accountStore: AccountStore;
   notesStore: NotesStore;
   notificationsStore: NotificationsStore;
@@ -27,9 +27,9 @@ export const ServiceProviderContext = React.createContext<ServiceProviderContext
 export const ServiceProviderConsumer = ServiceProviderContext.Consumer;
 
 export const ServiceProvider = ({ children }) => {
-  const errorStore = new ErrorStore();
+  const applicationStore = new ApplicationStore();
   const axiosProvider = new AxiosProvider();
-  const medicLaunchApiClient = new MedicLaunchApiClient(axiosProvider, errorStore);
+  const medicLaunchApiClient = new MedicLaunchApiClient(axiosProvider, applicationStore);
   const practiceStore = new PracticeStore(medicLaunchApiClient);
   const questionsStore = new QuestionsStore(medicLaunchApiClient);
   const paymentStore = new PaymentStore(medicLaunchApiClient);
@@ -46,7 +46,7 @@ export const ServiceProvider = ({ children }) => {
       paymentStore,
       flashCardStore,
       userStore,
-      errorStore,
+      applicationStore,
       accountStore,
       notesStore,
       notificationsStore
