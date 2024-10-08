@@ -48,7 +48,7 @@ export default function MockSelector({ name, specialities, selected, setSelected
         <Grid container spacing={2.5}>
           {
             specialities.map(speciality => (
-              <Grid item xs={6} key={speciality}>
+              <Grid item xs={12} md={6} key={speciality}>
                 <Stack direction="row" spacing={1} alignItems="center">
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     {checkIcon}

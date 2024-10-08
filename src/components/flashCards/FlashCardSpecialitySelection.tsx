@@ -52,14 +52,14 @@ export const FlashCardSpecialitySelection = observer(({ selectedSpecialityId, se
         specialities && specialities.length > 0 ?
           <Grid container spacing={2}>
             {specialities.map((speciality) => (
-                <Grid item xs={3}>
-                  <SpecialityOption
-                    selected={selectedSpecialityId === speciality.id}
-                    setSelected={handleSpecialityClick}
-                    speciality={speciality}
-                  />
-                </Grid>
-              ))}
+              <Grid item xs={12} sm={6} md={3}>
+                <SpecialityOption
+                  selected={selectedSpecialityId === speciality.id}
+                  setSelected={handleSpecialityClick}
+                  speciality={speciality}
+                />
+              </Grid>
+            ))}
           </Grid>
           :
           <Stack alignItems="center">

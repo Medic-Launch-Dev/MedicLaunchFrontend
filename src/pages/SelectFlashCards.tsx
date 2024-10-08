@@ -19,7 +19,8 @@ export default function SelectFlashCards() {
     <Page sx={{ height: "100%" }}>
       <Stack height="100%" gap={3} py={2}>
         <Stack
-          direction="row"
+          spacing={2}
+          direction={{ xs: "column", md: "row" }}
           justifyContent="space-between"
           alignItems="center"
           sx={{ py: 1, borderRadius: 1, mb: 1 }}
@@ -27,7 +28,7 @@ export default function SelectFlashCards() {
           <LinkButton variant="contained" to={"/"}>
             Study Portal
           </LinkButton>
-          <Typography variant="h2" color="primary">Flashcards - Select Speciality</Typography>
+          <Typography variant="h2" color="primary" align="center">Flashcards - Select Speciality</Typography>
           <Button sx={{ visibility: "hidden" }}>Study Portal</Button>
         </Stack>
         <Box

@@ -39,7 +39,7 @@ export default function FlashCards() {
 
   return (
     <Page sx={{ height: "100%" }} maxWidth="xl">
-      <Stack direction="row" sx={{ height: '100%' }}>
+      <Stack direction={{ xs: "column", md: "row" }} spacing={{ xs: 2, md: 0 }} sx={{ height: '100%' }}>
         <Stack width={350} gap={2} height="100%">
           <Card sx={{ flexShrink: 0 }}>
             <Stack direction="row" justifyContent="space-between">
