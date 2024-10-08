@@ -1,5 +1,5 @@
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
-import { Card, CircularProgress, Divider, IconButton, Skeleton, Stack, Typography } from "@mui/material";
+import { Card, CircularProgress, Divider, IconButton, Skeleton, Stack, Typography, useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import Page from "../components/nav/Page";
@@ -7,8 +7,10 @@ import EditNote from "../components/notes/EditNote";
 import LinkButton from "../components/util/LinkButton";
 import { Flashcard } from "../models/Flashcard";
 import { useServiceProvider } from "../services/ServiceProvider";
+import theme from "../theme";
 
 export default function FlashCards() {
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { specialityId = "" } = useParams();
   const navigate = useNavigate();
   const { flashCardStore, accountStore: { isSubscribed } } = useServiceProvider();
@@ -75,7 +77,7 @@ export default function FlashCards() {
         <Stack sx={{ flexGrow: 1 }} alignItems="center" justifyContent="center" height="100%">
           <img
             src={flashcards?.[currentIdx]?.imageUrl}
-            style={{ maxWidth: 600, maxHeight: "calc(100% - 100px)", margin: 20 }}
+            style={{ maxWidth: isMobile ? "100%" : 600, maxHeight: "calc(100% - 100px)", margin: 20 }}
           />
           <Stack direction="row" gap={2} mt={4}>
             <IconButton
@@ -98,7 +100,7 @@ export default function FlashCards() {
             </IconButton>
           </Stack>
         </Stack>
-        <Stack width={350} gap={2} height="100%">
+        <Stack width={{ xs: "100%", md: 350 }} gap={2} height="100%">
           <LinkButton variant="contained" to={"/"} sx={{ width: 'max-content' }}>
             Study Portal
           </LinkButton>
