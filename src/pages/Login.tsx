@@ -38,15 +38,17 @@ export default function Login() {
     <>
       <Snackbar {...snackbarProps} />
       <Grid container sx={{ height: "100vh" }}>
-        <Grid item lg={7} sx={{ height: "100%" }}>
+        <Grid item xs={12} lg={7} sx={{ height: "100%" }}>
           <Stack
             sx={{ m: "auto", minHeight: "100%", py: 2, position: "relative" }}
             alignItems="center"
             justifyContent="center"
             spacing={2}
           >
-            <img src="/logo.png" width={140} style={{ position: "absolute", top: 24, left: 24 }} />
-            <Box maxWidth="sm">
+            <Box sx={{ position: "fixed", top: 24, left: { xs: "50%", md: 24 }, transform: { xs: "translateX(-50%)", md: "none" } }}>
+              <img src="/logo.png" width={140} />
+            </Box>
+            <Box maxWidth="sm" px={2}>
               <Typography
                 variant="h1"
                 sx={{ ...primaryGradientText, flexShrink: 0, pb: 2 }}
@@ -113,11 +115,7 @@ export default function Login() {
             </Box>
           </Stack>
         </Grid>
-        <Grid
-          item
-          lg={5}
-          sx={{ height: "100%", background: primaryGradient }}
-        ></Grid>
+        <Grid item lg={5} sx={{ height: "100%", background: primaryGradient, display: { xs: 'none', lg: 'block' } }}></Grid>
       </Grid>
     </>
   );

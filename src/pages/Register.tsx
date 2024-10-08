@@ -101,13 +101,16 @@ export default function Register() {
       <Grid container sx={{ height: "100vh" }}>
         <Grid item lg={7} xs={12} sx={{ height: "100%", maxWidth: 600 }}>
           <Stack
-            sx={{ m: "auto", minHeight: "100%", py: 5 }}
+            sx={{ m: "auto", minHeight: "100%", py: 2 }}
             alignItems="center"
             justifyContent="center"
             spacing={2}
           >
-            <img src="/logo.png" width={140} style={{ position: "absolute", top: 24, left: 24 }} />
-            <Box maxWidth="md" width="100%" px={12}>
+            <Box sx={{ position: { md: "fixed", xs: "relative" }, top: 24, left: { xs: 0, md: 24 } }}>
+              <img src="/logo.png" width={140} />
+            </Box>
+            <Box sx={{ display: { xs: "block", md: "none" }, height: 24 }} />
+            <Box maxWidth="md" px={2}>
               <form onSubmit={formik.handleSubmit}>
                 <Typography
                   variant="h1"
@@ -120,7 +123,7 @@ export default function Register() {
                 </Typography>
 
                 <Grid container spacing={3}>
-                  <Grid item md={6}>
+                  <Grid item xs={12} sm={6}>
                     <TextField
                       fullWidth
                       name="firstName"
@@ -131,7 +134,7 @@ export default function Register() {
                       required
                     />
                   </Grid>
-                  <Grid item md={6}>
+                  <Grid item xs={12} sm={6}>
                     <TextField
                       fullWidth
                       name="lastName"
@@ -142,7 +145,7 @@ export default function Register() {
                       required
                     />
                   </Grid>
-                  <Grid item md={6}>
+                  <Grid item xs={12} sm={6}>
                     <TextField
                       fullWidth
                       name="phoneNumber"
@@ -153,7 +156,7 @@ export default function Register() {
                       required
                     />
                   </Grid>
-                  <Grid item md={6}>
+                  <Grid item xs={12} sm={6}>
                     <TextField
                       fullWidth
                       name="email"
@@ -166,7 +169,7 @@ export default function Register() {
                       required
                     />
                   </Grid>
-                  <Grid item md={6}>
+                  <Grid item xs={12} sm={6}>
                     <TextField
                       fullWidth
                       name="university"
@@ -177,7 +180,7 @@ export default function Register() {
                       required
                     />
                   </Grid>
-                  <Grid item md={6}>
+                  <Grid item xs={12} sm={6}>
                     <TextField
                       fullWidth
                       name="graduationYear"
@@ -191,7 +194,7 @@ export default function Register() {
                       required
                     />
                   </Grid>
-                  <Grid item md={6}>
+                  <Grid item xs={12} sm={6}>
                     <FormControl fullWidth>
                       <InputLabel id="select-label">How did you hear about us</InputLabel>
                       <Select
@@ -213,7 +216,7 @@ export default function Register() {
                       </Select>
                     </FormControl>
                   </Grid>
-                  <Grid item md={6}>
+                  <Grid item xs={12} sm={6}>
                     {
                       customHowDidYouHearAboutUs &&
                       <TextField
@@ -225,7 +228,7 @@ export default function Register() {
                       />
                     }
                   </Grid>
-                  <Grid item md={6}>
+                  <Grid item xs={12} sm={6}>
                     <TextField
                       fullWidth
                       name="password"
@@ -239,7 +242,7 @@ export default function Register() {
                       required
                     />
                   </Grid>
-                  <Grid item md={6}>
+                  <Grid item xs={12} sm={6}>
                     <TextField
                       fullWidth
                       name="confirmPassword"
