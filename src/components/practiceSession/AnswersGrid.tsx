@@ -2,11 +2,17 @@ import { Box, Stack, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useServiceProvider } from "../../services/ServiceProvider";
 
-function AnswersGrid() {
+interface AnswerGridProps {
+  isMock?: boolean;
+}
+
+function AnswersGrid({ isMock }: AnswerGridProps) {
   const { questionsStore } = useServiceProvider();
   const { wasAnsweredCorrectly } = questionsStore
 
   function getBackgroundColor(answeredCorrectly?: boolean) {
+    console.log(answeredCorrectly);
+    if (answeredCorrectly !== undefined && isMock) return "#e4f4fa";
     if (answeredCorrectly === true) return "#e7fae5";
     if (answeredCorrectly === false) return "#f7e2e2";
     else return "#f4f4f4";
@@ -14,6 +20,7 @@ function AnswersGrid() {
 
   function getTextColor(answeredCorrectly?: boolean) {
     if (answeredCorrectly === undefined) return;
+    if (isMock) return "#2394c4";
     if (answeredCorrectly) return "#177d10";
     else return "#962121";
   }

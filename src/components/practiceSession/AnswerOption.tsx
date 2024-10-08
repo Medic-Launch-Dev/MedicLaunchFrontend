@@ -7,25 +7,26 @@ interface AnswerOptionProps {
   setSelectedOption: (answer: Option) => void;
   selected?: boolean;
   disabled?: boolean;
-  style: "base" | "correct" | "incorrect" | "subdued";
+  style: "base" | "correct" | "incorrect" | "subdued" | "mock";
 }
 
 function AnswerOption({ option, setSelectedOption, selected, disabled, style }: AnswerOptionProps) {
   function getBackgroundColor() {
+    if (style === "mock") return "#e4f4fa";
     if (style === "incorrect") return "#fdf0f0";
     if (style === "correct") return "#f5fef4";
     return "#fff";
   }
 
   function getBorderColor() {
-    if (selected) return "#2394c4"
+    if (selected || style === "mock") return "#2394c4";
     if (style === "incorrect") return "#962121";
     if (style === "correct") return "#368b30";
     return "transparent";
   }
 
   function getTextColor() {
-    if (selected) return "#2394c4"
+    if (selected || style === "mock") return "#2394c4"
     if (style === "incorrect") return "#962121";
     if (style === "correct") return "#177d10";
     if (style === "subdued") return "#c4c4c4"

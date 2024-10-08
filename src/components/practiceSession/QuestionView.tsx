@@ -109,16 +109,26 @@ function QuestionView({ question: questionFromProps, inPreview, isMock, isFreeTr
             ?.slice()
             ?.sort((a, b) => a.letter.localeCompare(b.letter))
             ?.map((option, index) => {
-              let style: "base" | "correct" | "incorrect" | "subdued";
+              let style: "base" | "correct" | "incorrect" | "subdued" | "mock";
               if (!wasAttempted) {
                 style = "base";
               } else {
-                if (question?.correctAnswerLetter === option.letter) {
-                  style = "correct"
-                } else if (question?.submittedAnswerLetter === option.letter) {
-                  style = "incorrect";
+                if (isMock) {
+                  console.log("It is a mock")
+                  if (question.submittedAnswerLetter === option.letter) {
+                    style = "mock";
+                  } else {
+                    style = "subdued";
+                  }
                 } else {
-                  style = "subdued";
+
+                  if (question?.correctAnswerLetter === option.letter) {
+                    style = "correct"
+                  } else if (question?.submittedAnswerLetter === option.letter) {
+                    style = "incorrect";
+                  } else {
+                    style = "subdued";
+                  }
                 }
               }
 
@@ -210,7 +220,7 @@ function QuestionView({ question: questionFromProps, inPreview, isMock, isFreeTr
       {
         !inPreview &&
         <Box sx={{ flexShrink: 0 }}>
-          <AnswersGrid />
+          <AnswersGrid isMock={isMock} />
         </Box>
       }
       <Box sx={{ flexGrow: 1, overflowY: 'scroll', backgroundColor: "white", borderRadius: 1, p: 3, display: { xs: 'none', md: 'block' } }}>
