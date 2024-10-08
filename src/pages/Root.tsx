@@ -45,7 +45,7 @@ function Root() {
             <Grid item xs={12}>
               <Stack
                 sx={{
-                  px: 5,
+                  px: { xs: 2, md: 5 },
                   borderRadius: 2,
                   background: primaryGradient,
                 }}
@@ -144,14 +144,14 @@ function Root() {
         </Grid>
         <Grid item xs={12} lg={5}>
           <Grid container spacing={2}>
-            <Grid item xs={6}>
+            <Grid item xs={12} sm={6}>
               <Card title="My UKMLA Progress">
                 <Stack alignItems="center" mt={2} mb={-1}>
                   <ProgressPieChart />
                 </Stack>
               </Card>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} sm={6}>
               <ExamDate />
             </Grid>
           </Grid>

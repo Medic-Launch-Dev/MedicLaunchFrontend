@@ -1,5 +1,5 @@
 import { Logout } from "@mui/icons-material";
-import { Box, Button, Drawer, Stack } from "@mui/material";
+import { Box, Button, Drawer, DrawerProps, Stack } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useMatch, useNavigate } from "react-router-dom";
 import LogoWhite from "../../assets/logo-white.svg";
@@ -7,7 +7,9 @@ import { useAuth } from "../../services/AuthProvider";
 import { useServiceProvider } from "../../services/ServiceProvider";
 import NavLink from "./NavLink";
 
-function NavMenu() {
+interface NavMenuProps extends DrawerProps { }
+
+function NavMenu({ sx, ...rest }: NavMenuProps) {
   const { accountStore: { hasAdminAccess, hasAuthorAccess } } = useServiceProvider();
   const { logout } = useAuth();
   const navigate = useNavigate();
@@ -33,10 +35,10 @@ function NavMenu() {
           boxSizing: 'border-box',
           border: 'none'
         },
+        ...sx
       }}
-      variant="persistent"
       anchor="left"
-      open={true}
+      {...rest}
     >
       <Stack alignItems="center" justifyContent="space-between" height="100%">
         <div style={{ width: '100%' }}>
