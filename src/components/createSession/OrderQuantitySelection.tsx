@@ -50,7 +50,7 @@ export const OrderQuantitySelection = observer(() => {
           sx={{
             background: "white",
             borderRadius: 1.5,
-            p: 5,
+            p: { xs: 2, md: 5 },
             boxShadow: "0px 0px 22px 0px #97979765",
             height: "100%",
           }}

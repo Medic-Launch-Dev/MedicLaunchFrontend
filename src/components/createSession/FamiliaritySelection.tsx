@@ -43,7 +43,7 @@ export const FamiliaritySelection = observer(() => {
 
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', bgcolor: 'white', borderRadius: 1.5 }}>
-      <Stack sx={{ width: 450, m: 'auto' }} spacing={3}>
+      <Stack sx={{ width: 450, m: 'auto', px: { xs: 2, md: 0 } }} spacing={3}>
         {
           familiarities.map(f => (
             <FilterOption

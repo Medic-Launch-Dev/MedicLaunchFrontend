@@ -7,7 +7,8 @@ import {
   Stack,
   Step,
   StepLabel,
-  Stepper
+  Stepper,
+  useMediaQuery
 } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
@@ -19,10 +20,12 @@ import Page from "../components/nav/Page";
 import LinkButton from "../components/util/LinkButton";
 import { useSnackbar } from "../hooks/useSnackbar";
 import { useServiceProvider } from "../services/ServiceProvider";
+import theme from "../theme";
 
 function CreateSession() {
   const params = new URLSearchParams(window.location.search);
   const specialityId = params.get("specialityId");
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -100,6 +103,7 @@ function CreateSession() {
           Study Portal
         </LinkButton>
         <Stepper
+          orientation={isMobile ? "vertical" : "horizontal"}
           activeStep={activeStep}
           sx={{
             my: 2,

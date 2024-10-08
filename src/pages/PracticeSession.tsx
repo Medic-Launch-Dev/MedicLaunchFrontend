@@ -55,7 +55,7 @@ function PracticeSession() {
   );
 
   const progressBarMarkup = (
-    <Stack direction="row" spacing={2} alignItems="center" justifyContent="center">
+    <Stack direction={{ xs: "column-reverse", md: "row" }} spacing={2} alignItems={{ xs: "end", md: "center" }} justifyContent="center">
       <Stack
         direction="row"
         justifyContent="space-between"

@@ -139,7 +139,7 @@ function QuestionView({ question: questionFromProps, inPreview, isMock, isFreeTr
       {
         !inPreview && (
           wasAttempted ?
-            <Stack sx={{ width: "max-content" }} spacing={1} alignItems="center">
+            <Stack sx={{ width: { xs: "100%", md: "max-content" } }} spacing={1} alignItems="center">
               {
                 questionsStore.onLastQuestion
                   ?
@@ -213,7 +213,7 @@ function QuestionView({ question: questionFromProps, inPreview, isMock, isFreeTr
           <AnswersGrid />
         </Box>
       }
-      <Box sx={{ flexGrow: 1, overflowY: 'scroll', backgroundColor: "white", borderRadius: 1, p: 3 }}>
+      <Box sx={{ flexGrow: 1, overflowY: 'scroll', backgroundColor: "white", borderRadius: 1, p: 3, display: { xs: 'none', md: 'block' } }}>
         <LabValues />
       </Box>
       <Button
@@ -271,7 +271,7 @@ function QuestionView({ question: questionFromProps, inPreview, isMock, isFreeTr
             sx={{
               background: primaryGradient,
               p: 3,
-              mx: 8,
+              mx: { xs: 0, md: 8 },
               alignItems: "center",
               borderRadius: 1.5,
             }}

@@ -68,7 +68,7 @@ export const SpecialitySelection = observer(() => {
       sx={{
         bgcolor: "white",
         borderRadius: 1.5,
-        p: 4,
+        p: { xs: 2, md: 4 },
         maxHeight: "100%",
         overflowY: "scroll",
       }}
@@ -86,7 +86,7 @@ export const SpecialitySelection = observer(() => {
               />
             </Grid>
             {specialities.map((speciality) => (
-              <Grid item xs={3}>
+              <Grid item xs={12} sm={6} md={3}>
                 <SpecialityOption
                   selected={
                     selectedSpecialities.includes(speciality.id) || practiceFilter.allSpecialitiesSelected

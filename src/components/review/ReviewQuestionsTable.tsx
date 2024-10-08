@@ -46,11 +46,11 @@ export default function ReviewQuestionsTable() {
               <TableCell component="th" scope="row" sx={{ width: 100 }}>
                 {getResultChip(wasAnsweredCorrectly(question))}
               </TableCell>
-              <TableCell>
-                  <RichTextReadOnly
-                    content={`${idx + 1}. ${question.questionText}`}
-                    extensions={extensions}
-                  />
+              <TableCell sx={{ minWidth: 600 }}>
+                <RichTextReadOnly
+                  content={`${idx + 1}. ${question.questionText}`}
+                  extensions={extensions}
+                />
               </TableCell>
               <TableCell align="right">
                 <Button onClick={() => handleClickReview(idx)} size="small">

@@ -33,7 +33,7 @@ function ReviewSession() {
 
   return (
     <Page sx={{ pt: 2 }}>
-      <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+      <Stack direction={{ xs: "column", md: "row" }} alignItems={{ md: "center" }} justifyContent="space-between" mb={{ xs: 0, md: 5 }} spacing={2}>
         <LinkButton to="/">
           Study Portal
         </LinkButton>
@@ -46,21 +46,21 @@ function ReviewSession() {
       </Stack>
 
       <Grid container spacing={2}>
-        <Grid item lg={3}>
+        <Grid item xs={12} lg={3}>
           <ReviewCard
             title="Questions Completed"
             subtitle={`${correctAnswers + incorrectAnswers}/${totalQuestions}`}
             icon={<img src={QuestionsIcon} width={48} />}
           />
         </Grid>
-        <Grid item lg={3}>
+        <Grid item xs={12} lg={3}>
           <ReviewCard
             title="Correct"
             subtitle={`${score}%`}
             icon={<img src={CorrectIcon} width={48} />}
           />
         </Grid>
-        <Grid item lg={3}>
+        <Grid item xs={12} lg={3}>
           <Link style={unstyledLink} to="/speciality-analyser">
             <ReviewCard
               primary
@@ -69,7 +69,7 @@ function ReviewSession() {
             />
           </Link>
         </Grid>
-        <Grid item lg={3}>
+        <Grid item xs={12} lg={3}>
           <Link style={unstyledLink} to="/create-session">
             <ReviewCard
               primary
