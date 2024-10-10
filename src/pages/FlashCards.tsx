@@ -17,11 +17,16 @@ export default function FlashCards() {
 
   const [flashcards, setFlashcards] = useState<Flashcard[]>();
   const [currentIdx, setCurrentIdx] = useState(0);
+  const [isImageLoading, setIsImageLoading] = useState(false);
 
   useEffect(() => {
     if (!specialityId) navigate("/flash-cards");
     init();
   }, []);
+
+  useEffect(() => {
+    setIsImageLoading(true);
+  }, [currentIdx]);
 
   async function init() {
     if (!specialityId) return;
@@ -75,9 +80,19 @@ export default function FlashCards() {
           </Card>
         </Stack>
         <Stack sx={{ flexGrow: 1 }} alignItems="center" justifyContent="center" height="100%">
+          {isImageLoading && (
+            <CircularProgress size={60} thickness={5} sx={{ position: 'absolute' }} />
+          )}
           <img
             src={flashcards?.[currentIdx]?.imageUrl}
-            style={{ maxWidth: isMobile ? "100%" : 600, maxHeight: "calc(100% - 100px)", margin: 20 }}
+            style={{
+              maxWidth: isMobile ? "100%" : 600,
+              maxHeight: "calc(100% - 100px)",
+              margin: 20,
+              opacity: isImageLoading ? 0.5 : 1,
+              transition: 'opacity 0.3s ease-in-out'
+            }}
+            onLoad={() => setIsImageLoading(false)}
           />
           <Stack direction="row" gap={2} mt={4}>
             <IconButton
