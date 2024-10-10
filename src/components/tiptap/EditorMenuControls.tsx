@@ -31,9 +31,12 @@ import {
   MenuSelectTextAlign,
   isTouchDevice,
 } from "mui-tiptap";
+import { useServiceProvider } from "../../services/ServiceProvider";
 
 export default function EditorMenuControls() {
+  const { flashCardStore } = useServiceProvider();
   const theme = useTheme();
+
   return (
     <MenuControlsContainer>
       <MenuSelectFontFamily
@@ -138,19 +141,26 @@ export default function EditorMenuControls() {
       <MenuDivider />
 
       <MenuButtonImageUpload
-        onUploadFiles={(files) =>
-          // For the sake of a demo, we don't have a server to upload the files
-          // to, so we'll instead convert each one to a local "temporary" object
-          // URL. This will not persist properly in a production setting. You
-          // should instead upload the image files to your server, or perhaps
-          // convert the images to bas64 if you would like to encode the image
-          // data directly into the editor content, though that can make the
-          // editor content very large.
-          files.map((file) => ({
-            src: URL.createObjectURL(file),
-            alt: file.name,
-          }))
-        }
+        onUploadFiles={(files) => {
+          const uploadPromises = files.map((file) => 
+            flashCardStore.uploadFlashCardImage(file)
+              .then((imageUrl) => {
+                return {
+                  src: imageUrl || "",
+                  alt: file.name,
+                }
+              })
+              .catch((e) => {
+                console.error('Failed to upload image:', e);
+                return {
+                  src: "",
+                  alt: file.name,
+                }
+              })
+          );
+
+          return Promise.all(uploadPromises);
+        }}        
       />
 
       <MenuDivider />
