@@ -32,10 +32,13 @@ import {
   isTouchDevice,
 } from "mui-tiptap";
 import { useServiceProvider } from "../../services/ServiceProvider";
+import { useState } from 'react';
+import { CircularProgress } from '@mui/material';
 
 export default function EditorMenuControls() {
   const { flashCardStore } = useServiceProvider();
   const theme = useTheme();
+  const [isUploading, setIsUploading] = useState(false);
 
   return (
     <MenuControlsContainer>
@@ -140,28 +143,35 @@ export default function EditorMenuControls() {
 
       <MenuDivider />
 
-      <MenuButtonImageUpload
-        onUploadFiles={(files) => {
-          const uploadPromises = files.map((file) => 
-            flashCardStore.uploadFlashCardImage(file)
-              .then((imageUrl) => {
-                return {
-                  src: imageUrl || "",
-                  alt: file.name,
-                }
-              })
-              .catch((e) => {
-                console.error('Failed to upload image:', e);
-                return {
-                  src: "",
-                  alt: file.name,
-                }
-              })
-          );
+      {isUploading ? (
+        <CircularProgress size={16} />
+      ) : (
+        <MenuButtonImageUpload
+          onUploadFiles={(files) => {
+            setIsUploading(true);
+            const uploadPromises = files.map((file) => 
+              flashCardStore.uploadFlashCardImage(file)
+                .then((imageUrl) => {
+                  return {
+                    src: imageUrl || "",
+                    alt: file.name,
+                  }
+                })
+                .catch((e) => {
+                  console.error('Failed to upload image:', e);
+                  return {
+                    src: "",
+                    alt: file.name,
+                  }
+                })
+            );
 
-          return Promise.all(uploadPromises);
-        }}        
-      />
+            return Promise.all(uploadPromises).finally(() => {
+              setIsUploading(false);
+            });
+          }}        
+        />
+      )}
 
       <MenuDivider />
 
