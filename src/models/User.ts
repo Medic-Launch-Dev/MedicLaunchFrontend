@@ -20,6 +20,7 @@ export interface UserProfile {
   subscriptionPurchaseDate?: string;
   howDidYouHearAboutUs?: string;
   university: string;
+  isSubscribed?: boolean;
 }
 
 export interface MedicLaunchUser extends UserProfile {

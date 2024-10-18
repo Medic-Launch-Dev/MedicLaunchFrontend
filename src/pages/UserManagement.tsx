@@ -67,14 +67,14 @@ function UserManagement() {
 			width: 200,
 		},
 		{
-			field: 'totalProducts',
-			headerName: 'TOTAL PRODUCTS',
+			field: 'subscriptionPlan',
+			headerName: 'SUBSCRIPTION PLAN',
 			width: 160,
 			editable: false,
 		},
 		{
-			field: 'totalRevenue',
-			headerName: 'TOTAL REVENUE',
+			field: 'datePurchased',
+			headerName: 'DATE PURCHASED',
 			width: 150,
 			editable: false,
 		},
@@ -102,6 +102,8 @@ function UserManagement() {
 				totalProducts: 0,
 				totalRevenue: 0,
 				lastLoggedIn: '',
+				subscriptionPlan: user.isSubscribed ? `${user.subscriptionMonths} Month` : '-',
+				datePurchased: user.isSubscribed ? user.subscriptionPurchaseDate : '-',
 				mailingStatus: user.subscribeToPromotions ? 'Subscribed' : 'Unsubscribed'
 			}));
 			setRows(newRows);
