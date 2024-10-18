@@ -61,7 +61,7 @@ function Page({ children, withNav, maxWidth, fullWidth, sx, ...rest }: PageProps
       }
       <Toolbar sx={{ backgroundColor: "#fff", position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000 }}>
         <Stack sx={{ width: '100%' }} direction="row" justifyContent="space-between" alignItems="center">
-          <img src={Logo} height={40} alt="Medic launch" style={{ cursor: 'pointer' }} onClick={() => handleNavigate("/")} />
+          <img src="/logo.png" height={40} alt="Medic launch" style={{ cursor: 'pointer' }} onClick={() => handleNavigate("/")} />
           <Stack direction="row" alignItems="center" spacing={2}>
             <div onClick={() => handleNavigate("/notifications")}>
               <NotificationBellButton />
