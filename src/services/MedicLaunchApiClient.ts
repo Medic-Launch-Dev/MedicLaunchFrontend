@@ -105,6 +105,12 @@ export default class MedicLaunchApiClient {
     return clientSecret;
   }
 
+  async createCheckoutSession(planId: number): Promise<string> {
+    const response = await this.axios.post(`${this.apiUrl}/payment/create-checkout-session?planId=${planId}`);
+    const sessionUrl = response.data.sessionUrl;
+    return sessionUrl;
+  }
+
   async getPublishableKey(): Promise<string> {
     const response = await this.axios.get(`${this.apiUrl}/payment/publishable-key`);
     return response.data.publishableKey;

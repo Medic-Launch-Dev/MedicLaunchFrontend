@@ -11,6 +11,10 @@ export class PaymentStore {
         return await this.apiClient.getPaymentClientSecret(planId);
     }
 
+    async createCheckoutSession(planId: number) {
+        return await this.apiClient.createCheckoutSession(planId);
+    }
+
     async getPubishableKey() {
         return await this.apiClient.getPublishableKey();
     }
