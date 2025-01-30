@@ -98,10 +98,9 @@ function Root() {
               <Card
                 title="Mock Examination"
                 action={
-                  <Button variant="contained" disabled>Coming soon...</Button>
-                  // <Link style={unstyledLink} to={isSubscribed ? "select-mock" : "subscribe"}>
-                  //   <Button variant="contained">Start Mock</Button>
-                  // </Link>
+                  <Link style={unstyledLink} to={isSubscribed ? "select-mock" : "subscribe"}>
+                    <Button variant="contained">Start Mock</Button>
+                  </Link>
                 }
                 icon={<img src={MockExamIcon} width={64} />}
               >
