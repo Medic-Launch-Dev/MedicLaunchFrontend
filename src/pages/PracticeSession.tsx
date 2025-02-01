@@ -87,7 +87,7 @@ function PracticeSession() {
         <Typography variant="h6" sx={primaryGradientText}>{calculateProgress()}%</Typography>
       </Stack>
       <Box>
-        <Button onClick={handleClickEndSession} sx={{ whiteSpace: 'nowrap' }}>
+        <Button variant="contained" onClick={handleClickEndSession} sx={{ whiteSpace: 'nowrap' }}>
           End Session
         </Button>
       </Box>
