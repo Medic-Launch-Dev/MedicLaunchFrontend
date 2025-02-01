@@ -100,14 +100,21 @@ export class QuestionsStore {
 
   }
 
-  async flagQuestion() {
-    await this.apiClient.postData(`practice/flagquestion/${this.currentQuestion.id}`, {});
+  async flagQuestion(isMock?: boolean) {
+    if (!isMock) await this.apiClient.postData(`practice/flagquestion/${this.currentQuestion.id}`, {});
     runInAction(() => this.currentQuestion.isFlagged = true);
   }
 
-  async unflagQuestion() {
-    await this.apiClient.postData(`practice/unflagquestion/${this.currentQuestion.id}`, {});
+  async unflagQuestion(isMock?: boolean) {
+    if (!isMock) await this.apiClient.postData(`practice/unflagquestion/${this.currentQuestion.id}`, {});
     runInAction(() => this.currentQuestion.isFlagged = false);
+  }
+
+  flaggedQuestionsExist() {
+    for (let question of this.questions)
+      if (question.isFlagged) return true;
+
+    return false;
   }
 
   async getSpecialityQuestions(specialityId: string, questionBank: string) {

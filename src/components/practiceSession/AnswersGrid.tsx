@@ -1,3 +1,4 @@
+import { Flag } from "@mui/icons-material";
 import { Box, Stack, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useServiceProvider } from "../../services/ServiceProvider";
@@ -50,13 +51,18 @@ function AnswersGrid({ isMock }: AnswerGridProps) {
                 width: 24.7,
                 borderRadius: 0.5,
                 cursor: "pointer",
-                border: index === questionsStore.currentQuestionIdx ? "2px solid #2394c4" : undefined
+                border: index === questionsStore.currentQuestionIdx ? "2px solid #2394c4" : undefined,
+                position: "relative",
               }}
               onClick={() => questionsStore.setCurrentQuestion(index)}
             >
               <Typography variant="body2" color={getTextColor(wasAnsweredCorrectly(question))} fontWeight={500}>
                 {index + 1}
               </Typography>
+              {
+                question.isFlagged &&
+                <Flag sx={{ fontSize: 14, position: "absolute", top: -6, right: -6, color: "#2394c4" }} />
+              }
             </Stack>
           )
         })

@@ -1,7 +1,7 @@
-import { Box, LinearProgress, Stack, Typography } from "@mui/material";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, LinearProgress, Stack, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
-import { useEffect } from "react";
-import { Navigate, useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 import Page from "../components/nav/Page";
 import QuestionView from "../components/practiceSession/QuestionView";
 import LinkButton from "../components/util/LinkButton";
@@ -10,7 +10,9 @@ import { TimerState } from "../stores/practiceStore";
 import { primaryGradientText } from "../theme";
 
 function PracticeSession() {
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const [open, setOpen] = useState(false);
   const isMock = searchParams.get("isMock");
   const inReview = searchParams.get("inReview");
   const { questionsStore, practiceStore } = useServiceProvider();
@@ -19,6 +21,15 @@ function PracticeSession() {
     if (!questionsStore.questions) return 0;
     const totalAnswered = questionsStore.correctAnswers + questionsStore.incorrectAnswers;
     return Math.ceil((totalAnswered / questionsStore.questions.length) * 100);
+  }
+
+  function handleClickEndSession() {
+    if (isMock && questionsStore.flaggedQuestionsExist()) {
+      setOpen(true)
+      return;
+    }
+
+    navigate("/review-session");
   }
 
   useEffect(() => {
@@ -76,11 +87,25 @@ function PracticeSession() {
         <Typography variant="h6" sx={primaryGradientText}>{calculateProgress()}%</Typography>
       </Stack>
       <Box>
-        <LinkButton to="/review-session" sx={{ whiteSpace: 'nowrap' }}>
+        <Button onClick={handleClickEndSession} sx={{ whiteSpace: 'nowrap' }}>
           End Session
-        </LinkButton>
+        </Button>
       </Box>
     </Stack>
+  );
+
+  const confirmDialogMarkup = (
+    <Dialog open={open} onClose={() => setOpen(false)}>
+      <DialogTitle>There's Still Some Flagged Questions 🛑</DialogTitle>
+      <DialogContent>
+        <Typography>Wait! Before you go…</Typography>
+        <Typography>You have questions that are still flagged. Are you sure you want to end the exam session?</Typography>
+      </DialogContent>
+      <DialogActions>
+        <Button variant="text" onClick={() => navigate("/review-session")}>End Session</Button>
+        <Button variant="contained" onClick={() => setOpen(false)}>Stay on Page</Button>
+      </DialogActions>
+    </Dialog>
   );
 
   return (
@@ -89,6 +114,7 @@ function PracticeSession() {
         {inReview ? inReviewMarkup : progressBarMarkup}
       </Box>
       <QuestionView question={questionsStore.currentQuestion} isMock={Boolean(isMock)} />
+      {confirmDialogMarkup}
     </Page>
   )
 }

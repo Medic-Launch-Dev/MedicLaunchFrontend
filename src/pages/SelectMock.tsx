@@ -80,7 +80,6 @@ export default function SelectMock() {
                     "Surgery & clinical imaging",
                   ]}
                 />
-                {/* Overlay */}
                 <div
                   style={{
                     position: "absolute",
@@ -88,7 +87,7 @@ export default function SelectMock() {
                     left: 0,
                     width: "100%",
                     height: "100%",
-                    backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent dark overlay
+                    backgroundColor: "rgba(0, 0, 0, 0.5)",
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",

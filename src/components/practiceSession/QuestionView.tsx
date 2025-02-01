@@ -53,8 +53,8 @@ function QuestionView({ question: questionFromProps, inPreview, isMock, isFreeTr
 
   async function handleFlagQuestion() {
     setLoadingFlag(true);
-    if (question?.isFlagged) await questionsStore.unflagQuestion();
-    else await questionsStore.flagQuestion();
+    if (question?.isFlagged) await questionsStore.unflagQuestion(isMock);
+    else await questionsStore.flagQuestion(isMock);
     setLoadingFlag(false);
   }
 
