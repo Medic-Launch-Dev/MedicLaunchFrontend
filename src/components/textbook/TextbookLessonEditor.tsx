@@ -2,6 +2,7 @@ import { DeleteOutline } from "@mui/icons-material";
 import { Button, IconButton, Paper, Stack, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { TextbookLesson } from "../../models/TextbookLesson";
+import { RichQuestionTextEditor } from "../tiptap/RichQuestionTextEditor";
 
 interface TextbookLessonEditorProps {
   textbookLesson: TextbookLesson;
@@ -58,14 +59,10 @@ export default function TextbookLessonEditor({ textbookLesson, setTextbookLesson
                 value={content.heading}
                 onChange={e => handleContentChange(content.id || "", "heading", e.target.value)}
               />
-              <TextField
-                label="Text"
-                variant="outlined"
-                size="small"
-                multiline
-                rows={4}
-                value={content.text}
-                onChange={e => handleContentChange(content.id || "", "text", e.target.value)}
+              <RichQuestionTextEditor
+                placeholderText="Add content here..."
+                initialValue={content.text}
+                setValue={value => handleContentChange(content.id || "", "text", value)}
               />
             </Stack>
             <Stack alignItems="end">
@@ -85,14 +82,11 @@ export default function TextbookLessonEditor({ textbookLesson, setTextbookLesson
               value={newContent.heading}
               onChange={e => setNewContent({ ...newContent, heading: e.target.value })}
             />
-            <TextField
-              label="Text"
-              variant="outlined"
-              size="small"
-              multiline
-              rows={4}
-              value={newContent.text}
-              onChange={e => setNewContent({ ...newContent, text: e.target.value })}
+            <RichQuestionTextEditor
+              key={newContent.text} // Ensures re-mounting on reset
+              placeholderText="Add content here..."
+              initialValue={newContent.text}
+              setValue={(value) => setNewContent({ ...newContent, text: value })}
             />
           </Stack>
           <Stack alignItems="end">
