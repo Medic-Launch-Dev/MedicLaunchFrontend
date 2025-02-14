@@ -94,6 +94,22 @@ function AuthorPortal() {
               </Grid>
             }
             {
+              hasQuestionAuthorAccess &&
+              <Grid item xs={12} sm={6}>
+                <Card
+                  title="Review textbook"
+                  action={
+                    <Link to="/edit-textbook-lesson">
+                      <Button variant="contained">View textbook</Button>
+                    </Link>
+                  }
+                  icon={<img src={CoursesIcon} width={64} />}
+                >
+                  View your textbook lessons and edit them here
+                </Card>
+              </Grid>
+            }
+            {
               hasAdminAccess &&
               <Grid item xs={12} sm={6}>
                 <Card

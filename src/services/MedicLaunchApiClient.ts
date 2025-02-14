@@ -5,6 +5,7 @@ import { Flashcard } from "../models/Flashcard";
 import { PracticeFilter } from "../models/PracticeFilter";
 import { Question, QuestionType } from "../models/Question";
 import Speciality, { SpecialityAnalytics } from "../models/Speciality";
+import { TextbookLesson } from "../models/TextbookLesson";
 import { MedicLaunchUser } from "../models/User";
 import { ApplicationStore } from "../stores/applicationStore";
 import AxiosProvider from "./AxiosProvider";
@@ -145,6 +146,12 @@ export default class MedicLaunchApiClient {
     });
 
     return response.status === 200;
+  }
+
+  async createTextbookLesson(lesson: TextbookLesson): Promise<string> {
+    const response = await this.axios.post(`${this.apiUrl}/textbooklesson/create`, lesson);
+
+    return response.data;
   }
 
   async removeFlashCard(flashcardId: string) {

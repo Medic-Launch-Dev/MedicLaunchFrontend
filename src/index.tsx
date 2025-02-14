@@ -24,6 +24,8 @@ import CreateSession from "./pages/CreateSession";
 import EditFlashCards from "./pages/EditFlashCards";
 import EditFlascard from "./pages/EditFlashcard";
 import EditQuestion from "./pages/EditQuestion";
+import EditTextbookLesson from "./pages/EditTextbookLesson";
+import EditTextbookLessons from "./pages/EditTextbookLessons";
 import EditTrialQuestions from "./pages/EditTrialQuestions";
 import FlashCards from "./pages/FlashCards";
 import FreeTrial from "./pages/FreeTrial";
@@ -122,6 +124,14 @@ const App = () => {
         {
           path: "/edit-flashcard/:id",
           element: <EditFlascard />
+        },
+        {
+          path: "/edit-textbook-lesson",
+          element: <EditTextbookLessons />
+        },
+        {
+          path: "/edit-textbook-lesson/:id",
+          element: <EditTextbookLesson />
         },
         {
           path: "/revision-notes",

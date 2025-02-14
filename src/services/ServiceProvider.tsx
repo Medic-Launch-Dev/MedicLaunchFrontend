@@ -7,6 +7,7 @@ import { NotificationsStore } from '../stores/notificationsStore';
 import { PaymentStore } from '../stores/paymentStore';
 import { PracticeStore } from '../stores/practiceStore';
 import { QuestionsStore } from '../stores/questionsStore';
+import { TextbookLessonStore } from '../stores/textbookLessonStore';
 import { UserStore } from '../stores/userStore';
 import AxiosProvider from './AxiosProvider';
 import MedicLaunchApiClient from './MedicLaunchApiClient';
@@ -21,6 +22,7 @@ interface ServiceProviderContextValues {
   accountStore: AccountStore;
   notesStore: NotesStore;
   notificationsStore: NotificationsStore;
+  textbookLessonStore: TextbookLessonStore;
 }
 
 export const ServiceProviderContext = React.createContext<ServiceProviderContextValues | null>(null);
@@ -38,6 +40,7 @@ export const ServiceProvider = ({ children }) => {
   const accountStore = new AccountStore(medicLaunchApiClient);
   const notesStore = new NotesStore(medicLaunchApiClient);
   const notificationsStore = new NotificationsStore(medicLaunchApiClient);
+  const textbookLessonStore = new TextbookLessonStore(medicLaunchApiClient);
 
   return (
     <ServiceProviderContext.Provider value={{
@@ -49,7 +52,8 @@ export const ServiceProvider = ({ children }) => {
       applicationStore,
       accountStore,
       notesStore,
-      notificationsStore
+      notificationsStore,
+      textbookLessonStore
     }}>
       {children}
     </ServiceProviderContext.Provider>
