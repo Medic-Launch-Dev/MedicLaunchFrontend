@@ -192,6 +192,7 @@ export default function QuestionEditView({ question, setQuestion, setCanSubmit, 
           <TextField
             sx={{ flexGrow: 1 }}
             size="small"
+            defaultValue={question?.videoUrl || ''}
             onBlur={(e) => setVideoUrl(e.target.value)}
           />
         </Stack>
