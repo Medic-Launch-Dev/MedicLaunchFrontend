@@ -152,13 +152,13 @@ function Root() {
                     <div>
                       <Typography variant="h6" sx={{ ...primaryGradientText, fontSize: 12, letterSpacing: 0.5 }}>NEW COURSE LAUNCH</Typography>
                       <Typography variant="h3" sx={{ ...primaryGradientText }} mt={0.5}>Medic Launch AKT Crash Course</Typography>
-                      <Typography variant="h5" sx={{ ...primaryGradientText }} mt={0.5}>Taught by Dr. Owais Sheikh</Typography>
+                      <Typography variant="h5" sx={{ ...primaryGradientText }} mt={0.5}>Taught by Dr. Awais Sheikh</Typography>
                     </div>
                     <LinkButton
                       to={`https://buy.stripe.com/6oE3dsatndlV4i4bII?prefilled_email=${encodeURIComponent(myProfile?.email || "")}&prefilled_promo_code=MLUSER100`}
                       target='_blank'
                     >
-                      Get FREE Acess
+                      Get FREE Access
                     </LinkButton>
                   </Stack>
                 </MuiCard>
