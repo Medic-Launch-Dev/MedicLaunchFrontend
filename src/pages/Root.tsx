@@ -125,7 +125,7 @@ function Root() {
             <Grid item xs={12} sm={6}>
               <Card
                 title="Podcasts"
-                action={<LinkButton to="subscribe" target='_blank'>Listen</LinkButton>}
+                action={<LinkButton to="https://www.youtube.com/playlist?list=PL7lBz-Tdd6BVN7QHSe8quEkxa4JlA5WTL" target='_blank'>Listen</LinkButton>}
                 icon={<img src={PodcastsIcon} width={64} />}
               >
                 Insightful discussions, clinical gems
