@@ -1,5 +1,5 @@
 import { Add } from "@mui/icons-material";
-import { Button, CircularProgress, FormControl, InputLabel, MenuItem, Select, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Button, Chip, CircularProgress, FormControl, InputLabel, MenuItem, Select, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -86,6 +86,7 @@ const EditTextbookLessons = () => {
               <TableHead>
                 <TableRow>
                   <TableCell>Condition</TableCell>
+                  <TableCell>Status</TableCell>
                   <TableCell>Contents</TableCell>
                   <TableCell></TableCell>
                 </TableRow>
@@ -96,6 +97,13 @@ const EditTextbookLessons = () => {
                     textbookLessons.map(lesson => (
                       <TableRow key={lesson.id}>
                         <TableCell>{lesson.title}</TableCell>
+                        <TableCell>
+                          {
+                            lesson.isSubmitted ?
+                              <Chip label="Submitted" sx={{ backgroundColor: "#A4E29F" }} /> :
+                              <Chip label="Draft" />
+                          }
+                        </TableCell>
                         <TableCell>{lesson.contents.map(content => content.heading).join(", ")}</TableCell>
                         <TableCell>
                           <LinkButton

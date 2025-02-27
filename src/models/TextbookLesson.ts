@@ -6,6 +6,8 @@ export interface TextbookLesson {
   specialityId: string;
   speciality?: Speciality;
   contents: TextbookLessonContent[];
+  questionId?: string;
+  isSubmitted?: boolean;
 }
 
 export interface TextbookLessonContent {

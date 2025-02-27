@@ -3,6 +3,7 @@ import { Button, IconButton, Paper, Stack, TextField, Typography } from "@mui/ma
 import { useState } from "react";
 import { TextbookLesson } from "../../models/TextbookLesson";
 import { RichQuestionTextEditor } from "../tiptap/RichQuestionTextEditor";
+import TextSelect from "../util/TextSelect";
 
 interface TextbookLessonEditorProps {
   textbookLesson: TextbookLesson;
@@ -47,7 +48,22 @@ export default function TextbookLessonEditor({ textbookLesson, setTextbookLesson
 
   return (
     <div>
-      <Typography variant="h3">{textbookLesson.title}</Typography>
+      <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={2}>
+        <Typography variant="h3">{textbookLesson.title}</Typography>
+        <TextSelect
+          size="small"
+          options={[
+            { value: "false", displayText: "Draft" },
+            { value: "true", displayText: "Submitted" }
+          ]}
+          selected={String(textbookLesson.isSubmitted || false)}
+          setSelected={(value) => setTextbookLesson({
+            ...textbookLesson,
+            isSubmitted: value === "true"
+          })}
+          sx={{ minWidth: 150 }}
+        />
+      </Stack>
       <Stack spacing={2} mt={3}>
         {textbookLesson.contents.map(content => (
           <Paper key={content.id} sx={{ p: 3 }}>
