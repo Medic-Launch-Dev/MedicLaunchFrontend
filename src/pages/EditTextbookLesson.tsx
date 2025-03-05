@@ -83,9 +83,9 @@ function EditTextbookLesson() {
         </Stack>
         <Stack direction="row" alignItems="center" spacing={1}>
           <Button variant="outlined" color="error" onClick={() => setOpen(true)}>Delete</Button>
-          {/* <LinkButton variant="outlined" to={`/textbook-lessons/${textbookLesson.specialityId}?lessonId=${textbookLesson.id}`}>
+          <LinkButton variant="outlined" to={`/textbook-lessons/${textbookLesson.specialityId}?lessonId=${textbookLesson.id}`}>
             View
-          </LinkButton> */}
+          </LinkButton>
           <LoadingButton
             variant="contained"
             disabled={!hasChanges}

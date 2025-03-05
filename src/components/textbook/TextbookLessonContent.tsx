@@ -1,21 +1,67 @@
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Stack, Typography } from "@mui/material";
 import { TextbookLesson } from "../../models/TextbookLesson";
+import { useServiceProvider } from "../../services/ServiceProvider";
+import { primaryGradientText } from "../../theme";
+import LinkButton from "../util/LinkButton";
+
 interface TextbookLesssonContentProps {
   textbookLesson: TextbookLesson;
 }
 
 const TextbookLessonContent = ({ textbookLesson }: TextbookLesssonContentProps) => {
+  const { accountStore: { hasQuestionAuthorAccess } } = useServiceProvider();
+
   return (
-    <div>
-      <h1>{textbookLesson.title}</h1>
-      {
-        textbookLesson.contents.map((content, index) => (
-          <div key={index}>
-            <h2>{content.heading}</h2>
-            <p>{content.text}</p>
-          </div>
-        ))
-      }
-    </div>
+    <Box>
+      <Stack direction="row" justifyContent="space-between" alignItems="center" mb={2}>
+        <Typography variant="h3" sx={primaryGradientText}>
+          {textbookLesson.title}
+        </Typography>
+        {hasQuestionAuthorAccess && (
+          <LinkButton
+            variant="contained"
+            to={`/edit-textbook-lesson/${textbookLesson.id}`}
+          >
+            Edit
+          </LinkButton>
+        )}
+      </Stack>
+
+      <Stack spacing={1}>
+        {textbookLesson.contents.map((content, index) => (
+          <Accordion
+            key={index}
+            disableGutters
+            sx={{
+              borderRadius: 1,
+              '&:before': {
+                display: 'none',  // This removes the separator
+              },
+              boxShadow: 'none',  // Optional: removes the default shadow
+              border: '1px solid rgba(0, 0, 0, 0.12)'  // Optional: adds a consistent border
+            }}
+            defaultExpanded={index === 0}
+          >
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls={`content-${index}-content`}
+              id={`content-${index}-header`}
+            >
+              <Typography variant="h5">
+                {content.heading}
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>
+                {content.text}
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+        ))}
+
+      </Stack>
+    </Box>
   );
 };
 

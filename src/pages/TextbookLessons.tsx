@@ -1,56 +1,79 @@
-import { useEffect, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
-import TextbookLessonContent from "../components/textbook/TextbookLessonContent";
+import { ChevronLeft, ChevronRight } from "@mui/icons-material";
+import { LoadingButton } from "@mui/lab";
+import { Box, Button, Stack, Typography } from "@mui/material";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Page from "../components/nav/Page";
 import LinkButton from "../components/util/LinkButton";
-import { TextbookLesson } from "../models/TextbookLesson";
-import { useServiceProvider } from "../services/ServiceProvider";
+import { SpecialitySelector } from "../components/util/SpecialitySelector";
 
-const TextbookLessons = () => {
-  const { specialityId = "" } = useParams();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const lessonId = searchParams.get("lessonId") || "";
-  const { textbookLessonStore, accountStore: { hasQuestionAuthorAccess } } = useServiceProvider();
-  const [textbookLessons, setTextbookLessons] = useState<Record<string, TextbookLesson>>({});
-  const selectedLesson = textbookLessons[lessonId];
+export default function TextbookLessons() {
+  const navigate = useNavigate();
+  const [selectedSpecialityId, setSelectedSpecialityId] = useState("");
 
-  useEffect(() => {
-    const fetchLessons = async () => {
-      const lessons = await textbookLessonStore.getTextbookLessonsBySpeciality(specialityId);
-      setTextbookLessons(
-        lessons.reduce((acc, lesson) => {
-          acc[lesson.id || ""] = lesson;
-          return acc;
-        }, {} as Record<string, TextbookLesson>)
-      );
-    };
-
-    fetchLessons();
-  }, []);
-
-  const handleLessonChange = (newLessonId: string) => {
-    setSearchParams({ lessonId: newLessonId });
-  };
+  function handleNext() {
+    navigate(`/textbook-lessons/${selectedSpecialityId}`);
+  }
 
   return (
-    <div style={{ display: "flex" }}>
-      <div>
-        {hasQuestionAuthorAccess && <LinkButton variant="contained" to={`/edit-textbook-lesson/${lessonId}`}>Edit</LinkButton>}
-        <h3>{textbookLessons[lessonId]?.speciality?.name}</h3>
-        <ul>
-          {Object.values(textbookLessons).map((lesson) => (
-            <li key={lesson.id}>
-              <button onClick={() => handleLessonChange(lesson.id || "")}>
-                {lesson.title}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div style={{ flex: 1, padding: "20px" }}>
-        {selectedLesson && <TextbookLessonContent textbookLesson={selectedLesson} />}
-      </div>
-    </div>
+    <Page sx={{ height: "100%" }}>
+      <Stack height="100%" gap={3} py={2}>
+        <Stack
+          spacing={2}
+          direction={{ xs: "column", md: "row" }}
+          justifyContent="space-between"
+          alignItems="center"
+          sx={{ py: 1, borderRadius: 1, mb: 1 }}
+        >
+          <LinkButton variant="contained" to="/">
+            Study Portal
+          </LinkButton>
+          <Typography variant="h2" color="primary" align="center">
+            Textbook - Select Speciality
+          </Typography>
+          <Button sx={{ visibility: "hidden" }}>Study Portal</Button>
+        </Stack>
+        <Box sx={{
+          flexGrow: 1,
+          maxHeight: "100%",
+          minHeight: 400,
+          overflowY: "hidden",
+        }}>
+          <SpecialitySelector
+            selectedSpecialityId={selectedSpecialityId}
+            setSelectedSpecialityId={setSelectedSpecialityId}
+            redirectPath={`/${selectedSpecialityId}`}
+          />
+        </Box>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="center"
+          gap={1}
+          pt={1}
+          pb={6}
+        >
+          <LinkButton
+            variant="outlined"
+            sx={{ width: "max-content", flexShrink: 0 }}
+            size="large"
+            startIcon={<ChevronLeft />}
+            to="/"
+          >
+            Back
+          </LinkButton>
+          <LoadingButton
+            variant="contained"
+            sx={{ width: "max-content", flexShrink: 0, py: 1 }}
+            size="large"
+            endIcon={<ChevronRight />}
+            onClick={handleNext}
+            disabled={!selectedSpecialityId}
+          >
+            Next
+          </LoadingButton>
+        </Stack>
+      </Stack>
+    </Page>
   );
-};
-
-export default TextbookLessons;
+}

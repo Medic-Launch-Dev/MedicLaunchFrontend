@@ -3,9 +3,9 @@ import { LoadingButton } from "@mui/lab";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FlashCardSpecialitySelection } from "../components/flashCards/FlashCardSpecialitySelection";
 import Page from "../components/nav/Page";
 import LinkButton from "../components/util/LinkButton";
+import { SpecialitySelector } from "../components/util/SpecialitySelector";
 
 export default function SelectFlashCards() {
   const navigate = useNavigate();
@@ -39,7 +39,11 @@ export default function SelectFlashCards() {
             overflowY: "hidden",
           }}
         >
-          <FlashCardSpecialitySelection selectedSpecialityId={selectedSpecialityId} setSelectedSpecialityId={setSelectedSpecialityId} />
+          <SpecialitySelector
+            selectedSpecialityId={selectedSpecialityId}
+            setSelectedSpecialityId={setSelectedSpecialityId}
+            redirectPath="/flash-cards"
+          />
         </Box>
         <Stack
           direction="row"

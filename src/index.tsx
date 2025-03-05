@@ -38,6 +38,7 @@ import SelectFlashCards from "./pages/SelectFlashCards";
 import SelectMock from "./pages/SelectMock";
 import SpecialityAnalyser from "./pages/SpecialityAnalyser";
 import Subscribe from "./pages/Subscribe";
+import TextbookLesson from "./pages/TextbookLesson";
 import TextbookLessons from "./pages/TextbookLessons";
 import UserManagement from "./pages/UserManagement";
 import { AuthGuard } from "./services/AuthGuard";
@@ -121,8 +122,12 @@ const App = () => {
           element: <EditFlascard />
         },
         {
-          path: "/textbook-lessons/:specialityId",
+          path: "/textbook-lessons",
           element: <TextbookLessons />
+        },
+        {
+          path: "/textbook-lessons/:specialityId",
+          element: <TextbookLesson />
         },
         {
           path: "/edit-textbook-lesson",

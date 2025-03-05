@@ -94,35 +94,37 @@ const EditTextbookLessons = () => {
               <TableBody>
                 {
                   textbookLessons && textbookLessons.length > 0 ?
-                    textbookLessons.map(lesson => (
-                      <TableRow key={lesson.id}>
-                        <TableCell>{lesson.title}</TableCell>
-                        <TableCell>
-                          {
-                            lesson.isSubmitted ?
-                              <Chip label="Submitted" sx={{ backgroundColor: "#A4E29F" }} /> :
-                              <Chip label="Draft" />
-                          }
-                        </TableCell>
-                        <TableCell>{lesson.contents.map(content => content.heading).join(", ")}</TableCell>
-                        <TableCell>
-                          <LinkButton
-                            to={`/edit-textbook-lesson/${lesson.id}`}
-                            variant="contained"
-                            sx={{
-                              fontWeight: 500,
-                              fontSize: "14px",
-                              width: "4px",
-                              height: "32px",
-                              paddingX: "0px",
-                              paddingY: "20px"
-                            }}
-                          >
-                            Edit
-                          </LinkButton>
-                        </TableCell>
-                      </TableRow>
-                    ))
+                    textbookLessons
+                      .sort((a, b) => (a.title || '').localeCompare(b.title || ''))
+                      .map(lesson => (
+                        <TableRow key={lesson.id}>
+                          <TableCell>{lesson.title}</TableCell>
+                          <TableCell>
+                            {
+                              lesson.isSubmitted ?
+                                <Chip label="Submitted" sx={{ backgroundColor: "#A4E29F" }} /> :
+                                <Chip label="Draft" />
+                            }
+                          </TableCell>
+                          <TableCell>{lesson.contents.map(content => content.heading).join(", ")}</TableCell>
+                          <TableCell>
+                            <LinkButton
+                              to={`/edit-textbook-lesson/${lesson.id}`}
+                              variant="contained"
+                              sx={{
+                                fontWeight: 500,
+                                fontSize: "14px",
+                                width: "4px",
+                                height: "32px",
+                                paddingX: "0px",
+                                paddingY: "20px"
+                              }}
+                            >
+                              Edit
+                            </LinkButton>
+                          </TableCell>
+                        </TableRow>
+                      ))
                     :
                     <TableRow>
                       <TableCell colSpan={3} align="center" sx={{ py: 6 }}>No items in selected speciality</TableCell>
