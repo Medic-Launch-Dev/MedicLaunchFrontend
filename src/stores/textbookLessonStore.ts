@@ -10,11 +10,6 @@ export class TextbookLessonStore {
     makeAutoObservable(this);
   }
 
-  async getAllTextbookLessons() {
-    const lessons: TextbookLesson[] = await this.apiClient.getData("textbooklesson/list");
-    return lessons;
-  }
-
   async getTextbookLessonsBySpeciality(specialityId: string) {
     const lessons: TextbookLesson[] = await this.apiClient.getData(`textbooklesson/list?specialityId=${specialityId}`);
     return lessons;

@@ -2,18 +2,22 @@ import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import Page from "../components/nav/Page";
 import LinkButton from "../components/util/LinkButton";
 import { SpecialitySelector } from "../components/util/SpecialitySelector";
+import { useServiceProvider } from "../services/ServiceProvider";
 
 export default function TextbookLessons() {
   const navigate = useNavigate();
+  const { accountStore: { isSubscribed } } = useServiceProvider();
   const [selectedSpecialityId, setSelectedSpecialityId] = useState("");
 
   function handleNext() {
     navigate(`/textbook-lessons/${selectedSpecialityId}`);
   }
+
+  if (!isSubscribed) return <Navigate to="/subscribe" />;
 
   return (
     <Page sx={{ height: "100%" }}>

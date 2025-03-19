@@ -1,6 +1,6 @@
-import { Box, Card, Link, Stack, Typography } from "@mui/material";
+import { Box, Card, Chip, Link, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { Navigate, useParams, useSearchParams } from "react-router-dom";
 import Page from "../components/nav/Page";
 import TextbookLessonContent from "../components/textbook/TextbookLessonContent";
 import { TextbookLesson as TextbookLessonModel } from "../models/TextbookLesson";
@@ -10,7 +10,7 @@ const TextbookLesson = () => {
   const { specialityId = "" } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
   const lessonId = searchParams.get("lessonId") || "";
-  const { textbookLessonStore, accountStore: { hasQuestionAuthorAccess } } = useServiceProvider();
+  const { textbookLessonStore, accountStore: { isSubscribed, hasQuestionAuthorAccess } } = useServiceProvider();
   const [textbookLessons, setTextbookLessons] = useState<Record<string, TextbookLessonModel>>({});
   const selectedLesson = textbookLessons[lessonId];
 
@@ -35,6 +35,8 @@ const TextbookLesson = () => {
   const handleLessonChange = (newLessonId: string) => {
     setSearchParams({ lessonId: newLessonId });
   };
+
+  if (!isSubscribed) return <Navigate to="/subscribe" />;
 
   return (
     <Page>
@@ -71,15 +73,22 @@ const TextbookLesson = () => {
               {Object.values(textbookLessons)
                 .sort((a, b) => (a.title || '').localeCompare(b.title || ''))
                 .map((lesson) => (
-                  <Typography
-                    key={lesson.id}
-                    variant="h6"
-                    color={lesson.id === lessonId ? "primary" : "#9e9e9e"}
-                    onClick={() => handleLessonChange(lesson.id || "")}
-                    sx={{ cursor: 'pointer' }}
-                  >
-                    {lesson.title}
-                  </Typography>
+                  <Stack direction="row" spacing={1} alignItems="center">
+                    <Typography
+                      key={lesson.id}
+                      variant="h6"
+                      color={lesson.id === lessonId ? "primary" : "#9e9e9e"}
+                      onClick={() => handleLessonChange(lesson.id || "")}
+                      sx={{ cursor: 'pointer' }}
+                    >
+                      {lesson.title}
+                    </Typography>
+                    {
+                      (hasQuestionAuthorAccess && !lesson.isSubmitted) && (
+                        <Chip label="Draft" />
+                      )
+                    }
+                  </Stack>
                 ))
               }
             </Stack>

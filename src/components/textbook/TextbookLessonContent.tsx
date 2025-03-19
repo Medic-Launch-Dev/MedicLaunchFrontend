@@ -1,8 +1,10 @@
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Accordion, AccordionDetails, AccordionSummary, Box, Stack, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Alert, Box, Stack, Typography } from "@mui/material";
+import { RichTextReadOnly } from "mui-tiptap";
 import { TextbookLesson } from "../../models/TextbookLesson";
 import { useServiceProvider } from "../../services/ServiceProvider";
 import { primaryGradientText } from "../../theme";
+import useExtensions from '../tiptap/useExtensions';
 import LinkButton from "../util/LinkButton";
 
 interface TextbookLesssonContentProps {
@@ -11,6 +13,10 @@ interface TextbookLesssonContentProps {
 
 const TextbookLessonContent = ({ textbookLesson }: TextbookLesssonContentProps) => {
   const { accountStore: { hasQuestionAuthorAccess } } = useServiceProvider();
+
+  const extensions = useExtensions({
+    placeholder: ""
+  });
 
   return (
     <Box>
@@ -27,6 +33,13 @@ const TextbookLessonContent = ({ textbookLesson }: TextbookLesssonContentProps) 
           </LinkButton>
         )}
       </Stack>
+
+      {
+        (hasQuestionAuthorAccess && !textbookLesson.isSubmitted) &&
+        <Alert severity="info" sx={{ mb: 2 }}>
+          This is a draft lesson. Students won't be able to see it until it's submitted.
+        </Alert>
+      }
 
       <Stack spacing={1}>
         {textbookLesson.contents.map((content, index) => (
@@ -53,9 +66,7 @@ const TextbookLessonContent = ({ textbookLesson }: TextbookLesssonContentProps) 
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>
-                {content.text}
-              </Typography>
+              <RichTextReadOnly content={content.text} extensions={extensions} />
             </AccordionDetails>
           </Accordion>
         ))}
