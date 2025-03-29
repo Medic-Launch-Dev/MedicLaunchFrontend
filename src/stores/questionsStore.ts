@@ -133,6 +133,10 @@ export class QuestionsStore {
     return await this.apiClient.removeQuestion(questionId, specialityId);
   }
 
+  async generateQuestionTextAndExplanation(prompt: string) {
+    return await this.apiClient.generateQuestionTextAndExplanation(prompt);
+  }
+
   async getTrialQuestions() {
     return await this.apiClient.getData("questions/trial-questions");
   }
