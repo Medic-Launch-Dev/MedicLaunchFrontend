@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Grid,
   Stack,
   TextField,
@@ -14,6 +15,8 @@ import Speciality from "../../models/Speciality";
 import { useServiceProvider } from "../../services/ServiceProvider";
 import { primaryGradient, primaryGradientText } from "../../theme";
 import { getInnerTextFromHTML } from "../../utils/RichTextUtils";
+import { AutoAwesome } from "@mui/icons-material";
+import GenerateTextAndExplanationButton from "./GenerateTextAndExplanationButton";
 
 const emptyOptions = [
   { letter: "A", text: '' },
@@ -121,17 +124,27 @@ export default function QuestionEditView({ question, setQuestion, setCanSubmit, 
           </Stack>
 
           <Stack spacing={1}>
-            <Typography variant="h6" sx={primaryGradientText}>
-              Question text
-            </Typography>
+            <Stack spacing={1} direction="row" alignItems="center" justifyContent="space-between">
+              <Typography variant="h6" sx={primaryGradientText}>
+                Question text
+              </Typography>
+              <GenerateTextAndExplanationButton
+                setQuestionText={setQuestionText}
+                setExplanation={setExlpanation}
+                setOptions={setOptions}
+                setAnswer={setAnswer}
+              />
+            </Stack>
             <RichQuestionTextEditor
+              key={`question-${Date.now()}`}
               placeholderText="Write new question here..."
-              initialValue={question?.questionText || ''}
+              initialValue={questionText}
               setValue={setQuestionText}
             />
           </Stack>
 
           <AnswerOptionsInput
+            key={JSON.stringify(options)}
             options={options}
             setOptions={setOptions}
             answer={answer}
@@ -143,8 +156,9 @@ export default function QuestionEditView({ question, setQuestion, setCanSubmit, 
               Explanation
             </Typography>
             <RichQuestionTextEditor
+              key={`explanation-${Date.now()}`}
               placeholderText="Write new question here..."
-              initialValue={question?.explanation || ''}
+              initialValue={explanation}
               setValue={setExlpanation}
             />
           </Stack>
@@ -154,6 +168,7 @@ export default function QuestionEditView({ question, setQuestion, setCanSubmit, 
               Learning points
             </Typography>
             <RichQuestionTextEditor
+              key={`learning-points-${Date.now()}`}
               placeholderText="Write new question here..."
               initialValue={question?.learningPoints || ''}
               setValue={setLearningPoints}
@@ -165,6 +180,7 @@ export default function QuestionEditView({ question, setQuestion, setCanSubmit, 
               Clinical tips
             </Typography>
             <RichQuestionTextEditor
+              key={`clinical-tips-${Date.now()}`}
               placeholderText="Write clinical tips here..."
               initialValue={question?.clinicalTips || ''}
               setValue={setClinicalTips}

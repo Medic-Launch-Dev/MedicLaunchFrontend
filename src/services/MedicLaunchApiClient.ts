@@ -1,9 +1,8 @@
-
 import { AxiosInstance } from "axios";
 import { FamiliarityCounts } from "../models/FamiliarityCounts";
 import { Flashcard } from "../models/Flashcard";
 import { PracticeFilter } from "../models/PracticeFilter";
-import { Question, QuestionType } from "../models/Question";
+import { Question, QuestionTextAndExplanation, QuestionType } from "../models/Question";
 import Speciality, { SpecialityAnalytics } from "../models/Speciality";
 import { TextbookLesson } from "../models/TextbookLesson";
 import { MedicLaunchUser } from "../models/User";
@@ -57,6 +56,19 @@ export default class MedicLaunchApiClient {
 
   async removeQuestion(questionId: string, specialityId: string) {
     return await this.deleteData(`questions/delete/${specialityId}`, questionId);
+  }
+
+  async generateQuestionTextAndExplanation(conditions: string): Promise<QuestionTextAndExplanation> {
+    const response = await this.axios.post(
+      `${this.apiUrl}/questions/generate/text-and-explanation`,
+      JSON.stringify(conditions),  // Send string directly
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+    return response.data;
   }
 
   async startMock(mockExamType: QuestionType.PaperOneMockExam | QuestionType.PaperTwoMockExam) {

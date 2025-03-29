@@ -29,3 +29,10 @@ export class Question {
     specialityName?: string;
     videoUrl?: string;
 }
+
+export class QuestionTextAndExplanation {
+    questionText: string;
+    options: Option[];
+    correctAnswerLetter: string;
+    explanation: string;
+}
