@@ -1,6 +1,5 @@
 import { Box, Grid, Stack, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
-import { primaryGradient } from "../../theme";
 
 interface AuthLayoutProps {
   children: React.ReactNode | React.ReactNode[];
@@ -44,8 +43,17 @@ export default function AuthLayout({ children, title, subtitle }: AuthLayoutProp
           </Box>
         </Stack>
       </Grid>
-      <Grid item lg={7} sx={{ height: "100%", background: primaryGradient, display: { xs: 'none', lg: 'block' }}}>
-      </Grid>
+      <Grid
+        item
+        lg={7}
+        sx={{
+          height: "100%",
+          backgroundImage: "url('/auth-bg.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          display: { xs: 'none', lg: 'block' }
+        }}
+      ></Grid>
     </Grid>
   )
 }
