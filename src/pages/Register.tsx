@@ -5,7 +5,7 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
-import AgreementCheckbox from "../components/register/AgreementCheckbox";
+import AgreementCheckbox from "../components/auth/AgreementCheckbox";
 import { useSnackbar } from "../hooks/useSnackbar";
 import { MedicLaunchUser } from "../models/User";
 import userStore from "../stores/userStore";

@@ -74,9 +74,9 @@ function UserProfile({ adminView }: UserProfileProps) {
                   <Stack spacing={1}>
                     <ProfileField label="Full Name" value={`${userProfile?.firstName} ${userProfile?.lastName}`} />
                     <ProfileField label="Email" value={userProfile?.email} />
-                    <ProfileField label="University" value={userProfile?.university} />
-                    <ProfileField label="Graduation Year" value={userProfile?.graduationYear.toString()} />
-                    <ProfileField label="Mobile" value={userProfile?.phoneNumber} />
+                    <ProfileField label="University" value={userProfile?.university || "Not set"} />
+                    <ProfileField label="Graduation Year" value={userProfile?.graduationYear ? userProfile.graduationYear.toString() : "Not set"} />
+                    <ProfileField label="Mobile" value={userProfile?.phoneNumber || "Not set"} />
                   </Stack>
                 </Stack>
 

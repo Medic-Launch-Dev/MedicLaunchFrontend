@@ -9,17 +9,17 @@ export interface UserProfile {
   city?: string;
   email: string;
   firstName: string;
-  graduationYear: number;
+  graduationYear?: number;
   hasActiveSubscription?: boolean;
   id?: string;
   lastName: string;
-  phoneNumber: string;
+  phoneNumber?: string;
   questionsCompleted?: number;
-  subscribeToPromotions: boolean;
+  subscribeToPromotions?: boolean;
   subscriptionMonths?: string;
   subscriptionPurchaseDate?: string;
   howDidYouHearAboutUs?: string;
-  university: string;
+  university?: string;
   isSubscribed?: boolean;
 }
 

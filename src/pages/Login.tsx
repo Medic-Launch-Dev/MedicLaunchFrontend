@@ -5,7 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { useSnackbar } from "../hooks/useSnackbar";
 import { useAuth } from "../services/AuthProvider";
-import { primaryGradient, primaryGradientText } from "../theme";
+import AuthLayout from "../components/auth/AuthLayout";
+import { grey } from "@mui/material/colors";
 
 export default function Login() {
   const { showSnackbar, snackbarProps } = useSnackbar();
@@ -37,55 +38,40 @@ export default function Login() {
     },
   });
 
+  const requiredFieldsAreEmpty = () => {
+    const requiredFields = Object.values(formik.values);
+    return requiredFields.some((value) => value === "");
+  };
+
   return (
     <>
       <Snackbar {...snackbarProps} />
-      <Grid container sx={{ height: "100vh" }}>
-        <Grid item xs={12} lg={5} sx={{ height: "100%" }}>
-          <Stack
-            sx={{ m: "auto", minHeight: "100%", py: 2, position: "relative" }}
-            alignItems="center"
-            justifyContent="center"
-            spacing={2}
-          >
-            <Box sx={{ position: "fixed", top: 24, left: { xs: "50%", md: 24 }, transform: { xs: "translateX(-50%)", md: "none" } }}>
-              <img src="/logo.png" width={140} />
-            </Box>
-            <Box maxWidth="sm" px={2}>
-              <Typography
-                variant="h1"
-                sx={{ ...primaryGradientText, flexShrink: 0 }}
-                fontSize={36}
-                fontWeight={500}
-                textAlign="center"
-              >
-                Login
-              </Typography>
-              <form onSubmit={formik.handleSubmit}>
-                <TextField
-                  fullWidth
-                  label="Email address"
-                  name="email"
-                  sx={{ mt: 6 }}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.email}
-                  error={formik.touched.email && Boolean(formik.errors.email)}
-                  helperText={formik.touched.email && formik.errors.email}
-                />
-                <TextField
-                  fullWidth
-                  type="password"
-                  label="Password"
-                  name="password"
-                  sx={{ mt: 2 }}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.password}
-                  error={formik.touched.password && Boolean(formik.errors.password)}
-                  helperText={formik.touched.password && formik.errors.password}
-                />
-                {/* <Stack
+
+      <AuthLayout title="Log in" subtitle="Wecome back, please enter your details below.">
+        <form onSubmit={formik.handleSubmit}>
+          <TextField
+            fullWidth
+            label="Email address"
+            name="email"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.email}
+            error={formik.touched.email && Boolean(formik.errors.email)}
+            helperText={formik.touched.email && formik.errors.email}
+          />
+          <TextField
+            fullWidth
+            type="password"
+            label="Password"
+            name="password"
+            sx={{ mt: 2 }}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.password}
+            error={formik.touched.password && Boolean(formik.errors.password)}
+            helperText={formik.touched.password && formik.errors.password}
+          />
+          {/* <Stack
                   direction="row"
                   justifyContent="end"
                   alignItems="end"
@@ -94,42 +80,29 @@ export default function Login() {
                 >
                   <Typography fontSize={14}>Forgot password?</Typography>
                 </Stack> */}
-                <Stack spacing={2} width="100%" alignItems="center" sx={{ mt: 2 }}>
-                  <LoadingButton
-                    variant="contained"
-                    fullWidth
-                    sx={{ fontSize: 16, fontWeight: 500, py: 1.5 }}
-                    type="submit"
-                    loading={formik.isSubmitting}
-                  >
-                    Log in
-                  </LoadingButton>
-                  <Typography>
-                    Don't have an account?{" "}
-                    <Link
-                      to="/register"
-                      style={{ textDecoration: "none", color: "#2394c4" }}
-                    >
-                      Register here
-                    </Link>
-                  </Typography>
-                </Stack>
-              </form>
-            </Box>
+          <Stack spacing={3} width="100%" alignItems="center" sx={{ mt: 2 }}>
+            <LoadingButton
+              variant="contained"
+              fullWidth
+              sx={{ fontSize: 16, fontWeight: 500, py: 1.5 }}
+              type="submit"
+              loading={formik.isSubmitting}
+              disabled={!formik.isValid || requiredFieldsAreEmpty()}
+            >
+              Log in
+            </LoadingButton>
+            <Typography sx={{ color: grey[700] }}>
+              Don't have an account?{" "}
+              <Link
+                to="/register"
+                style={{ textDecoration: "none", color: "#2394c4" }}
+              >
+                Sign up here
+              </Link>
+            </Typography>
           </Stack>
-        </Grid>
-        <Grid 
-          item 
-          lg={7} 
-          sx={{ 
-            height: "100%", 
-            backgroundImage: "url('/auth-bg.png')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            display: { xs: 'none', lg: 'block' } 
-          }}
-        ></Grid>
-      </Grid>
+        </form>
+      </AuthLayout>
     </>
   );
 }

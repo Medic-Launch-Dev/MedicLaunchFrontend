@@ -9,7 +9,7 @@ import CreateQuestion from "./pages/CreateQuestion";
 import EditQuestions from './pages/EditQuestions';
 import Login from "./pages/Login";
 import PracticeSession from "./pages/PracticeSession";
-import Register from "./pages/Register";
+import Register from "./pages/RegisterSimple";
 import ReviewSession from "./pages/ReviewSession";
 import Root from "./pages/Root";
 // import reportWebVitals from "./reportWebVitals";

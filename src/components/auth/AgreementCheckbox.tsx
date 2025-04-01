@@ -1,4 +1,5 @@
 import { Checkbox, Stack, styled } from "@mui/material";
+import { grey } from "@mui/material/colors";
 
 const Icon = styled('span')({
   borderRadius: 3,
@@ -57,7 +58,7 @@ export default function AgreementCheckbox({ text, checked, onChange }: Agreement
         checked={checked}
         onChange={onChange}
       />
-      <span>{text}</span>
+      <span style={{ color: grey[700] }}>{text}</span>
     </Stack>
 
   )
