@@ -18,8 +18,11 @@ export default function Login() {
       password: "",
     },
     validationSchema: Yup.object({
-      email: Yup.string().email("Invalid email address").required("Required"),
-      password: Yup.string().required("Required"),
+      email: Yup.string()
+        .email("Please enter a valid email address")
+        .required("Email address is required"),
+      password: Yup.string()
+        .required("Password is required")
     }),
     onSubmit: async (values, { setSubmitting }) => {
       try {
@@ -38,7 +41,7 @@ export default function Login() {
     <>
       <Snackbar {...snackbarProps} />
       <Grid container sx={{ height: "100vh" }}>
-        <Grid item xs={12} lg={7} sx={{ height: "100%" }}>
+        <Grid item xs={12} lg={5} sx={{ height: "100%" }}>
           <Stack
             sx={{ m: "auto", minHeight: "100%", py: 2, position: "relative" }}
             alignItems="center"
@@ -51,7 +54,7 @@ export default function Login() {
             <Box maxWidth="sm" px={2}>
               <Typography
                 variant="h1"
-                sx={{ ...primaryGradientText, flexShrink: 0, pb: 2 }}
+                sx={{ ...primaryGradientText, flexShrink: 0 }}
                 fontSize={36}
                 fontWeight={500}
                 textAlign="center"
@@ -75,7 +78,7 @@ export default function Login() {
                   type="password"
                   label="Password"
                   name="password"
-                  sx={{ mt: 3 }}
+                  sx={{ mt: 2 }}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.password}
@@ -91,7 +94,7 @@ export default function Login() {
                 >
                   <Typography fontSize={14}>Forgot password?</Typography>
                 </Stack> */}
-                <Stack spacing={2} width="100%" alignItems="center" sx={{ mt: 4 }}>
+                <Stack spacing={2} width="100%" alignItems="center" sx={{ mt: 2 }}>
                   <LoadingButton
                     variant="contained"
                     fullWidth
@@ -115,7 +118,17 @@ export default function Login() {
             </Box>
           </Stack>
         </Grid>
-        <Grid item lg={5} sx={{ height: "100%", background: primaryGradient, display: { xs: 'none', lg: 'block' } }}></Grid>
+        <Grid 
+          item 
+          lg={7} 
+          sx={{ 
+            height: "100%", 
+            backgroundImage: "url('/auth-bg.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            display: { xs: 'none', lg: 'block' } 
+          }}
+        ></Grid>
       </Grid>
     </>
   );

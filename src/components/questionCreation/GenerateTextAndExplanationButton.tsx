@@ -14,35 +14,6 @@ interface GenerateTextAndExplanationButtonProps {
   setAnswer: (answer: string) => void;
 }
 
-const DUMMY_GENERATED_QUESTION: QuestionTextAndExplanation = {
-  "questionText": "<p>A 25-year-old woman with cystic fibrosis presents to the Emergency Department with a fever of 39.0&#8451;, heart rate of 130&nbsp;beats per minute, blood pressure of 85/55&nbsp;mmHg, and she is confused and lethargic. On examination, she has a productive cough, and coarse crackles are heard throughout both lung fields.</p><p></p><p><strong>What is the most appropriate immediate management?</strong></p>",
-  "options": [
-      {
-          "letter": "A",
-          "text": "Administer intravenous fluids and start broad-spectrum antibiotics within the first hour"
-      },
-      {
-          "letter": "B",
-          "text": "Obtain blood cultures and wait for results before starting antibiotics"
-      },
-      {
-          "letter": "C",
-          "text": "Provide oxygen therapy and obtain a chest X-ray before initiating any treatment"
-      },
-      {
-          "letter": "D",
-          "text": "Administer nebulized antibiotics specific for Pseudomonas aeruginosa"
-      },
-      {
-          "letter": "E",
-          "text": "Start high-dose corticosteroids to reduce inflammation"
-      }
-  ],
-  "correctAnswerLetter": "A",
-  "explanation": "<p>The most appropriate immediate management is to administer intravenous fluids and start broad-spectrum antibiotics within the first hour. This patient is exhibiting signs of sepsis—fever, tachycardia, hypotension, and altered mental status—which require prompt treatment. According to NICE guidelines and the UK Sepsis Trust recommendations, early recognition and initiation of the 'Sepsis Six' protocol are crucial. This includes administering intravenous fluids to address hypotension and starting empirical broad-spectrum antibiotics as soon as possible to reduce mortality.</p><p></p><p>Option B is incorrect because delaying antibiotics until blood culture results are available can worsen outcomes; antibiotics should be started promptly after obtaining cultures. Option C involves necessary assessments but should not delay immediate resuscitative measures and antibiotic therapy. Option D is inappropriate as nebulized antibiotics are not sufficient in sepsis management; systemic antibiotics are required. Option E is not indicated unless there is a specific reason to suspect adrenal insufficiency; corticosteroids are not part of the immediate management of sepsis.</p>"
-}
-
-
 export default function GenerateTextAndExplanationButton({ setQuestionText, setExplanation, setOptions, setAnswer }: GenerateTextAndExplanationButtonProps) {
   const { questionsStore } = useServiceProvider();
   const [open, setOpen] = useState(false);

@@ -22,9 +22,6 @@ const theme = createTheme({
       main: "#ffffff",
       contrastText: "#2394c4",
       light: "#cbeaf7"
-    },
-    background: {
-      default: "#f3f6fe"
     }
   },
   shape: {
@@ -32,7 +29,7 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: [
-      'Poppins',
+      'DM Sans',
       '-apple-system',
       'BlinkMacSystemFont',
       '"Segoe UI"',
@@ -134,7 +131,18 @@ theme.components = {
     styleOverrides: {
       root: {
         backgroundColor: "#fff",
-        borderRadius: 12
+        borderRadius: 12,
+        '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+          transition: 'all 0.2s ease-in-out'
+        },
+        '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+          borderWidth: '1px'
+        },
+        '&:hover .MuiOutlinedInput-root:not(.Mui-focused):not(.Mui-error)': {
+          '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: '#8c8c8c'
+          }
+        }
       }
     }
   },
