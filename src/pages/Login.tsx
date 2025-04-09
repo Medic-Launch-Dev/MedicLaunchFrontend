@@ -47,7 +47,7 @@ export default function Login() {
     <>
       <Snackbar {...snackbarProps} />
 
-      <AuthLayout title="Log in" subtitle="Wecome back, please enter your details below.">
+      <AuthLayout title="Log in" subtitle="Welcome back, please enter your details below.">
         <form onSubmit={formik.handleSubmit}>
           <TextField
             fullWidth
