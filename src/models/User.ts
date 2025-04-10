@@ -15,7 +15,7 @@ export interface UserProfile {
   lastName: string;
   phoneNumber?: string;
   questionsCompleted?: number;
-  subscribeToPromotions?: boolean;
+  subscribeToPromotions: boolean;
   subscriptionMonths?: string;
   subscriptionPurchaseDate?: string;
   howDidYouHearAboutUs?: string;

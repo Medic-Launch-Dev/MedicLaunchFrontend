@@ -1,23 +1,22 @@
-import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Link as MuiLink, Select, Snackbar, Stack, TextField, Typography } from "@mui/material";
+import { Grid, Link as MuiLink, Snackbar, Stack, TextField, Typography } from "@mui/material";
+import { grey } from "@mui/material/colors";
 import { useFormik } from "formik";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import AgreementCheckbox from "../components/auth/AgreementCheckbox";
+import AuthLayout from "../components/auth/AuthLayout";
 import { useSnackbar } from "../hooks/useSnackbar";
 import { MedicLaunchUser } from "../models/User";
-import userStore from "../stores/userStore";
-import { primaryGradient, primaryGradientText, unstyledLink } from "../theme";
-import AuthLayout from "../components/auth/AuthLayout";
-import { grey } from "@mui/material/colors";
+import { useServiceProvider } from "../services/ServiceProvider";
 
 interface FormValues {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
+  subscribeToPromotions: boolean;
 }
 
 const validationSchema = yup.object({
@@ -45,15 +44,18 @@ const validationSchema = yup.object({
 
 export default function Register() {
   const navigate = useNavigate();
+  const { userStore } = useServiceProvider();
   const { showSnackbar, snackbarProps } = useSnackbar();
   const [agreedToTerms, setAgreedToTerms] = useState(false);
+
 
   const formik = useFormik({
     initialValues: {
       firstName: "",
       lastName: "",
       email: "",
-      password: ""
+      password: "",
+      subscribeToPromotions: false,
     },
     validationSchema: validationSchema,
     onSubmit: handleSubmit,
@@ -66,6 +68,7 @@ export default function Register() {
         lastName: values.lastName,
         email: values.email,
         password: values.password,
+        subscribeToPromotions: values.subscribeToPromotions,
       };
 
       const successfullyRegistered = await userStore.createUser(userData);
@@ -96,6 +99,8 @@ export default function Register() {
                 value={formik.values.firstName}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
+                error={formik.touched.firstName && Boolean(formik.errors.firstName)}
+                helperText={formik.touched.firstName && formik.errors.firstName}
                 required
               />
             </Grid>
@@ -107,6 +112,8 @@ export default function Register() {
                 value={formik.values.lastName}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
+                error={formik.touched.lastName && Boolean(formik.errors.lastName)}
+                helperText={formik.touched.lastName && formik.errors.lastName}
                 required
               />
             </Grid>
@@ -154,6 +161,11 @@ export default function Register() {
                 </div>
               }
             />
+            <AgreementCheckbox
+              text="Send me updates and promotions via email/text"
+              checked={formik.values.subscribeToPromotions}
+              onChange={e => formik.setFieldValue("subscribeToPromotions", e.target.checked)}
+            />
           </Stack>
           <Stack spacing={3} width="100%" alignItems="center" sx={{ mt: 2 }}>
             <LoadingButton
@@ -166,7 +178,7 @@ export default function Register() {
             >
               Register
             </LoadingButton>
-            <Typography sx={{ color: grey[700]}}>
+            <Typography sx={{ color: grey[700] }}>
               Already have an account?{" "}
               <Link
                 to="/login"
