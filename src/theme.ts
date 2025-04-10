@@ -32,7 +32,7 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: [
-      'DM Sans',
+      'DM Sans Variable',
       '-apple-system',
       'BlinkMacSystemFont',
       '"Segoe UI"',
