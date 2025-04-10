@@ -61,7 +61,20 @@ export default class MedicLaunchApiClient {
   async generateQuestionTextAndExplanation(conditions: string): Promise<QuestionTextAndExplanation> {
     const response = await this.axios.post(
       `${this.apiUrl}/questions/generate/text-and-explanation`,
-      JSON.stringify(conditions),  // Send string directly
+      JSON.stringify(conditions),
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+    return response.data;
+  }
+
+  async generateQuestionContent(condition: string, endpoint: string): Promise<string> {
+    const response = await this.axios.post(
+      `${this.apiUrl}/questions/generate/${endpoint}`,
+      JSON.stringify(condition),
       {
         headers: {
           'Content-Type': 'application/json'

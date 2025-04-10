@@ -17,6 +17,7 @@ import { primaryGradient, primaryGradientText } from "../../theme";
 import { getInnerTextFromHTML } from "../../utils/RichTextUtils";
 import { AutoAwesome } from "@mui/icons-material";
 import GenerateTextAndExplanationButton from "./GenerateTextAndExplanationButton";
+import ContentGeneratorButton from "./ContentGeneratorButton";
 
 const emptyOptions = [
   { letter: "A", text: '' },
@@ -164,21 +165,37 @@ export default function QuestionEditView({ question, setQuestion, setCanSubmit, 
           </Stack>
 
           <Stack spacing={1}>
-            <Typography variant="h6" sx={primaryGradientText}>
-              Learning points
-            </Typography>
+            <Stack spacing={1} direction="row" alignItems="center" justifyContent="space-between">
+              <Typography variant="h6" sx={primaryGradientText}>
+                Learning points
+              </Typography>
+              <ContentGeneratorButton 
+                title="Learning Points"
+                endpoint="learning-points"
+                setContent={setLearningPoints}
+                placeholder="Perthes' Disease"
+              />
+            </Stack>
             <RichQuestionTextEditor
               key={`learning-points-${Date.now()}`}
-              placeholderText="Write new question here..."
+              placeholderText="Write learning points here..."
               initialValue={question?.learningPoints || ''}
               setValue={setLearningPoints}
             />
           </Stack>
 
           <Stack spacing={1}>
-            <Typography variant="h6" sx={primaryGradientText}>
-              Clinical tips
-            </Typography>
+            <Stack spacing={1} direction="row" alignItems="center" justifyContent="space-between">
+              <Typography variant="h6" sx={primaryGradientText}>
+                Clinical tips
+              </Typography>
+              <ContentGeneratorButton
+                title="Clinical Tips" 
+                endpoint="clinical-tips"
+                setContent={setClinicalTips}
+                placeholder="Perthes' Disease"
+              />
+            </Stack>
             <RichQuestionTextEditor
               key={`clinical-tips-${Date.now()}`}
               placeholderText="Write clinical tips here..."

@@ -137,6 +137,10 @@ export class QuestionsStore {
     return await this.apiClient.generateQuestionTextAndExplanation(prompt);
   }
 
+  async generateContent(prompt: string, endpoint: string) {
+    return await this.apiClient.generateQuestionContent(prompt, endpoint);
+  }
+
   async getTrialQuestions() {
     return await this.apiClient.getData("questions/trial-questions");
   }
