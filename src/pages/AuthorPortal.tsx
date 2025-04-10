@@ -97,15 +97,15 @@ function AuthorPortal() {
               hasQuestionAuthorAccess &&
               <Grid item xs={12} sm={6}>
                 <Card
-                  title="Review textbook"
+                  title="Review clinical companion"
                   action={
-                    <Link to="/edit-textbook-lesson">
-                      <Button variant="contained">View textbook</Button>
+                    <Link to="/edit-clinical-companion-lesson">
+                      <Button variant="contained">View lessons</Button>
                     </Link>
                   }
                   icon={<img src={CoursesIcon} width={64} />}
                 >
-                  View your textbook lessons and edit them here
+                  View your clinical companion lessons and edit them here
                 </Card>
               </Grid>
             }

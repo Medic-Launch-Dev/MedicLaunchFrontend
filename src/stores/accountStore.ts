@@ -6,12 +6,22 @@ import MedicLaunchApiClient from "../services/MedicLaunchApiClient";
 export class AccountStore {
   apiClient: MedicLaunchApiClient;
   myProfile: UserProfile | null = null;
-  isSubscribed: boolean = false;
+  isSubscribed: boolean;
   roles: string[] = [];
+
+  // Add loading state properties
+  private loadingProfile: boolean = false;
+  private loadingSubscription: boolean = false;
+  private loadingRoles: boolean = false;
 
   constructor(apClient: MedicLaunchApiClient) {
     this.apiClient = apClient;
     makeAutoObservable(this);
+  }
+
+  // Add a getter for general loading state
+  get isLoading() {
+    return this.loadingProfile || this.loadingSubscription || this.loadingRoles;
   }
 
   get hasAdminAccess() {
@@ -31,24 +41,45 @@ export class AccountStore {
   }
 
   public async getMyProfile() {
-    const profile: UserProfile = await this.apiClient.getData('account/myprofile');
-    runInAction(() => {
-      this.myProfile = profile;
-    });
+    try {
+      this.loadingProfile = true;
+      const profile: UserProfile = await this.apiClient.getData('account/myprofile');
+      runInAction(() => {
+        this.myProfile = profile;
+      });
+    } finally {
+      runInAction(() => {
+        this.loadingProfile = false;
+      });
+    }
   }
 
   public async getSubscriptionStatus() {
-    const response: boolean = await this.apiClient.getData('account/hasactivesubscription');
-    runInAction(() => {
-      this.isSubscribed = response;
-    });
+    try {
+      this.loadingSubscription = true;
+      const response: boolean = await this.apiClient.getData('account/hasactivesubscription');
+      runInAction(() => {
+        this.isSubscribed = response;
+      });
+    } finally {
+      runInAction(() => {
+        this.loadingSubscription = false;
+      });
+    }
   }
 
   public async getRoles() {
-    const response: string[] = await this.apiClient.getData('account/roles');
-    runInAction(() => {
-      this.roles = response;
-    });
+    try {
+      this.loadingRoles = true;
+      const response: string[] = await this.apiClient.getData('account/roles');
+      runInAction(() => {
+        this.roles = response;
+      });
+    } finally {
+      runInAction(() => {
+        this.loadingRoles = false;
+      });
+    }
   }
 }
 

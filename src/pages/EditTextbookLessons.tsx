@@ -61,7 +61,7 @@ const EditTextbookLessons = () => {
 
       <AddTextbookLessonModal open={open} onClose={() => setOpen(false)} specialityId={selectedSpeciality || ""} />
 
-      <Typography style={primaryGradientText} variant="h3" mb={3}>Edit Textbook</Typography>
+      <Typography style={primaryGradientText} variant="h3" mb={3}>Edit Clinical Companion</Typography>
 
       <FormControl>
         <InputLabel>Specialities</InputLabel>
@@ -109,7 +109,7 @@ const EditTextbookLessons = () => {
                           <TableCell>{lesson.contents.map(content => content.heading).join(", ")}</TableCell>
                           <TableCell>
                             <LinkButton
-                              to={`/edit-textbook-lesson/${lesson.id}`}
+                              to={`/edit-clinical-companion-lesson/${lesson.id}`}
                               variant="contained"
                               sx={{
                                 fontWeight: 500,

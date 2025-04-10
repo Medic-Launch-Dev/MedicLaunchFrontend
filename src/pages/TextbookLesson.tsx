@@ -36,7 +36,7 @@ const TextbookLesson = () => {
     setSearchParams({ lessonId: newLessonId });
   };
 
-  if (!isSubscribed) return <Navigate to="/subscribe" />;
+  if (isSubscribed === false) return <Navigate to="/subscribe" />;
 
   return (
     <Page>
@@ -48,7 +48,7 @@ const TextbookLesson = () => {
                 Speciality
               </Typography>
               <Link
-                href="/textbook-lessons"
+                href="/clinical-companion"
                 style={{ color: 'black', fontSize: 13, fontWeight: 500 }}
               >
                 Change

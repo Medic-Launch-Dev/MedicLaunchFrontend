@@ -27,7 +27,7 @@ const TextbookLessonContent = ({ textbookLesson }: TextbookLesssonContentProps) 
         {hasQuestionAuthorAccess && (
           <LinkButton
             variant="contained"
-            to={`/edit-textbook-lesson/${textbookLesson.id}`}
+            to={`/edit-clinical-companion-lesson/${textbookLesson.id}`}
           >
             Edit
           </LinkButton>

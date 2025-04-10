@@ -118,19 +118,19 @@ const App = () => {
           element: <EditFlascard />
         },
         {
-          path: "/textbook-lessons",
+          path: "/clinical-companion",
           element: <TextbookLessons />
         },
         {
-          path: "/textbook-lessons/:specialityId",
+          path: "/clinical-companion/:specialityId",
           element: <TextbookLesson />
         },
         {
-          path: "/edit-textbook-lesson",
+          path: "/edit-clinical-companion-lesson",
           element: <EditTextbookLessons />
         },
         {
-          path: "/edit-textbook-lesson/:id",
+          path: "/edit-clinical-companion-lesson/:id",
           element: <EditTextbookLesson />
         },
         {

@@ -28,13 +28,13 @@ export default function AddTextbookLessonModal({ open, onClose, specialityId }: 
     setLoading(true);
     const newLessonId = await textbookLessonStore.createTextbookLesson(newLesson);
     console.log(newLessonId);
-    if (newLessonId) navigate(`/edit-textbook-lesson/${newLessonId}`);
+    if (newLessonId) navigate(`/edit-clinical-companion-lesson/${newLessonId}`);
     setLoading(false);
   }
 
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Create Textbook Lesson</DialogTitle>
+      <DialogTitle>Create Clinical Companion Lesson</DialogTitle>
       <DialogContent>
         <TextField label="Title" variant="outlined" value={title} onChange={e => setTitle(e.target.value)} sx={{ my: 1, minWidth: 300 }} />
       </DialogContent>

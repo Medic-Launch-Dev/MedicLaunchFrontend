@@ -61,7 +61,7 @@ function EditTextbookLesson() {
     setLoadingDelete(true);
     const success = await textbookLessonStore.deleteTextbookLessonById(id);
 
-    if (success) navigate(`/edit-textbook-lesson?specialityId=${textbookLesson.specialityId}`);
+    if (success) navigate(`/edit-clinical-companion-lesson?specialityId=${textbookLesson.specialityId}`);
   }
 
   if (!hasQuestionAuthorAccess) return <Unauthorised />;
@@ -76,14 +76,14 @@ function EditTextbookLesson() {
       >
         <Snackbar {...snackbarProps} />
         <Stack direction="row" alignItems="center" spacing={2}>
-          <LinkButton variant="outlined" to={`/edit-textbook-lesson?specialityId=${textbookLesson.specialityId}`} startIcon={<ChevronLeft />}>Back</LinkButton>
+          <LinkButton variant="outlined" to={`/edit-clinical-companion-lesson?specialityId=${textbookLesson.specialityId}`} startIcon={<ChevronLeft />}>Back</LinkButton>
           <Typography variant="h2" style={primaryGradientText}>
-            Edit textbook lesson
+            Edit lesson
           </Typography>
         </Stack>
         <Stack direction="row" alignItems="center" spacing={1}>
           <Button variant="outlined" color="error" onClick={() => setOpen(true)}>Delete</Button>
-          <LinkButton variant="outlined" to={`/textbook-lessons/${textbookLesson.specialityId}?lessonId=${textbookLesson.id}`}>
+          <LinkButton variant="outlined" to={`/clinical-companion/${textbookLesson.specialityId}?lessonId=${textbookLesson.id}`}>
             View
           </LinkButton>
           <LoadingButton

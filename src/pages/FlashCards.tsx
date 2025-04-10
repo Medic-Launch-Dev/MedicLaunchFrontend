@@ -42,7 +42,7 @@ export default function FlashCards() {
     </Stack>
   );
 
-  if (!isSubscribed) return <Navigate to="/subscribe" />;
+  if (isSubscribed === false) return <Navigate to="/subscribe" />;
 
   return (
     <Page sx={{ height: "100%" }} maxWidth="xl">

@@ -14,10 +14,11 @@ export default function TextbookLessons() {
   const [selectedSpecialityId, setSelectedSpecialityId] = useState("");
 
   function handleNext() {
-    navigate(`/textbook-lessons/${selectedSpecialityId}`);
+    navigate(`/clinical-companion/${selectedSpecialityId}`);
   }
 
-  if (!isSubscribed) return <Navigate to="/subscribe" />;
+  // Only redirect after we're sure about the subscription status
+  if (isSubscribed === false) return <Navigate to="/subscribe" />;
 
   return (
     <Page sx={{ height: "100%" }}>
@@ -33,7 +34,7 @@ export default function TextbookLessons() {
             Study Portal
           </LinkButton>
           <Typography variant="h2" color="primary" align="center">
-            Textbook - Select Speciality
+            Clinical Companion - Select Speciality
           </Typography>
           <Button sx={{ visibility: "hidden" }}>Study Portal</Button>
         </Stack>
