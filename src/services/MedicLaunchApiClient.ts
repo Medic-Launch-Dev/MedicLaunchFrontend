@@ -84,6 +84,18 @@ export default class MedicLaunchApiClient {
     return response.data;
   }
 
+  async generateTextbookLesson(learningPoints: string, specialityId: string, questionId?: string): Promise<TextbookLesson> {
+    const lesson = await this.axios.post(
+      `${this.apiUrl}/textbooklesson/generate`,
+      {
+        learningPoints,
+        specialityId,
+        questionId
+      }
+    );
+    return lesson.data;
+  }
+
   async startMock(mockExamType: QuestionType.PaperOneMockExam | QuestionType.PaperTwoMockExam) {
     const res = await this.axios.post(`${this.apiUrl}/mockexam/start/${mockExamType}`, {});
     return res.data;

@@ -20,6 +20,15 @@ export class TextbookLessonStore {
     return lesson;
   }
 
+  async getTextbookLessonByQuestionId(questionId: string) {
+    try {
+      const lesson: TextbookLesson = await this.apiClient.getData(`textbooklesson/by-question/${questionId}`);
+      return lesson;
+    } catch {
+      return null;
+    }
+  }
+
   async createTextbookLesson(lesson: TextbookLesson) {
     const newLessonId = await this.apiClient.createTextbookLesson(lesson);
     return newLessonId;
@@ -33,5 +42,10 @@ export class TextbookLessonStore {
   async deleteTextbookLessonById(id: string) {
     const success = this.apiClient.deleteData("textbooklesson/delete", id);
     return success;
+  }
+
+  async generateTextbookLesson(learningPoints: string, specialityId: string, questionId?: string) {
+    const lesson = await this.apiClient.generateTextbookLesson(learningPoints, specialityId, questionId);
+    return lesson;
   }
 }

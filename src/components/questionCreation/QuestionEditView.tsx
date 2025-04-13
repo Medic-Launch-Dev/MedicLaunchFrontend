@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Grid,
   Stack,
   TextField,
@@ -15,9 +14,9 @@ import Speciality from "../../models/Speciality";
 import { useServiceProvider } from "../../services/ServiceProvider";
 import { primaryGradient, primaryGradientText } from "../../theme";
 import { getInnerTextFromHTML } from "../../utils/RichTextUtils";
-import { AutoAwesome } from "@mui/icons-material";
-import GenerateTextAndExplanationButton from "./GenerateTextAndExplanationButton";
+import AssociatedTextbookLesson from "./AssociatedTextbookLesson";
 import ContentGeneratorButton from "./ContentGeneratorButton";
+import GenerateTextAndExplanationButton from "./GenerateTextAndExplanationButton";
 
 const emptyOptions = [
   { letter: "A", text: '' },
@@ -169,7 +168,7 @@ export default function QuestionEditView({ question, setQuestion, setCanSubmit, 
               <Typography variant="h6" sx={primaryGradientText}>
                 Learning points
               </Typography>
-              <ContentGeneratorButton 
+              <ContentGeneratorButton
                 title="Learning Points"
                 endpoint="learning-points"
                 setContent={setLearningPoints}
@@ -190,7 +189,7 @@ export default function QuestionEditView({ question, setQuestion, setCanSubmit, 
                 Clinical tips
               </Typography>
               <ContentGeneratorButton
-                title="Clinical Tips" 
+                title="Clinical Tips"
                 endpoint="clinical-tips"
                 setContent={setClinicalTips}
                 placeholder="Perthes' Disease"
@@ -206,28 +205,32 @@ export default function QuestionEditView({ question, setQuestion, setCanSubmit, 
         </Stack>
       </Grid>
       <Grid item xs={4}>
-        <Stack direction="row" spacing={1}>
-          <Box
-            sx={{
-              background: primaryGradient,
-              color: "#fff",
-              px: 2,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              fontWeight: 500,
-              borderRadius: 1,
-              flexShrink: 0
-            }}
-          >
-            Video URL
-          </Box>
-          <TextField
-            sx={{ flexGrow: 1 }}
-            size="small"
-            defaultValue={question?.videoUrl || ''}
-            onBlur={(e) => setVideoUrl(e.target.value)}
-          />
+        <Stack spacing={3}>
+          <Stack direction="row" spacing={1}>
+            <Box
+              sx={{
+                background: primaryGradient,
+                color: "#fff",
+                px: 2,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                fontWeight: 500,
+                borderRadius: 1,
+                flexShrink: 0
+              }}
+            >
+              Video URL
+            </Box>
+            <TextField
+              sx={{ flexGrow: 1 }}
+              size="small"
+              defaultValue={question?.videoUrl || ''}
+              onBlur={(e) => setVideoUrl(e.target.value)}
+            />
+          </Stack>
+
+          <AssociatedTextbookLesson question={question} />
         </Stack>
       </Grid>
     </Grid>

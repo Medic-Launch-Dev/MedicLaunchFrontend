@@ -9,9 +9,10 @@ import LinkButton from "../util/LinkButton";
 
 interface TextbookLesssonContentProps {
   textbookLesson: TextbookLesson;
+  inPreview?: boolean;
 }
 
-const TextbookLessonContent = ({ textbookLesson }: TextbookLesssonContentProps) => {
+const TextbookLessonContent = ({ textbookLesson, inPreview }: TextbookLesssonContentProps) => {
   const { accountStore: { hasQuestionAuthorAccess } } = useServiceProvider();
 
   const extensions = useExtensions({
@@ -24,18 +25,19 @@ const TextbookLessonContent = ({ textbookLesson }: TextbookLesssonContentProps) 
         <Typography variant="h3" sx={primaryGradientText}>
           {textbookLesson.title}
         </Typography>
-        {hasQuestionAuthorAccess && (
+        {
+          hasQuestionAuthorAccess && !inPreview &&
           <LinkButton
             variant="contained"
             to={`/edit-clinical-companion-lesson/${textbookLesson.id}`}
           >
             Edit
           </LinkButton>
-        )}
+        }
       </Stack>
 
       {
-        (hasQuestionAuthorAccess && !textbookLesson.isSubmitted) &&
+        (hasQuestionAuthorAccess && !textbookLesson.isSubmitted && !inPreview) &&
         <Alert severity="info" sx={{ mb: 2 }}>
           This is a draft lesson. Students won't be able to see it until it's submitted.
         </Alert>
