@@ -48,7 +48,7 @@ function NavMenu({ sx, ...rest }: NavMenuProps) {
           </Box>
           <Stack sx={{ width: '100%', pt: 4 }} gap={1.5}>
             <NavLink text="Study Portal" selected={!!matchHome} href="/" />
-            <NavLink text="Clinical Companion" selected={!!matchClinicalCompanion} href="/clinical-companion" />
+            <NavLink text="Clinical Companion" selected={!!matchClinicalCompanion} href="/clinical-companion" tag="New" />
             <NavLink text="My Profile" selected={!!matchMyProfile} href="/my-profile" />
             {hasAuthorAccess && <NavLink text="Author Portal" selected={!!matchAuthorPortal} href="/author-portal" />}
             {hasAdminAccess && <NavLink text="User Management" selected={!!matchUserManagement} href="/user-management" />}
