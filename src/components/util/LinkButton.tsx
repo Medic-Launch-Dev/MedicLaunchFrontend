@@ -9,7 +9,7 @@ interface LinkButtonProps extends ButtonProps {
 
 export default function LinkButton({ variant, children, to, target, ...rest }: LinkButtonProps) {
   return (
-    <Link to={to} target={target} style={{ textDecoration: 'none', color: 'inherit' }}>
+    <Link to={to} target={target} style={{ textDecoration: 'none', color: 'inherit', width: "100%" }}>
       <Button variant={variant ?? "contained"} {...rest}>
         {children}
       </Button>

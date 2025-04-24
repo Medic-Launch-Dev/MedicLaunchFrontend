@@ -119,6 +119,14 @@ export default class MedicLaunchApiClient {
     return token;
   }
 
+  async resendConfirmationEmail(email: string): Promise<boolean> {
+    const response = await this.axios.post(`${this.baseUrl}/resendConfirmationEmail`, {
+      email: email
+    });
+
+    return response.status === 200;
+  }
+
   async retrieveUserProfile() {
     return await this.getData('account/myprofile');
   }

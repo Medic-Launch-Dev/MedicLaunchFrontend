@@ -1,12 +1,12 @@
 import { LoadingButton } from "@mui/lab";
-import { Box, Grid, Snackbar, Stack, TextField, Typography } from "@mui/material";
+import { Snackbar, Stack, TextField, Typography } from "@mui/material";
+import { grey } from "@mui/material/colors";
 import { useFormik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+import AuthLayout from "../components/auth/AuthLayout";
 import { useSnackbar } from "../hooks/useSnackbar";
 import { useAuth } from "../services/AuthProvider";
-import AuthLayout from "../components/auth/AuthLayout";
-import { grey } from "@mui/material/colors";
 
 export default function Login() {
   const { showSnackbar, snackbarProps } = useSnackbar();
@@ -29,9 +29,13 @@ export default function Login() {
       try {
         const isAuthenticated = await login(values.email, values.password);
         if (isAuthenticated) navigate("/");
-      } catch (e) {
+      } catch (e: any) {
         console.error(e);
-        showSnackbar("Login failed", "error");
+        if (e.response?.data?.detail === "Email not confirmed") {
+          navigate(`/confirm-email?email=${encodeURIComponent(values.email)}`);
+        } else {
+          showSnackbar("Login failed", "error");
+        }
       } finally {
         setSubmitting(false);
       }

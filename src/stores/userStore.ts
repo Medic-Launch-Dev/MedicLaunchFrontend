@@ -56,6 +56,10 @@ export class UserStore {
   public async resetAccountPassword(data: any): Promise<boolean> {
     return await this.apiClient.postData('account/resetpassword', data);
   }
+
+  public async resendConfirmationEmail(email: string): Promise<boolean> {
+    return await this.apiClient.resendConfirmationEmail(email);
+  }
 }
 
 const axiosProvider = new AxiosProvider();

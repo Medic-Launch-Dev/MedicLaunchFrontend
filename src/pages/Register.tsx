@@ -83,7 +83,8 @@ export default function Register() {
       };
 
       const successfullyRegistered = await userStore.createUser(userData);
-      if (successfullyRegistered) navigate("/login");
+      if (successfullyRegistered)
+        navigate(`/confirm-email?email=${encodeURIComponent(values.email)}`);
     } catch (e) {
       console.error(e);
       showSnackbar('Registration failed', 'error');

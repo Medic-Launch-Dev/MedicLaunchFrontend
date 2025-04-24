@@ -15,6 +15,7 @@ import Root from "./pages/Root";
 // import reportWebVitals from "./reportWebVitals";
 import "./index.css";
 import AuthorPortal from "./pages/AuthorPortal";
+import ConfirmEmail from './pages/ConfirmEmail';
 import CreateFlashCard from "./pages/CreateFlashCard";
 import CreateSession from "./pages/CreateSession";
 import EditFlashCards from "./pages/EditFlashCards";
@@ -23,6 +24,7 @@ import EditQuestion from "./pages/EditQuestion";
 import EditTextbookLesson from "./pages/EditTextbookLesson";
 import EditTextbookLessons from "./pages/EditTextbookLessons";
 import EditTrialQuestions from "./pages/EditTrialQuestions";
+import EmailConfirmed from './pages/EmailConfirmed';
 import FlashCards from "./pages/FlashCards";
 import FreeTrial from "./pages/FreeTrial";
 import MyProfile from "./pages/MyProfile";
@@ -167,6 +169,14 @@ const App = () => {
       path: "/register",
       element: <Register />
     },
+    {
+      path: "/confirm-email",
+      element: <ConfirmEmail />
+    },
+    {
+      path: "/email-confirmed",
+      element: <EmailConfirmed />
+    }
   ]);
 
 
