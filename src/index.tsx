@@ -15,6 +15,7 @@ import Root from "./pages/Root";
 // import reportWebVitals from "./reportWebVitals";
 import "./index.css";
 import AuthorPortal from "./pages/AuthorPortal";
+import ClinicalCaseCapture from './pages/ClinicalCaseCapture';
 import ConfirmEmail from './pages/ConfirmEmail';
 import CreateFlashCard from "./pages/CreateFlashCard";
 import CreateSession from "./pages/CreateSession";
@@ -26,11 +27,13 @@ import EditTextbookLessons from "./pages/EditTextbookLessons";
 import EditTrialQuestions from "./pages/EditTrialQuestions";
 import EmailConfirmed from './pages/EmailConfirmed';
 import FlashCards from "./pages/FlashCards";
+import ForgotPassword from './pages/ForgotPassword';
 import FreeTrial from "./pages/FreeTrial";
 import MyProfile from "./pages/MyProfile";
 import Notifications from "./pages/Notifications";
 import PaymentComplete from "./pages/PaymentComplete";
 import QuestionPreview from "./pages/QuestionPreview";
+import ResetPassword from './pages/ResetPassword';
 import RevisionNotes from "./pages/RevisionNotes";
 import SelectFlashCards from "./pages/SelectFlashCards";
 import SelectMock from "./pages/SelectMock";
@@ -136,6 +139,10 @@ const App = () => {
           element: <EditTextbookLesson />
         },
         {
+          path: "/clinical-case-capture",
+          element: <ClinicalCaseCapture />
+        },
+        {
           path: "/revision-notes",
           element: <RevisionNotes />
         },
@@ -176,6 +183,14 @@ const App = () => {
     {
       path: "/email-confirmed",
       element: <EmailConfirmed />
+    },
+    {
+      path: "/reset-password",
+      element: <ResetPassword />
+    },
+    {
+      path: "forgot-password",
+      element: <ForgotPassword />
     }
   ]);
 

@@ -60,6 +60,14 @@ export class UserStore {
   public async resendConfirmationEmail(email: string): Promise<boolean> {
     return await this.apiClient.resendConfirmationEmail(email);
   }
+
+  public async requestPasswordReset(email: string): Promise<boolean> {
+    return await this.apiClient.requestPasswordReset(email);
+  }
+
+  public async resetPassword(email: string, code: string, newPassword: string): Promise<boolean> {
+    return await this.apiClient.resetPassword(email, code, newPassword);
+  }
 }
 
 const axiosProvider = new AxiosProvider();

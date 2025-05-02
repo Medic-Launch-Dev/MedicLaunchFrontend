@@ -39,7 +39,7 @@ const TextbookLesson = () => {
   if (isSubscribed === false) return <Navigate to="/subscribe" />;
 
   return (
-    <Page>
+    <Page withNav maxWidth="xl">
       <Box sx={{ display: "flex", gap: 4, p: 2, height: "100%" }}>
         <Stack width={350} gap={2} height="100%">
           <Card sx={{ flexShrink: 0, p: 2 }}>

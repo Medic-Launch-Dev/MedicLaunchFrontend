@@ -1,4 +1,5 @@
 import { AxiosInstance } from "axios";
+import { ClinicalCaseDetails } from "../models/ClinicalCaseCapture";
 import { FamiliarityCounts } from "../models/FamiliarityCounts";
 import { Flashcard } from "../models/Flashcard";
 import { PracticeFilter } from "../models/PracticeFilter";
@@ -96,6 +97,14 @@ export default class MedicLaunchApiClient {
     return lesson.data;
   }
 
+  async generateClinicalCase(caseDetails: ClinicalCaseDetails): Promise<string> {
+    const response = await this.axios.post(
+      `${this.apiUrl}/clinicalCaseCapture/generate`,
+      caseDetails
+    );
+    return response.data;
+  }
+
   async startMock(mockExamType: QuestionType.PaperOneMockExam | QuestionType.PaperTwoMockExam) {
     const res = await this.axios.post(`${this.apiUrl}/mockexam/start/${mockExamType}`, {});
     return res.data;
@@ -122,6 +131,24 @@ export default class MedicLaunchApiClient {
   async resendConfirmationEmail(email: string): Promise<boolean> {
     const response = await this.axios.post(`${this.baseUrl}/resendConfirmationEmail`, {
       email: email
+    });
+
+    return response.status === 200;
+  }
+
+  async requestPasswordReset(email: string): Promise<boolean> {
+    const response = await this.axios.post(`${this.baseUrl}/forgotPassword`, {
+      email: email
+    });
+
+    return response.status === 200;
+  }
+
+  async resetPassword(email: string, code: string, newPassword: string): Promise<boolean> {
+    const response = await this.axios.post(`${this.baseUrl}/resetPassword`, {
+      email,
+      resetCode: code,
+      newPassword
     });
 
     return response.status === 200;

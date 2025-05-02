@@ -75,15 +75,20 @@ export default function Login() {
             error={formik.touched.password && Boolean(formik.errors.password)}
             helperText={formik.touched.password && formik.errors.password}
           />
-          {/* <Stack
-                  direction="row"
-                  justifyContent="end"
-                  alignItems="end"
-                  width="100%"
-                  sx={{ mt: 1 }}
-                >
-                  <Typography fontSize={14}>Forgot password?</Typography>
-                </Stack> */}
+          <Stack
+            direction="row"
+            justifyContent="end"
+            alignItems="end"
+            width="100%"
+            sx={{ mt: 1 }}
+          >
+            <Link
+              to="/forgot-password"
+              style={{ textDecoration: "none", color: "#2394c4" }}
+            >
+              Forgot password?
+            </Link>
+          </Stack>
           <Stack spacing={3} width="100%" alignItems="center" sx={{ mt: 2 }}>
             <LoadingButton
               variant="contained"
@@ -95,15 +100,17 @@ export default function Login() {
             >
               Log in
             </LoadingButton>
-            <Typography sx={{ color: grey[700] }}>
-              Don't have an account?{" "}
-              <Link
-                to="/register"
-                style={{ textDecoration: "none", color: "#2394c4" }}
-              >
-                Sign up here
-              </Link>
-            </Typography>
+            <Stack spacing={1} alignItems="center">
+              <Typography sx={{ color: grey[700] }}>
+                Don't have an account?{" "}
+                <Link
+                  to="/register"
+                  style={{ textDecoration: "none", color: "#2394c4" }}
+                >
+                  Sign up here
+                </Link>
+              </Typography>
+            </Stack>
           </Stack>
         </form>
       </AuthLayout>

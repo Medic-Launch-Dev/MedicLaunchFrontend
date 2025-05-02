@@ -21,7 +21,7 @@ export default function TextbookLessons() {
   if (isSubscribed === false) return <Navigate to="/subscribe" />;
 
   return (
-    <Page sx={{ height: "100%" }}>
+    <Page withNav maxWidth="xl" sx={{ height: "100%" }}>
       <Stack height="100%" gap={3} py={2}>
         <Stack
           spacing={2}
