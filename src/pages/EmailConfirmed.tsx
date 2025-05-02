@@ -11,6 +11,7 @@ export default function EmailConfirmed() {
           variant="contained"
           fullWidth
           sx={{ fontSize: 16, fontWeight: 500, py: 1.5 }}
+          style={{ width: "100%" }}
           to="/login"
         >
           Go to Login

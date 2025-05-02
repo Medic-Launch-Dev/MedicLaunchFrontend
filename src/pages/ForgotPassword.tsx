@@ -66,6 +66,7 @@ export default function ForgotPassword() {
               sx={{ fontSize: 16, fontWeight: 500, py: 1.5 }}
               type="submit"
               loading={formik.isSubmitting}
+              style={{ width: "100%" }}
             >
               Send Reset Link
             </LoadingButton>
