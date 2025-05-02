@@ -95,97 +95,97 @@ const App = () => {
           element: <AuthorPortal />
         },
         {
-          path: "/subscribe",
+          path: "subscribe",
           element: <Subscribe />
         },
         {
-          path: "/my-profile",
+          path: "my-profile",
           element: <MyProfile />
         },
         {
-          path: "/flash-cards",
+          path: "flash-cards",
           element: <SelectFlashCards />
         },
         {
-          path: "/flash-cards/:specialityId",
+          path: "flash-cards/:specialityId",
           element: <FlashCards />
         },
         {
-          path: "/create-flash-card",
+          path: "create-flash-card",
           element: <CreateFlashCard />
         },
         {
-          path: "/edit-flash-cards",
+          path: "edit-flash-cards",
           element: <EditFlashCards />
         },
         {
-          path: "/edit-flashcard/:id",
+          path: "edit-flashcard/:id",
           element: <EditFlascard />
         },
         {
-          path: "/clinical-companion",
+          path: "clinical-companion",
           element: <TextbookLessons />
         },
         {
-          path: "/clinical-companion/:specialityId",
+          path: "clinical-companion/:specialityId",
           element: <TextbookLesson />
         },
         {
-          path: "/edit-clinical-companion-lesson",
+          path: "edit-clinical-companion-lesson",
           element: <EditTextbookLessons />
         },
         {
-          path: "/edit-clinical-companion-lesson/:id",
+          path: "edit-clinical-companion-lesson/:id",
           element: <EditTextbookLesson />
         },
         {
-          path: "/clinical-case-capture",
+          path: "clinical-case-capture",
           element: <ClinicalCaseCapture />
         },
         {
-          path: "/revision-notes",
+          path: "revision-notes",
           element: <RevisionNotes />
         },
         {
-          path: "/notifications",
+          path: "notifications",
           element: <Notifications />
         },
         {
-          path: "/speciality-analyser",
+          path: "speciality-analyser",
           element: <SpecialityAnalyser />
         },
         {
-          path: "/select-mock",
+          path: "select-mock",
           element: <SelectMock />
         },
         {
-          path: "/payment-complete",
+          path: "payment-complete",
           element: <PaymentComplete />
         },
         {
-          path: "/free-trial",
+          path: "free-trial",
           element: <FreeTrial />
         }
       ],
     },
     {
-      path: "/login",
+      path: "login",
       element: <Login />
     },
     {
-      path: "/register",
+      path: "register",
       element: <Register />
     },
     {
-      path: "/confirm-email",
+      path: "confirm-email",
       element: <ConfirmEmail />
     },
     {
-      path: "/email-confirmed",
+      path: "email-confirmed",
       element: <EmailConfirmed />
     },
     {
-      path: "/reset-password",
+      path: "reset-password",
       element: <ResetPassword />
     },
     {
