@@ -13,7 +13,7 @@ export default function FlashCards() {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { specialityId = "" } = useParams();
   const navigate = useNavigate();
-  const { flashCardStore, accountStore: { isSubscribed } } = useServiceProvider();
+  const { flashCardStore, accountStore: { hasStudentAccess } } = useServiceProvider();
 
   const [flashcards, setFlashcards] = useState<Flashcard[]>();
   const [currentIdx, setCurrentIdx] = useState(0);
@@ -42,7 +42,7 @@ export default function FlashCards() {
     </Stack>
   );
 
-  if (isSubscribed === false) return <Navigate to="/subscribe" />;
+  if (hasStudentAccess !== true) return <Navigate to="/trial-expired" />;
 
   return (
     <Page sx={{ height: "100%" }} maxWidth="xl">

@@ -1,4 +1,5 @@
-import { Button, Grid, Card as MuiCard, Stack, Typography } from '@mui/material';
+import { Lock } from '@mui/icons-material';
+import { Button, Grid, Stack, Typography } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { Link, useNavigate } from 'react-router-dom';
 import CoursesIcon from '../../src/assets/icons/courses.svg';
@@ -15,33 +16,17 @@ import SpecialityAnalyserChart from '../components/specialityAnalyser/Speciality
 import Card from '../components/util/Card';
 import LinkButton from '../components/util/LinkButton';
 import { useServiceProvider } from '../services/ServiceProvider';
-import { primaryGradient, primaryGradientText, unstyledLink } from '../theme';
+import { primaryGradient, unstyledLink } from '../theme';
 
 function Root() {
-  const { accountStore: { myProfile, isSubscribed }, questionsStore } = useServiceProvider();
+  const { accountStore: { myProfile, hasStudentAccess }, questionsStore } = useServiceProvider();
   const navigate = useNavigate();
-
-  async function handleStartFreeTrial() {
-    await questionsStore.startFreeTrial();
-    navigate("/free-trial");
-  }
 
   return (
     <Page withNav fullWidth>
       <Grid container spacing={2}>
         <Grid item xs={12} lg={7}>
           <Grid container spacing={2}>
-            {
-              !isSubscribed &&
-              <Grid item xs={12}>
-                <MuiCard>
-                  <Stack direction="row" justifyContent="space-between" alignItems="center">
-                    <Typography variant="h4" sx={{ ...primaryGradientText }}>Subscribe to unlock all features</Typography>
-                    <LinkButton to="subscribe">Subscribe</LinkButton>
-                  </Stack>
-                </MuiCard>
-              </Grid>
-            }
             <Grid item xs={12}>
               <Stack
                 sx={{
@@ -62,16 +47,11 @@ function Root() {
                 title="Question Bank"
                 primary
                 action={
-                  isSubscribed ?
-                    <Link style={unstyledLink} to="create-session">
-                      <Button variant="contained" color="secondary">
-                        Start Questions
-                      </Button>
-                    </Link>
-                    :
-                    <Button variant="contained" color="secondary" onClick={handleStartFreeTrial}>
-                      Start Free Trial
+                  <Link style={unstyledLink} to={hasStudentAccess ? "create-session" : "trial-expired"} >
+                    <Button variant="contained" color="secondary">
+                      Start Questions
                     </Button>
+                  </Link>
                 }
                 icon={<img src={QuestionBankIcon} width={64} />}
               >
@@ -83,7 +63,7 @@ function Root() {
                 title="Flash Cards"
                 primary
                 action={
-                  <Link style={unstyledLink} to={isSubscribed ? "flash-cards" : "subscribe"}>
+                  <Link style={unstyledLink} to={hasStudentAccess ? "flash-cards" : "trial-expired"}>
                     <Button variant="contained" color="secondary">
                       Learn
                     </Button>
@@ -98,9 +78,14 @@ function Root() {
               <Card
                 title="Mock Examination"
                 action={
-                  <Link style={unstyledLink} to={isSubscribed ? "select-mock" : "subscribe"}>
-                    <Button variant="contained">Start Mock</Button>
-                  </Link>
+                  myProfile?.isOnFreeTrial ?
+                    <LinkButton to="subscribe" startIcon={<Lock />}>
+                      Subscribe to unlock
+                    </LinkButton>
+                    :
+                    <Link style={unstyledLink} to={hasStudentAccess ? "select-mock" : "trial-expired"}>
+                      <Button variant="contained">Start Mock</Button>
+                    </Link>
                 }
                 icon={<img src={MockExamIcon} width={64} />}
               >
@@ -111,7 +96,7 @@ function Root() {
               <Card
                 title="Notes"
                 action={
-                  <Link style={unstyledLink} to={isSubscribed ? "revision-notes" : "subscribe"}>
+                  <Link style={unstyledLink} to={hasStudentAccess ? "revision-notes" : "trial-expired"}>
                     <Button variant="contained" color="primary">
                       View
                     </Button>

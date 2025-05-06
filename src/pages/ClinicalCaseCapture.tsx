@@ -2,6 +2,7 @@ import { AutoAwesome } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { Box, CircularProgress, Grid, Paper, Snackbar, Stack, TextField, Typography } from "@mui/material";
 import { useState } from "react";
+import { Navigate } from "react-router-dom";
 import Page from "../components/nav/Page";
 import { useSnackbar } from "../hooks/useSnackbar";
 import { ClinicalCaseDetails } from "../models/ClinicalCaseCapture";
@@ -19,7 +20,8 @@ export default function ClinicalCaseCapture() {
   const [loading, setLoading] = useState(false);
   const [generatedCase, setGeneratedCase] = useState<string | null>(null);
   const { showSnackbar, snackbarProps } = useSnackbar();
-  const { clinicalCaseCaptureStore } = useServiceProvider();
+  const { clinicalCaseCaptureStore, accountStore } = useServiceProvider();
+  const { hasStudentAccess } = accountStore;
 
   const handleChange = (field: keyof ClinicalCaseDetails) => (e: React.ChangeEvent<HTMLInputElement>) => {
     setCaseDetails({ ...caseDetails, [field]: e.target.value });
@@ -38,6 +40,8 @@ export default function ClinicalCaseCapture() {
       setLoading(false);
     }
   };
+
+  if (hasStudentAccess !== true) return <Navigate to="/trial-expired" />;
 
   return (
     <Page withNav maxWidth="xl">

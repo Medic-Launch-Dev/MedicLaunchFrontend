@@ -3,10 +3,10 @@ import { Alert, Avatar, Box, Container, ContainerProps, IconButton, Stack, Toolb
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Logo from "../../assets/logo.svg";
 import { useServiceProvider } from "../../services/ServiceProvider";
 import theme, { primaryGradient } from "../../theme";
 import NotificationBellButton from "../notifications/NotificationBellButton";
+import FreeTrialBanner from "./FreeTrialBanner";
 import NavMenu from "./NavMenu";
 import NavigateConfirmationModal from "./NavigateConfirmationModal";
 
@@ -63,6 +63,7 @@ function Page({ children, withNav, maxWidth, fullWidth, sx, ...rest }: PageProps
         <Stack sx={{ width: '100%' }} direction="row" justifyContent="space-between" alignItems="center">
           <img src="/logo.png" height={40} alt="Medic launch" style={{ cursor: 'pointer' }} onClick={() => handleNavigate("/")} />
           <Stack direction="row" alignItems="center" spacing={2}>
+            <FreeTrialBanner />
             <div onClick={() => handleNavigate("/notifications")}>
               <NotificationBellButton />
             </div>

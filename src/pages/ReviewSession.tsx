@@ -1,7 +1,7 @@
 import { Grid, Stack, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import AnalyticsIcon from '../../src/assets/icons/analytics.svg';
 import CorrectIcon from '../../src/assets/icons/correct.svg';
 import QuestionsIcon from '../../src/assets/icons/questions.svg';
@@ -14,7 +14,8 @@ import { useServiceProvider } from "../services/ServiceProvider";
 import { primaryGradientText, unstyledLink } from "../theme";
 
 function ReviewSession() {
-  const { questionsStore } = useServiceProvider();
+  const { questionsStore, accountStore } = useServiceProvider();
+  const { hasStudentAccess } = accountStore;
   const { correctAnswers, incorrectAnswers, totalQuestions } = questionsStore;
   const totalAnswers = correctAnswers + incorrectAnswers;
   const score = totalAnswers === 0 ? totalAnswers : Math.ceil((correctAnswers / totalAnswers) * 100);
@@ -30,6 +31,8 @@ function ReviewSession() {
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
   }, []);
+
+  if (hasStudentAccess !== true) return <Navigate to="/trial-expired" />;
 
   return (
     <Page sx={{ pt: 2 }}>

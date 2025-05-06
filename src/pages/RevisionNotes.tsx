@@ -2,7 +2,7 @@ import { Add, DeleteOutline } from "@mui/icons-material";
 import { Button, Card, Divider, FormControl, IconButton, InputLabel, MenuItem, Select, Stack, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Navigate, useSearchParams } from "react-router-dom";
 import Page from "../components/nav/Page";
 import EditNoteDialog from "../components/notes/EditNoteDialog";
 import LinkButton from "../components/util/LinkButton";
@@ -16,7 +16,8 @@ function RevisionNotes() {
   let [searchParams] = useSearchParams();
   const defaultSpeciality = searchParams.get('speciality');
 
-  const { questionsStore, notesStore } = useServiceProvider();
+  const { questionsStore, notesStore, accountStore } = useServiceProvider();
+  const { hasStudentAccess } = accountStore;
   const { notes } = notesStore
   const [specialities, setSpecialities] = useState<Speciality[]>([]);
   const [selectedSpeciality, setSelectedSpeciality] = useState<string>();
@@ -62,6 +63,8 @@ function RevisionNotes() {
     await notesStore.deleteNoteById(noteId);
     await notesStore.getAllNotes();
   }
+
+  if (hasStudentAccess !== true) return <Navigate to="/trial-expired" />;
 
   return (
     <Page sx={{ pt: 2 }}>

@@ -5,7 +5,7 @@ import MedicLaunchApiClient from "../services/MedicLaunchApiClient";
 
 export class AccountStore {
   apiClient: MedicLaunchApiClient;
-  myProfile: UserProfile | null = null;
+  private _myProfile: UserProfile | null = null;
   isSubscribed: boolean;
   roles: string[] = [];
 
@@ -19,7 +19,6 @@ export class AccountStore {
     makeAutoObservable(this);
   }
 
-  // Add a getter for general loading state
   get isLoading() {
     return this.loadingProfile || this.loadingSubscription || this.loadingRoles;
   }
@@ -40,12 +39,27 @@ export class AccountStore {
     return this.roles.includes("QuestionAuthor") || this.roles.includes("Admin");
   }
 
+  get myProfile(): UserProfile | null {
+    if (!this._myProfile && !this.loadingProfile) {
+      this.getMyProfile();
+    }
+    return this._myProfile;
+  }
+
+  set myProfile(value: UserProfile | null) {
+    this._myProfile = value;
+  }
+
+  get hasStudentAccess() {
+    return this._myProfile?.isOnFreeTrial || this.myProfile?.hasActiveSubscription || this.roles.includes("FlashcardAuthor") || this.roles.includes("QuestionAuthor") || this.roles.includes("Admin");
+  }
+
   public async getMyProfile() {
     try {
       this.loadingProfile = true;
       const profile: UserProfile = await this.apiClient.getData('account/myprofile');
       runInAction(() => {
-        this.myProfile = profile;
+        this._myProfile = profile;
       });
     } finally {
       runInAction(() => {

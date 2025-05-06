@@ -2,18 +2,22 @@ import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import Page from "../components/nav/Page";
 import LinkButton from "../components/util/LinkButton";
 import { SpecialitySelector } from "../components/util/SpecialitySelector";
+import { useServiceProvider } from "../services/ServiceProvider";
 
 export default function SelectFlashCards() {
   const navigate = useNavigate();
+  const { accountStore: { hasStudentAccess } } = useServiceProvider();
   const [selectedSpecialityId, setSelectedSpecialityId] = useState("");
 
   function handleNext() {
     navigate(`/flash-cards/${selectedSpecialityId}`)
   }
+
+  if (hasStudentAccess !== true) return <Navigate to="/trial-expired" />;
 
   return (
     <Page sx={{ height: "100%" }}>

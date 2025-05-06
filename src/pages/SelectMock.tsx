@@ -2,7 +2,7 @@ import { ChevronRight } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { Box, Grid, Stack } from "@mui/material";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import Page from "../components/nav/Page";
 import MockSelector from "../components/practiceSession/MockSelector";
 import LinkButton from "../components/util/LinkButton";
@@ -11,6 +11,7 @@ import { useServiceProvider } from "../services/ServiceProvider";
 
 export default function SelectMock() {
   const { questionsStore } = useServiceProvider();
+  const { accountStore: { hasStudentAccess, myProfile } } = useServiceProvider();
   const [selectedMock, setSelectedMock] = useState<QuestionType.PaperOneMockExam | QuestionType.PaperTwoMockExam>(QuestionType.PaperOneMockExam);
   const navigate = useNavigate();
 
@@ -22,6 +23,8 @@ export default function SelectMock() {
       console.error(e);
     }
   }
+
+  if (myProfile?.isOnFreeTrial || hasStudentAccess !== true) return <Navigate to="/subscribe" />;
 
   return (
     <Page sx={{ height: "100%" }}>

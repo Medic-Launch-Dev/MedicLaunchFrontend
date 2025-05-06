@@ -10,15 +10,14 @@ import { useServiceProvider } from "../services/ServiceProvider";
 
 export default function TextbookLessons() {
   const navigate = useNavigate();
-  const { accountStore: { isSubscribed } } = useServiceProvider();
+  const { accountStore: { hasStudentAccess } } = useServiceProvider();
   const [selectedSpecialityId, setSelectedSpecialityId] = useState("");
 
   function handleNext() {
     navigate(`/clinical-companion/${selectedSpecialityId}`);
   }
 
-  // Only redirect after we're sure about the subscription status
-  if (isSubscribed === false) return <Navigate to="/subscribe" />;
+  if (hasStudentAccess !== true) return <Navigate to="/trial-expired" />;
 
   return (
     <Page withNav maxWidth="xl" sx={{ height: "100%" }}>

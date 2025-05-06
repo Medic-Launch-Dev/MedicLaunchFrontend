@@ -21,6 +21,8 @@ export interface UserProfile {
   howDidYouHearAboutUs?: string;
   university?: string;
   isSubscribed?: boolean;
+  isOnFreeTrial?: boolean;
+  freeTrialDaysRemaining?: number | null;
 }
 
 export interface MedicLaunchUser extends UserProfile {

@@ -234,6 +234,14 @@ theme.components = {
       }
     }
   },
+  MuiBackdrop: {
+    styleOverrides: {
+      root: {
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
+      }
+    }
+  },
   MuiLink: {
     styleOverrides: {
       root: {

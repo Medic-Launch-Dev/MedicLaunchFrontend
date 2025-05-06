@@ -41,6 +41,7 @@ import SpecialityAnalyser from "./pages/SpecialityAnalyser";
 import Subscribe from "./pages/Subscribe";
 import TextbookLesson from "./pages/TextbookLesson";
 import TextbookLessons from "./pages/TextbookLessons";
+import TrialExpired from './pages/TrialExpired';
 import UserManagement from "./pages/UserManagement";
 import { AuthGuard } from "./services/AuthGuard";
 import { AuthProvider } from "./services/AuthProvider";
@@ -165,6 +166,10 @@ const App = () => {
         {
           path: "free-trial",
           element: <FreeTrial />
+        },
+        {
+          path: "trial-expired",
+          element: <TrialExpired />
         }
       ],
     },

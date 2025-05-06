@@ -5,6 +5,7 @@ import { useSearchParams } from "react-router-dom";
 import Page from "../components/nav/Page";
 import QuestionView from "../components/practiceSession/QuestionView";
 import LinkButton from "../components/util/LinkButton";
+import Unauthorised from "../components/util/Unauthorised";
 import { useServiceProvider } from "../services/ServiceProvider";
 import { QuestionModelUI } from "../stores/questionsStore";
 import { primaryGradient } from "../theme";
@@ -12,7 +13,7 @@ import { primaryGradient } from "../theme";
 function QuestionPreview() {
   let [searchParams] = useSearchParams();
   const from = searchParams.get('from');
-  const { questionsStore } = useServiceProvider();
+  const { questionsStore, accountStore: { hasQuestionAuthorAccess } } = useServiceProvider();
 
   function hasMinimumProperties(question: QuestionModelUI) {
     if (!question) return false;
@@ -21,6 +22,8 @@ function QuestionPreview() {
     if (!question.correctAnswerLetter) return false;
     return true;
   }
+
+  if (!hasQuestionAuthorAccess) return <Unauthorised />;
 
   return (
     <Page>
