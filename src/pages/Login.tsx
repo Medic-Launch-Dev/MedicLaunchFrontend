@@ -34,7 +34,7 @@ export default function Login() {
         if (e.response?.data?.detail === "Email not confirmed") {
           navigate(`/confirm-email?email=${encodeURIComponent(values.email)}`);
         } else {
-          showSnackbar("Login failed", "error");
+          showSnackbar("Incorrect username or password", "error");
         }
       } finally {
         setSubmitting(false);
