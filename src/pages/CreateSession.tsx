@@ -1,6 +1,7 @@
 import { BarChart, ChevronLeft, ChevronRight, School, Star } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import {
+  Alert,
   Box,
   Button,
   Snackbar,
@@ -30,10 +31,12 @@ function CreateSession() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
-  const { practiceStore, questionsStore, accountStore: { hasStudentAccess } } = useServiceProvider();
+  const { practiceStore, questionsStore, accountStore } = useServiceProvider();
+  const { hasStudentAccess, trialQuestionLimitReached } = accountStore;
   const { showSnackbar, snackbarProps } = useSnackbar();
 
   useEffect(() => {
+    accountStore.getMyProfile();
     if (specialityId) {
       practiceStore.setSelectedSpecialities([specialityId]);
     } else {
@@ -95,7 +98,7 @@ function CreateSession() {
     navigate("/practice-session");
   }
 
-  if (hasStudentAccess !== true) return <Navigate to="/trial-expired" />;
+  if (hasStudentAccess === false) return <Navigate to="/trial-expired" />;
 
   return (
     <Page sx={{ height: "100%" }}>
@@ -141,9 +144,26 @@ function CreateSession() {
             overflowY: "hidden",
           }}
         >
-          {activeStep === 0 && <SpecialitySelection />}
-          {activeStep === 1 && <FamiliaritySelection />}
-          {activeStep === 2 && <OrderQuantitySelection />}
+          <Stack spacing={1}>
+            {
+              trialQuestionLimitReached &&
+              <Alert
+                sx={{ display: "flex", alignItems: "center" }}
+                severity="warning"
+                action={
+                  <LinkButton to="/subscribe" size="small">
+                    Subscribe to Continue
+                  </LinkButton>
+                }
+              >
+
+                You've reached the maximum number of questions you can practice while on a free trial.
+              </Alert>
+            }
+            {activeStep === 0 && <SpecialitySelection />}
+            {activeStep === 1 && <FamiliaritySelection />}
+            {activeStep === 2 && <OrderQuantitySelection />}
+          </Stack>
         </Box>
         <Stack
           direction="row"
@@ -170,6 +190,7 @@ function CreateSession() {
             endIcon={<ChevronRight />}
             onClick={handleNext}
             loading={loading}
+            disabled={trialQuestionLimitReached}
           >
             Next
           </LoadingButton>

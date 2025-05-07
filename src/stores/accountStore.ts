@@ -9,10 +9,9 @@ export class AccountStore {
   isSubscribed: boolean;
   roles: string[] = [];
 
-  // Add loading state properties
-  private loadingProfile: boolean = false;
-  private loadingSubscription: boolean = false;
-  private loadingRoles: boolean = false;
+  loadingProfile: boolean = false;
+  loadingSubscription: boolean = false;
+  loadingRoles: boolean = false;
 
   constructor(apClient: MedicLaunchApiClient) {
     this.apiClient = apClient;
@@ -52,6 +51,20 @@ export class AccountStore {
 
   get hasStudentAccess() {
     return this._myProfile?.isOnFreeTrial || this.myProfile?.hasActiveSubscription || this.roles.includes("FlashcardAuthor") || this.roles.includes("QuestionAuthor") || this.roles.includes("Admin");
+  }
+
+  get trialQuestionLimitReached() {
+    if (this._myProfile?.isOnFreeTrial) {
+      return (this._myProfile.remainingTrialQuestions || 0) <= 0;
+    }
+    return false;
+  }
+
+  get trialClinicalCasesLimitReached() {
+    if (this._myProfile?.isOnFreeTrial) {
+      return (this._myProfile.remainingTrialClinicalCases || 0) <= 0;
+    }
+    return false;
   }
 
   public async getMyProfile() {

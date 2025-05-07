@@ -42,7 +42,7 @@ export default function FlashCards() {
     </Stack>
   );
 
-  if (hasStudentAccess !== true) return <Navigate to="/trial-expired" />;
+  if (hasStudentAccess === false) return <Navigate to="/trial-expired" />;
 
   return (
     <Page sx={{ height: "100%" }} maxWidth="xl">

@@ -36,7 +36,7 @@ const TextbookLesson = () => {
     setSearchParams({ lessonId: newLessonId });
   };
 
-  if (hasStudentAccess !== true) return <Navigate to="/trial-expired" />;
+  if (hasStudentAccess === false) return <Navigate to="/trial-expired" />;
 
   return (
     <Page withNav maxWidth="xl">

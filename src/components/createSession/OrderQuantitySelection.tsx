@@ -5,7 +5,8 @@ import { useServiceProvider } from "../../services/ServiceProvider";
 import FilterOption from "./FamiliarityOption";
 
 export const OrderQuantitySelection = observer(() => {
-  const { practiceStore, questionsStore } = useServiceProvider();
+  const { practiceStore, questionsStore, accountStore } = useServiceProvider();
+  const { myProfile } = accountStore;
   const practiceFilter = practiceStore.practiceFilter;
   const order = practiceFilter.selectionOrder;
 
@@ -20,6 +21,12 @@ export const OrderQuantitySelection = observer(() => {
   };
 
   const questionsCount = questionsStore.questions.length;
+  let maxQuestionsCount = 200;
+  if (myProfile?.isOnFreeTrial) {
+    maxQuestionsCount = Math.min(200, questionsCount, myProfile.remainingTrialQuestions || 0);
+  } else {
+    maxQuestionsCount = Math.min(200, questionsCount);
+  }
 
   return (
     <Box
@@ -61,7 +68,7 @@ export const OrderQuantitySelection = observer(() => {
           <Slider
             step={1}
             min={1}
-            max={Math.min(200, questionsCount)}
+            max={maxQuestionsCount}
             valueLabelDisplay="on"
             onChange={(e, value) => onQuanityChange(value as number)}
           />

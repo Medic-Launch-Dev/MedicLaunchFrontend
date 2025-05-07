@@ -42,7 +42,7 @@ function PracticeSession() {
     };
   }, []);
 
-  if (hasStudentAccess !== true) return <Navigate to="/trial-expired" />;
+  if (hasStudentAccess === false) return <Navigate to="/trial-expired" />;
   if (!questionsStore.questions.length) return <Navigate to="/create-session" />;
 
   const inReviewMarkup = (

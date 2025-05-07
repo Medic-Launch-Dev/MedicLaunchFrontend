@@ -9,6 +9,7 @@ import { TextbookLesson } from "../models/TextbookLesson";
 import { MedicLaunchUser } from "../models/User";
 import { ApplicationStore } from "../stores/applicationStore";
 import AxiosProvider from "./AxiosProvider";
+import { QuestionAttempt } from "../models/QuestionAttempt";
 
 export default class MedicLaunchApiClient {
   private readonly apiUrl: string;
@@ -57,6 +58,14 @@ export default class MedicLaunchApiClient {
 
   async removeQuestion(questionId: string, specialityId: string) {
     return await this.deleteData(`questions/delete/${specialityId}`, questionId);
+  }
+
+  async attemptQuestion(questionAttempt: QuestionAttempt) {
+    const response = await this.axios.post(
+      `${this.apiUrl}/practice/attemptquestion`,
+      questionAttempt
+    );
+    return response.status;
   }
 
   async generateQuestionTextAndExplanation(conditions: string): Promise<QuestionTextAndExplanation> {

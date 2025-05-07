@@ -64,7 +64,7 @@ function RevisionNotes() {
     await notesStore.getAllNotes();
   }
 
-  if (hasStudentAccess !== true) return <Navigate to="/trial-expired" />;
+  if (hasStudentAccess === false) return <Navigate to="/trial-expired" />;
 
   return (
     <Page sx={{ pt: 2 }}>

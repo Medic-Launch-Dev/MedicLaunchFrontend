@@ -95,7 +95,8 @@ export class QuestionsStore {
         isCorrect: answerLetter === this.currentQuestion.correctAnswerLetter,
       };
 
-      await this.apiClient.postData("practice/attemptquestion", questionAttempt);
+      const responseStatus = await this.apiClient.attemptQuestion(questionAttempt);
+      return responseStatus;
     }
 
   }

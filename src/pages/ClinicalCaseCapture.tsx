@@ -1,6 +1,6 @@
 import { AutoAwesome } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import { Box, CircularProgress, Grid, Paper, Snackbar, Stack, TextField, Typography } from "@mui/material";
+import { Alert, Box, CircularProgress, Grid, Paper, Snackbar, Stack, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import Page from "../components/nav/Page";
@@ -8,8 +8,10 @@ import { useSnackbar } from "../hooks/useSnackbar";
 import { ClinicalCaseDetails } from "../models/ClinicalCaseCapture";
 import { useServiceProvider } from "../services/ServiceProvider";
 import { primaryGradientText } from "../theme";
+import LinkButton from "../components/util/LinkButton";
+import { observer } from "mobx-react-lite";
 
-export default function ClinicalCaseCapture() {
+function ClinicalCaseCapture() {
   const [caseDetails, setCaseDetails] = useState<ClinicalCaseDetails>({
     patientDemographics: "",
     clinicalContext: "",
@@ -21,7 +23,7 @@ export default function ClinicalCaseCapture() {
   const [generatedCase, setGeneratedCase] = useState<string | null>(null);
   const { showSnackbar, snackbarProps } = useSnackbar();
   const { clinicalCaseCaptureStore, accountStore } = useServiceProvider();
-  const { hasStudentAccess } = accountStore;
+  const { hasStudentAccess, trialClinicalCasesLimitReached, loadingProfile } = accountStore;
 
   const handleChange = (field: keyof ClinicalCaseDetails) => (e: React.ChangeEvent<HTMLInputElement>) => {
     setCaseDetails({ ...caseDetails, [field]: e.target.value });
@@ -29,6 +31,8 @@ export default function ClinicalCaseCapture() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (trialClinicalCasesLimitReached) return;
+
     setLoading(true);
     setGeneratedCase(null);
     try {
@@ -41,12 +45,27 @@ export default function ClinicalCaseCapture() {
     }
   };
 
-  if (hasStudentAccess !== true) return <Navigate to="/trial-expired" />;
+  if (!loadingProfile && hasStudentAccess !== true) return <Navigate to="/trial-expired" />;
 
   return (
     <Page withNav maxWidth="xl">
       <Snackbar {...snackbarProps} />
       <Typography variant="h2" style={primaryGradientText} mb={3}>Clinical Case Capture</Typography>
+      {
+        trialClinicalCasesLimitReached &&
+        <Alert
+          sx={{ display: "flex", alignItems: "center", mb: 2 }}
+          severity="warning"
+          action={
+            <LinkButton to="/subscribe" size="small">
+              Subscribe to Continue
+            </LinkButton>
+          }
+        >
+
+          You've reached the maximum number of cases you can generate while on a free trial.
+        </Alert>
+      }
       <Grid container spacing={4}>
         <Grid item xs={12} md={5}>
           <Paper sx={{ p: 3 }}>
@@ -99,7 +118,13 @@ export default function ClinicalCaseCapture() {
                   minRows={3}
                 />
                 <Stack alignItems="end">
-                  <LoadingButton type="submit" variant="contained" loading={loading} startIcon={<AutoAwesome />}>
+                  <LoadingButton
+                    type="submit"
+                    variant="contained"
+                    loading={loading}
+                    disabled={trialClinicalCasesLimitReached}
+                    startIcon={<AutoAwesome />}
+                  >
                     Generate
                   </LoadingButton>
                 </Stack>
@@ -132,3 +157,5 @@ export default function ClinicalCaseCapture() {
     </Page>
   );
 }
+
+export default observer(ClinicalCaseCapture);

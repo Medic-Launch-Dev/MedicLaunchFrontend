@@ -24,7 +24,7 @@ export default function SelectMock() {
     }
   }
 
-  if (myProfile?.isOnFreeTrial || hasStudentAccess !== true) return <Navigate to="/subscribe" />;
+  if (myProfile?.isOnFreeTrial || hasStudentAccess === false) return <Navigate to="/subscribe" />;
 
   return (
     <Page sx={{ height: "100%" }}>

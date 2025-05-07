@@ -23,6 +23,8 @@ export interface UserProfile {
   isSubscribed?: boolean;
   isOnFreeTrial?: boolean;
   freeTrialDaysRemaining?: number | null;
+  remainingTrialQuestions?: number;
+  remainingTrialClinicalCases?: number;
 }
 
 export interface MedicLaunchUser extends UserProfile {

@@ -17,7 +17,7 @@ export default function TextbookLessons() {
     navigate(`/clinical-companion/${selectedSpecialityId}`);
   }
 
-  if (hasStudentAccess !== true) return <Navigate to="/trial-expired" />;
+  if (hasStudentAccess === false) return <Navigate to="/trial-expired" />;
 
   return (
     <Page withNav maxWidth="xl" sx={{ height: "100%" }}>

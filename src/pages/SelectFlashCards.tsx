@@ -10,14 +10,17 @@ import { useServiceProvider } from "../services/ServiceProvider";
 
 export default function SelectFlashCards() {
   const navigate = useNavigate();
-  const { accountStore: { hasStudentAccess } } = useServiceProvider();
+  const { accountStore: { hasStudentAccess, loadingProfile } } = useServiceProvider();
   const [selectedSpecialityId, setSelectedSpecialityId] = useState("");
 
   function handleNext() {
     navigate(`/flash-cards/${selectedSpecialityId}`)
   }
 
-  if (hasStudentAccess !== true) return <Navigate to="/trial-expired" />;
+  console.log("hasStudentAccess", hasStudentAccess);
+  console.log("isLoadingProfile", loadingProfile);
+
+  if (!loadingProfile && hasStudentAccess !== true) return <Navigate to="/trial-expired" />;
 
   return (
     <Page sx={{ height: "100%" }}>
