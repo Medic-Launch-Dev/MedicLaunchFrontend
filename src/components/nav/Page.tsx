@@ -59,32 +59,38 @@ function Page({ children, withNav, maxWidth, fullWidth, sx, ...rest }: PageProps
           }}
         />
       }
-      <Toolbar sx={{ backgroundColor: "#fff", position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000 }}>
-        <Stack sx={{ width: '100%' }} direction="row" justifyContent="space-between" alignItems="center">
-          <img src="/logo.png" height={40} alt="Medic launch" style={{ cursor: 'pointer' }} onClick={() => handleNavigate("/")} />
-          <Stack direction="row" alignItems="center" spacing={2}>
-            <FreeTrialBanner />
-            <div onClick={() => handleNavigate("/notifications")}>
-              <NotificationBellButton />
-            </div>
-            <div onClick={() => handleNavigate("/my-profile")} style={{ cursor: 'pointer' }}>
-              <Avatar sx={{ background: primaryGradient }}>
-                {myProfile?.firstName.charAt(0)}{myProfile?.lastName.charAt(0)}
-              </Avatar>
-            </div>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="start"
-              onClick={handleDrawerToggle}
-              sx={{ mr: 2, display: { md: 'none' } }}
-            >
-              <Menu />
-            </IconButton>
+      <Toolbar sx={{ backgroundColor: "#fff", position: "relative", top: 0, left: 0, right: 0, zIndex: 1000 }}>
+        <Stack spacing={1} sx={{ width: '100%', py: { xs: 1, md: 0 } }}>
+          <Stack sx={{ width: '100%' }} direction="row" justifyContent="space-between" alignItems="center">
+            <img src="/logo.png" height={40} alt="Medic launch" style={{ cursor: 'pointer' }} onClick={() => handleNavigate("/")} />
+            <Stack direction="row" alignItems="center" spacing={2}>
+              <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+                <FreeTrialBanner />
+              </Box>
+              <div onClick={() => handleNavigate("/notifications")}>
+                <NotificationBellButton />
+              </div>
+              <div onClick={() => handleNavigate("/my-profile")} style={{ cursor: 'pointer' }}>
+                <Avatar sx={{ background: primaryGradient }}>
+                  {myProfile?.firstName.charAt(0)}{myProfile?.lastName.charAt(0)}
+                </Avatar>
+              </div>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                sx={{ mr: 2, display: { md: 'none' } }}
+              >
+                <Menu />
+              </IconButton>
+            </Stack>
           </Stack>
+          <Box sx={{ display: { xs: 'block', md: 'none' } }}>
+            <FreeTrialBanner />
+          </Box>
         </Stack>
       </Toolbar>
-      <Box sx={{ height: 64 }} />
       <Container sx={{ display: 'flex', ...sx, }} maxWidth={fullWidth ? false : maxWidth || 'lg'} {...rest}>
         {withNav && <Box sx={{ width: 240, flexShrink: 0, display: { xs: 'none', md: 'block' } }}></Box>} {/* nav menu spacer */}
         <Box sx={{ p: { xs: 1, md: 3 }, flexGrow: 1, height: "calc(100vh - 64px)", overflowY: "scroll" }}>

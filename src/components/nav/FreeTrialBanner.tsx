@@ -11,6 +11,7 @@ const Container = styled('div')(() => ({
   color: "#16698d",
   display: "flex",
   alignItems: "center",
+  justifyContent: "space-between",
   gap: 16,
 }));
 
