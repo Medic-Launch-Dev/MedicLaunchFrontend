@@ -5,41 +5,37 @@ import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import Page from "../components/nav/Page";
 import { PlanSelection } from "../components/subscribe/PlanSelection";
-import { QuestionBankSelection } from "../components/subscribe/QuestionBankSelection";
 import LinkButton from "../components/util/LinkButton";
 import { useSnackbar } from "../hooks/useSnackbar";
 import { useServiceProvider } from "../services/ServiceProvider";
 import { primaryGradientText } from "../theme";
+import { Navigate } from "react-router-dom";
 
 function Subscribe() {
-  const { paymentStore } = useServiceProvider();
+  const { paymentStore, accountStore: { isSubscribed, loadingSubscription } } = useServiceProvider();
   const [loading, setLoading] = useState(false);
-  const [activeStep, setActiveStep] = useState(0);
   const [selectedPlanId, setSelectedPlanId] = useState<number>(2);
 
   const { showSnackbar, snackbarProps } = useSnackbar();
 
-  const steps = [
-    {
-      label: "Select Question Bank",
-      onNext: () => setActiveStep(1),
-    },
-    {
-      label: "Select Plan",
-      onNext: handlePayment,
-    },
-  ];
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
   async function handlePayment() {
-    setLoading(true);
-    const checkoutSessionUrl = await paymentStore.createCheckoutSession(selectedPlanId);
-    window.location.href = checkoutSessionUrl;
-    setLoading(false);
+    try {
+      setLoading(true);
+      const checkoutSessionUrl = await paymentStore.createCheckoutSession(selectedPlanId);
+      window.location.href = checkoutSessionUrl;
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      showSnackbar(
+        "An error occurred while processing your payment. Please try again.",
+        "error"
+      );
+    } finally {
+      setLoading(false);
+    }
   }
+
+  if (!loadingSubscription && isSubscribed) return <Navigate to="/" />;
 
   return (
     <Page sx={{ height: "100%" }}>
@@ -64,8 +60,7 @@ function Subscribe() {
             overflowY: "hidden",
           }}
         >
-          {activeStep === 0 && <QuestionBankSelection />}
-          {activeStep === 1 && <PlanSelection selectedPlanId={selectedPlanId} setSelectedPlanId={setSelectedPlanId} />}
+          <PlanSelection selectedPlanId={selectedPlanId} setSelectedPlanId={setSelectedPlanId} />
         </Box>
         <Stack
           direction="row"
@@ -75,26 +70,24 @@ function Subscribe() {
           pt={1}
           pb={6}
         >
-          <Button
+          <LinkButton
+            to="/"
             variant="outlined"
             sx={{ width: "max-content", flexShrink: 0 }}
             size="large"
             startIcon={<ChevronLeft />}
-            disabled={activeStep === 0}
-            onClick={handleBack}
           >
             Back
-          </Button>
+          </LinkButton>
           <LoadingButton
             variant="contained"
             sx={{ width: "max-content", flexShrink: 0, py: 1 }}
             size="large"
-            endIcon={activeStep === steps.length - 1 ? undefined : <ChevronRight />}
-            startIcon={activeStep === steps.length - 1 ? <Lock /> : undefined}
-            onClick={steps[activeStep].onNext}
+            startIcon={<Lock />}
+            onClick={handlePayment}
             loading={loading}
           >
-            {activeStep === steps.length - 1 ? "Secure Checkout" : "Next"}
+            Secure Checkout
           </LoadingButton>
         </Stack>
       </Stack>
