@@ -5,7 +5,7 @@ import LinkButton from "../util/LinkButton";
 
 const Container = styled('div')(() => ({
   backgroundColor: "#e6f0f5",
-  padding: "4px 4px 4px 12px",
+  padding: "4px 8px 4px 12px",
   borderRadius: 12,
   border: "1px solid #8cc1d7",
   color: "#16698d",

@@ -86,7 +86,7 @@ function Page({ children, withNav, maxWidth, fullWidth, sx, ...rest }: PageProps
               </IconButton>
             </Stack>
           </Stack>
-          <Box sx={{ display: { xs: 'block', md: 'none' } }}>
+          <Box sx={{ display: { xs: 'block', md: 'none' }, pt: 1 }}>
             <FreeTrialBanner />
           </Box>
         </Stack>
