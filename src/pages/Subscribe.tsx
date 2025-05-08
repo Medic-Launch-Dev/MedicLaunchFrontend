@@ -1,6 +1,6 @@
 import { ChevronLeft, ChevronRight, Lock } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import { Box, Button, Snackbar, Stack, Typography } from "@mui/material";
+import { Box, Snackbar, Stack, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import Page from "../components/nav/Page";

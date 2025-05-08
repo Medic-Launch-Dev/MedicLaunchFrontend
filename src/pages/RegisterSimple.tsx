@@ -10,6 +10,7 @@ import AuthLayout from "../components/auth/AuthLayout";
 import { useSnackbar } from "../hooks/useSnackbar";
 import { MedicLaunchUser } from "../models/User";
 import { useServiceProvider } from "../services/ServiceProvider";
+import { AxiosError } from "axios";
 
 interface FormValues {
   firstName: string;
@@ -74,9 +75,9 @@ export default function Register() {
       const successfullyRegistered = await userStore.createUser(userData);
       if (successfullyRegistered)
         navigate(`/confirm-email?email=${encodeURIComponent(values.email)}`);
-    } catch (e) {
+    } catch (e: any) {
       console.error(e);
-      showSnackbar('Registration failed', 'error');
+      showSnackbar(e.response.data[0].description , 'error');
     }
   }
 
