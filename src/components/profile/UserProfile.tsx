@@ -84,12 +84,6 @@ function UserProfile({ adminView }: UserProfileProps) {
                   <Button variant="contained" size="small" onClick={() => setEditOpen(true)}>
                     Edit
                   </Button>
-                  {
-                    !adminView &&
-                    <Button variant="contained" size="small" onClick={() => setPasswordOpen(true)}>
-                      Reset Password
-                    </Button>
-                  }
                 </Stack>
               </Stack>
             </Paper>
