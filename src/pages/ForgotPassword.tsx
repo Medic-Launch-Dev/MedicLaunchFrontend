@@ -1,7 +1,8 @@
 import { LoadingButton } from "@mui/lab";
-import { Snackbar, Stack, TextField } from "@mui/material";
+import { Snackbar, Stack, TextField, Typography } from "@mui/material";
+import { grey } from "@mui/material/colors";
 import { useFormik } from "formik";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import * as yup from "yup";
 import AuthLayout from "../components/auth/AuthLayout";
 import { useSnackbar } from "../hooks/useSnackbar";
@@ -15,9 +16,9 @@ const validationSchema = yup.object({
 });
 
 export default function ForgotPassword() {
-  const navigate = useNavigate();
   const { userStore } = useServiceProvider();
   const { showSnackbar, snackbarProps } = useSnackbar();
+  const [emailSent, setEmailSent] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -28,12 +29,14 @@ export default function ForgotPassword() {
   });
 
   async function handleSubmit({ email }: { email: string }) {
+    if (!email || emailSent) return;
+
     try {
       const success = await userStore.requestPasswordReset(email);
-      if (success)
+      if (success) {
+        setEmailSent(true);
         showSnackbar('Password reset link sent', 'success');
-      else
-        showSnackbar('Failed to send password reset email', 'error');
+      }
     } catch (e) {
       console.error(e);
       showSnackbar('Failed to send reset email', 'error');
@@ -60,16 +63,23 @@ export default function ForgotPassword() {
               helperText={formik.touched.email && formik.errors.email}
               required
             />
-            <LoadingButton
-              variant="contained"
-              fullWidth
-              sx={{ fontSize: 16, fontWeight: 500, py: 1.5 }}
-              type="submit"
-              loading={formik.isSubmitting}
-              style={{ width: "100%" }}
-            >
-              Send Reset Link
-            </LoadingButton>
+            {
+              emailSent ?
+                <Typography fontSize={16} textAlign="center" sx={{ color: grey[700] }}>
+                  A password reset link has been sent to {formik.values.email}.
+                </Typography>
+                :
+                <LoadingButton
+                  variant="contained"
+                  fullWidth
+                  sx={{ fontSize: 16, fontWeight: 500, py: 1.5 }}
+                  type="submit"
+                  loading={formik.isSubmitting}
+                  style={{ width: "100%" }}
+                >
+                  Send Reset Link
+                </LoadingButton>
+            }
           </Stack>
         </form>
       </AuthLayout>
