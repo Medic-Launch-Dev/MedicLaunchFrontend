@@ -1,21 +1,14 @@
-import { Stack, Typography } from "@mui/material";
-import { Plan } from "../../models/Payment";
+import { Box, Stack, Typography } from "@mui/material";
+import { Plan, PlanLookupKey } from "../../models/Payment";
 import { primaryGradient } from "../../theme";
 
 interface PlanOptionProps extends Plan {
-  mostPopular?: boolean;
   selected: boolean;
-  setSelected: (planId: number) => void;
+  setSelected: (lookupKey: PlanLookupKey) => void;
 }
 
-export default function PlanOption({ id, name, price, mostPopular, selected, setSelected }: PlanOptionProps) {
-  const basePlanFeatures = ["Clinical Question Bank", "Detailed Explanations", "Personalised Dashboard", "Clinical Tips"];
-
-  const planFeatures = {
-    1: basePlanFeatures,
-    2: [...basePlanFeatures, "Mock Examinations"],
-    3: [...basePlanFeatures, "Mock Examinations", "Flashcards"]
-  }
+export default function PlanOption({ lookupKey, name, price, normalizedMonthlyPrice, selected, setSelected }: PlanOptionProps) {
+  const planFeatures = ["Clinical Question Bank", "Detailed Explanations", "Personalised Dashboard", "Clinical Tips", "Mock Examinations", "Flashcards"];
 
 
   const checkIcon = (
@@ -47,21 +40,45 @@ export default function PlanOption({ id, name, price, mostPopular, selected, set
           fontWeight: 500,
           cursor: "pointer",
         }}
-        onClick={() => setSelected(id)}
+        onClick={() => setSelected(lookupKey)}
       >
         <Stack>
-          <Typography fontSize={18} fontWeight={600} color={selected ? "white" : "primary"} textAlign="center">{name}</Typography>
           <Stack direction="row" alignItems="center" justifyContent="center" spacing={1}>
-            <Typography fontSize={22} fontWeight={500} color={selected ? "#d7e8ef" : "#a0a0a0"} textAlign="center" sx={{ textDecoration: "line-through" }}>£{price * 2}</Typography>
-            <Typography fontSize={28} fontWeight={600} color={selected ? "white" : "primary"} textAlign="center">£{price}</Typography>
+            <Typography fontSize={18} fontWeight={600} color={selected ? "white" : "primary"} textAlign="center">{name}</Typography>
+            {
+              lookupKey === PlanLookupKey.ANNUAL &&
+              <Box
+                sx={{
+                  px: 1.5,
+                  py: 0.5,
+                  borderRadius: '999px',
+                  background: selected ? 'white' : '#2496C7',
+                  color: selected ? '#2496C7' : 'white',
+                  fontWeight: 600,
+                  fontSize: 13,
+                  border: `1px solid #2496C7`,
+                }}
+              >
+                Save 50%
+              </Box>
+            }
           </Stack>
-          <Typography fontSize={13} fontWeight={500} color={selected ? "white" : "primary"} textAlign="center">
-            Limited Promotional Offer: Save 50%!
-          </Typography>
+          <Stack direction="row" alignItems="center" justifyContent="center" spacing={1}>
+            <Typography fontSize={28} fontWeight={600} color={selected ? "white" : "primary"} textAlign="center">
+              £{Number.isInteger(normalizedMonthlyPrice) ? normalizedMonthlyPrice : normalizedMonthlyPrice.toFixed(2)}
+              <span style={{ fontSize: 16 }}> / month</span>
+            </Typography>
+          </Stack>
+          {
+            lookupKey === PlanLookupKey.ANNUAL &&
+            <Typography fontSize={13} fontWeight={500} color={selected ? "white" : "primary"} textAlign="center">
+              Billed annually at £{price}/year
+            </Typography>
+          }
         </Stack>
         <Stack spacing={2} sx={{ p: 3, bgcolor: "#f9f9ff", borderRadius: 1, width: 280 }}>
           {
-            planFeatures[id].map(feature => (
+            planFeatures.map(feature => (
               <Stack direction="row" spacing={1} alignItems="center">
                 {checkIcon}
                 <Typography fontWeight={500} color="black">{feature}</Typography>

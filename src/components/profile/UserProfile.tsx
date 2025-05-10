@@ -1,13 +1,13 @@
-import { Check, Loop } from "@mui/icons-material";
+import { Check } from "@mui/icons-material";
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grid, Paper, Snackbar, Stack, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 import { useSnackbar } from "../../hooks/useSnackbar";
 import { useServiceProvider } from "../../services/ServiceProvider";
 import { primaryGradient } from "../../theme";
-import { formatDate } from "../../utils/DateTimeUtils";
 import LinkButton from "../util/LinkButton";
 import EditProfileModal from "./EditProfileModal";
+import ManageSubscriptionButton from "./ManageSubscriptionButton";
 import ResetPasswordModal from "./ResetPasswordModal";
 
 interface UserProfileProps {
@@ -101,9 +101,7 @@ function UserProfile({ adminView }: UserProfileProps) {
                 {
                   !adminView && (
                     accountStore.isSubscribed ?
-                      <Button size="small" variant="contained" startIcon={<Loop />} onClick={() => setResetOpen(true)} disabled={userProfile?.questionsCompleted === 0}>
-                        Reset Questions
-                      </Button>
+                      <ManageSubscriptionButton />
                       :
                       <LinkButton to="/subscribe" variant="contained" size="small">
                         Purchase Subscription
@@ -111,7 +109,7 @@ function UserProfile({ adminView }: UserProfileProps) {
                   )
                 }
               </Stack>
-              <Divider sx={{ my: 2 }} />
+              {/* <Divider sx={{ my: 2 }} />
               {
                 accountStore.isSubscribed ?
                   <Stack direction="row" justifyContent="space-between">
@@ -121,7 +119,7 @@ function UserProfile({ adminView }: UserProfileProps) {
                   </Stack>
                   :
                   <Typography textAlign="center" py={2}>No subscription active</Typography>
-              }
+              } */}
             </Paper>
             <Paper sx={{ p: 3, mt: 3 }}>
               <Stack direction="row" justifyContent="space-between" alignItems="center">

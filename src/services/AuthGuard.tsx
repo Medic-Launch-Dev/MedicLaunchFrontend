@@ -10,7 +10,6 @@ export const AuthGuard = ({ children }) => {
   useEffect(() => {
     if (isLoggedIn()) {
       accountStore.getMyProfile();
-      accountStore.getSubscriptionStatus();
       accountStore.getRoles();
     }
   }, []);

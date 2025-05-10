@@ -1,27 +1,28 @@
-import { ChevronLeft, ChevronRight, Lock } from "@mui/icons-material";
+import { ChevronLeft, Lock } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { Box, Snackbar, Stack, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
+import { Navigate } from "react-router-dom";
 import Page from "../components/nav/Page";
 import { PlanSelection } from "../components/subscribe/PlanSelection";
 import LinkButton from "../components/util/LinkButton";
 import { useSnackbar } from "../hooks/useSnackbar";
+import { PlanLookupKey } from "../models/Payment";
 import { useServiceProvider } from "../services/ServiceProvider";
 import { primaryGradientText } from "../theme";
-import { Navigate } from "react-router-dom";
 
 function Subscribe() {
-  const { paymentStore, accountStore: { isSubscribed, loadingSubscription } } = useServiceProvider();
+  const { paymentStore, accountStore: { isSubscribed, loadingProfile } } = useServiceProvider();
   const [loading, setLoading] = useState(false);
-  const [selectedPlanId, setSelectedPlanId] = useState<number>(2);
+  const [selectedPlanLookupKey, setSelectedPlanLookupKey] = useState<PlanLookupKey>(PlanLookupKey.ANNUAL);
 
   const { showSnackbar, snackbarProps } = useSnackbar();
 
   async function handlePayment() {
     try {
       setLoading(true);
-      const checkoutSessionUrl = await paymentStore.createCheckoutSession(selectedPlanId);
+      const checkoutSessionUrl = await paymentStore.createCheckoutSession(selectedPlanLookupKey);
       window.location.href = checkoutSessionUrl;
       setLoading(false);
     } catch (error) {
@@ -35,7 +36,7 @@ function Subscribe() {
     }
   }
 
-  if (!loadingSubscription && isSubscribed) return <Navigate to="/" />;
+  if (!loadingProfile && isSubscribed) return <Navigate to="/" />;
 
   return (
     <Page sx={{ height: "100%" }}>
@@ -60,7 +61,7 @@ function Subscribe() {
             overflowY: "hidden",
           }}
         >
-          <PlanSelection selectedPlanId={selectedPlanId} setSelectedPlanId={setSelectedPlanId} />
+          <PlanSelection selectedPlanLookupKey={selectedPlanLookupKey} setSelectedPlanLookupKey={setSelectedPlanLookupKey} />
         </Box>
         <Stack
           direction="row"

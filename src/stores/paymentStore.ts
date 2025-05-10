@@ -1,3 +1,4 @@
+import { PlanLookupKey } from "../models/Payment";
 import MedicLaunchApiClient from "../services/MedicLaunchApiClient";
 
 export class PaymentStore {
@@ -7,12 +8,12 @@ export class PaymentStore {
         this.apiClient = apiClient;
     }
 
-    async getPaymentIntent(planId: number) {
-        return await this.apiClient.getPaymentClientSecret(planId);
+    async createCheckoutSession(planLookupKey: PlanLookupKey) {
+        return await this.apiClient.createCheckoutSession(planLookupKey);
     }
 
-    async createCheckoutSession(planId: number) {
-        return await this.apiClient.createCheckoutSession(planId);
+    async createBillingPortalSession() {
+        return await this.apiClient.createBillingPortalSession();
     }
 
     async getPubishableKey() {

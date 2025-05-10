@@ -1,23 +1,26 @@
+export enum PlanLookupKey {
+  MONTHYLY = "mediclaunch_monthly",
+  ANNUAL = "mediclaunch_annual",
+}
+
 export class Plan {
-  id: number;
+  lookupKey: PlanLookupKey;
   name: string;
   price: number;
+  normalizedMonthlyPrice: number;
 }
 
 export const plans: Plan[] = [
   {
-    id: 1,
-    name: "1 Month",
-    price: 17
+    lookupKey: PlanLookupKey.MONTHYLY,
+    name: "Monthly",
+    price: 7,
+    normalizedMonthlyPrice: 7
   },
   {
-    id: 2,
-    name: "3 Months",
-    price: 29
-  },
-  {
-    id: 3,
-    name: "12 Months",
-    price: 42
-  },
+    lookupKey: PlanLookupKey.ANNUAL,
+    name: "Yearly",
+    price: 42,
+    normalizedMonthlyPrice: 3.5
+  }
 ]

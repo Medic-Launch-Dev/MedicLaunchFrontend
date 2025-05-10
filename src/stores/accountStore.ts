@@ -6,11 +6,9 @@ import MedicLaunchApiClient from "../services/MedicLaunchApiClient";
 export class AccountStore {
   apiClient: MedicLaunchApiClient;
   private _myProfile: UserProfile | null = null;
-  isSubscribed: boolean;
   roles: string[] = [];
 
   loadingProfile: boolean = false;
-  loadingSubscription: boolean = false;
   loadingRoles: boolean = false;
 
   constructor(apClient: MedicLaunchApiClient) {
@@ -19,7 +17,7 @@ export class AccountStore {
   }
 
   get isLoading() {
-    return this.loadingProfile || this.loadingSubscription || this.loadingRoles;
+    return this.loadingProfile || this.loadingRoles;
   }
 
   get hasAdminAccess() {
@@ -38,6 +36,24 @@ export class AccountStore {
     return this.roles.includes("QuestionAuthor") || this.roles.includes("Admin");
   }
 
+  get hasStudentAccess() {
+    return (
+      this._myProfile?.isOnFreeTrial ||
+      this.myProfile?.stripeSubscriptionStatus === "active" ||
+      this.roles.includes("FlashcardAuthor") ||
+      this.roles.includes("QuestionAuthor") ||
+      this.roles.includes("Admin")
+    );
+  }
+
+  get isSubscribed() {
+    return this.myProfile?.stripeSubscriptionStatus === "active";
+  }
+
+  get isOnFreeTrial() {
+    return this.myProfile?.isOnFreeTrial;
+  }
+
   get myProfile(): UserProfile | null {
     if (!this._myProfile && !this.loadingProfile) {
       this.getMyProfile();
@@ -49,9 +65,6 @@ export class AccountStore {
     this._myProfile = value;
   }
 
-  get hasStudentAccess() {
-    return this._myProfile?.isOnFreeTrial || this.myProfile?.hasActiveSubscription || this.roles.includes("FlashcardAuthor") || this.roles.includes("QuestionAuthor") || this.roles.includes("Admin");
-  }
 
   get trialQuestionLimitReached() {
     if (this._myProfile?.isOnFreeTrial) {
@@ -77,20 +90,6 @@ export class AccountStore {
     } finally {
       runInAction(() => {
         this.loadingProfile = false;
-      });
-    }
-  }
-
-  public async getSubscriptionStatus() {
-    try {
-      this.loadingSubscription = true;
-      const response: boolean = await this.apiClient.getData('account/hasactivesubscription');
-      runInAction(() => {
-        this.isSubscribed = response;
-      });
-    } finally {
-      runInAction(() => {
-        this.loadingSubscription = false;
       });
     }
   }

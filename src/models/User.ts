@@ -10,7 +10,6 @@ export interface UserProfile {
   email: string;
   firstName: string;
   graduationYear?: number;
-  hasActiveSubscription?: boolean;
   id?: string;
   lastName: string;
   phoneNumber?: string;
@@ -20,11 +19,11 @@ export interface UserProfile {
   subscriptionPurchaseDate?: string;
   howDidYouHearAboutUs?: string;
   university?: string;
-  isSubscribed?: boolean;
   isOnFreeTrial?: boolean;
   freeTrialDaysRemaining?: number | null;
   remainingTrialQuestions?: number;
   remainingTrialClinicalCases?: number;
+  stripeSubscriptionStatus?: string;
 }
 
 export interface MedicLaunchUser extends UserProfile {

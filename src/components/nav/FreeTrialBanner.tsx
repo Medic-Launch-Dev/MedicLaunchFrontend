@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { observer } from "mobx-react-lite";
 import { useMatch } from "react-router-dom";
 import { useServiceProvider } from "../../services/ServiceProvider";
 import LinkButton from "../util/LinkButton";
@@ -15,20 +16,25 @@ const Container = styled('div')(() => ({
   gap: 16,
 }));
 
-export default function FreeTrialBanner() {
+function FreeTrialBanner() {
   const { accountStore } = useServiceProvider();
-  const { myProfile, hasAuthorAccess } = accountStore;
-  const { freeTrialDaysRemaining, hasActiveSubscription } = myProfile || {};
+  const { myProfile, loadingProfile, isSubscribed, hasAuthorAccess } = accountStore;
+  const { freeTrialDaysRemaining } = myProfile || {};
   const matchSubscribe = useMatch("/subscribe/*");
 
-  if (hasAuthorAccess || hasActiveSubscription || matchSubscribe) return null;
+  console.log("loadingProfile:", loadingProfile);
+  console.log("hasAuthorAccess:", hasAuthorAccess);
+  console.log("isSubscribed:", isSubscribed);
+  console.log("matchSubscribe:", matchSubscribe);
+
+  if (loadingProfile || hasAuthorAccess || isSubscribed || matchSubscribe) return null;
 
   return (
     <Container>
       {
         (freeTrialDaysRemaining === 0 || freeTrialDaysRemaining === null) ?
           <div>🚨 <b>Your free trial has ended.</b> Don’t fall behind: unlock full access and smash the UKMLA!</div> :
-          <div>⏳ <b>{freeTrialDaysRemaining} days left!</b> Don’t fall behind: unlock full access and smash the UKMLA!</div>
+          <div>⏳ <b>{freeTrialDaysRemaining} trial days left!</b> Don’t fall behind: unlock full access and smash the UKMLA!</div>
       }
       <LinkButton
         variant="contained"
@@ -41,3 +47,5 @@ export default function FreeTrialBanner() {
     </Container>
   )
 }
+
+export default observer(FreeTrialBanner);

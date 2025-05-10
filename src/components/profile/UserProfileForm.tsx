@@ -1,11 +1,10 @@
 import { LoadingButton } from "@mui/lab";
-import { Button, FormControl, Grid, InputLabel, MenuItem, Select, Snackbar, Stack, TextField } from "@mui/material";
+import { Button, Grid, Snackbar, Stack, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import * as yup from "yup";
 import { useSnackbar } from "../../hooks/useSnackbar";
-import { plans } from "../../models/Payment";
 import { useServiceProvider } from "../../services/ServiceProvider";
 
 export interface EditProfileFormData {
@@ -249,7 +248,7 @@ function UserProfileForm({ adminView, newUser, onClose }: UserProfileFormProps) 
             required
           />
         </Grid>
-        {newUser && (
+        {/* {newUser && (
           <Grid item xs={12} md={4}>
             <FormControl size="small" fullWidth>
               <InputLabel>Plan</InputLabel>
@@ -267,7 +266,7 @@ function UserProfileForm({ adminView, newUser, onClose }: UserProfileFormProps) 
               </Select>
             </FormControl>
           </Grid>
-        )}
+        )} */}
       </Grid>
       <Stack spacing={1} alignItems="center" justifyContent="right" direction="row" mt={8}>
         <Button onClick={onClose}>Cancel</Button>

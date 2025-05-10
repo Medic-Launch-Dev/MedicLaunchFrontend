@@ -2,14 +2,15 @@ import { AxiosInstance } from "axios";
 import { ClinicalCaseDetails } from "../models/ClinicalCaseCapture";
 import { FamiliarityCounts } from "../models/FamiliarityCounts";
 import { Flashcard } from "../models/Flashcard";
+import { PlanLookupKey } from "../models/Payment";
 import { PracticeFilter } from "../models/PracticeFilter";
 import { Question, QuestionTextAndExplanation, QuestionType } from "../models/Question";
+import { QuestionAttempt } from "../models/QuestionAttempt";
 import Speciality, { SpecialityAnalytics } from "../models/Speciality";
 import { TextbookLesson } from "../models/TextbookLesson";
 import { MedicLaunchUser } from "../models/User";
 import { ApplicationStore } from "../stores/applicationStore";
 import AxiosProvider from "./AxiosProvider";
-import { QuestionAttempt } from "../models/QuestionAttempt";
 
 export default class MedicLaunchApiClient {
   private readonly apiUrl: string;
@@ -181,14 +182,14 @@ export default class MedicLaunchApiClient {
     return response.data;
   }
 
-  async getPaymentClientSecret(planId: number): Promise<string> {
-    const response = await this.axios.post(`${this.apiUrl}/payment/create-payment-intent?planId=${planId}`);
-    const clientSecret = response.data.clientSecret;
-    return clientSecret;
+  async createCheckoutSession(planLookupKey: PlanLookupKey): Promise<string> {
+    const response = await this.axios.post(`${this.apiUrl}/payment/create-checkout-session?planLookupKey=${planLookupKey}`);
+    const sessionUrl = response.data.sessionUrl;
+    return sessionUrl;
   }
 
-  async createCheckoutSession(planId: number): Promise<string> {
-    const response = await this.axios.post(`${this.apiUrl}/payment/create-checkout-session?planId=${planId}`);
+  async createBillingPortalSession(): Promise<string> {
+    const response = await this.axios.post(`${this.apiUrl}/payment/create-billing-portal-session`);
     const sessionUrl = response.data.sessionUrl;
     return sessionUrl;
   }
