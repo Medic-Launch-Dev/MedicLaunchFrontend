@@ -22,11 +22,6 @@ function FreeTrialBanner() {
   const { freeTrialDaysRemaining } = myProfile || {};
   const matchSubscribe = useMatch("/subscribe/*");
 
-  console.log("loadingProfile:", loadingProfile);
-  console.log("hasAuthorAccess:", hasAuthorAccess);
-  console.log("isSubscribed:", isSubscribed);
-  console.log("matchSubscribe:", matchSubscribe);
-
   if (loadingProfile || hasAuthorAccess || isSubscribed || matchSubscribe) return null;
 
   return (

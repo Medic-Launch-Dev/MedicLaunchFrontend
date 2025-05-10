@@ -12,7 +12,6 @@ function AnswersGrid({ isMock }: AnswerGridProps) {
   const { wasAnsweredCorrectly } = questionsStore
 
   function getBackgroundColor(answeredCorrectly?: boolean) {
-    console.log(answeredCorrectly);
     if (answeredCorrectly !== undefined && isMock) return "#e4f4fa";
     if (answeredCorrectly === true) return "#e7fae5";
     if (answeredCorrectly === false) return "#f7e2e2";

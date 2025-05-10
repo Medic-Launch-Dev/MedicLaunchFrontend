@@ -17,9 +17,6 @@ export default function SelectFlashCards() {
     navigate(`/flash-cards/${selectedSpecialityId}`)
   }
 
-  console.log("hasStudentAccess", hasStudentAccess);
-  console.log("isLoadingProfile", loadingProfile);
-
   if (!loadingProfile && hasStudentAccess !== true) return <Navigate to="/trial-expired" />;
 
   return (

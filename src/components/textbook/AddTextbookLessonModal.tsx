@@ -27,7 +27,6 @@ export default function AddTextbookLessonModal({ open, onClose, specialityId }: 
 
     setLoading(true);
     const newLessonId = await textbookLessonStore.createTextbookLesson(newLesson);
-    console.log(newLessonId);
     if (newLessonId) navigate(`/edit-clinical-companion-lesson/${newLessonId}`);
     setLoading(false);
   }

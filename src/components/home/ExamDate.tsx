@@ -36,11 +36,8 @@ export default function ExamDate() {
   const calculateDaysLeft = (date: string) => {
     const formattedDate = formatDate(date);
     const examDay = dayjs(formattedDate);
-    console.log(examDay.toDate());
     const today = dayjs();
-    console.log(today.toDate());
     const diff = examDay.diff(today, 'day');
-    console.log(diff);
     setDaysLeft(diff);
   };
 

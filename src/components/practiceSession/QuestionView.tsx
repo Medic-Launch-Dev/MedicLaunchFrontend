@@ -114,7 +114,6 @@ function QuestionView({ question: questionFromProps, inPreview, isMock, isFreeTr
                 style = "base";
               } else {
                 if (isMock) {
-                  console.log("It is a mock")
                   if (question.submittedAnswerLetter === option.letter) {
                     style = "mock";
                   } else {
