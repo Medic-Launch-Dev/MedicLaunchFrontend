@@ -93,7 +93,7 @@ export default function Register() {
       <AuthLayout title="Sign up" subtitle="Create your account to get started.">
         <form onSubmit={formik.handleSubmit}>
           <Grid container spacing={2}>
-            <Grid item sm={6}>
+            <Grid item xs={12} md={6}>
               <TextField
                 fullWidth
                 name="firstName"
@@ -106,7 +106,7 @@ export default function Register() {
                 required
               />
             </Grid>
-            <Grid item sm={6}>
+            <Grid item xs={12} md={6}>
               <TextField
                 fullWidth
                 name="lastName"

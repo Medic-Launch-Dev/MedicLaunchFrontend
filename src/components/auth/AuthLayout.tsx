@@ -17,11 +17,13 @@ export default function AuthLayout({ children, title, subtitle }: AuthLayoutProp
           justifyContent="center"
           spacing={2}
         >
-          <Box sx={{ position: "fixed", top: 24, left: { xs: "50%", md: 24 }, transform: { xs: "translateX(-50%)", md: "none" } }}>
-            <img src="/logo.png" width={140} />
+          <Box>
           </Box>
           <Box px={2} sx={{ maxWidth: 450, width: "100%" }}>
             <Stack sx={{ flexShrink: 0 }} spacing={1} pb={5}>
+              <Stack alignItems="center" justifyContent="center" pb={4}>
+                <img src="/logo.png" width={140} />
+              </Stack>
               <Typography
                 variant="h1"
                 color="primary"
@@ -32,7 +34,7 @@ export default function AuthLayout({ children, title, subtitle }: AuthLayoutProp
               </Typography>
               {
                 subtitle && (
-                  <Typography fontSize={16} sx={{ color: grey[700]}}>
+                  <Typography fontSize={16} sx={{ color: grey[700] }}>
                     {subtitle}
                   </Typography>
                 )
