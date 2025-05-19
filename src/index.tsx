@@ -13,7 +13,6 @@ import Register from "./pages/RegisterSimple";
 import ReviewSession from "./pages/ReviewSession";
 import Root from "./pages/Root";
 // import reportWebVitals from "./reportWebVitals";
-import "./index.css";
 import AuthorPortal from "./pages/AuthorPortal";
 import ClinicalCaseCapture from './pages/ClinicalCaseCapture';
 import ConfirmEmail from './pages/ConfirmEmail';
