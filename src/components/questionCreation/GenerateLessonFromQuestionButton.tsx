@@ -6,7 +6,8 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
-  Stack
+  Stack,
+  Tooltip
 } from "@mui/material";
 import { useState } from "react";
 import { TextbookLesson } from "../../models/TextbookLesson";
@@ -76,9 +77,13 @@ export default function GenerateLessonFromQuestionButton({
 
   return (
     <>
-      <Button size="small" startIcon={<AutoAwesome />} onClick={() => setOpen(true)}>
-        Generate
-      </Button>
+      <Tooltip title={!learningPoints ? "Add learning points to enable" : ""}>
+        <span>
+          <Button size="small" startIcon={<AutoAwesome />} onClick={() => setOpen(true)} disabled={!learningPoints}>
+            Generate
+          </Button>
+        </span>
+      </Tooltip>
 
       <Dialog open={open} onClose={handleDiscard} maxWidth="sm" fullWidth>
         <DialogTitle>Generate Lesson</DialogTitle>
@@ -88,7 +93,7 @@ export default function GenerateLessonFromQuestionButton({
               variant="outlined"
               onClick={handleGenerateLesson}
               startIcon={<AutoAwesome />}
-              disabled={loadingGenerate}
+              disabled={loadingGenerate || !learningPoints}
               sx={{ flexShrink: 0 }}
             >
               Generate
