@@ -8,8 +8,8 @@ export class AccountStore {
   private _myProfile: UserProfile | null = null;
   roles: string[] = [];
 
-  loadingProfile: boolean = false;
-  loadingRoles: boolean = false;
+  private loadingProfile: boolean = false;
+  private loadingRoles: boolean = false;
 
   constructor(apClient: MedicLaunchApiClient) {
     this.apiClient = apClient;

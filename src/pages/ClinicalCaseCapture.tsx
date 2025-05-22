@@ -1,15 +1,15 @@
 import { AutoAwesome } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { Alert, Box, CircularProgress, Grid, Paper, Snackbar, Stack, TextField, Typography } from "@mui/material";
+import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import Page from "../components/nav/Page";
+import LinkButton from "../components/util/LinkButton";
 import { useSnackbar } from "../hooks/useSnackbar";
 import { ClinicalCaseDetails } from "../models/ClinicalCaseCapture";
 import { useServiceProvider } from "../services/ServiceProvider";
 import { primaryGradientText } from "../theme";
-import LinkButton from "../components/util/LinkButton";
-import { observer } from "mobx-react-lite";
 
 function ClinicalCaseCapture() {
   const [caseDetails, setCaseDetails] = useState<ClinicalCaseDetails>({
@@ -23,7 +23,7 @@ function ClinicalCaseCapture() {
   const [generatedCase, setGeneratedCase] = useState<string | null>(null);
   const { showSnackbar, snackbarProps } = useSnackbar();
   const { clinicalCaseCaptureStore, accountStore } = useServiceProvider();
-  const { hasStudentAccess, trialClinicalCasesLimitReached, loadingProfile } = accountStore;
+  const { hasStudentAccess, trialClinicalCasesLimitReached, isLoading } = accountStore;
 
   const handleChange = (field: keyof ClinicalCaseDetails) => (e: React.ChangeEvent<HTMLInputElement>) => {
     setCaseDetails({ ...caseDetails, [field]: e.target.value });
@@ -45,7 +45,7 @@ function ClinicalCaseCapture() {
     }
   };
 
-  if (!loadingProfile && hasStudentAccess !== true) return <Navigate to="/trial-expired" />;
+  if (!isLoading && hasStudentAccess !== true) return <Navigate to="/trial-expired" />;
 
   return (
     <Page withNav maxWidth="xl">

@@ -11,12 +11,14 @@ interface SpecialitySelectorProps {
   selectedSpecialityId: string;
   setSelectedSpecialityId: (specialityId: string) => void;
   redirectPath?: string;
+  limitToFirst4?: boolean;
 }
 
 export const SpecialitySelector = observer(({
   selectedSpecialityId,
   setSelectedSpecialityId,
-  redirectPath
+  redirectPath,
+  limitToFirst4 = false,
 }: SpecialitySelectorProps) => {
   const navigate = useNavigate();
   const { questionsStore } = useServiceProvider();
@@ -42,6 +44,11 @@ export const SpecialitySelector = observer(({
       });
   }, []);
 
+  const isInFirst4 = (specialityId: string) => {
+    const first4Ids = specialities.slice(0, 4).map(s => s.id);
+    return first4Ids.includes(specialityId);
+  }
+
   return (
     <Box sx={{
       bgcolor: "white",
@@ -59,6 +66,7 @@ export const SpecialitySelector = observer(({
                 selected={selectedSpecialityId === speciality.id}
                 setSelected={handleSpecialityClick}
                 speciality={speciality}
+                locked={limitToFirst4 && !isInFirst4(speciality.id)}
               />
             </Grid>
           ))}

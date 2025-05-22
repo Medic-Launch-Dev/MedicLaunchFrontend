@@ -13,7 +13,7 @@ import { useServiceProvider } from "../services/ServiceProvider";
 import { primaryGradientText } from "../theme";
 
 function Subscribe() {
-  const { paymentStore, accountStore: { isSubscribed, loadingProfile } } = useServiceProvider();
+  const { paymentStore, accountStore: { isSubscribed, isLoading } } = useServiceProvider();
   const [loading, setLoading] = useState(false);
   const [selectedPlanLookupKey, setSelectedPlanLookupKey] = useState<PlanLookupKey>(PlanLookupKey.ANNUAL);
 
@@ -36,7 +36,7 @@ function Subscribe() {
     }
   }
 
-  if (!loadingProfile && isSubscribed) return <Navigate to="/" />;
+  if (!isLoading && isSubscribed) return <Navigate to="/" />;
 
   return (
     <Page sx={{ height: "100%" }}>

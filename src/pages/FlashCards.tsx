@@ -1,5 +1,6 @@
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
 import { Card, CircularProgress, Divider, IconButton, Skeleton, Stack, Typography, useMediaQuery } from "@mui/material";
+import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import Page from "../components/nav/Page";
@@ -9,7 +10,7 @@ import { Flashcard } from "../models/Flashcard";
 import { useServiceProvider } from "../services/ServiceProvider";
 import theme from "../theme";
 
-export default function FlashCards() {
+function FlashCards() {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { specialityId = "" } = useParams();
   const navigate = useNavigate();
@@ -139,3 +140,5 @@ export default function FlashCards() {
     </Page>
   );
 }
+
+export default observer(FlashCards);

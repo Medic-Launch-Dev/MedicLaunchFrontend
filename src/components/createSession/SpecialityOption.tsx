@@ -1,20 +1,27 @@
-import { Box } from "@mui/material";
-import { primaryGradient } from "../../theme";
+import { Box, Tooltip } from "@mui/material";
 import Speciality from "../../models/Speciality";
+import { primaryGradient } from "../../theme";
 
 interface SpecialityOptionProps {
   speciality: Speciality;
   centered?: boolean;
   selected: boolean;
   setSelected: (speciality: string) => void;
+  locked?: boolean; // Optional, for visual indication
 }
 
-export default function SpecialityOption({ speciality, centered, selected, setSelected }: SpecialityOptionProps) {
-  return (
+export default function SpecialityOption({
+  speciality,
+  centered,
+  selected,
+  setSelected,
+  locked = false,
+}: SpecialityOptionProps) {
+  const content = (
     <Box
       sx={{
         background: selected ? primaryGradient : "white",
-        color: selected ? "white" : undefined,
+        color: selected ? "white" : locked ? "#aaa" : undefined,
         borderRadius: 1.5,
         py: 2,
         px: 4,
@@ -24,11 +31,26 @@ export default function SpecialityOption({ speciality, centered, selected, setSe
         alignItems: 'center',
         justifyContent: centered ? "center" : undefined,
         fontWeight: 500,
-        cursor: "pointer",
+        cursor: locked ? "not-allowed" : "pointer",
+        opacity: locked ? 0.6 : 1,
+        position: "relative",
+        userSelect: locked ? "none" : "auto",
       }}
-      onClick={() => setSelected(speciality.id)}
+      onClick={() => {
+        if (!locked) setSelected(speciality.id);
+      }}
+      aria-locked={locked}
     >
+      {locked && "🔒 "}
       {speciality.name}
     </Box>
-  )
+  );
+
+  return locked ? (
+    <Tooltip title="Purchase a subscription to unlock this speciality" arrow>
+      <span>{content}</span>
+    </Tooltip>
+  ) : (
+    content
+  );
 }

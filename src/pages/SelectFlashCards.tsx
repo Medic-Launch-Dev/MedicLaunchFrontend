@@ -10,14 +10,14 @@ import { useServiceProvider } from "../services/ServiceProvider";
 
 export default function SelectFlashCards() {
   const navigate = useNavigate();
-  const { accountStore: { hasStudentAccess, loadingProfile } } = useServiceProvider();
+  const { accountStore: { hasStudentAccess, isLoading, isOnFreeTrial } } = useServiceProvider();
   const [selectedSpecialityId, setSelectedSpecialityId] = useState("");
 
   function handleNext() {
     navigate(`/flash-cards/${selectedSpecialityId}`)
   }
 
-  if (!loadingProfile && hasStudentAccess !== true) return <Navigate to="/trial-expired" />;
+  if (!isLoading && hasStudentAccess !== true) return <Navigate to="/trial-expired" />;
 
   return (
     <Page sx={{ height: "100%" }}>
@@ -46,6 +46,7 @@ export default function SelectFlashCards() {
           <SpecialitySelector
             selectedSpecialityId={selectedSpecialityId}
             setSelectedSpecialityId={setSelectedSpecialityId}
+            limitToFirst4={isOnFreeTrial}
             redirectPath="/flash-cards"
           />
         </Box>

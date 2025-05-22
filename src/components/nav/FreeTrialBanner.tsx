@@ -1,17 +1,16 @@
-import styled from "@emotion/styled";
+import { Box } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useMatch } from "react-router-dom";
 import { useServiceProvider } from "../../services/ServiceProvider";
 import LinkButton from "../util/LinkButton";
-import { Box } from "@mui/material";
 
 function FreeTrialBanner() {
   const { accountStore } = useServiceProvider();
-  const { myProfile, loadingProfile, isSubscribed, hasAuthorAccess } = accountStore;
+  const { myProfile, isLoading, isSubscribed, hasAuthorAccess } = accountStore;
   const { freeTrialDaysRemaining } = myProfile || {};
   const matchSubscribe = useMatch("/subscribe/*");
 
-  if (loadingProfile || hasAuthorAccess || isSubscribed || matchSubscribe) return null;
+  if (isLoading || hasAuthorAccess || isSubscribed || matchSubscribe) return null;
 
   return (
     <Box sx={{

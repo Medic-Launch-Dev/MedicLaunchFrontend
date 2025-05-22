@@ -32,7 +32,7 @@ function CreateSession() {
   const [loading, setLoading] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const { practiceStore, questionsStore, accountStore } = useServiceProvider();
-  const { hasStudentAccess, trialQuestionLimitReached } = accountStore;
+  const { hasStudentAccess, trialQuestionLimitReached, isLoading } = accountStore;
   const { showSnackbar, snackbarProps } = useSnackbar();
 
   useEffect(() => {
@@ -98,7 +98,7 @@ function CreateSession() {
     navigate("/practice-session");
   }
 
-  if (hasStudentAccess === false) return <Navigate to="/trial-expired" />;
+  if (!isLoading && hasStudentAccess === false) return <Navigate to="/trial-expired" />;
 
   return (
     <Page sx={{ height: "100%" }}>
