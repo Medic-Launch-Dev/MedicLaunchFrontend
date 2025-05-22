@@ -11,7 +11,7 @@ import { useServiceProvider } from "../services/ServiceProvider";
 
 export default function SelectMock() {
   const { questionsStore } = useServiceProvider();
-  const { accountStore: { hasStudentAccess, myProfile } } = useServiceProvider();
+  const { accountStore: { hasStudentAccess, isLoading } } = useServiceProvider();
   const [selectedMock, setSelectedMock] = useState<QuestionType.PaperOneMockExam | QuestionType.PaperTwoMockExam>(QuestionType.PaperOneMockExam);
   const navigate = useNavigate();
 
@@ -24,7 +24,7 @@ export default function SelectMock() {
     }
   }
 
-  if (myProfile?.isOnFreeTrial || hasStudentAccess === false) return <Navigate to="/subscribe" />;
+  if (!isLoading && hasStudentAccess === false) return <Navigate to="/trial-expired" />;
 
   return (
     <Page sx={{ height: "100%" }}>
