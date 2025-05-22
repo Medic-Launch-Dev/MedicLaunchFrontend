@@ -1,5 +1,5 @@
 export enum PlanLookupKey {
-  MONTHYLY = "mediclaunch_monthly",
+  MONTHLY = "mediclaunch_monthly",
   ANNUAL = "mediclaunch_annual",
 }
 
@@ -12,7 +12,7 @@ export class Plan {
 
 export const plans: Plan[] = [
   {
-    lookupKey: PlanLookupKey.MONTHYLY,
+    lookupKey: PlanLookupKey.MONTHLY,
     name: "Monthly",
     price: 7,
     normalizedMonthlyPrice: 7
@@ -24,3 +24,38 @@ export const plans: Plan[] = [
     normalizedMonthlyPrice: 3.5
   }
 ]
+
+export const features = [
+  {
+    title: "Question Bank",
+    description: "Master your weakest topics in half the time"
+  },
+  {
+    title: "Clinical Tips",
+    description: "Insider hacks from NHS consultants"
+  },
+  {
+    title: "Detailed Explanations",
+    description: "Clinically backed with zero fluff"
+  },
+  {
+    title: "Flashcards",
+    description: "Clinically proven recall, retain facts 2× faster"
+  },
+  {
+    title: "Mock Exams",
+    description: "Crush MLA anxiety with timed practice"
+  },
+  {
+    title: "Clinical Case Capture",
+    description: "Transform patients into powerful revision"
+  },
+  {
+    title: "Personalised Dashboard",
+    description: "Track growth, build streaks, stay motivated"
+  },
+  {
+    title: "Medic Launch Community",
+    description: "Connect, learn, and thrive with colleagues"
+  }
+];
