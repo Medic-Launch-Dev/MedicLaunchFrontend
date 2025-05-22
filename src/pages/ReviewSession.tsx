@@ -15,7 +15,7 @@ import { primaryGradientText, unstyledLink } from "../theme";
 
 function ReviewSession() {
   const { questionsStore, accountStore } = useServiceProvider();
-  const { hasStudentAccess } = accountStore;
+  const { hasStudentAccess, isLoading } = accountStore;
   const { correctAnswers, incorrectAnswers, totalQuestions } = questionsStore;
   const totalAnswers = correctAnswers + incorrectAnswers;
   const score = totalAnswers === 0 ? totalAnswers : Math.ceil((correctAnswers / totalAnswers) * 100);
@@ -32,7 +32,7 @@ function ReviewSession() {
     };
   }, []);
 
-  if (hasStudentAccess === false) return <Navigate to="/trial-expired" />;
+  if (!isLoading && hasStudentAccess === false) return <Navigate to="/trial-expired" />;
 
   return (
     <Page sx={{ pt: 2 }}>

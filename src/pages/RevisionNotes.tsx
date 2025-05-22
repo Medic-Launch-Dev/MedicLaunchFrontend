@@ -17,7 +17,7 @@ function RevisionNotes() {
   const defaultSpeciality = searchParams.get('speciality');
 
   const { questionsStore, notesStore, accountStore } = useServiceProvider();
-  const { hasStudentAccess } = accountStore;
+  const { hasStudentAccess, isLoading } = accountStore;
   const { notes } = notesStore
   const [specialities, setSpecialities] = useState<Speciality[]>([]);
   const [selectedSpeciality, setSelectedSpeciality] = useState<string>();
@@ -64,7 +64,7 @@ function RevisionNotes() {
     await notesStore.getAllNotes();
   }
 
-  if (hasStudentAccess === false) return <Navigate to="/trial-expired" />;
+  if (!isLoading && hasStudentAccess === false) return <Navigate to="/trial-expired" />;
 
   return (
     <Page sx={{ pt: 2 }}>

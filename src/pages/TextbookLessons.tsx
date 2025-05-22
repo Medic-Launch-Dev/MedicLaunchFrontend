@@ -10,14 +10,14 @@ import { useServiceProvider } from "../services/ServiceProvider";
 
 export default function TextbookLessons() {
   const navigate = useNavigate();
-  const { accountStore: { hasStudentAccess } } = useServiceProvider();
+  const { accountStore: { hasStudentAccess, isLoading } } = useServiceProvider();
   const [selectedSpecialityId, setSelectedSpecialityId] = useState("");
 
   function handleNext() {
     navigate(`/clinical-companion/${selectedSpecialityId}`);
   }
 
-  if (hasStudentAccess === false) return <Navigate to="/trial-expired" />;
+  if (!isLoading && hasStudentAccess === false) return <Navigate to="/trial-expired" />;
 
   return (
     <Page withNav maxWidth="xl" sx={{ height: "100%" }}>

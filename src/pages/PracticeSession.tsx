@@ -16,7 +16,7 @@ function PracticeSession() {
   const isMock = searchParams.get("isMock");
   const inReview = searchParams.get("inReview");
   const { questionsStore, practiceStore, accountStore } = useServiceProvider();
-  const { hasStudentAccess } = accountStore;
+  const { hasStudentAccess, isLoading } = accountStore;
 
   function calculateProgress() {
     if (!questionsStore.questions) return 0;
@@ -42,7 +42,7 @@ function PracticeSession() {
     };
   }, []);
 
-  if (hasStudentAccess === false) return <Navigate to="/trial-expired" />;
+  if (!isLoading && hasStudentAccess === false) return <Navigate to="/trial-expired" />;
   if (!questionsStore.questions.length) return <Navigate to="/create-session" />;
 
   const inReviewMarkup = (

@@ -10,7 +10,7 @@ const TextbookLesson = () => {
   const { specialityId = "" } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
   const lessonId = searchParams.get("lessonId") || "";
-  const { textbookLessonStore, accountStore: { hasStudentAccess, hasQuestionAuthorAccess } } = useServiceProvider();
+  const { textbookLessonStore, accountStore: { hasStudentAccess, hasQuestionAuthorAccess, isLoading } } = useServiceProvider();
   const [textbookLessons, setTextbookLessons] = useState<Record<string, TextbookLessonModel>>({});
   const selectedLesson = textbookLessons[lessonId];
 
@@ -36,7 +36,7 @@ const TextbookLesson = () => {
     setSearchParams({ lessonId: newLessonId });
   };
 
-  if (hasStudentAccess === false) return <Navigate to="/trial-expired" />;
+  if (!isLoading && hasStudentAccess === false) return <Navigate to="/trial-expired" />;
 
   return (
     <Page withNav maxWidth="xl">
