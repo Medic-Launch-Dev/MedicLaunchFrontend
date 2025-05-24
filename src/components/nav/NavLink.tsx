@@ -1,3 +1,4 @@
+import { Launch } from "@mui/icons-material";
 import { Box } from "@mui/material";
 import { NavLink as RouterNavLink } from "react-router-dom";
 
@@ -6,11 +7,12 @@ interface NavLinkProps {
   href: string;
   selected?: boolean;
   tag?: string; // New prop for the tag
+  external?: boolean;
 }
 
-export default function NavLink({ text, href, selected, tag }: NavLinkProps) {
+export default function NavLink({ text, href, selected, tag, external }: NavLinkProps) {
   return (
-    <RouterNavLink to={href} style={{ textDecoration: 'none', color: 'white' }}>
+    <RouterNavLink to={href} target={external ? "_blank" : "_self"} style={{ textDecoration: 'none', color: 'white' }}>
       <Box
         sx={{
           fontSize: 16,
@@ -43,6 +45,7 @@ export default function NavLink({ text, href, selected, tag }: NavLinkProps) {
             {tag}
           </Box>
         )}
+        {external && <Launch fontSize="small" />}
       </Box>
     </RouterNavLink>
   )
