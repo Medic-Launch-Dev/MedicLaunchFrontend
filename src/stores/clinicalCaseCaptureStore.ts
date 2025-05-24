@@ -1,5 +1,5 @@
 import { makeAutoObservable } from "mobx";
-import { ClinicalCaseDetails } from "../models/ClinicalCaseCapture";
+import { GenerateClinicalCase } from "../models/ClinicalCaseCapture";
 import MedicLaunchApiClient from "../services/MedicLaunchApiClient";
 
 export class ClinicalCaseCaptureStore {
@@ -10,7 +10,7 @@ export class ClinicalCaseCaptureStore {
     makeAutoObservable(this);
   }
 
-  async generateClinicalCase(caseDetails: ClinicalCaseDetails) {
+  async generateClinicalCase(caseDetails: GenerateClinicalCase) {
     const output = await this.apiClient.generateClinicalCase(caseDetails);
     return output;
   }

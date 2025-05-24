@@ -1,5 +1,5 @@
 import { AxiosInstance } from "axios";
-import { ClinicalCaseDetails } from "../models/ClinicalCaseCapture";
+import { ClinicalCase, GenerateClinicalCase } from "../models/ClinicalCaseCapture";
 import { FamiliarityCounts } from "../models/FamiliarityCounts";
 import { Flashcard } from "../models/Flashcard";
 import { PlanLookupKey } from "../models/Payment";
@@ -107,9 +107,9 @@ export default class MedicLaunchApiClient {
     return lesson.data;
   }
 
-  async generateClinicalCase(caseDetails: ClinicalCaseDetails): Promise<string> {
+  async generateClinicalCase(caseDetails: GenerateClinicalCase): Promise<ClinicalCase> {
     const response = await this.axios.post(
-      `${this.apiUrl}/clinicalCaseCapture/generate`,
+      `${this.apiUrl}/clinicalCases/generate`,
       caseDetails
     );
     return response.data;

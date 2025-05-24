@@ -7,12 +7,12 @@ import { Navigate } from "react-router-dom";
 import Page from "../components/nav/Page";
 import LinkButton from "../components/util/LinkButton";
 import { useSnackbar } from "../hooks/useSnackbar";
-import { ClinicalCaseDetails } from "../models/ClinicalCaseCapture";
+import { ClinicalCase, GenerateClinicalCase } from "../models/ClinicalCaseCapture";
 import { useServiceProvider } from "../services/ServiceProvider";
 import { primaryGradientText } from "../theme";
 
 function ClinicalCaseCapture() {
-  const [caseDetails, setCaseDetails] = useState<ClinicalCaseDetails>({
+  const [caseDetails, setCaseDetails] = useState<GenerateClinicalCase>({
     patientDemographics: "",
     clinicalContext: "",
     presentingComplaint: "",
@@ -20,12 +20,12 @@ function ClinicalCaseCapture() {
     complaintHistory: "",
   });
   const [loading, setLoading] = useState(false);
-  const [generatedCase, setGeneratedCase] = useState<string | null>(null);
+  const [generatedCase, setGeneratedCase] = useState<ClinicalCase | null>(null);
   const { showSnackbar, snackbarProps } = useSnackbar();
   const { clinicalCaseCaptureStore, accountStore } = useServiceProvider();
   const { hasStudentAccess, trialClinicalCasesLimitReached, isLoading } = accountStore;
 
-  const handleChange = (field: keyof ClinicalCaseDetails) => (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (field: keyof GenerateClinicalCase) => (e: React.ChangeEvent<HTMLInputElement>) => {
     setCaseDetails({ ...caseDetails, [field]: e.target.value });
   };
 
@@ -144,7 +144,12 @@ function ClinicalCaseCapture() {
               </Stack>
             }
             {!loading && generatedCase && (
-              <Box dangerouslySetInnerHTML={{ __html: generatedCase }} />
+              <Stack spacing={2}>
+                <Typography variant="h2">
+                  {generatedCase.title}
+                </Typography>
+                <Box dangerouslySetInnerHTML={{ __html: generatedCase.caseDetails }} />
+              </Stack>
             )}
             {!loading && !generatedCase && (
               <Typography color="textSecondary" align="center" mt={10}>
