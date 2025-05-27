@@ -50,6 +50,7 @@ import {
 } from "./services/ServiceProvider";
 import theme from "./theme";
 import ClinicalCases from './pages/ClinicalCases';
+import ClinicalCaseView from './pages/ClinicalCaseView';
 
 const App = () => {
   const router = createBrowserRouter([
@@ -140,12 +141,16 @@ const App = () => {
           element: <EditTextbookLesson />
         },
         {
-          path: "clinical-case-capture",
+          path: "clinical-cases",
+          element: <ClinicalCases />
+        },
+        {
+          path: "clinical-cases/generate",
           element: <ClinicalCaseCapture />
         },
         {
-          path: "my-clinical-cases",
-          element: <ClinicalCases />
+          path: "clinical-cases/:id",
+          element: <ClinicalCaseView />
         },
         {
           path: "revision-notes",

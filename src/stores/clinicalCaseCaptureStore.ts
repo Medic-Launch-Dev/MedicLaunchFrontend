@@ -22,9 +22,10 @@ export class ClinicalCaseCaptureStore {
     return cases;
   }
 
-  async createClinicalCase(clinicalCase: ClinicalCase) {
-    await this.apiClient.postData('clinicalCases', clinicalCase);
+  async createClinicalCase(clinicalCase: ClinicalCase): Promise<string | undefined> {
+    const createdCase = await this.apiClient.createClinicalCase(clinicalCase);
     await this.getAllClinicalCases();
+    return createdCase?.id;
   }
 
   async updateClinicalCase(id: string, clinicalCase: ClinicalCase) {

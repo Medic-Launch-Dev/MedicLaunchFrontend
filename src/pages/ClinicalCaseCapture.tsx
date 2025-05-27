@@ -1,9 +1,9 @@
-import { AutoAwesome } from "@mui/icons-material";
+import { AutoAwesome, ChevronLeft } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { Alert, Box, CircularProgress, Grid, Paper, Snackbar, Stack, TextField, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import Page from "../components/nav/Page";
 import LinkButton from "../components/util/LinkButton";
 import { useSnackbar } from "../hooks/useSnackbar";
@@ -19,11 +19,13 @@ function ClinicalCaseCapture() {
     symptoms: "",
     complaintHistory: "",
   });
-  const [loading, setLoading] = useState(false);
+  const [loadingGenerate, setLoadingGenerate] = useState(false);
+  const [loadingSave, setLoadingSave] = useState(false);
   const [generatedCase, setGeneratedCase] = useState<ClinicalCase | null>(null);
   const { showSnackbar, snackbarProps } = useSnackbar();
   const { clinicalCaseCaptureStore, accountStore } = useServiceProvider();
   const { hasStudentAccess, trialClinicalCasesLimitReached, isLoading } = accountStore;
+  const navigate = useNavigate();
 
   const handleChange = (field: keyof GenerateClinicalCase) => (e: React.ChangeEvent<HTMLInputElement>) => {
     setCaseDetails({ ...caseDetails, [field]: e.target.value });
@@ -33,7 +35,7 @@ function ClinicalCaseCapture() {
     e.preventDefault();
     if (trialClinicalCasesLimitReached) return;
 
-    setLoading(true);
+    setLoadingGenerate(true);
     setGeneratedCase(null);
     try {
       const data = await clinicalCaseCaptureStore.generateClinicalCase(caseDetails);
@@ -41,7 +43,24 @@ function ClinicalCaseCapture() {
     } catch (err) {
       showSnackbar("Failed to capture clinical case", "error");
     } finally {
-      setLoading(false);
+      setLoadingGenerate(false);
+    }
+  };
+
+  const handleSave = async () => {
+    if (!generatedCase) return;
+    try {
+      setLoadingSave(true);
+      const id = await clinicalCaseCaptureStore.createClinicalCase(generatedCase);
+      if (id) {
+        navigate(`/clinical-cases/${id}`);
+      } else {
+        showSnackbar("Failed to save clinical case", "error");
+      }
+    } catch (err) {
+      showSnackbar("Failed to save clinical case", "error");
+    } finally {
+      setLoadingSave(false);
     }
   };
 
@@ -50,7 +69,12 @@ function ClinicalCaseCapture() {
   return (
     <Page withNav maxWidth="xl">
       <Snackbar {...snackbarProps} />
-      <Typography variant="h2" style={primaryGradientText} mb={3}>Clinical Case Capture</Typography>
+      <Stack direction="row" alignItems="center" spacing={2} mb={3}>
+        <LinkButton to="/clinical-cases" variant="text" startIcon={<ChevronLeft />}>
+          Back
+        </LinkButton>
+        <Typography variant="h2" style={primaryGradientText}>Clinical Case Capture</Typography>
+      </Stack>
       {
         trialClinicalCasesLimitReached &&
         <Alert
@@ -121,7 +145,7 @@ function ClinicalCaseCapture() {
                   <LoadingButton
                     type="submit"
                     variant="contained"
-                    loading={loading}
+                    loading={loadingGenerate}
                     disabled={trialClinicalCasesLimitReached}
                     startIcon={<AutoAwesome />}
                   >
@@ -135,7 +159,7 @@ function ClinicalCaseCapture() {
         <Grid item xs={12} md={7}>
           <Paper sx={{ p: 3, minHeight: 300 }}>
             {
-              loading &&
+              loadingGenerate &&
               <Stack alignItems="center" mt={10}>
                 <CircularProgress />
                 <Typography color="textSecondary" mt={2}>
@@ -143,15 +167,25 @@ function ClinicalCaseCapture() {
                 </Typography>
               </Stack>
             }
-            {!loading && generatedCase && (
+            {!loadingGenerate && generatedCase && (
               <Stack spacing={2}>
-                <Typography variant="h2">
-                  {generatedCase.title}
-                </Typography>
+                <Stack direction="row" alignItems="top" justifyContent="space-between" spacing={1}>
+                  <Typography variant="h3">
+                    {generatedCase.title}
+                  </Typography>
+                  <LoadingButton
+                    variant="contained"
+                    sx={{ flexShrink: 0, height: "max-content" }}
+                    onClick={handleSave}
+                    loading={loadingSave}
+                  >
+                    Save
+                  </LoadingButton>
+                </Stack>
                 <Box dangerouslySetInnerHTML={{ __html: generatedCase.caseDetails }} />
               </Stack>
             )}
-            {!loading && !generatedCase && (
+            {!loadingGenerate && !generatedCase && (
               <Typography color="textSecondary" align="center" mt={10}>
                 No data yet. Fill in the form and submit to see results here.
               </Typography>

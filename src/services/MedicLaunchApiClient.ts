@@ -291,8 +291,9 @@ export default class MedicLaunchApiClient {
     return response.status === 200;
   }
 
-  async createClinicalCase(clinicalCase: ClinicalCase) {
-    await this.postData('clinicalCases', clinicalCase);
+  async createClinicalCase(clinicalCase: ClinicalCase): Promise<ClinicalCase> {
+    const response = await this.axios.post(`${this.apiUrl}/clinicalCases`, clinicalCase);
+    return response.data;
   }
 
   async updateClinicalCase(id: string, clinicalCase: ClinicalCase) {
