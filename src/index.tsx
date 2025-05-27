@@ -49,6 +49,7 @@ import {
   ServiceProviderConsumer,
 } from "./services/ServiceProvider";
 import theme from "./theme";
+import ClinicalCases from './pages/ClinicalCases';
 
 const App = () => {
   const router = createBrowserRouter([
@@ -141,6 +142,10 @@ const App = () => {
         {
           path: "clinical-case-capture",
           element: <ClinicalCaseCapture />
+        },
+        {
+          path: "my-clinical-cases",
+          element: <ClinicalCases />
         },
         {
           path: "revision-notes",

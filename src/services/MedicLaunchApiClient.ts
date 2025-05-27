@@ -290,4 +290,16 @@ export default class MedicLaunchApiClient {
     );
     return response.status === 200;
   }
+
+  async createClinicalCase(clinicalCase: ClinicalCase) {
+    await this.postData('clinicalCases', clinicalCase);
+  }
+
+  async updateClinicalCase(id: string, clinicalCase: ClinicalCase) {
+    await this.putData(`clinicalCases/${id}`, clinicalCase);
+  }
+
+  async deleteClinicalCase(id: string) {
+    await this.deleteData('clinicalCases', id);
+  }
 }
