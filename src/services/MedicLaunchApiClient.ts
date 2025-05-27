@@ -290,4 +290,17 @@ export default class MedicLaunchApiClient {
     );
     return response.status === 200;
   }
+
+  async createClinicalCase(clinicalCase: ClinicalCase): Promise<ClinicalCase> {
+    const response = await this.axios.post(`${this.apiUrl}/clinicalCases`, clinicalCase);
+    return response.data;
+  }
+
+  async updateClinicalCase(id: string, clinicalCase: ClinicalCase) {
+    await this.putData(`clinicalCases/${id}`, clinicalCase);
+  }
+
+  async deleteClinicalCase(id: string) {
+    await this.deleteData('clinicalCases', id);
+  }
 }

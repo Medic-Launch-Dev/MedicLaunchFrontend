@@ -16,7 +16,7 @@ function NavMenu({ sx, ...rest }: NavMenuProps) {
 
   const matchHome = useMatch("/");
   const matchClinicalCompanion = useMatch("/clinical-companion/*");
-  const matchClinicalCaseCapture = useMatch("/clinical-case-capture/*");
+  const matchCaseCapture = useMatch("/clinical-cases/*");
   const matchMyProfile = useMatch("/my-profile");
   const matchAuthorPortal = useMatch("/author-portal");
   const matchUserManagement = useMatch("/user-management");
@@ -50,7 +50,7 @@ function NavMenu({ sx, ...rest }: NavMenuProps) {
           <Stack sx={{ width: '100%', pt: 4 }} gap={1.5}>
             <NavLink text="Study Portal" selected={!!matchHome} href="/" />
             <NavLink text="Clinical Companion" selected={!!matchClinicalCompanion} href="/clinical-companion" />
-            <NavLink text="Case Capture" selected={!!matchClinicalCaseCapture} href="/clinical-case-capture" tag="New" />
+            <NavLink text="Case Capture" selected={!!matchCaseCapture} href="/clinical-cases" tag="New" />
             <NavLink text="My Profile" selected={!!matchMyProfile} href="/my-profile" />
             {hasAuthorAccess && <NavLink text="Author Portal" selected={!!matchAuthorPortal} href="/author-portal" />}
             {hasAdminAccess && <NavLink text="User Management" selected={!!matchUserManagement} href="/user-management" />}
