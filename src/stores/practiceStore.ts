@@ -66,8 +66,8 @@ export class PracticeStore {
 		this.practiceFilter.selectionOrder = questionsOrder;
 	}
 
-	setQuestionsCount(questionsCount: number) {
-		this.practiceFilter.questionsCount = questionsCount;
+	setQuestionAmount(amount: number) {
+		this.practiceFilter.amount = amount;
 	}
 
 	setAllSpecialitiesSelected(allSpecialitiesSelected: boolean) {

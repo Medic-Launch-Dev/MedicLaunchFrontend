@@ -22,6 +22,7 @@ import LinkButton from "../components/util/LinkButton";
 import { useSnackbar } from "../hooks/useSnackbar";
 import { useServiceProvider } from "../services/ServiceProvider";
 import theme from "../theme";
+import { Familiarity } from "../models/PracticeFilter";
 
 function CreateSession() {
   const params = new URLSearchParams(window.location.search);
@@ -74,28 +75,28 @@ function CreateSession() {
   };
 
   async function handleSelectSpeciality() {
+    // Only update familiarity counts, do not fetch questions yet
     try {
-      questionsStore.setFamiliarityCounts(practiceStore.practiceFilter.specialityIds, practiceStore.practiceFilter.allSpecialitiesSelected);
+      await questionsStore.setFamiliarityCounts(
+        practiceStore.practiceFilter.specialityIds,
+        practiceStore.practiceFilter.allSpecialitiesSelected
+      );
     } catch (e) {
       console.error(e);
       showSnackbar("Error", "error");
     }
   }
 
-  async function handleSelectFamiliarity() {
+  async function handleSelectFamiliarity() { }
+
+  async function handleStartPractice() {
     try {
-      const practiceQuestion = await practiceStore.getPracticeQuestions();
-
-      questionsStore.setPracticeQuestions(practiceQuestion);
-      practiceStore.setQuestionsCount(practiceQuestion.length);
+      const practiceQuestions = await practiceStore.getPracticeQuestions();
+      questionsStore.setPracticeQuestions(practiceQuestions);
+      navigate("/practice-session");
     } catch (e) {
-      showSnackbar("Error", "error");
+      showSnackbar("Error fetching questions", "error");
     }
-  }
-
-  function handleStartPractice() {
-    questionsStore.applyOrderAndQuantity(practiceStore.practiceFilter);
-    navigate("/practice-session");
   }
 
   if (!isLoading && hasStudentAccess === false) return <Navigate to="/trial-expired" />;

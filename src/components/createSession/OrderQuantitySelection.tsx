@@ -1,6 +1,6 @@
 import { Box, Slider, Stack, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
-import { QuestionsOrder } from "../../models/PracticeFilter";
+import { familiarityKeyMap, QuestionsOrder } from "../../models/PracticeFilter";
 import { useServiceProvider } from "../../services/ServiceProvider";
 import FilterOption from "./FamiliarityOption";
 
@@ -17,10 +17,16 @@ export const OrderQuantitySelection = observer(() => {
   };
 
   const onQuanityChange = (quantity: number) => {
-    practiceStore.setQuestionsCount(quantity);
+    practiceStore.setQuestionAmount(quantity);
   };
 
-  const questionsCount = questionsStore.questions.length;
+  const selectedFamiliarity = practiceFilter.familiarity;
+  const familiarityCounts = questionsStore.familiarityCounts;
+  const questionsCount =
+    familiarityCounts && familiarityKeyMap[selectedFamiliarity]
+      ? familiarityCounts[familiarityKeyMap[selectedFamiliarity]]
+      : 0;
+
   let maxQuestionsCount = 100;
   if (myProfile?.isOnFreeTrial) {
     maxQuestionsCount = Math.min(100, questionsCount, myProfile.remainingTrialQuestions || 0);
