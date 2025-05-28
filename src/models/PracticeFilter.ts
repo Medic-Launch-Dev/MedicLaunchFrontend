@@ -8,8 +8,15 @@ export enum Familiarity {
     AllQuestions = "AllQuestions"
 }
 
+export const familiarityKeyMap = {
+    [Familiarity.NewQuestions]: "newQuestions",
+    [Familiarity.IncorrectQuestions]: "incorrectQuestions",
+    [Familiarity.FlaggedQuestions]: "flaggedQuestions",
+    [Familiarity.AllQuestions]: "allQuestions",
+  } as const;
+
 export enum QuestionsOrder {
-    OrderBySpeciality = "Order By Speciality",
+    OrderBySpeciality = "OrderBySpeciality",
     Randomized = "Randomized"
 }
 
@@ -18,14 +25,14 @@ export class PracticeFilter {
         this.specialityIds = [];
         this.familiarity = Familiarity.NewQuestions;
         this.selectionOrder = QuestionsOrder.Randomized;
-        this.questionsCount = 20;
+        this.amount = 20;
         this.allSpecialitiesSelected = false;
         makeAutoObservable(this);
     }
     specialityIds: string[];
     familiarity: Familiarity;
     selectionOrder: QuestionsOrder;
-    questionsCount: number;
+    amount: number;
     questionType: string = QuestionType.General
     allSpecialitiesSelected: boolean;
 }

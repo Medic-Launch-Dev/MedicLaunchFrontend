@@ -1,4 +1,3 @@
-// New page for managing saved clinical cases, similar to RevisionNotes UI
 import { Add } from "@mui/icons-material";
 import { Button, Card, Divider, Stack, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
@@ -9,18 +8,12 @@ import LinkButton from "../components/util/LinkButton";
 import { ClinicalCase } from "../models/ClinicalCaseCapture";
 import { useServiceProvider } from "../services/ServiceProvider";
 import { primaryGradientText } from "../theme";
-import useExtensions from "../components/tiptap/useExtensions";
-import { RichTextReadOnly } from "mui-tiptap";
 import DeleteClinicalCaseButton from "../components/clinicalCases/DeleteClinicalCaseButton";
 
 function ClinicalCases() {
   const { clinicalCaseCaptureStore, accountStore } = useServiceProvider();
   const { hasStudentAccess, isLoading } = accountStore;
   const [cases, setCases] = useState<ClinicalCase[]>([]);
-
-  const extensions = useExtensions({
-    placeholder: ""
-  });
 
   useEffect(() => {
     fetchCases();

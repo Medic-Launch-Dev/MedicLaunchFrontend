@@ -36,14 +36,10 @@ function ClinicalCaseView() {
 
   return (
     <Page withNav maxWidth="md">
-      <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+      <Stack direction="row" alignItems="center" mb={3}>
         <LinkButton to="/clinical-cases" variant="text" startIcon={<ChevronLeft />}>
           Back to Cases
         </LinkButton>
-        <Typography variant="h2" sx={primaryGradientText} align="center">
-          Clinical Case
-        </Typography>
-        <Box sx={{ width: 160 }} />
       </Stack>
       <Card sx={{ p: 4 }}>
         {loading ? (
