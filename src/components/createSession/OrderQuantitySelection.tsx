@@ -21,11 +21,11 @@ export const OrderQuantitySelection = observer(() => {
   };
 
   const questionsCount = questionsStore.questions.length;
-  let maxQuestionsCount = 200;
+  let maxQuestionsCount = 100;
   if (myProfile?.isOnFreeTrial) {
-    maxQuestionsCount = Math.min(200, questionsCount, myProfile.remainingTrialQuestions || 0);
+    maxQuestionsCount = Math.min(100, questionsCount, myProfile.remainingTrialQuestions || 0);
   } else {
-    maxQuestionsCount = Math.min(200, questionsCount);
+    maxQuestionsCount = Math.min(100, questionsCount);
   }
 
   return (

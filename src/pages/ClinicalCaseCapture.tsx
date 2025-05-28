@@ -169,7 +169,7 @@ function ClinicalCaseCapture() {
             }
             {!loadingGenerate && generatedCase && (
               <Stack spacing={2}>
-                <Stack direction="row" alignItems="top" justifyContent="space-between" spacing={1}>
+                <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={1}>
                   <Typography variant="h3">
                     {generatedCase.title}
                   </Typography>
