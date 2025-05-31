@@ -142,7 +142,7 @@ function RevisionNotes() {
                 <TableRow>
                   <TableCell colSpan={5}>
                     <Stack alignItems="center" my={3}>
-                      No notes in this cateogry
+                      No notes in this category
                     </Stack>
                   </TableCell>
                 </TableRow>
