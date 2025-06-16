@@ -1,4 +1,4 @@
-import { Check } from "@mui/icons-material";
+import { Check, Launch } from "@mui/icons-material";
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grid, Paper, Snackbar, Stack, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
@@ -103,19 +103,15 @@ function UserProfile({ adminView }: UserProfileProps) {
                   )
                 }
               </Stack>
-              {/* <Divider sx={{ my: 2 }} />
-              {
-                accountStore.isSubscribed ?
-                  <Stack direction="row" justifyContent="space-between">
-                    <SubscriptionField label="Subscription" value="UKMLA" />
-                    <SubscriptionField label="Plan" value={`${userProfile?.subscriptionMonths} month`} />
-                    <SubscriptionField label="Date purchased" value={formatDate(userProfile?.subscriptionPurchaseDate)} />
-                  </Stack>
-                  :
-                  <Typography textAlign="center" py={2}>No subscription active</Typography>
-              } */}
+              <Divider sx={{ my: 2 }} />
+              <Stack direction="row" justifyContent="space-between" alignItems="center">
+                <Typography fontSize={17} fontWeight={500}>My Affiliate Portal</Typography>
+                <LinkButton to="https://mediclaunch.endorsely.com/" target="_blank" variant="contained" size="small" endIcon={<Launch />}>
+                  Open Portal
+                </LinkButton>
+              </Stack>
             </Paper>
-            <Paper sx={{ p: 3, mt: 3 }}>
+            <Paper sx={{ p: 3, mt: 2 }}>
               <Stack direction="row" justifyContent="space-between" alignItems="center">
                 <Typography fontSize={17} fontWeight={500}>My Courses</Typography>
                 <Button size="small" variant="contained" disabled>
