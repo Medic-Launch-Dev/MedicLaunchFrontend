@@ -51,6 +51,7 @@ import {
 import theme from "./theme";
 import ClinicalCases from './pages/ClinicalCases';
 import ClinicalCaseView from './pages/ClinicalCaseView';
+import WhiteboardMedicine from './pages/WhiteboardMedicine';
 
 const App = () => {
   const router = createBrowserRouter([
@@ -167,6 +168,10 @@ const App = () => {
         {
           path: "select-mock",
           element: <SelectMock />
+        },
+        {
+          path: "whiteboard-medicine",
+          element: <WhiteboardMedicine />
         },
         {
           path: "payment-complete",
