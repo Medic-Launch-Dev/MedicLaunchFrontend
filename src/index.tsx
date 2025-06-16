@@ -49,6 +49,9 @@ import {
   ServiceProviderConsumer,
 } from "./services/ServiceProvider";
 import theme from "./theme";
+import ClinicalCases from './pages/ClinicalCases';
+import ClinicalCaseView from './pages/ClinicalCaseView';
+import WhiteboardMedicine from './pages/WhiteboardMedicine';
 
 const App = () => {
   const router = createBrowserRouter([
@@ -139,8 +142,16 @@ const App = () => {
           element: <EditTextbookLesson />
         },
         {
-          path: "clinical-case-capture",
+          path: "clinical-cases",
+          element: <ClinicalCases />
+        },
+        {
+          path: "clinical-cases/generate",
           element: <ClinicalCaseCapture />
+        },
+        {
+          path: "clinical-cases/:id",
+          element: <ClinicalCaseView />
         },
         {
           path: "revision-notes",
@@ -157,6 +168,10 @@ const App = () => {
         {
           path: "select-mock",
           element: <SelectMock />
+        },
+        {
+          path: "whiteboard-medicine",
+          element: <WhiteboardMedicine />
         },
         {
           path: "payment-complete",

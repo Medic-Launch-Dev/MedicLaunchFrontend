@@ -1,10 +1,14 @@
 name: Medic Launch Prod Deployment
 on:
-    workflow_dispatch:
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write       # REQUIRED for OIDC
+      contents: read        # Required for actions/checkout
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
@@ -18,25 +22,27 @@ jobs:
       run: |
         npm ci
         CI=false npm run build:prod
-        
-    - uses: azure/login@v1
+
+    - name: Login to Azure using OIDC
+      uses: azure/login@v1
       with:
-          creds: ${{ secrets.AZURE_CREDENTIALS_PRODUCTION }}
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
     - name: Upload to blob storage
       uses: azure/CLI@v1
       with:
         inlineScript: |
-            az storage blob upload-batch --account-name mediclaunchprod --auth-mode key -d '$web' --source ./build --overwrite
+          az storage blob upload-batch --account-name mediclaunchprod --auth-mode key -d '$web' --source ./build --overwrite
+
     - name: Purge CDN endpoint
       uses: azure/CLI@v1
       with:
         inlineScript: |
-           az cdn endpoint purge --content-paths  "/*" --profile-name "mediclaunchprod" --name "mediclaunchprod.azureedge.net" --resource-group "mediclaunch-prod"
+          az cdn endpoint purge --content-paths "/*" --profile-name "mediclaunchprod" --name "mediclaunchprod.azureedge.net" --resource-group "mediclaunch-prod"
 
-
-  # Azure logout
     - name: logout
-      run: |
-            az logout
       if: always()
+      run: |
+        az logout

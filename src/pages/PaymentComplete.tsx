@@ -1,8 +1,9 @@
 import { Stack, Typography } from "@mui/material";
 import Page from "../components/nav/Page";
 import LinkButton from "../components/util/LinkButton";
+import { observer } from "mobx-react-lite";
 
-export default function PaymentComplete() {
+function PaymentComplete() {
   return (
     <Page maxWidth="sm" sx={{ height: '100%' }}>
       <Stack height="100%" alignItems="center" justifyContent="center">
@@ -14,9 +15,11 @@ export default function PaymentComplete() {
           Your learning companion for medical excellence!
         </Typography>
         <LinkButton to="/" sx={{ mt: 10 }}>
-           Go to Study Portal
+          Go to Study Portal
         </LinkButton>
       </Stack>
     </Page>
   );
 }
+
+export default observer(PaymentComplete);

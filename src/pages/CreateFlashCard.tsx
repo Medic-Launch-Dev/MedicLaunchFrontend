@@ -11,7 +11,7 @@ import { Flashcard } from "../models/Flashcard";
 import { useServiceProvider } from "../services/ServiceProvider";
 import { primaryGradientText } from "../theme";
 
-const CreateFlashCard = () => {
+function CreateFlashCard() {
   const navigate = useNavigate();
   const { showSnackbar, snackbarProps } = useSnackbar();
 

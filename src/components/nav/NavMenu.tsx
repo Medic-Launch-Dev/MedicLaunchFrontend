@@ -16,7 +16,7 @@ function NavMenu({ sx, ...rest }: NavMenuProps) {
 
   const matchHome = useMatch("/");
   const matchClinicalCompanion = useMatch("/clinical-companion/*");
-  const matchClinicalCaseCapture = useMatch("/clinical-case-capture/*");
+  const matchCaseCapture = useMatch("/clinical-cases/*");
   const matchMyProfile = useMatch("/my-profile");
   const matchAuthorPortal = useMatch("/author-portal");
   const matchUserManagement = useMatch("/user-management");
@@ -47,10 +47,10 @@ function NavMenu({ sx, ...rest }: NavMenuProps) {
           <Box sx={{ m: 4 }}>
             <img src={LogoWhite} width={120} />
           </Box>
-          <Stack sx={{ width: '100%', pt: 4 }} gap={1.5}>
+          <Stack sx={{ width: '100%', pt: 4 }} gap={0.5}>
             <NavLink text="Study Portal" selected={!!matchHome} href="/" />
-            <NavLink text="Clinical Companion" selected={!!matchClinicalCompanion} href="/clinical-companion" tag="New" />
-            <NavLink text="Case Capture" selected={!!matchClinicalCaseCapture} href="/clinical-case-capture" tag="New" />
+            <NavLink text="Clinical Companion" selected={!!matchClinicalCompanion} href="/clinical-companion" />
+            <NavLink text="Case Capture" selected={!!matchCaseCapture} href="/clinical-cases" tag="New" />
             <NavLink text="My Profile" selected={!!matchMyProfile} href="/my-profile" />
             <NavLink text="Community" href="https://medic-launch.circle.so/" external />
             {hasAuthorAccess && <NavLink text="Author Portal" selected={!!matchAuthorPortal} href="/author-portal" />}

@@ -5,8 +5,9 @@ import Page from "../components/nav/Page";
 import TextbookLessonContent from "../components/textbook/TextbookLessonContent";
 import { TextbookLesson as TextbookLessonModel } from "../models/TextbookLesson";
 import { useServiceProvider } from "../services/ServiceProvider";
+import { observer } from "mobx-react-lite";
 
-const TextbookLesson = () => {
+function TextbookLesson() {
   const { specialityId = "" } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
   const lessonId = searchParams.get("lessonId") || "";
@@ -102,4 +103,4 @@ const TextbookLesson = () => {
   );
 };
 
-export default TextbookLesson;
+export default observer(TextbookLesson);

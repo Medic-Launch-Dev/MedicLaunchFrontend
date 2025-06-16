@@ -39,7 +39,7 @@ function Root() {
                 alignItems="center"
               >
                 <Typography variant="h2" color="#fff">Welcome, {myProfile?.firstName}!</Typography>
-                <img src={WelcomeImg} height={140} />
+                <img src={WelcomeImg} height={130} />
               </Stack>
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -53,7 +53,7 @@ function Root() {
                     </Button>
                   </Link>
                 }
-                icon={<img src={QuestionBankIcon} width={64} />}
+                icon={<img src={QuestionBankIcon} width={56} />}
               >
                 Select specialities and filter questions in your personal portal
               </Card>
@@ -69,7 +69,7 @@ function Root() {
                     </Button>
                   </Link>
                 }
-                icon={<img src={FlashCardsIcon} width={64} />}
+                icon={<img src={FlashCardsIcon} width={56} />}
               >
                 Interactive, efficient flashcard revision
               </Card>
@@ -87,7 +87,7 @@ function Root() {
                       <Button variant="contained">Start Mock</Button>
                     </Link>
                 }
-                icon={<img src={MockExamIcon} width={64} />}
+                icon={<img src={MockExamIcon} width={56} />}
               >
                 Challenge yourself through realistic exam simulations
               </Card>
@@ -102,7 +102,7 @@ function Root() {
                     </Button>
                   </Link>
                 }
-                icon={<img src={NotesIcon} width={64} />}
+                icon={<img src={NotesIcon} width={56} />}
               >
                 Create notes to help you master medical knowledge efficiently
               </Card>
@@ -111,7 +111,7 @@ function Root() {
               <Card
                 title="Podcasts"
                 action={<LinkButton to="https://www.youtube.com/playlist?list=PL7lBz-Tdd6BVN7QHSe8quEkxa4JlA5WTL" target='_blank'>Listen</LinkButton>}
-                icon={<img src={PodcastsIcon} width={64} />}
+                icon={<img src={PodcastsIcon} width={56} />}
               >
                 Insightful discussions, clinical gems
               </Card>
@@ -120,7 +120,7 @@ function Root() {
               <Card
                 title="Courses"
                 action={<LinkButton to="https://www.mediclaunch.com/courses" target='_blank'>See Courses</LinkButton>}
-                icon={<img src={CoursesIcon} width={64} />}
+                icon={<img src={CoursesIcon} width={56} />}
               >
                 Explore courses and webinars tailored to expand your skills and knowledge
               </Card>

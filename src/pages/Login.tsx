@@ -7,8 +7,9 @@ import * as Yup from "yup";
 import AuthLayout from "../components/auth/AuthLayout";
 import { useSnackbar } from "../hooks/useSnackbar";
 import { useAuth } from "../services/AuthProvider";
+import { observer } from "mobx-react-lite";
 
-export default function Login() {
+function Login() {
   const { showSnackbar, snackbarProps } = useSnackbar();
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -117,3 +118,5 @@ export default function Login() {
     </>
   );
 }
+
+export default observer(Login);

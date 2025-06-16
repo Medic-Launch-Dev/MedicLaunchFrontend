@@ -57,7 +57,8 @@ function Subscribe() {
   async function handlePayment() {
     try {
       setLoading(true);
-      const checkoutSessionUrl = await paymentStore.createCheckoutSession(selectedPlanLookupKey);
+      const endorselyReferral = (window as any).endorsely_referral;
+      const checkoutSessionUrl = await paymentStore.createCheckoutSession(selectedPlanLookupKey, endorselyReferral);
       window.location.href = checkoutSessionUrl;
       setLoading(false);
     } catch (error) {

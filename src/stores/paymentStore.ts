@@ -8,8 +8,8 @@ export class PaymentStore {
         this.apiClient = apiClient;
     }
 
-    async createCheckoutSession(planLookupKey: PlanLookupKey) {
-        return await this.apiClient.createCheckoutSession(planLookupKey);
+    async createCheckoutSession(planLookupKey: PlanLookupKey, endorselyReferral?: string) {
+        return await this.apiClient.createCheckoutSession(planLookupKey, endorselyReferral);
     }
 
     async createBillingPortalSession() {

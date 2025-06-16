@@ -1,5 +1,6 @@
 import { Box, Stack, Typography } from "@mui/material";
 import { primaryGradient, primaryGradientText } from "../../theme";
+import { grey } from "@mui/material/colors";
 
 interface CardProps {
   title: string;
@@ -16,8 +17,8 @@ export default function Card({ title, children, primary, action, icon }: CardPro
       justifyContent="space-between"
       sx={{
         p: 2.5,
-        borderRadius: 2,
-        color: primary ? '#fff' : '#046E9B',
+        borderRadius: 1.5,
+        color: primary ? '#fff' : grey[700],
         border: primary ? undefined : '1px solid #DFE5F9',
         background: primary ? primaryGradient : "#fff",
         height: '100%'
@@ -27,7 +28,7 @@ export default function Card({ title, children, primary, action, icon }: CardPro
         <Typography variant="h4" sx={primary ? undefined : primaryGradientText}>
           {title}
         </Typography>
-        <Box sx={{ my: 1 }}>
+        <Box sx={{ my: 0.5 }}>
           {
             typeof children === 'string' ?
               <Typography>{children}</Typography>
@@ -36,7 +37,7 @@ export default function Card({ title, children, primary, action, icon }: CardPro
           }
         </Box>
       </div>
-      <Stack sx={{ mt: 1 }} direction="row" justifyContent="space-between" alignItems="baseline">
+      <Stack sx={{ mt: 1 }} direction="row" justifyContent="space-between" alignItems="end">
         <div>{action}</div>
         <div>{icon}</div>
       </Stack>

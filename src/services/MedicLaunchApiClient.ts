@@ -1,5 +1,5 @@
 import { AxiosInstance } from "axios";
-import { ClinicalCaseDetails } from "../models/ClinicalCaseCapture";
+import { ClinicalCase, GenerateClinicalCase } from "../models/ClinicalCaseCapture";
 import { FamiliarityCounts } from "../models/FamiliarityCounts";
 import { Flashcard } from "../models/Flashcard";
 import { PlanLookupKey } from "../models/Payment";
@@ -107,9 +107,9 @@ export default class MedicLaunchApiClient {
     return lesson.data;
   }
 
-  async generateClinicalCase(caseDetails: ClinicalCaseDetails): Promise<string> {
+  async generateClinicalCase(caseDetails: GenerateClinicalCase): Promise<ClinicalCase> {
     const response = await this.axios.post(
-      `${this.apiUrl}/clinicalCaseCapture/generate`,
+      `${this.apiUrl}/clinicalCases/generate`,
       caseDetails
     );
     return response.data;
@@ -182,8 +182,10 @@ export default class MedicLaunchApiClient {
     return response.data;
   }
 
-  async createCheckoutSession(planLookupKey: PlanLookupKey): Promise<string> {
-    const response = await this.axios.post(`${this.apiUrl}/payment/create-checkout-session?planLookupKey=${planLookupKey}`);
+  async createCheckoutSession(planLookupKey: PlanLookupKey, endorselyReferral?: string): Promise<string> {
+    const response = await this.axios.post(
+      `${this.apiUrl}/payment/create-checkout-session?planLookupKey=${planLookupKey}&endorselyReferral=${endorselyReferral || ''}`
+    );
     const sessionUrl = response.data.sessionUrl;
     return sessionUrl;
   }
@@ -289,5 +291,18 @@ export default class MedicLaunchApiClient {
       this.axios.delete(`${this.apiUrl}/${endpoint}/${id}`)
     );
     return response.status === 200;
+  }
+
+  async createClinicalCase(clinicalCase: ClinicalCase): Promise<ClinicalCase> {
+    const response = await this.axios.post(`${this.apiUrl}/clinicalCases`, clinicalCase);
+    return response.data;
+  }
+
+  async updateClinicalCase(id: string, clinicalCase: ClinicalCase) {
+    await this.putData(`clinicalCases/${id}`, clinicalCase);
+  }
+
+  async deleteClinicalCase(id: string) {
+    await this.deleteData('clinicalCases', id);
   }
 }

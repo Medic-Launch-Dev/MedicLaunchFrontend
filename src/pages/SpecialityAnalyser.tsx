@@ -5,8 +5,9 @@ import LinkButton from "../components/util/LinkButton";
 import { SpecialityAnalytics } from "../models/Speciality";
 import { useServiceProvider } from "../services/ServiceProvider";
 import { primaryGradientText } from "../theme";
+import { observer } from "mobx-react-lite";
 
-export default function SpecialityAnalyser() {
+function SpecialityAnalyser() {
   const { questionsStore } = useServiceProvider();
   const [loading, setLoading] = useState(true);
   const [specialityAnalytics, setSpecialityAnalytics] = useState<SpecialityAnalytics[]>([]);
@@ -73,3 +74,5 @@ export default function SpecialityAnalyser() {
     </Page>
   );
 }
+
+export default observer(SpecialityAnalyser);

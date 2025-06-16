@@ -7,6 +7,7 @@ import * as yup from "yup";
 import AuthLayout from "../components/auth/AuthLayout";
 import { useSnackbar } from "../hooks/useSnackbar";
 import { useServiceProvider } from "../services/ServiceProvider";
+import { observer } from "mobx-react-lite";
 
 const validationSchema = yup.object({
   email: yup
@@ -15,7 +16,7 @@ const validationSchema = yup.object({
     .email("Enter a valid email"),
 });
 
-export default function ForgotPassword() {
+function ForgotPassword() {
   const { userStore } = useServiceProvider();
   const { showSnackbar, snackbarProps } = useSnackbar();
   const [emailSent, setEmailSent] = useState(false);
@@ -86,3 +87,5 @@ export default function ForgotPassword() {
     </>
   );
 }
+
+export default observer(ForgotPassword);

@@ -11,6 +11,7 @@ import { useSnackbar } from "../hooks/useSnackbar";
 import { MedicLaunchUser } from "../models/User";
 import { useServiceProvider } from "../services/ServiceProvider";
 import { AxiosError } from "axios";
+import { observer } from "mobx-react-lite";
 
 interface FormValues {
   firstName: string;
@@ -43,7 +44,7 @@ const validationSchema = yup.object({
     )
 });
 
-export default function Register() {
+function Register() {
   const navigate = useNavigate();
   const { userStore } = useServiceProvider();
   const { showSnackbar, snackbarProps } = useSnackbar();
@@ -77,7 +78,7 @@ export default function Register() {
         navigate(`/confirm-email?email=${encodeURIComponent(values.email)}`);
     } catch (e: any) {
       console.error(e);
-      showSnackbar(e.response.data[0].description , 'error');
+      showSnackbar(e.response.data[0].description, 'error');
     }
   }
 
@@ -195,3 +196,5 @@ export default function Register() {
     </>
   );
 }
+
+export default observer(Register);

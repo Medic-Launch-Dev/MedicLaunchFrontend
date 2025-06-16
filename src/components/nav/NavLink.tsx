@@ -16,7 +16,7 @@ export default function NavLink({ text, href, selected, tag, external }: NavLink
       <Box
         sx={{
           fontSize: 16,
-          fontWeight: 600,
+          fontWeight: selected ? 600 : 500,
           pl: 3,
           py: 1,
           cursor: 'pointer',

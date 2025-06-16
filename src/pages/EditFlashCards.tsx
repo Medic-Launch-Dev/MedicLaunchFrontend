@@ -12,7 +12,7 @@ import Speciality from "../models/Speciality";
 import { useServiceProvider } from "../services/ServiceProvider";
 import { primaryGradientText } from "../theme";
 
-const EditFlashCards = () => {
+function EditFlashCards() {
   const [searchParams] = useSearchParams();
   const defaultSpeciality = searchParams.get('speciality');
 
