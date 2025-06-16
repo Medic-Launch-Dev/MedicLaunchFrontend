@@ -1,4 +1,5 @@
 import { Box } from "@mui/material";
+import { grey } from "@mui/material/colors";
 import { NavLink as RouterNavLink } from "react-router-dom";
 
 interface NavLinkProps {
@@ -14,7 +15,7 @@ export default function NavLink({ text, href, selected, tag }: NavLinkProps) {
       <Box
         sx={{
           fontSize: 16,
-          fontWeight: selected ? 600 : 500,
+          fontWeight: 600,
           pl: 3,
           py: 1,
           cursor: 'pointer',
