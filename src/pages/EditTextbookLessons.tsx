@@ -12,7 +12,7 @@ import { TextbookLesson } from "../models/TextbookLesson";
 import { useServiceProvider } from "../services/ServiceProvider";
 import { primaryGradientText } from "../theme";
 
-const EditTextbookLessons = () => {
+function EditTextbookLessons() {
   const [searchParams] = useSearchParams();
   const defaultSpeciality = searchParams.get('speciality');
 

@@ -8,8 +8,9 @@ import MockSelector from "../components/practiceSession/MockSelector";
 import LinkButton from "../components/util/LinkButton";
 import { QuestionType } from "../models/Question";
 import { useServiceProvider } from "../services/ServiceProvider";
+import { observer } from "mobx-react-lite";
 
-export default function SelectMock() {
+function SelectMock() {
   const { questionsStore } = useServiceProvider();
   const { accountStore: { hasStudentAccess, isLoading } } = useServiceProvider();
   const [selectedMock, setSelectedMock] = useState<QuestionType.PaperOneMockExam | QuestionType.PaperTwoMockExam>(QuestionType.PaperOneMockExam);
@@ -121,3 +122,5 @@ export default function SelectMock() {
     </Page>
   )
 }
+
+export default observer(SelectMock);

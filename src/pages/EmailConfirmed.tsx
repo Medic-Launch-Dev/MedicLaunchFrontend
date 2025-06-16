@@ -1,8 +1,9 @@
 import { Stack } from "@mui/material";
 import AuthLayout from "../components/auth/AuthLayout";
 import LinkButton from "../components/util/LinkButton";
+import { observer } from "mobx-react-lite";
 
-export default function EmailConfirmed() {
+function EmailConfirmed() {
   return (
     <AuthLayout title="Email confirmed" subtitle="Thanks for confirming your email, you may now log in.">
       <Stack spacing={4} alignItems="center">
@@ -20,3 +21,5 @@ export default function EmailConfirmed() {
     </AuthLayout>
   );
 }
+
+export default observer(EmailConfirmed);

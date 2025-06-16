@@ -1,8 +1,9 @@
 import { Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import Page from "../components/nav/Page";
 import LinkButton from "../components/util/LinkButton";
+import { observer } from "mobx-react-lite";
 
-export default function TrialExpired() {
+function TrialExpired() {
   return (
     <Page withNav fullWidth>
       <Dialog open={true} fullWidth maxWidth="xs">
@@ -22,3 +23,5 @@ export default function TrialExpired() {
     </Page>
   )
 }
+
+export default observer(TrialExpired);

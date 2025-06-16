@@ -7,8 +7,9 @@ import Page from "../components/nav/Page";
 import LinkButton from "../components/util/LinkButton";
 import { SpecialitySelector } from "../components/util/SpecialitySelector";
 import { useServiceProvider } from "../services/ServiceProvider";
+import { observer } from "mobx-react-lite";
 
-export default function SelectFlashCards() {
+function SelectFlashCards() {
   const navigate = useNavigate();
   const { accountStore: { hasStudentAccess, isLoading, isOnFreeTrial } } = useServiceProvider();
   const [selectedSpecialityId, setSelectedSpecialityId] = useState("");
@@ -83,3 +84,5 @@ export default function SelectFlashCards() {
     </Page>
   )
 }
+
+export default observer(SelectFlashCards);

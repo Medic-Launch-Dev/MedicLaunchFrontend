@@ -7,8 +7,9 @@ import Page from "../components/nav/Page";
 import LinkButton from "../components/util/LinkButton";
 import { SpecialitySelector } from "../components/util/SpecialitySelector";
 import { useServiceProvider } from "../services/ServiceProvider";
+import { observer } from "mobx-react-lite";
 
-export default function TextbookLessons() {
+function TextbookLessons() {
   const navigate = useNavigate();
   const { accountStore: { hasStudentAccess, isLoading } } = useServiceProvider();
   const [selectedSpecialityId, setSelectedSpecialityId] = useState("");
@@ -81,3 +82,5 @@ export default function TextbookLessons() {
     </Page>
   );
 }
+
+export default observer(TextbookLessons);

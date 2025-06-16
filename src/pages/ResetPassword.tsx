@@ -7,6 +7,7 @@ import * as yup from "yup";
 import AuthLayout from "../components/auth/AuthLayout";
 import { useSnackbar } from "../hooks/useSnackbar";
 import { useServiceProvider } from "../services/ServiceProvider";
+import { observer } from "mobx-react-lite";
 
 const validationSchema = yup.object({
   password: yup
@@ -23,7 +24,7 @@ const validationSchema = yup.object({
     .oneOf([yup.ref('password')], "Passwords must match"),
 });
 
-export default function ResetPassword() {
+function ResetPassword() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { userStore } = useServiceProvider();
@@ -113,3 +114,5 @@ export default function ResetPassword() {
     </>
   );
 }
+
+export default observer(ResetPassword);

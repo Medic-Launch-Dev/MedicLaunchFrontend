@@ -6,8 +6,9 @@ import { useSearchParams } from "react-router-dom";
 import AuthLayout from "../components/auth/AuthLayout";
 import { useSnackbar } from "../hooks/useSnackbar";
 import { useServiceProvider } from "../services/ServiceProvider";
+import { observer } from "mobx-react-lite";
 
-export default function ConfirmEmail() {
+function ConfirmEmail() {
   const [searchParams] = useSearchParams();
   const email = searchParams.get("email");
   const { showSnackbar, snackbarProps } = useSnackbar();
@@ -59,3 +60,5 @@ export default function ConfirmEmail() {
     </AuthLayout>
   );
 }
+
+export default observer(ConfirmEmail);
