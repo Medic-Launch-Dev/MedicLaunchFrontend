@@ -182,8 +182,10 @@ export default class MedicLaunchApiClient {
     return response.data;
   }
 
-  async createCheckoutSession(planLookupKey: PlanLookupKey): Promise<string> {
-    const response = await this.axios.post(`${this.apiUrl}/payment/create-checkout-session?planLookupKey=${planLookupKey}`);
+  async createCheckoutSession(planLookupKey: PlanLookupKey, endorselyReferral?: string): Promise<string> {
+    const response = await this.axios.post(
+      `${this.apiUrl}/payment/create-checkout-session?planLookupKey=${planLookupKey}&endorselyReferral=${endorselyReferral || ''}`
+    );
     const sessionUrl = response.data.sessionUrl;
     return sessionUrl;
   }
