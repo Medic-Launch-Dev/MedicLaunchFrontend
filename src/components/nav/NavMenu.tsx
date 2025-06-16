@@ -47,7 +47,7 @@ function NavMenu({ sx, ...rest }: NavMenuProps) {
           <Box sx={{ m: 4 }}>
             <img src={LogoWhite} width={120} />
           </Box>
-          <Stack sx={{ width: '100%', pt: 4 }} gap={1.5}>
+          <Stack sx={{ width: '100%', pt: 4 }} gap={0.5}>
             <NavLink text="Study Portal" selected={!!matchHome} href="/" />
             <NavLink text="Clinical Companion" selected={!!matchClinicalCompanion} href="/clinical-companion" />
             <NavLink text="Case Capture" selected={!!matchCaseCapture} href="/clinical-cases" tag="New" />
