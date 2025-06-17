@@ -1,4 +1,4 @@
-import { Check, Launch } from "@mui/icons-material";
+import { CampaignOutlined, Check, CurrencyExchangeOutlined, Launch, NoteAltOutlined } from "@mui/icons-material";
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grid, Paper, Snackbar, Stack, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
@@ -9,6 +9,7 @@ import LinkButton from "../util/LinkButton";
 import EditProfileModal from "./EditProfileModal";
 import ManageSubscriptionButton from "./ManageSubscriptionButton";
 import ResetPasswordModal from "./ResetPasswordModal";
+import NotesIcon from '../../src/assets/icons/notes.svg';
 
 interface UserProfileProps {
   adminView?: boolean;
@@ -89,9 +90,12 @@ function UserProfile({ adminView }: UserProfileProps) {
             </Paper>
           </Grid>
           <Grid item xs={12} md={7}>
-            <Paper sx={{ p: 3 }}>
+            <Paper sx={{ px: 3, py: 2 }}>
               <Stack direction="row" justifyContent="space-between" alignItems="center">
-                <Typography fontSize={17} fontWeight={500}>My Subscription</Typography>
+                <Stack direction="row" alignItems="center" spacing={1}>
+                  <CurrencyExchangeOutlined color="primary" />
+                  <Typography fontSize={17} fontWeight={500}>My Subscription</Typography>
+                </Stack>
                 {
                   !adminView && (
                     accountStore.isSubscribed ?
@@ -103,9 +107,13 @@ function UserProfile({ adminView }: UserProfileProps) {
                   )
                 }
               </Stack>
-              <Divider sx={{ my: 2 }} />
+            </Paper>
+            <Paper sx={{ px: 3, py: 2, mt: 2 }}>
               <Stack direction="row" justifyContent="space-between" alignItems="center">
-                <Typography fontSize={17} fontWeight={500}>My Affiliate Portal</Typography>
+                <Stack direction="row" alignItems="center" spacing={1}>
+                  <CampaignOutlined color="primary" />
+                  <Typography fontSize={17} fontWeight={500}>My Affiliate Portal</Typography>
+                </Stack>
                 <LinkButton to="https://mediclaunch.endorsely.com/" target="_blank" variant="contained" size="small" endIcon={<Launch />}>
                   Open Portal
                 </LinkButton>

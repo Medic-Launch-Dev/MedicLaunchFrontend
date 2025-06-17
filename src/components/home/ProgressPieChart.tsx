@@ -38,8 +38,8 @@ function ProgressPieChart() {
         cy="50%"
         dataKey="value"
         nameKey="name"
-        outerRadius={70}
-        innerRadius={50}
+        outerRadius={60}
+        innerRadius={45}
         startAngle={-270}
       />
       <text
