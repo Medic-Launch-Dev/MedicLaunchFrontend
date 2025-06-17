@@ -45,7 +45,7 @@ export default function SpecialityAnalyserChart() {
   }
 
   return (
-    <Card sx={{ p: 3, mt: 2, maxHeight: 490, overflowY: 'auto' }}>
+    <Card sx={{ px: 3, py: 2, height: '100%' }}>
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <Typography color="primary" variant="h3">Speciality Analyser</Typography>
         <ToggleButton value="sort" size="small" onClick={toggleSortOrder}><Percent sx={{ fontSize: 18 }} /></ToggleButton>
@@ -55,15 +55,15 @@ export default function SpecialityAnalyserChart() {
         loading ?
           <Stack alignItems="center" my={5}><CircularProgress /></Stack>
           :
-          <Grid container alignItems="center" rowSpacing={1.5} sx={{ overflowY: 'auto' }}>
+          <Grid container alignItems="center" rowSpacing={1.5} columnSpacing={0.5} sx={{ overflowY: 'auto' }}>
             {
               getSortedAnalytics().length > 0 ?
                 getSortedAnalytics().map(({ specialityName, totalQuestions, correct, incorrect }) => (
                   <React.Fragment key={specialityName}>
-                    <Grid item xs={4}>
+                    <Grid item xs={5}>
                       <Typography variant="h6" color="#333333" fontWeight={500}>{specialityName}</Typography>
                     </Grid>
-                    <Grid item xs={8}>
+                    <Grid item xs={7}>
                       <ProgressBar correctQuestions={correct} incorrectQuestions={incorrect} totalQuestions={totalQuestions} />
                     </Grid>
                   </React.Fragment>

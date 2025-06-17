@@ -1,7 +1,7 @@
 import { Lock } from '@mui/icons-material';
 import { Button, Grid, Stack, Typography } from '@mui/material';
 import { observer } from 'mobx-react-lite';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import CoursesIcon from '../../src/assets/icons/courses.svg';
 import MockExamIcon from '../../src/assets/icons/exam.svg';
 import FlashCardsIcon from '../../src/assets/icons/flash-cards.svg';
@@ -19,8 +19,7 @@ import { useServiceProvider } from '../services/ServiceProvider';
 import { primaryGradient, unstyledLink } from '../theme';
 
 function Root() {
-  const { accountStore: { myProfile, hasStudentAccess }, questionsStore } = useServiceProvider();
-  const navigate = useNavigate();
+  const { accountStore: { myProfile, hasStudentAccess } } = useServiceProvider();
 
   return (
     <Page withNav fullWidth>
@@ -128,19 +127,32 @@ function Root() {
           </Grid>
         </Grid>
         <Grid item xs={12} lg={5}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <Card title="My UKMLA Progress">
-                <Stack alignItems="center" mt={2} mb={-1}>
-                  <ProgressPieChart />
-                </Stack>
+          <Stack sx={{ height: "100%" }} gap={2}>
+            <Grid container spacing={2} sx={{ flexShrink: 0 }}>
+              <Grid item xs={12} sm={6}>
+                <Card title="My UKMLA Progress">
+                  <Stack alignItems="center" mt={1} mb={-2}>
+                    <ProgressPieChart />
+                  </Stack>
+                </Card>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <ExamDate />
+              </Grid>
+            </Grid>
+            <div style={{ flexGrow: 1 }}>
+              <SpecialityAnalyserChart />
+            </div>
+            <div style={{ flexShrink: 0 }}>
+              <Card
+                title="Courses"
+                action={<LinkButton to="https://www.mediclaunch.com/courses" target='_blank'>See Courses</LinkButton>}
+                icon={<img src={CoursesIcon} width={56} />}
+              >
+                Explore courses and webinars tailored to expand your skills and knowledge
               </Card>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <ExamDate />
-            </Grid>
-          </Grid>
-          <SpecialityAnalyserChart />
+            </div>
+          </Stack>
         </Grid>
       </Grid>
     </Page>
