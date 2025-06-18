@@ -5,8 +5,9 @@ import React, { useEffect, useState } from "react";
 import { SpecialityAnalytics } from "../../models/Speciality";
 import { useServiceProvider } from "../../services/ServiceProvider";
 import ProgressBar from "../charts/ProgressBar";
+import { observer } from "mobx-react-lite";
 
-export default function SpecialityAnalyserChart() {
+function SpecialityAnalyserChart() {
   const { questionsStore } = useServiceProvider();
   const [loading, setLoading] = useState(true);
   const [specialityAnalytics, setSpecialityAnalytics] = useState<SpecialityAnalytics[]>([]);
@@ -77,13 +78,13 @@ export default function SpecialityAnalyserChart() {
         loading ?
           <Stack alignItems="center" my={5}><CircularProgress /></Stack>
           :
-          <Box sx={{ position: "relative", height: 540 }}>
+          <Box sx={{ position: "relative", height: 590 }}>
             <Grid
               container
               alignItems="center"
               rowSpacing={1.5}
               columnSpacing={0.5}
-              sx={{ overflowY: 'auto', height: 540, pr: 1 }}
+              sx={{ overflowY: 'auto', height: 590, pr: 1 }}
               ref={scrollRef}
             >
               {
@@ -122,3 +123,5 @@ export default function SpecialityAnalyserChart() {
     </Card>
   );
 }
+
+export default observer(SpecialityAnalyserChart);
