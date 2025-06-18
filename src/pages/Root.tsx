@@ -162,18 +162,19 @@ function Root() {
               <Card
                 title="Circle Community"
                 action={
-                  !hasStudentAccess || isOnFreeTrial ?
-                    <LinkButton to="subscribe" startIcon={<Lock />}>
-                      Subscribe to unlock
-                    </LinkButton>
-                    :
-                    <LinkButton
-                      to="https://medic-launch.circle.so/"
-                      target='_blank'
-                      endIcon={<Launch />}
-                    >
-                      View
-                    </LinkButton>
+                  <Button disabled variant='contained'>Coming Soon</Button>
+                  // !hasStudentAccess || isOnFreeTrial ?
+                  //   <LinkButton to="subscribe" startIcon={<Lock />}>
+                  //     Subscribe to unlock
+                  //   </LinkButton>
+                  //   :
+                  //   <LinkButton
+                  //     to="https://medic-launch.circle.so/"
+                  //     target='_blank'
+                  //     endIcon={<Launch />}
+                  //   >
+                  //     View
+                  //   </LinkButton>
                 }
                 icon={<img src={PeopleIcon} width={48} />}
               >
