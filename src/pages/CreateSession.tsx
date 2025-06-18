@@ -102,9 +102,9 @@ function CreateSession() {
   if (!isLoading && hasStudentAccess === false) return <Navigate to="/trial-expired" />;
 
   return (
-    <Page sx={{ height: "100%" }}>
+    <Page sx={{ height: "100%", overflow: "hidden" }}>
       <Snackbar {...snackbarProps} />
-      <Stack height="100%" gap={3} py={2}>
+      <Stack height="100%" gap={3} py={0}>
         <LinkButton to="/" sx={{ width: "max-content", flexShrink: 0 }}>
           Study Portal
         </LinkButton>
@@ -140,12 +140,21 @@ function CreateSession() {
         <Box
           sx={{
             flexGrow: 1,
-            maxHeight: "100%",
-            minHeight: 400,
-            overflowY: "hidden",
+            minHeight: 0,
+            maxHeight: "none",
+            overflow: "hidden",
+            display: "flex",
           }}
         >
-          <Stack spacing={1}>
+          <Stack
+            spacing={1}
+            sx={{
+              flexGrow: 1,
+              overflowY: "auto",
+              height: "100%",
+              minHeight: 0,
+            }}
+          >
             {
               trialQuestionLimitReached &&
               <Alert
@@ -157,7 +166,6 @@ function CreateSession() {
                   </LinkButton>
                 }
               >
-
                 You've reached the maximum number of questions you can practice while on a free trial.
               </Alert>
             }
@@ -171,8 +179,9 @@ function CreateSession() {
           alignItems="center"
           justifyContent="center"
           gap={1}
-          pt={1}
-          pb={6}
+          pt={0}
+          pb={0}
+          sx={{ flexShrink: 0 }}
         >
           <Button
             variant="outlined"
