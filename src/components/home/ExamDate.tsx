@@ -52,11 +52,11 @@ export default function ExamDate() {
         UKMLA Exam Date
       </Typography>
       <Stack sx={{ flexGrow: 1 }} alignItems="center" justifyContent="center" spacing={2}>
-        <Button variant="outlined" sx={{ borderRadius: 99 }} onClick={() => setOpen(true)}>
+        <Button variant="outlined" size="small" sx={{ borderRadius: 99, px: 2, py: 0.5 }} onClick={() => setOpen(true)}>
           {examDate ? examDate : "Enter here.."}
         </Button>
         <div>
-          <Typography sx={primaryGradientText} variant="h1" fontSize={48} fontWeight={700} align="center">
+          <Typography sx={primaryGradientText} variant="h1" fontSize={44} fontWeight={700} align="center">
             {daysLeft || "0"}
           </Typography>
           <Typography sx={primaryGradientText} variant="h4" align="center">

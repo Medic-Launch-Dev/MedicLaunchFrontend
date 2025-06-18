@@ -1,8 +1,10 @@
-import { Lock } from '@mui/icons-material';
+import { Launch, Lock } from '@mui/icons-material';
 import { Button, Grid, Stack, Typography } from '@mui/material';
 import { observer } from 'mobx-react-lite';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import CoursesIcon from '../../src/assets/icons/courses.svg';
+import PeopleIcon from '../../src/assets/icons/people.png';
+import WhiteboardIcon from '../../src/assets/icons/whiteboard.png';
 import MockExamIcon from '../../src/assets/icons/exam.svg';
 import FlashCardsIcon from '../../src/assets/icons/flash-cards.svg';
 import NotesIcon from '../../src/assets/icons/notes.svg';
@@ -19,13 +21,12 @@ import { useServiceProvider } from '../services/ServiceProvider';
 import { primaryGradient, unstyledLink } from '../theme';
 
 function Root() {
-  const { accountStore: { myProfile, hasStudentAccess }, questionsStore } = useServiceProvider();
-  const navigate = useNavigate();
+  const { accountStore: { myProfile, hasStudentAccess } } = useServiceProvider();
 
   return (
     <Page withNav fullWidth>
       <Grid container spacing={2}>
-        <Grid item xs={12} lg={7}>
+        <Grid item xs={12} lg={6}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Stack
@@ -53,7 +54,7 @@ function Root() {
                     </Button>
                   </Link>
                 }
-                icon={<img src={QuestionBankIcon} width={56} />}
+                icon={<img src={QuestionBankIcon} width={48} />}
               >
                 Select specialities and filter questions in your personal portal
               </Card>
@@ -69,7 +70,7 @@ function Root() {
                     </Button>
                   </Link>
                 }
-                icon={<img src={FlashCardsIcon} width={56} />}
+                icon={<img src={FlashCardsIcon} width={48} />}
               >
                 Interactive, efficient flashcard revision
               </Card>
@@ -87,7 +88,7 @@ function Root() {
                       <Button variant="contained">Start Mock</Button>
                     </Link>
                 }
-                icon={<img src={MockExamIcon} width={56} />}
+                icon={<img src={MockExamIcon} width={48} />}
               >
                 Challenge yourself through realistic exam simulations
               </Card>
@@ -102,7 +103,7 @@ function Root() {
                     </Button>
                   </Link>
                 }
-                icon={<img src={NotesIcon} width={56} />}
+                icon={<img src={NotesIcon} width={48} />}
               >
                 Create notes to help you master medical knowledge efficiently
               </Card>
@@ -110,8 +111,16 @@ function Root() {
             <Grid item xs={12} sm={6}>
               <Card
                 title="Podcasts"
-                action={<LinkButton to="https://www.youtube.com/playlist?list=PL7lBz-Tdd6BVN7QHSe8quEkxa4JlA5WTL" target='_blank'>Listen</LinkButton>}
-                icon={<img src={PodcastsIcon} width={56} />}
+                action={
+                  <LinkButton
+                    to="https://www.youtube.com/playlist?list=PL7lBz-Tdd6BVN7QHSe8quEkxa4JlA5WTL"
+                    target='_blank'
+                    endIcon={<Launch />}
+                  >
+                    Listen
+                  </LinkButton>
+                }
+                icon={<img src={PodcastsIcon} width={48} />}
               >
                 Insightful discussions, clinical gems
               </Card>
@@ -119,28 +128,75 @@ function Root() {
             <Grid item xs={12} sm={6}>
               <Card
                 title="Courses"
-                action={<LinkButton to="https://www.mediclaunch.com/courses" target='_blank'>See Courses</LinkButton>}
-                icon={<img src={CoursesIcon} width={56} />}
+                action={
+                  <LinkButton
+                    to="https://www.mediclaunch.com/courses"
+                    target='_blank'
+                    endIcon={<Launch />}
+                  >
+                    See Courses
+                  </LinkButton>}
+                icon={<img src={CoursesIcon} width={48} />}
               >
-                Explore courses and webinars tailored to expand your skills and knowledge
+                Explore courses and webinars tailored to expand
               </Card>
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12} lg={5}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <Card title="My UKMLA Progress">
-                <Stack alignItems="center" mt={2} mb={-1}>
-                  <ProgressPieChart />
-                </Stack>
-              </Card>
+        <Grid item xs={12} lg={6}>
+          <Stack sx={{ height: "100%" }} gap={2}>
+            <Grid container spacing={2} sx={{ flexShrink: 0 }}>
+              <Grid item xs={12} sm={6}>
+                <Card title="My UKMLA Progress">
+                  <Stack alignItems="center" mb={-4}>
+                    <ProgressPieChart />
+                  </Stack>
+                </Card>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <ExamDate />
+              </Grid>
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <ExamDate />
+            <div style={{ flexGrow: 1 }}>
+              <SpecialityAnalyserChart />
+            </div>
+            <Grid container sx={{ flexShrink: 0 }} spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <Card
+                  title="Whiteboard Medicine"
+                  action={
+                    <LinkButton
+                      to="https://www.youtube.com/playlist?list=PL7lBz-Tdd6BXbmZk6T-vTCjc7Br7Mi1Pm"
+                      target='_blank'
+                      endIcon={<Launch />}
+                    >
+                      Watch
+                    </LinkButton>
+                  }
+                  icon={<img src={WhiteboardIcon} width={48} />}
+                >
+                  Concise visual tutorials on key clinical topics
+                </Card>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Card
+                  title="Circle Community"
+                  action={
+                    <LinkButton
+                      to="https://medic-launch.circle.so/"
+                      target='_blank'
+                      endIcon={<Launch />}
+                    >
+                      View
+                    </LinkButton>
+                  }
+                  icon={<img src={PeopleIcon} width={48} />}
+                >
+                  Join our supportive community of future doctors
+                </Card>
+              </Grid>
             </Grid>
-          </Grid>
-          <SpecialityAnalyserChart />
+          </Stack>
         </Grid>
       </Grid>
     </Page>
