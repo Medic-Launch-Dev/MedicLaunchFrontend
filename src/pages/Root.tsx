@@ -3,13 +3,13 @@ import { Button, Grid, Stack, Typography } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { Link } from 'react-router-dom';
 import CoursesIcon from '../../src/assets/icons/courses.svg';
-import PeopleIcon from '../../src/assets/icons/people.png';
-import WhiteboardIcon from '../../src/assets/icons/whiteboard.png';
 import MockExamIcon from '../../src/assets/icons/exam.svg';
 import FlashCardsIcon from '../../src/assets/icons/flash-cards.svg';
 import NotesIcon from '../../src/assets/icons/notes.svg';
+import PeopleIcon from '../../src/assets/icons/people.png';
 import PodcastsIcon from '../../src/assets/icons/podcasts.svg';
 import QuestionBankIcon from '../../src/assets/icons/question-bank.svg';
+import WhiteboardIcon from '../../src/assets/icons/whiteboard.png';
 import WelcomeImg from '../../src/assets/images/Welcome.png';
 import ExamDate from '../components/home/ExamDate';
 import ProgressPieChart from '../components/home/ProgressPieChart';
@@ -21,12 +21,12 @@ import { useServiceProvider } from '../services/ServiceProvider';
 import { primaryGradient, unstyledLink } from '../theme';
 
 function Root() {
-  const { accountStore: { myProfile, hasStudentAccess } } = useServiceProvider();
+  const { accountStore: { myProfile, hasStudentAccess, isOnFreeTrial } } = useServiceProvider();
 
   return (
     <Page withNav fullWidth>
       <Grid container spacing={2}>
-        <Grid item xs={12} lg={6}>
+        <Grid item xs={12} lg={7}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Stack
@@ -79,12 +79,12 @@ function Root() {
               <Card
                 title="Mock Examination"
                 action={
-                  myProfile?.isOnFreeTrial ?
+                  !hasStudentAccess || isOnFreeTrial ?
                     <LinkButton to="subscribe" startIcon={<Lock />}>
                       Subscribe to unlock
                     </LinkButton>
                     :
-                    <Link style={unstyledLink} to={hasStudentAccess ? "select-mock" : "trial-expired"}>
+                    <Link style={unstyledLink} to={"select-mock"}>
                       <Button variant="contained">Start Mock</Button>
                     </Link>
                 }
@@ -141,9 +141,48 @@ function Root() {
                 Explore courses and webinars tailored to expand
               </Card>
             </Grid>
+            <Grid item xs={12} sm={6}>
+              <Card
+                title="Whiteboard Medicine"
+                action={
+                  <LinkButton
+                    to="https://www.youtube.com/playlist?list=PL7lBz-Tdd6BXbmZk6T-vTCjc7Br7Mi1Pm"
+                    target='_blank'
+                    endIcon={<Launch />}
+                  >
+                    Watch
+                  </LinkButton>
+                }
+                icon={<img src={WhiteboardIcon} width={48} />}
+              >
+                Concise visual tutorials on key clinical topics
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Card
+                title="Circle Community"
+                action={
+                  !hasStudentAccess || isOnFreeTrial ?
+                    <LinkButton to="subscribe" startIcon={<Lock />}>
+                      Subscribe to unlock
+                    </LinkButton>
+                    :
+                    <LinkButton
+                      to="https://medic-launch.circle.so/"
+                      target='_blank'
+                      endIcon={<Launch />}
+                    >
+                      View
+                    </LinkButton>
+                }
+                icon={<img src={PeopleIcon} width={48} />}
+              >
+                Join our supportive community of future doctors
+              </Card>
+            </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12} lg={6}>
+        <Grid item xs={12} lg={5}>
           <Stack sx={{ height: "100%" }} gap={2}>
             <Grid container spacing={2} sx={{ flexShrink: 0 }}>
               <Grid item xs={12} sm={6}>
@@ -160,42 +199,6 @@ function Root() {
             <div style={{ flexGrow: 1 }}>
               <SpecialityAnalyserChart />
             </div>
-            <Grid container sx={{ flexShrink: 0 }} spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <Card
-                  title="Whiteboard Medicine"
-                  action={
-                    <LinkButton
-                      to="https://www.youtube.com/playlist?list=PL7lBz-Tdd6BXbmZk6T-vTCjc7Br7Mi1Pm"
-                      target='_blank'
-                      endIcon={<Launch />}
-                    >
-                      Watch
-                    </LinkButton>
-                  }
-                  icon={<img src={WhiteboardIcon} width={48} />}
-                >
-                  Concise visual tutorials on key clinical topics
-                </Card>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Card
-                  title="Circle Community"
-                  action={
-                    <LinkButton
-                      to="https://medic-launch.circle.so/"
-                      target='_blank'
-                      endIcon={<Launch />}
-                    >
-                      View
-                    </LinkButton>
-                  }
-                  icon={<img src={PeopleIcon} width={48} />}
-                >
-                  Join our supportive community of future doctors
-                </Card>
-              </Grid>
-            </Grid>
           </Stack>
         </Grid>
       </Grid>

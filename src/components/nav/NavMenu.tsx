@@ -52,7 +52,6 @@ function NavMenu({ sx, ...rest }: NavMenuProps) {
             <NavLink text="Clinical Companion" selected={!!matchClinicalCompanion} href="/clinical-companion" />
             <NavLink text="Case Capture" selected={!!matchCaseCapture} href="/clinical-cases" tag="New" />
             <NavLink text="My Profile" selected={!!matchMyProfile} href="/my-profile" />
-            <NavLink text="Community" href="https://medic-launch.circle.so/" external />
             {hasAuthorAccess && <NavLink text="Author Portal" selected={!!matchAuthorPortal} href="/author-portal" />}
             {hasAdminAccess && <NavLink text="User Management" selected={!!matchUserManagement} href="/user-management" />}
           </Stack>

@@ -77,13 +77,13 @@ export default function SpecialityAnalyserChart() {
         loading ?
           <Stack alignItems="center" my={5}><CircularProgress /></Stack>
           :
-          <Box sx={{ position: "relative", height: 206 }}>
+          <Box sx={{ position: "relative", height: 540 }}>
             <Grid
               container
               alignItems="center"
               rowSpacing={1.5}
               columnSpacing={0.5}
-              sx={{ overflowY: 'auto', height: 206, pr: 1 }}
+              sx={{ overflowY: 'auto', height: 540, pr: 1 }}
               ref={scrollRef}
             >
               {
