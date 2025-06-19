@@ -1,4 +1,5 @@
 import { createTheme } from "@mui/material";
+import grey from "@mui/material/colors/grey";
 
 export const primaryGradient = 'linear-gradient(115.43deg, #2496C7 6.22%, #046E9B 100%)';
 
@@ -210,9 +211,12 @@ theme.components = {
     }
   },
   MuiPaper: {
+    defaultProps: {
+      elevation: 0
+    },
     styleOverrides: {
       root: {
-        boxShadow: '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)'
+        border: `1px solid ${grey[300]}`,
       }
     }
   },

@@ -5,6 +5,7 @@ import { Question, QuestionType } from "../models/Question";
 import { QuestionAttempt } from "../models/QuestionAttempt";
 import Speciality from "../models/Speciality";
 import MedicLaunchApiClient from "../services/MedicLaunchApiClient";
+import { AuthoredQuestionStats } from "../models/AuthoredQuestionStats";
 
 export class QuestionModelUI extends Question {
   submittedAnswerLetter?: string;
@@ -241,6 +242,11 @@ export class QuestionsStore {
   async getSpecialityAnalytics() {
     const specialityAnalytics = await this.apiClient.retrieveSpecialityAnalytics();
     return specialityAnalytics.sort((a, b) => a.specialityName.localeCompare(b.specialityName));
+  }
+
+  async getQuestionStats() {
+    const stats: AuthoredQuestionStats = await this.apiClient.getData("questions/stats");
+    return stats;
   }
 
 

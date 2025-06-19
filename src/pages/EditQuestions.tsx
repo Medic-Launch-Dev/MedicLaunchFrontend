@@ -2,6 +2,7 @@ import { Add } from "@mui/icons-material"
 import {
 	Button,
 	Grid,
+	Paper,
 	Stack,
 	Typography
 } from "@mui/material"
@@ -18,6 +19,7 @@ import Speciality from "../models/Speciality"
 import { useServiceProvider } from "../services/ServiceProvider"
 import { QuestionModelUI } from "../stores/questionsStore"
 import { primaryGradientText } from "../theme"
+import QuestionStats from "../components/questions/QuestionStats"
 
 function EditQuestions() {
 	let [searchParams] = useSearchParams();
@@ -89,30 +91,35 @@ function EditQuestions() {
 			<Typography style={primaryGradientText} variant="h3" mb={3}>Edit Questions</Typography>
 
 			<Grid container spacing={3} mb={4}>
-				<Grid item xs={8}>
-					<Stack direction="row" alignItems="center">
-						<Grid container columnSpacing={2} >
-							<Grid item xs={6} sx={{ fontWeight: "bold" }}>
-								<TextSelect
-									label="Speciality"
-									options={specialities.map(speciality => ({
-										value: speciality.id,
-										displayText: speciality.name
-									}))}
-									selected={selectedSpeciality || ""}
-									setSelected={setSelectedSpeciality}
-								/>
-							</Grid>
-							<Grid item xs={6}>
-								<TextSelect
-									label="Question bank"
-									options={questionBankOptions.map(option => ({ value: option }))}
-									selected={selectedQuestionBank}
-									setSelected={setSelectedQuestionBank}
-								/>
-							</Grid>
+				<Grid item xs={6}>
+					<Grid container columnSpacing={2} >
+						<Grid item xs={6} sx={{ fontWeight: "bold" }}>
+							<TextSelect
+								label="Speciality"
+								options={specialities.map(speciality => ({
+									value: speciality.id,
+									displayText: speciality.name
+								}))}
+								selected={selectedSpeciality || ""}
+								setSelected={setSelectedSpeciality}
+								fullWidth
+							/>
 						</Grid>
-					</Stack>
+						<Grid item xs={6}>
+							<TextSelect
+								label="Question bank"
+								options={questionBankOptions.map(option => ({ value: option }))}
+								selected={selectedQuestionBank}
+								setSelected={setSelectedQuestionBank}
+								fullWidth
+							/>
+						</Grid>
+					</Grid>
+				</Grid>
+				<Grid item xs={6} container justifyContent="flex-end">
+					<Paper sx={{ height: "100%", px: 3, py: 1, width: "max-content" }}>
+						<QuestionStats />
+					</Paper>
 				</Grid>
 			</Grid>
 			<LoadingWrapper isLoading={loading}>
