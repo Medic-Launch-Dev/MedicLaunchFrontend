@@ -18,8 +18,6 @@ const options = {
 }
 
 const App = () => {
-  console.log("PostHog API Key:", process.env.REACT_APP_PUBLIC_POSTHOG_KEY);
-  console.log("PostHog API Host:", process.env.REACT_APP_PUBLIC_POSTHOG_HOST);
   return (
     <React.StrictMode>
       <ThemeProvider theme={theme}>
@@ -39,8 +37,8 @@ const App = () => {
 };
 
 ReactDOM.render(
-  <PostHogProvider apiKey={process.env.REACT_APP_PUBLIC_POSTHOG_KEY || ""} options={options} >
-    <App />
-  </PostHogProvider>,
+  // <PostHogProvider apiKey={process.env.REACT_APP_PUBLIC_POSTHOG_KEY || ""} options={options} >
+  <App />,
+  // </PostHogProvider>,
   document.getElementById("root")
 );

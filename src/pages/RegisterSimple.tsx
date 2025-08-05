@@ -75,7 +75,8 @@ function Register() {
 
       const successfullyRegistered = await userStore.createUser(userData);
       if (successfullyRegistered)
-        navigate(`/confirm-email?email=${encodeURIComponent(values.email)}`);
+        showSnackbar("Registration successful! Please log in.", "success");
+      navigate("/login");
     } catch (e: any) {
       console.error(e);
       showSnackbar(e.response.data[0].description, 'error');
