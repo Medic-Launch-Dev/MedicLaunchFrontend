@@ -83,22 +83,20 @@ export class QuestionsStore {
     }
   }
 
-  async submitAnswer(answerLetter: string, isFreeTrial?: boolean) {
+  async submitAnswer(answerLetter: string) {
     this.currentQuestion.submittedAnswerLetter = answerLetter;
     if (answerLetter === this.currentQuestion.correctAnswerLetter) this._correctAnswers += 1;
     else this._incorrectAnswers += 1;
 
-    if (!isFreeTrial) {
-      const questionAttempt: QuestionAttempt = {
-        questionId: this.currentQuestion.id || "",
-        chosenAnswer: answerLetter,
-        correctAnswer: this.currentQuestion.correctAnswerLetter,
-        isCorrect: answerLetter === this.currentQuestion.correctAnswerLetter,
-      };
+    const questionAttempt: QuestionAttempt = {
+      questionId: this.currentQuestion.id || "",
+      chosenAnswer: answerLetter,
+      correctAnswer: this.currentQuestion.correctAnswerLetter,
+      isCorrect: answerLetter === this.currentQuestion.correctAnswerLetter,
+    };
 
-      const responseStatus = await this.apiClient.attemptQuestion(questionAttempt);
-      return responseStatus;
-    }
+    const responseStatus = await this.apiClient.attemptQuestion(questionAttempt);
+    return responseStatus;
 
   }
 
@@ -247,14 +245,5 @@ export class QuestionsStore {
   async getQuestionStats() {
     const stats: AuthoredQuestionStats = await this.apiClient.getData("questions/stats");
     return stats;
-  }
-
-
-  async startFreeTrial() {
-    const trialQuestions = await this.apiClient.getData("questions/trial-questions");
-    this._currentQuestionIdx = 0;
-    this._correctAnswers = 0;
-    this._incorrectAnswers = 0;
-    this.questions = trialQuestions;
   }
 }

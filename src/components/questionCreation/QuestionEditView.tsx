@@ -30,10 +30,9 @@ interface QuestionEditViewProps {
   question?: Question;
   setQuestion: (question: Question) => void;
   setCanSubmit?: (newValue: boolean) => void;
-  isTrial?: boolean;
 }
 
-export default function QuestionEditView({ question, setQuestion, setCanSubmit, isTrial }: QuestionEditViewProps) {
+export default function QuestionEditView({ question, setQuestion, setCanSubmit }: QuestionEditViewProps) {
   const { questionsStore } = useServiceProvider();
   const [specialities, setSpecialities] = useState<Speciality[]>([]);
 
@@ -103,15 +102,12 @@ export default function QuestionEditView({ question, setQuestion, setCanSubmit, 
       <Grid item xs={8}>
         <Stack spacing={3}>
           <Stack direction="row" spacing={1}>
-            {
-              !isTrial &&
-              <TextSelect
-                label="Question bank"
-                options={questionBankOptions}
-                value={selectedQuestionBank}
-                setSelected={setSelectedQuestionBank}
-              />
-            }
+            <TextSelect
+              label="Question bank"
+              options={questionBankOptions}
+              value={selectedQuestionBank}
+              setSelected={setSelectedQuestionBank}
+            />
             <TextSelect
               label="Speciality"
               options={specialities.map(speciality => ({

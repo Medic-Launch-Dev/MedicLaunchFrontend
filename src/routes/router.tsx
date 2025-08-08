@@ -17,11 +17,9 @@ import EditFlascard from "../pages/EditFlashcard";
 import EditQuestion from "../pages/EditQuestion";
 import EditTextbookLesson from "../pages/EditTextbookLesson";
 import EditTextbookLessons from "../pages/EditTextbookLessons";
-import EditTrialQuestions from "../pages/EditTrialQuestions";
 import EmailConfirmed from '../pages/EmailConfirmed';
 import FlashCards from "../pages/FlashCards";
 import ForgotPassword from '../pages/ForgotPassword';
-import FreeTrial from "../pages/FreeTrial";
 import MyProfile from "../pages/MyProfile";
 import Notifications from "../pages/Notifications";
 import PaymentComplete from "../pages/PaymentComplete";
@@ -53,7 +51,6 @@ const router = createBrowserRouter([
       { path: "create-question", element: <CreateQuestion /> },
       { path: "question-preview", element: <QuestionPreview /> },
       { path: "edit-questions", element: <EditQuestions /> },
-      { path: "edit-trial-questions", element: <EditTrialQuestions /> },
       { path: "edit-question", element: <EditQuestion /> },
       { path: "user-management", element: <UserManagement /> },
       { path: "author-portal", element: <AuthorPortal /> },
@@ -77,7 +74,6 @@ const router = createBrowserRouter([
       { path: "select-mock", element: <SelectMock /> },
       { path: "whiteboard-medicine", element: <WhiteboardMedicine /> },
       { path: "payment-complete", element: <PaymentComplete /> },
-      { path: "free-trial", element: <FreeTrial /> },
       { path: "trial-expired", element: <TrialExpired /> }
     ],
   },

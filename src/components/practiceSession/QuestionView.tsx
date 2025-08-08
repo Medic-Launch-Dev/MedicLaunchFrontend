@@ -21,10 +21,9 @@ interface QuestionViewProps {
   question: QuestionModelUI;
   inPreview?: boolean;
   isMock?: boolean;
-  isFreeTrial?: boolean;
 }
 
-function QuestionView({ question: questionFromProps, inPreview, isMock, isFreeTrial }: QuestionViewProps) {
+function QuestionView({ question: questionFromProps, inPreview, isMock }: QuestionViewProps) {
   const { questionsStore, practiceStore } = useServiceProvider();
   const question = inPreview ? questionsStore.previewQuestion : questionFromProps;
 
@@ -47,7 +46,7 @@ function QuestionView({ question: questionFromProps, inPreview, isMock, isFreeTr
     if (!selectedOption) return;
 
     setLoadingSubmit(true);
-    await questionsStore.submitAnswer(selectedOption.letter, isFreeTrial);
+    await questionsStore.submitAnswer(selectedOption.letter);
     setLoadingSubmit(false);
   }
 
@@ -97,7 +96,6 @@ function QuestionView({ question: questionFromProps, inPreview, isMock, isFreeTr
             {question?.specialityName}
           </Box>
           <Typography fontWeight={600}>{`Question ${questionsStore.getQuestionNumber()}`}</Typography>
-          {isFreeTrial && <Chip label="Free Trial" />}
         </Box>
       }
       <Box mb={2}>
@@ -152,8 +150,8 @@ function QuestionView({ question: questionFromProps, inPreview, isMock, isFreeTr
               {
                 questionsStore.onLastQuestion
                   ?
-                  <LinkButton sx={{ px: 12, py: 1.25 }} to={isFreeTrial ? "/subscribe" : "/review-session"}>
-                    {isFreeTrial ? "Subscribe" : "End Session"}
+                  <LinkButton sx={{ px: 12, py: 1.25 }} to={"/review-session"}>
+                    End Session
                   </LinkButton>
                   :
                   <Button
@@ -166,7 +164,7 @@ function QuestionView({ question: questionFromProps, inPreview, isMock, isFreeTr
                   </Button>
               }
               <Stack direction="row" spacing={1}>
-                {!isFreeTrial && flagButtonMarkup}
+                {flagButtonMarkup}
                 <Button
                   startIcon={<KeyboardArrowLeft />}
                   variant="outlined"
@@ -189,7 +187,7 @@ function QuestionView({ question: questionFromProps, inPreview, isMock, isFreeTr
                 Submit
               </LoadingButton>
               <Stack direction="row" spacing={1}>
-                {!isFreeTrial && flagButtonMarkup}
+                {flagButtonMarkup}
                 <Button
                   startIcon={<KeyboardArrowLeft />}
                   variant="outlined"
@@ -226,7 +224,6 @@ function QuestionView({ question: questionFromProps, inPreview, isMock, isFreeTr
         <LabValues />
       </Box>
       <Button
-        disabled={isFreeTrial}
         variant="contained"
         color="secondary"
         sx={{ color: "black", fontWeight: 500, visibility: !wasAttempted || inPreview ? "hidden" : "visible" }}
@@ -301,8 +298,8 @@ function QuestionView({ question: questionFromProps, inPreview, isMock, isFreeTr
         {
           questionsStore.onLastQuestion
             ?
-            <LinkButton sx={{ px: 12, py: 1.25 }} to={isFreeTrial ? "/subscribe" : "/review-session"}>
-              {isFreeTrial ? "Subscribe" : "End Session"}
+            <LinkButton sx={{ px: 12, py: 1.25 }} to="/review-session">
+              End Session
             </LinkButton>
             :
             <Button
@@ -315,7 +312,7 @@ function QuestionView({ question: questionFromProps, inPreview, isMock, isFreeTr
             </Button>
         }
         <Stack direction="row" spacing={1}>
-          {!isFreeTrial && flagButtonMarkup}
+          {flagButtonMarkup}
           <Button
             startIcon={<KeyboardArrowLeft />}
             variant="outlined"

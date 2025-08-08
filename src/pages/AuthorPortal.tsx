@@ -109,22 +109,6 @@ function AuthorPortal() {
                 </Card>
               </Grid>
             }
-            {
-              hasAdminAccess &&
-              <Grid item xs={12} sm={6}>
-                <Card
-                  title="Review trial questions"
-                  action={
-                    <Link to="/edit-trial-questions">
-                      <Button variant="contained">View trial questions</Button>
-                    </Link>
-                  }
-                  icon={<img src={CoursesIcon} width={64} />}
-                >
-                  View your trial questions and edit here
-                </Card>
-              </Grid>
-            }
           </Grid>
         </Grid>
       </Grid>

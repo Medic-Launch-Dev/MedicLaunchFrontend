@@ -26,7 +26,6 @@ import { primaryGradientText } from "../theme";
 
 const EditQuestion = () => {
   const [searchParams] = useSearchParams();
-  const isTrial = searchParams.get("isTrial");
   const { questionsStore, accountStore: { hasQuestionAuthorAccess, hasAdminAccess } } = useServiceProvider();
   const { showSnackbar, snackbarProps } = useSnackbar();
   const [loadingSave, setLoadingSave] = useState(false);
@@ -45,10 +44,9 @@ const EditQuestion = () => {
       const updatedQuestion: Question = { ...question, previousSpecialityId: question.specialityId }
       if (submitDraft) updatedQuestion.isSubmitted = true;
 
-      if (isTrial) await questionsStore.updateTrialQuestion(updatedQuestion);
-      else await questionsStore.updateQuestion(updatedQuestion);
+      await questionsStore.updateQuestion(updatedQuestion);
 
-      if (submitDraft) navigate(isTrial ? "/edit-trial-questions" : `/edit-questions?speciality=${question.specialityId}`);
+      if (submitDraft) navigate(`/edit-questions?speciality=${question.specialityId}`);
 
       showSnackbar(submitDraft ? "Question submitted" : "Question updated", "success");
     } catch (e) {
@@ -65,11 +63,8 @@ const EditQuestion = () => {
       if (!question || !question.id) return;
 
       setLoadingDelete(true);
-      const res = isTrial ?
-        await questionsStore.deleteTrialQuestion(question.id) :
-        await questionsStore.deleteQuestion(question.id, question.specialityId);
-
-      if (res) navigate(isTrial ? "/edit-trial-questions" : `/edit-questions?speciality=${question.specialityId}`);
+      const res = await questionsStore.deleteQuestion(question.id, question.specialityId);
+      if (res) navigate(`/edit-questions?speciality=${question.specialityId}`);
     } catch (e) {
       console.error(e);
       showSnackbar("Failed to delete", "error");
@@ -80,7 +75,7 @@ const EditQuestion = () => {
 
   const handleClickPreview = () => {
     questionsStore.setPreviewQuestion(question);
-    navigate(`/question-preview?from=${isTrial ? "edit-trial-questions" : "edit-question"}`);
+    navigate("/question-preview?from=edit-question");
   };
 
   useEffect(() => {
@@ -102,7 +97,7 @@ const EditQuestion = () => {
         <Stack direction="row" alignItems="center" spacing={1}>
           <LinkButton
             variant="text"
-            to={isTrial ? "/edit-trial-questions" : `/edit-questions?speciality=${question?.specialityId}`}
+            to={`/edit-questions?speciality=${question?.specialityId}`}
             startIcon={<ChevronLeft />}
           >
             Back
@@ -128,7 +123,7 @@ const EditQuestion = () => {
       </Stack>
       {
         question ?
-          <QuestionEditView question={question} setQuestion={setQuestion} setCanSubmit={setCanSubmit} isTrial={Boolean(isTrial)} /> :
+          <QuestionEditView question={question} setQuestion={setQuestion} setCanSubmit={setCanSubmit} /> :
           <Stack alignItems="center" my={5}>
             <CircularProgress />
           </Stack>

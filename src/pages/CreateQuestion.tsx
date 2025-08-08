@@ -17,8 +17,6 @@ import { useServiceProvider } from "../services/ServiceProvider";
 import { primaryGradientText } from "../theme";
 
 const CreateQuestion = () => {
-  const [searchParams] = useSearchParams();
-  const isTrial = searchParams.get("isTrial");
   const { questionsStore, accountStore: { hasQuestionAuthorAccess, hasAdminAccess } } = useServiceProvider();
   const { showSnackbar, snackbarProps } = useSnackbar();
   const [loadingDraft, setLoadingDraft] = useState(false);
@@ -32,19 +30,12 @@ const CreateQuestion = () => {
       if (!question) return;
       isSubmitted ? setLoadingSubmit(true) : setLoadingDraft(true);
 
-      if (isTrial) {
-        await questionsStore.addTrialQuestion({
-          ...question,
-          isSubmitted
-        });
-      } else {
-        await questionsStore.addQuestion({
-          ...question,
-          isSubmitted
-        });
-      }
+      await questionsStore.addQuestion({
+        ...question,
+        isSubmitted
+      });
 
-      navigate(isTrial ? "/edit-trial-questions" : `/edit-questions?speciality=${question.specialityId}`);
+      navigate(`/edit-questions?speciality=${question.specialityId}`);
     } catch (e) {
       console.error(e);
       showSnackbar("Failed to submit", "error");
@@ -91,7 +82,6 @@ const CreateQuestion = () => {
         question={question}
         setQuestion={setQuestion}
         setCanSubmit={setCanSubmit}
-        isTrial={Boolean(isTrial)}
       />
     </Page>
   );

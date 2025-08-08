@@ -5,10 +5,9 @@ import { QuestionModelUI } from "../../stores/questionsStore";
 
 interface EditQuestionsTableProps {
   questions: QuestionModelUI[];
-  isTrial?: boolean;
 }
 
-export default function EditQuestionsTable({ questions, isTrial }: EditQuestionsTableProps) {
+export default function EditQuestionsTable({ questions }: EditQuestionsTableProps) {
   const navigate = useNavigate();
   const { questionsStore } = useServiceProvider();
 
@@ -20,7 +19,7 @@ export default function EditQuestionsTable({ questions, isTrial }: EditQuestions
 
   function handleClickEdit(question: QuestionModelUI) {
     questionsStore.setPreviewQuestion(question);
-    navigate(isTrial ? "/edit-question?isTrial=true" : "/edit-question")
+    navigate("/edit-question")
   }
 
   return (
