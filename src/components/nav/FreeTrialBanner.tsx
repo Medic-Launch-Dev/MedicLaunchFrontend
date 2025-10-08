@@ -1,10 +1,10 @@
-import { Box } from "@mui/material";
+import { Box, BoxProps } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useMatch } from "react-router-dom";
 import { useServiceProvider } from "../../services/ServiceProvider";
 import LinkButton from "../util/LinkButton";
 
-function FreeTrialBanner() {
+function FreeTrialBanner({ sx }: BoxProps) {
   const { accountStore } = useServiceProvider();
   const { myProfile, isLoading, isSubscribed, hasAuthorAccess } = accountStore;
   const { freeTrialDaysRemaining } = myProfile || {};
@@ -21,7 +21,8 @@ function FreeTrialBanner() {
       color: "#fff",
       display: "flex",
       alignItems: "center",
-      gap: 2
+      gap: 2,
+      ...sx
     }}>
       <div style={{ flexGrow: 1 }}>
         {
