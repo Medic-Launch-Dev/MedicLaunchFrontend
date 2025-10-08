@@ -8,6 +8,7 @@ import AuthLayout from "../components/auth/AuthLayout";
 import { useSnackbar } from "../hooks/useSnackbar";
 import { useAuth } from "../services/AuthProvider";
 import { observer } from "mobx-react-lite";
+import { useEffect } from "react";
 
 function Login() {
   const { showSnackbar, snackbarProps } = useSnackbar();
@@ -56,6 +57,7 @@ function Login() {
         <form onSubmit={formik.handleSubmit}>
           <TextField
             fullWidth
+            type="email"
             label="Email address"
             name="email"
             onChange={formik.handleChange}

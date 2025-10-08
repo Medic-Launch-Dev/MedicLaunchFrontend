@@ -1,5 +1,6 @@
 import { Box, Grid, Stack, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
+import { useEffect } from "react";
 
 interface AuthLayoutProps {
   children: React.ReactNode | React.ReactNode[];
@@ -8,8 +9,19 @@ interface AuthLayoutProps {
 }
 
 export default function AuthLayout({ children, title, subtitle }: AuthLayoutProps) {
+  useEffect(() => {
+    document.body.style.backgroundColor = "#fff";
+
+    return () => {
+      document.body.style.backgroundColor = "";
+    }
+  }, []);
+
   return (
-    <Grid container sx={{ height: "100vh", bgcolor: "white" }}>
+    <Grid container sx={{
+      height: { xs: undefined, lg: "100vh" },
+      py: { xs: 4, lg: 0 }
+    }}>
       <Grid item xs={12} lg={5} sx={{ height: "100%" }}>
         <Stack
           sx={{ m: "auto", minHeight: "100%", py: 2, position: "relative" }}
@@ -17,9 +29,7 @@ export default function AuthLayout({ children, title, subtitle }: AuthLayoutProp
           justifyContent="center"
           spacing={2}
         >
-          <Box>
-          </Box>
-          <Box px={2} sx={{ maxWidth: 450, width: "100%" }}>
+          <Box px={3} sx={{ maxWidth: 450, width: "100%" }}>
             <Stack sx={{ flexShrink: 0 }} spacing={1} pb={5}>
               <Stack alignItems="center" justifyContent="center" pb={4}>
                 <img src="/logo.png" width={140} />

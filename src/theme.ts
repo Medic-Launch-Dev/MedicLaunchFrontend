@@ -87,6 +87,12 @@ const theme = createTheme({
 });
 
 theme.components = {
+  MuiCssBaseline: {
+    styleOverrides: {
+      overflowX: 'hidden',
+      WebkitOverflowScrolling: 'touch'
+    }
+  },
   MuiButton: {
     styleOverrides: {
       root: {
@@ -243,6 +249,15 @@ theme.components = {
       root: {
         backdropFilter: 'blur(16px)',
         WebkitBackdropFilter: 'blur(16px)',
+      }
+    }
+  },
+  MuiSnackbar: {
+    styleOverrides: {
+      root: {
+        '& .MuiSnackbarContent-root': {
+          border: 'none'
+        }
       }
     }
   },

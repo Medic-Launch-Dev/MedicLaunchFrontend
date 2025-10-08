@@ -124,6 +124,7 @@ function Register() {
             <Grid item xs={12}>
               <TextField
                 fullWidth
+                type="email"
                 name="email"
                 label="Email"
                 value={formik.values.email}
