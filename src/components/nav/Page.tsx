@@ -60,11 +60,11 @@ function Page({ children, withNav, maxWidth, fullWidth, sx, ...rest }: PageProps
         />
       }
       <Toolbar sx={{ backgroundColor: "#fff", position: "relative", top: 0, left: 0, right: 0, zIndex: 1000 }}>
-        <Stack spacing={1} sx={{ width: '100%', py: { xs: 2, md: 0 } }}>
+        <Stack spacing={2} sx={{ width: '100%', py: { xs: 2, md: 1 } }}>
           <Stack sx={{ width: '100%' }} direction="row" justifyContent="space-between" alignItems="center">
             <img src="/logo.png" height={40} alt="Medic launch" style={{ cursor: 'pointer' }} onClick={() => handleNavigate("/")} />
             <Stack direction="row" alignItems="center" spacing={2}>
-              <FreeTrialBanner sx={{ display: { xs: 'none', md: 'block' } }} />
+              <FreeTrialBanner sx={{ display: { xs: 'none', md: 'flex' } }} />
               <div onClick={() => handleNavigate("/notifications")}>
                 <NotificationBellButton />
               </div>
@@ -84,7 +84,7 @@ function Page({ children, withNav, maxWidth, fullWidth, sx, ...rest }: PageProps
               </IconButton>
             </Stack>
           </Stack>
-          <FreeTrialBanner sx={{ display: { xs: 'block', md: 'none' }, pt: 1 }} />
+          <FreeTrialBanner sx={{ display: { xs: 'flex', md: 'none' } }} />
         </Stack>
       </Toolbar>
       <Container sx={{ display: 'flex', ...sx, }} maxWidth={fullWidth ? false : maxWidth || 'lg'} {...rest}>
