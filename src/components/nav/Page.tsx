@@ -89,7 +89,7 @@ function Page({ children, withNav, maxWidth, fullWidth, sx, ...rest }: PageProps
       </Toolbar>
       <Container sx={{ display: 'flex', ...sx, }} maxWidth={fullWidth ? false : maxWidth || 'lg'} {...rest}>
         {withNav && <Box sx={{ width: 240, flexShrink: 0, display: { xs: 'none', md: 'block' } }}></Box>} {/* nav menu spacer */}
-        <Box sx={{ py: 2, flexGrow: 1, height: "calc(100vh - 64px)", overflowY: "scroll" }}>
+        <Box sx={{ py: 2, flexGrow: 1, height: "calc(100dvh - 64px)", overflowY: "scroll" }}>
           {
             errorMessage &&
             <Alert severity="error" sx={{ mb: 3 }}>

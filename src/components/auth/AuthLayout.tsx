@@ -19,7 +19,7 @@ export default function AuthLayout({ children, title, subtitle }: AuthLayoutProp
 
   return (
     <Grid container sx={{
-      height: { xs: undefined, lg: "100vh" },
+      height: { xs: undefined, lg: "100dvh" },
       py: { xs: 4, lg: 0 }
     }}>
       <Grid item xs={12} lg={5} sx={{ height: "100%" }}>

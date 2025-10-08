@@ -79,7 +79,7 @@ function Subscribe() {
   return (
     <Page sx={{ height: "100%" }}>
       <Snackbar {...snackbarProps} />
-      <Stack height="100%" gap={3} py={2}>
+      <Stack height="100%" gap={3} pt={2} pb={2}>
         <Stack direction={{ xs: "column", md: "row" }} justifyContent="space-between" spacing={2}>
           <LinkButton to="/" sx={{ width: "max-content", flexShrink: 0 }} startIcon={<ChevronLeft />}>
             Study Portal
