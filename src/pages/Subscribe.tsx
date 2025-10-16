@@ -1,4 +1,4 @@
-import { CheckCircleOutline, ChevronLeft, Lock } from "@mui/icons-material";
+import { CheckCircleOutline, ChevronLeft, ChevronRight, Lock } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { Box, Grid, Snackbar, Stack, styled, ToggleButton, ToggleButtonGroup, toggleButtonGroupClasses, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
@@ -91,7 +91,7 @@ function Subscribe() {
             Study Portal
           </LinkButton>
         </Stack>
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', bgcolor: 'white', borderRadius: 2, p: { xs: 3, md: 5 } }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', bgcolor: 'white', borderRadius: 2, p: { xs: 3, md: 5 }, pb: { xs: 8, md: 0 } }}>
           <Box mb={3}>
             <StyledToggleButtonGroup
               value={selectedPlanLookupKey}
@@ -133,10 +133,17 @@ function Subscribe() {
               size="large"
               onClick={handlePayment}
               loading={loading}
-              startIcon={<Lock />}
-              sx={{ py: 1.5, px: 4, width: { xs: "100%", md: "max-content" } }}
+              endIcon={<ChevronRight />}
+              sx={{
+                py: 1.5,
+                px: 4,
+                width: { xs: "90%", md: "max-content" },
+                position: { xs: "fixed", md: "static" },
+                bottom: { xs: 16, md: "auto" },
+
+              }}
             >
-              Secure Payment
+              Proceed to Payment
             </LoadingButton>
           </Stack>
         </Box>
